@@ -22,7 +22,7 @@ qt_add_resources(TouchApp "configuration"
         qtquickcontrols2.conf
 )
 
-target_link_libraries(TouchApp PRIVATE
+target_link_libraries(TouchApp PRIVATE #-Wl,-subsystem,windows
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
@@ -58,3 +58,9 @@ set_property(TARGET TouchApp
 # make IDEs aware of the QML import path
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
+
+if(${CMAKE_CXX_COMPILER} MATCHES ".*/(g\\+\\+)(\\..*)")
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "-mwindows")
+elseif(${CMAKE_CXX_COMPILER} MATCHES ".*/(cl)(\\..*)")
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+endif()

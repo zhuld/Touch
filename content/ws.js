@@ -41,7 +41,6 @@ function getBoundString_EndLastIndex(msg, startChar, stopChar)
             }
         }
     }
-
     return response;
 }
 
@@ -104,14 +103,11 @@ function checkMessage(message)
 
 function push(channel){
     if(channel > 0){
-
-        //wsClient.sendTextMessage(("ON[" + channel + "]"))
         wsClient.sendTextMessage(("PUSH[" + channel + "]"))
     }
 }
 function release(channel){
     if(channel > 0){
-        //wsClient.sendTextMessage(("OFF[" + channel + "]"))
         wsClient.sendTextMessage(("RELEASE[" + channel + "]"))
     }
 }

@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
     engine.addImportPath(":/");
 
 
-
     app.setOrganizationName("Zhuld");
     app.setOrganizationDomain("zld.com");
     app.setApplicationName("Touch");

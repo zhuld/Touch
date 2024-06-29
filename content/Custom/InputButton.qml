@@ -80,15 +80,13 @@ Item {
                 horizontalAlignment: Text.AlignRight
             }
 
-            color: mouseArea.pressed ?  Qt.darker(btnColor,2) : btnColor
+            border.width: height*0.02
+            border.color: Qt.darker(btnColor,1.4)
+            color: mouseArea.pressed ?  Qt.darker(btnColor,1.4) : btnColor
 
             Drag.keys: [ input ]
             Drag.active: mouseArea.drag.active
 
-            // states: State {
-            //     when: mouseArea.drag.active
-            //     AnchorChanges { target: dragButton; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-            // }
             Behavior on color {
                 ColorAnimation {
                     duration: 200

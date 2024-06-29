@@ -23,7 +23,6 @@ Item {
                     height: parent.height*0.1
                     MySwitch{
                         height: parent.height*0.7
-                        //anchors.verticalCenter: parent.verticalCenter
                         channel: 40
                         anchors.right: parent.right
                     }
@@ -37,7 +36,7 @@ Item {
                         width: parent.width*0.5
                         height: width*0.05
                         anchors.horizontalCenter: parent.horizontalCenter
-                        border.color: borderColor
+                        border.color: buttonTextColor
                         border.width: 2
                         color: "transparent"
                     }
@@ -47,7 +46,7 @@ Item {
                         height: width
                         anchors.left: tv.right
                         anchors.leftMargin: parent.width*0.1
-                        border.color: borderColor
+                        border.color: buttonTextColor
                         border.width: 2
                         color: "transparent"
                     }
@@ -57,7 +56,7 @@ Item {
                         height: width
                         anchors.right: tv.left
                         anchors.rightMargin: parent.width*0.1
-                        border.color: borderColor
+                        border.color: buttonTextColor
                         border.width: 2
                         color: "transparent"
                     }
@@ -68,7 +67,7 @@ Item {
                         height: parent.height*0.9
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
-                        border.color: borderColor
+                        border.color: buttonTextColor
                         border.width: 2
                         color: "transparent"
                         radius: width/10

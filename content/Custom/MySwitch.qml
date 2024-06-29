@@ -6,10 +6,6 @@ import "qrc:/qt/qml/content/ws.js" as WS
 Item {
     id: control
     property int channel
-    property color btnColor: buttonCheckedColor
-
-    property color switchColor: buttonTextColor
-
     property bool checked
 
     implicitWidth: height*2
@@ -19,26 +15,37 @@ Item {
         id:rect
         anchors.fill: parent
         radius: height*0.5
-        color: control.checked ? Qt.lighter(btnColor,1.2):Qt.darker(btnColor,1.6)
+        color: control.checked ? buttonCheckedColor:buttonColor
         border.color: backgroundColor
-        Text {
-            width: parent.width*0.7
-            height: parent.height
-            horizontalAlignment: control.checked ? Text.AlignLeft : Text.AlignRight
-            verticalAlignment: Text.AlignVCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: control.checked ? "开":"关"
-            font.pixelSize: parent.height*0.6
-            color: switchColor
-        }
+        // Text {
+        //     width: parent.width*0.7
+        //     height: parent.height
+        //     horizontalAlignment: control.checked ? Text.AlignLeft : Text.AlignRight
+        //     verticalAlignment: Text.AlignVCenter
+        //     anchors.horizontalCenter: parent.horizontalCenter
+        //     //text: control.checked ? "开":"关"
+        //     font.pixelSize: parent.height*0.6
+        //     color: buttonTextColor
+        // }
         Rectangle {
             x: control.checked ? parent.width - parent.height : parent.height - height
             width: parent.height*0.8
             height: width
             radius: height*0.5
-            color: control.down ? Qt.lighter(switchColor,1.4):switchColor
+            color: buttonTextColor
             anchors.verticalCenter: parent.verticalCenter
-            //border.color: control.checked ? (control.down ? "#17a81a" : "#21be2b") : "#999999"
+            Text {
+                anchors.centerIn: parent
+                text: "✓"
+                color: buttonCheckedColor
+                font.pixelSize: parent.height*0.8
+                opacity: checked ? 1:0
+                Behavior on opacity {
+                    NumberAnimation{
+                        duration: 600
+                    }
+                }
+            }
             Behavior on x {
                 NumberAnimation{
                     easing.type: Easing.InOutCubic;
@@ -55,7 +62,7 @@ Item {
         id: channel
         height: parent.height
         text: root.settings.showChannel? "D"+control.channel : ""
-        color: textColor
+        color: buttonTextColor
         font.pixelSize: height*0.3
         z:1
     }

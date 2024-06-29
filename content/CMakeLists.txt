@@ -8,17 +8,16 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        Main.qml
+        Base.qml
         Connect.qml
         webSocket/WSClient.qml
         webSocket/WSServer.qml
-        Pages/Test1.ui.qml
-        Pages/Test2.ui.qml
-        Pages/Test3.ui.qml
-        Pages/Test4.ui.qml
-        Pages/Test5.ui.qml
-        Pages/TestModel.qml
-
+        Pages/System.ui.qml
+        Pages/Video.ui.qml
+        Pages/Camera.ui.qml
+        Pages/Volume.ui.qml
+        Pages/Light.ui.qml
+        Pages/ConfigModel.qml
         Custom/MyLable.qml
         Custom/MyButton.qml
         Custom/MyDelayButton.qml
@@ -33,6 +32,7 @@ qt6_add_qml_module(content
         Custom/Light.qml
         Custom/Category.qml
         Custom/Background.qml
+        Custom/ColorSwitch.qml
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         ws.js

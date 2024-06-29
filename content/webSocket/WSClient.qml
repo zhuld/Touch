@@ -10,11 +10,11 @@ WebSocket {
     signal wsTextReceived(var message)
 
     onTextMessageReceived: (message)=> {
-                               console.info("Client","Text Received:", message)
+                               //console.info("Client","Text Received:", message)
                                wsTextReceived(message)
                            }
     onBinaryMessageReceived: (message)=> {
-                                 console.info("Client","Bin Received:", new Uint8Array(message))
+                                 //console.info("Client","Bin Received:", new Uint8Array(message))
                              }
     onStatusChanged: {
         wsStatusChanged(socket.status)

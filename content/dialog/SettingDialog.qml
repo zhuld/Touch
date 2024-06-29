@@ -25,6 +25,7 @@ Dialog {
         property bool webSocketServer: false
         property int webSocketServerPort: 9880
         property bool showChannel: false
+        property bool darkTheme: false
     }
 
     Overlay.modal: Rectangle{
@@ -85,7 +86,6 @@ Dialog {
                 text: "确定"
                 font.pixelSize: height*0.4
                 onClicked: rootSetting.accept()
-                btnColor: "darkgreen"
             }
             Text {
                 id:settingTitle
@@ -175,8 +175,9 @@ Dialog {
                     font.pixelSize: height*0.7
                     color: buttonTextColor
                 }
-                Switch{
+                ColorSwitch{
                     height: settingDialog.height/15
+                    width: height*2
                     id:fullscreen
                     checked: settings.fullscreen
                 }
@@ -211,8 +212,9 @@ Dialog {
                     font.pixelSize: height*0.7
                     color: buttonTextColor
                 }
-                Switch{
+                ColorSwitch{
                     height: settingDialog.height/15
+                    width: height*2
                     id:webSocketServer
                     checked: settings.webSocketServer
                 }
@@ -241,7 +243,6 @@ Dialog {
                     enabled: webSocketServer.checked
                     visible: false
                 }
-
                 Text {
                     text: "显示通道号码"
                     width: parent.width*0.5
@@ -249,10 +250,24 @@ Dialog {
                     font.pixelSize: height*0.7
                     color:  buttonTextColor
                 }
-                Switch{
+                ColorSwitch{
                     height: settingDialog.height/15
+                    width: height*2
                     id:showChannel
                     checked: settings.showChannel
+                }
+                Text {
+                    text: "暗色主题"
+                    width: parent.width*0.5
+                    height: settingDialog.height/12
+                    font.pixelSize: height*0.7
+                    color:  buttonTextColor
+                }
+                ColorSwitch{
+                    height: settingDialog.height/15
+                    width: height*2
+                    id:darkTheme
+                    checked: settings.darkTheme
                 }
             }
         }
@@ -266,6 +281,7 @@ Dialog {
         settings.webSocketServer = webSocketServer.checked
         settings.webSocketServerPort = webSocketServerPort.text
         settings.showChannel = showChannel.checked
+        settings.darkTheme = darkTheme.checked
         settings.sync()
     }
 
@@ -277,6 +293,7 @@ Dialog {
         webSocketServer.checked = settings.webSocketServer
         webSocketServerPort.text = settings.webSocketServerPort
         showChannel.checked = settings.showChannel
+        darkTheme.checked = settings.darkTheme
         settings.sync()
     }
     function apply(){
@@ -287,6 +304,7 @@ Dialog {
         settings.webSocketServer = webSocketServer.checked
         settings.webSocketServerPort = webSocketServerPort.text
         settings.showChannel = showChannel.checked
+        settings.darkTheme = darkTheme.checked
         settings.sync()
     }
 }

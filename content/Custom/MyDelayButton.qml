@@ -7,8 +7,7 @@ DelayButton {
     id:control
 
     property int channel
-    property color btnColor: buttonCheckedColor
-    property color textColor: buttonTextColor
+    property color btnColor: buttonColor
 
     delay: 2000
 
@@ -30,7 +29,7 @@ DelayButton {
     background: Rectangle {
         anchors.fill: parent
         opacity: enabled ? 1 : 0.3
-        color: root.digital[control.channel]? btnColor:Qt.darker(btnColor,2)
+        color: root.digital[control.channel]? btnColor:Qt.darker(btnColor,1.6)
         radius: height*0.1
         Rectangle {
             id:progressBar
@@ -45,7 +44,7 @@ DelayButton {
         id: channel
         height: parent.height
         text: root.settings.showChannel? "D"+control.channel : ""
-        color: textColor
+        color: buttonTextColor
         font.pixelSize: height*0.3
     }
 

@@ -10,12 +10,10 @@ Rectangle {
     property string output
     property alias textOutput: textOutput.text
     property alias textInput: textInput.text
-    property color tColor: buttonTextColor
-    property color btnColor: buttonColor
 
     readonly property var input: root.analog[output]
 
-    color: Qt.darker(btnColor,1.4)
+    color: Qt.darker(buttonColor,1.4)
     radius: height/10
 
     Column{
@@ -30,16 +28,16 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             text: "Output"
-            color: tColor
+            color: buttonTextColor
         }
         IconLabel{
             id:textInput
             width: parent.width
             height: parent.height*0.5 - parent.spacing
             font.pixelSize: height*0.45
-            color: tColor
+            color: buttonTextColor
             icon.height: height*0.4
-            icon.color: tColor
+            icon.color: buttonTextColor
             spacing: width*0.05
         }
     }
@@ -61,7 +59,7 @@ Rectangle {
         id: channel
         height: parent.height
         text: root.settings.showChannel? "A"+control.output : ""
-        color: textColor
+        color: buttonTextColor
         font.pixelSize: height*0.3
     }
     Text {
@@ -70,7 +68,7 @@ Rectangle {
         anchors.margins: height*0.1
         text: output
         font.pixelSize: height*0.3
-        color: tColor
+        color: buttonTextColor
         horizontalAlignment: Text.AlignRight
     }
     Text {
@@ -79,7 +77,7 @@ Rectangle {
         anchors.margins: height*0.1
         text: input? input:""
         font.pixelSize: height*0.3
-        color: tColor
+        color: buttonTextColor
         horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignBottom
     }
@@ -92,8 +90,12 @@ Rectangle {
                            WS.level(output,drop.keys[0])
                            control.opacity = 1
                        }
-            onEntered:control.opacity = 0.7
-            onExited: control.opacity = 1
+            onEntered:{
+                control.opacity = 0.6
+            }
+            onExited: {
+                control.opacity = 1
+            }
         }
     }
     Component.onCompleted: {
@@ -112,7 +114,7 @@ Rectangle {
 
     function update(inputChannel){
         if(inputChannel>0){
-            control.color = Qt.darker(inputModel.get(inputChannel-1).bgColor,1.2)
+            control.color = inputModel.get(inputChannel-1).bgColor
             textInput.text = inputModel.get(inputChannel-1).name
             textInput.icon.source = inputModel.get(inputChannel-1).iconSource
         }

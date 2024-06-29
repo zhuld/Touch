@@ -31,8 +31,17 @@ Item {
                 centerX: light.width/2; centerY: 0
                 centerRadius: light.height
                 focalX: centerX; focalY: centerY
-                GradientStop { position: 0; color: control.lightColor }
-                GradientStop { position: 0.8; color: "transparent" }
+                GradientStop {
+                    position: 0; color: control.lightColor
+                    Behavior on color {
+                        ColorAnimation{
+                            duration: 500
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0.8; color: "transparent"
+                }
             }
             startX: light.width*0.45; startY: 0
             PathLine { x: light.width*0.55; y: 0 }
@@ -43,11 +52,7 @@ Item {
             PathLine { x: light.width*0.45; y: 0 }
         }
     }
-    Behavior on lightColor {
-        ColorAnimation{
-            duration: 500
-        }
-    }
+
     Text {
         id: label
         text: qsTr("灯光")

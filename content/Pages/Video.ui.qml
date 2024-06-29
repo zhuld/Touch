@@ -56,7 +56,7 @@ Item {
                     width: parent.width
                     height: parent.height*0.8
                     columns: 2
-                    spacing: height*0.1
+                    spacing: height*0.08
 
                     Repeater{
                         model: ListModel {
@@ -67,7 +67,7 @@ Item {
                             ListElement { name: qsTr("无线投屏");  inputChannel: 4 ; bgColor:"darkviolet"; iconSource:"qrc:/qt/qml/content/icons/wuxiantouping.png"}
                             ListElement { name: qsTr("预留输入");  inputChannel: 5 ; bgColor:"firebrick"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
                             ListElement { name: qsTr("预留输入");  inputChannel: 6 ; bgColor:"grey"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
-                            ListElement { name: qsTr("预留输入");  inputChannel: 7 ; bgColor:"midnightblue"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
+                            ListElement { name: qsTr("预留输入");  inputChannel: 7 ; bgColor:"#3B48A1"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
                             ListElement { name: qsTr("摄像机");  inputChannel: 8 ; bgColor:"olive"; iconSource:"qrc:/qt/qml/content/icons/shipinhuiyi.png"}
                         }
                         delegate: InputButton {

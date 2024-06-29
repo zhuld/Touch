@@ -14,11 +14,11 @@ Item {
             id:repeater
             model: ListModel{
                 id:volList
-                ListElement{name: "鹅颈话筒"; vChannel: 5; mChannel: 41 ; miniVol: -40; maxVol: 20}
-                ListElement{name: "手持话筒"; vChannel: 6; mChannel: 42 ; miniVol: -40; maxVol: 5}
-                ListElement{name: "音频"; vChannel: 7; mChannel: 43; miniVol: -30; maxVol: 10}
-                ListElement{name: "总音量"; vChannel: 8; mChannel: 44; miniVol: -45; maxVol: 0}
-                ListElement{name: "会议音量"; vChannel: 9; mChannel: 45; miniVol: -40; maxVol: 0}
+                ListElement{name: "鹅颈话筒"; vChannel: 5; mChannel: 41 ; miniVol: -40; maxVol: 20; inputType: true}
+                ListElement{name: "手持话筒"; vChannel: 6; mChannel: 42 ; miniVol: -40; maxVol: 5; inputType: true}
+                ListElement{name: "音频"; vChannel: 7; mChannel: 43; miniVol: -30; maxVol: 10; inputType: true}
+                ListElement{name: "会议音量"; vChannel: 8; mChannel: 44; miniVol: -45; maxVol: 0; inputType: false}
+                ListElement{name: "总音量"; vChannel: 9; mChannel: 45; miniVol: -40; maxVol: 0; inputType: false}
             }
 
             delegate: Category{
@@ -28,6 +28,7 @@ Item {
                 required property int mChannel
                 required property int miniVol
                 required property int maxVol
+                required property bool inputType
                 Column{
                     anchors.fill: parent
                     anchors.margins: item.width*0.02
@@ -44,6 +45,7 @@ Item {
                         muteChannel: mChannel
                         miniVolume: miniVol
                         maxVolume: maxVol
+                        input: inputType
                     }
                 }
             }

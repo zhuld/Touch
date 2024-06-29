@@ -9,6 +9,7 @@ import QtWebSockets
 
 import "./dialog"
 import "./Pages"
+import "./Custom"
 import "./webSocket"
 
 import "qrc:/qt/qml/content/ws.js" as WS
@@ -21,37 +22,37 @@ Window {
     property alias settings: settingDialog.settings
     property alias pageList: config.pageList
 
-    property bool connectPage: true
+    property bool connectPage: false
 
     property var digital:[500]
     property var analog:[100]
     property var text:[100]
 
-    property color backgroundColor:"#030A1D"
-    property color buttonTextColor: "azure"
-    property color textColor: "lightskyblue"
-    property color buttonColor: "#1B2A4B"
-    property color buttonCheckedColor: "#124373"
+    property color backgroundColor:settings.darkTheme ? "#030A1D" :"lightgray"
+
+    property color buttonTextColor: settings.darkTheme ? "whitesmoke":"#0B1A38"
+    property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
+    property color buttonColor: settings.darkTheme?"#B01B2A4B" : "#A0FAFAFA"
+    property color catagoryColor:  settings.darkTheme ? "#263B69":"#D7DBE4"
+    property color buttonCheckedColor: settings.darkTheme ? "#B0589BAB":"#C0589BAB"
 
     property color buttonTextRedColor: "red"
-    property color borderColor: "#3685FE"
 
-    property color volumeBlueColor: "#3685FE"
-    property color volumeRedColor: "#880015"
+    property color volumeBlueColor: settings.darkTheme ? "whitesmoke":"#0B1A38"
+    property color volumeRedColor: "red"
 
     property int usedIndex: 0
 
-    TestModel {
+    ConfigModel {
         id: config
     }
 
-
-    width: 1280
     height: 800
+    width: 1280
     minimumWidth: 800
     minimumHeight: 480
 
-    title: Application.name+" - "+config.version
+    title: Application.name
 
     visibility:settings.fullscreen? Window.FullScreen : Window.Windowed
 
@@ -67,7 +68,7 @@ Window {
         Image {
             anchors.fill: parent
             source: config.background
-            opacity: connectPage? 0.9:0.4
+            opacity: connectPage? 0.9:0.5
             Behavior on opacity {
                 OpacityAnimator{
                     duration: 1500
@@ -106,7 +107,7 @@ Window {
             height: parent.height
             verticalAlignment: Text.AlignVCenter
             anchors.right: parent.right
-            anchors.rightMargin: styleSwitch.visible? parent.width*0.1 : 0
+            anchors.rightMargin: (themeSwitch.width)*1.1
             font.pixelSize: height*0.4
             color: textColor
             Timer{
@@ -123,60 +124,21 @@ Window {
                 }
             }
         }
-        Switch{
-            id:styleSwitch
+        ColorSwitch{
+            id:themeSwitch
             height: parent.height/2
             width: height*2
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            indicator: Rectangle {
-                anchors.fill: parent
-                radius: height/2
-                color: buttonColor
-                border.color: "black"
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 300
-                    }
-                }
-                Rectangle {
-                    x: parent.parent.checked ? parent.width - parent.height*0.9 : parent.height*0.1
-                    width: height
-                    height: parent.height*0.8
-                    y:parent.height*0.1
-                    radius: height/2
-                    color: buttonTextColor
-                    border.color: "black"
-                    Behavior on x{
-                        NumberAnimation{
-                            duration: 300
-                        }
-                    }
-                }
+            checked: settings.darkTheme
+            onCheckedChanged: {
+                settings.darkTheme = checked
             }
-            checked: true
-            visible: false
-
-            state: checked? "dark": "light"
-            states: [
-                State {
-                    name: "dark"
-                    PropertyChanges {
-                        target: root
-                    }
-                },
-                State {
-                    name: "light"
-                    PropertyChanges {
-                        target: root
-                    }
-                }
-            ]
         }
         Shape{
             anchors.fill: parent
             ShapePath{
-                strokeColor: borderColor
+                strokeColor: textColor
                 strokeStyle: ShapePath.SolidLine
                 strokeWidth: 2
                 startX: 0
@@ -227,7 +189,7 @@ Window {
         target: wsClient
         onWsStatusChanged: (status) =>{
                                if (wsClient.status === WebSocket.Open){
-                                   pageLoader.setSource("qrc:/qt/qml/content/Main.qml")
+                                   pageLoader.setSource("qrc:/qt/qml/content/Base.qml")
                                    connectPage = false
                                }else if ((wsClient.status === WebSocket.Closed)){
                                    wsClient.active = false

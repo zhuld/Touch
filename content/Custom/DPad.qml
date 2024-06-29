@@ -6,15 +6,13 @@ Item {
     id:control
 
     property int channel
-    property color btnColor: buttonCheckedColor
-    property color iconColor:buttonTextColor
     implicitWidth: 100
     implicitHeight: 130
     Rectangle{
         width: parent.width
         height: width
-        color: Qt.darker(btnColor,1.2)
-        border.color: btnColor
+        color: buttonColor
+        border.color: buttonCheckedColor
         border.width: 2
         radius: width/2
     }
@@ -54,7 +52,7 @@ Item {
                     id:icon
                     anchors.fill: parent
                     icon.height: height*0.5
-                    icon.color: iconColor
+                    icon.color: buttonTextColor
                     icon.source: iconUrl
                     Behavior on icon.height {
                         NumberAnimation{
@@ -67,7 +65,7 @@ Item {
                     id: channel
                     height: parent.height
                     text: root.settings.showChannel&enable? "D"+(control.channel+index) : ""
-                    color: iconColor
+                    color: buttonTextColor
                     font.pixelSize: height*0.3
                 }
                 DropArea{
@@ -77,12 +75,10 @@ Item {
                     Connections{
                         onEntered:{
                             icon.icon.height = height*0.9
-                            //iconDpad.icon.source = dPadIcon
                             WS.push(control.channel+index)
                         }
                         onExited:{
                             icon.icon.height = height*0.5
-                            //iconDpad.icon.source = "qrc:/qt/qml/content/icons/dpad.png"
                             WS.release(control.channel+index)
                         }
                     }
@@ -92,14 +88,12 @@ Item {
                     onPressed:{
                         if(enable){
                             icon.icon.height = height*0.9
-                            //iconDpad.icon.source = dPadIcon
                             WS.push(control.channel+index)
                         }
                     }
                     onReleased:{
                         if(enable){
                             icon.icon.height = height*0.5
-                            //iconDpad.icon.source = "qrc:/qt/qml/content/icons/dpad.png"
                             WS.release(control.channel+index)
                         }
                     }
@@ -147,9 +141,9 @@ Item {
             width: parent.width
             height: width
             radius: width/2
-            color: mouseArea.pressed ? Qt.alpha(btnColor,0.7):Qt.darker(btnColor,1.6)
-            border.color: btnColor
-            border.width: 2
+            color: mouseArea.pressed ? buttonCheckedColor:buttonColor
+            border.width: height*0.02
+            border.color: buttonCheckedColor
 
             Drag.active: mouseArea.drag.active
 
@@ -160,8 +154,13 @@ Item {
                 id:iconDpad
                 anchors.fill: parent
                 icon.height: height*0.6
-                icon.color: iconColor
+                icon.color: buttonTextColor
                 icon.source: "qrc:/qt/qml/content/icons/yuan.png"
+            }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                }
             }
         }
     }
@@ -171,7 +170,7 @@ Item {
         width: height
         anchors.top : dpadBackground.bottom
         icon.source:  "qrc:/qt/qml/content/icons/fangda.png"
-        icon.color: iconColor
+        icon.color: buttonTextColor
         channel: control.channel+9
     }
     MyRoundButton{
@@ -180,7 +179,7 @@ Item {
         anchors.top : dpadBackground.bottom
         anchors.right: dpadBackground.right
         icon.source:  "qrc:/qt/qml/content/icons/suoxiao.png"
-        icon.color: iconColor
+        icon.color: buttonTextColor
         channel: control.channel+10
     }
 }

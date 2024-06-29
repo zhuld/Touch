@@ -17,7 +17,7 @@ Item {
             height: parent.height*0.3
             horizontalAlignment: Text.AlignLeft
             font.pixelSize: height*0.25
-            color: backgroundColor
+            color: textColor
         }
         Text {
             id: timerText
@@ -25,7 +25,7 @@ Item {
             height: parent.height*0.5
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height*0.3
-            color: backgroundColor
+            color: textColor
             Timer{
                 id:timer
                 interval: 1000
@@ -46,13 +46,12 @@ Item {
             height: parent.height*0.2
             horizontalAlignment: Text.AlignRight
             font.pixelSize: height*0.4
-            color: backgroundColor
+            color: textColor
         }
     }
     Rectangle{
         id: socketStatusProgress
         property real socketValue: 1
-        //anchors.bottom: parent.bottom
         y:parent.height -3
         width: parent.width*socketValue
         height: 3

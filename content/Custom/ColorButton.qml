@@ -3,9 +3,6 @@ import QtQuick.Controls
 
 Button {
     id:control
-    property color btnColor: "steelblue"
-    property color borderColor: "steelblue"
-    property color textColor: "whitesmoke"
     property real btnRadius: 0
 
     implicitHeight: parent.height
@@ -17,16 +14,16 @@ Button {
         width: parent.width
         height: parent.height
         id: rect
-        border.color: control.down | control.checked  ?  Qt.darker(control.borderColor, 2):Qt.lighter(control.borderColor, 1.1)
+        border.color:buttonCheckedColor
         border.width: 2
-        color: control.down | control.checked?  btnColor: control.hovered?  Qt.darker(btnColor, 2):"transparent"
+        color: control.down | control.checked?  buttonCheckedColor:buttonColor
         radius: btnRadius
     }
 
     contentItem: Text {
         text: control.text
-        font.pixelSize: control.height*0.35
-        color: control.down | control.checked? Qt.lighter(control.textColor, 1.4) :Qt.darker(control.textColor, 1.2)
+        font.pixelSize: control.height*0.4
+        color: buttonTextColor
         wrapMode: Text.Wrap
         horizontalAlignment : Text.AlignHCenter
         verticalAlignment : Text.AlignVCenter

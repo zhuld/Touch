@@ -16,6 +16,8 @@ Item {
     property int channel
     property int volume : 0
 
+    property bool input: true
+
     Slider{
         id:slider
         height: parent.height*0.95
@@ -28,26 +30,27 @@ Item {
         stepSize: 1/(maxVolume-miniVolume)
         snapMode: Slider.SnapAlways
 
-        value: ((root.analog[control.channel])/(maxVolume- miniVolume))
+        //value: ((root.analog[control.channel])/(maxVolume- miniVolume))
 
         enabled: !root.digital[control.muteChannel]
         opacity: enabled? 1 : 0.8
 
         handle: Rectangle{
+            id:handle
             width: parent.width*0.3
             height: parent.width*0.6
             anchors.horizontalCenter: parent.horizontalCenter
             y:parent.visualPosition*(parent.availableHeight-height)
             gradient: Gradient {
-                GradientStop { position: 0.0; color: "#57111B" }
-                GradientStop { position: 0.1; color: "#A598CF" }
-                GradientStop { position: 0.2; color: "#682632" }
-                GradientStop { position: 0.48; color: "#8F4E69" }
-                GradientStop { position: 0.49; color: "#FFFFFF" }
-                GradientStop { position: 0.51; color: "#FFFFFF" }
-                GradientStop { position: 0.52; color: "#885E7E" }
-                GradientStop { position: 0.90; color: "#8F6C94" }
-                GradientStop { position: 1.0; color: "#57111B" }
+                GradientStop { position: 0.0; color: input? "#07111B": "#57111B" }
+                GradientStop { position: 0.1; color: input? "#5598CF": "#A598CF" }
+                GradientStop { position: 0.2; color: input? "#182632": "#682632" }
+                GradientStop { position: 0.45; color: input? "#2F4E69": "#8F4E69" }
+                //GradientStop { position: 0.49; color: input? "#FFFFFF": "#FFFFFF" }
+                GradientStop { position: 0.5; color: input? "#FFFFFF": "#FFFFFF" }
+                GradientStop { position: 0.55; color: input? "#385E7E": "#885E7E" }
+                GradientStop { position: 0.90; color: input? "#3F6C94": "#8F6C94" }
+                GradientStop { position: 1.0; color: input? "#07111B": "#57111B" }
             }
             radius: width*0.2
             Behavior on y{
@@ -56,34 +59,30 @@ Item {
                     easing.type: Easing.OutBack
                     duration: 500}
             }
-            opacity: slider.pressed? 0.6:1
-            Behavior on opacity {
-                NumberAnimation{
-                    duration: 200
-                }
-            }
+            z:1
         }
-
         background: Rectangle {
-            //anchors.centerIn: parent
             implicitWidth: 4
             implicitHeight: 200
             height: parent.availableHeight -parent.handle.height+2
             width: parent.width*0.1
             y: parent.handle.height/2-1
             anchors.horizontalCenter: parent.horizontalCenter
-            //radius: width*0.5
             gradient: Gradient {
-                //orientation: Gradient.Horizontal
                 GradientStop { position: 1; color: buttonCheckedColor}
                 GradientStop { position: maxVolume/(maxVolume- miniVolume); color: "yellow" }
                 GradientStop { position: 0; color: "red"}
             }
+            opacity: 0.9
             Rectangle {
                 height: slider.visualPosition * parent.height
                 width: parent.width
-                //radius: parent.radius
-                color:backgroundColor
+                gradient: Gradient {
+                    orientation: Qt.Horizontal
+                    GradientStop { position: 0; color: Qt.darker(backgroundColor,1.2)}
+                    GradientStop { position: 0.2; color: backgroundColor}
+                    GradientStop { position: 1; color: backgroundColor}
+                }
             }
         }
 
@@ -92,46 +91,45 @@ Item {
             WS.level(control.channel, volume)
         }
 
-
         Repeater{
             id:repeater
-            model: (maxVolume-miniVolume)/5+1
+            model: (maxVolume-miniVolume)+1
             Item{
                 anchors.fill: parent
-                Shape{ //刻度线
+                Shape{ //刻度线左
                     anchors.fill: parent
                     ShapePath{
-                        strokeColor: (-5*index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
-                        strokeWidth: 2
-                        startX: parent.width*0.3
-                        startY: parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*5*index
+                        strokeColor: (-index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
+                        strokeWidth: (Math.floor(index/5)*5 === index )? 2:1
+                        startX: (Math.floor(index/5)*5 === index )? parent.width*0.2 : parent.width*0.3
+                        startY: parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*index
                         PathLine{
                             x:parent.width*0.4
-                            y:parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*5*index
+                            y:parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*index
                         }
                     }
                 }
-                Shape{ //刻度线
+                Shape{ //刻度线右
                     anchors.fill: parent
                     ShapePath{
-                        strokeColor: (-5*index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
-                        strokeWidth: 2
+                        strokeColor: (-index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
+                        strokeWidth: (Math.floor(index/5)*5 === index )? 2:1
                         startX: parent.width*0.6
-                        startY: parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*5*index
+                        startY: parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*index
                         PathLine{
-                            x:parent.width*0.9
-                            y:parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*5*index
+                            x:(Math.floor(index/5)*5 === index )? parent.width*0.9 : parent.width*0.7
+                            y:parent.handle.height/2+(parent.availableHeight-parent.handle.height)/(maxVolume-miniVolume)*index
                         }
                     }
                 }
                 Text {
-                    text: -5*index+maxVolume
+                    text: (Math.floor(index/5)*5 === index )? -index+maxVolume : ""
                     width: parent.parent.width*0.3
                     height: parent.parent.handle.height
                     horizontalAlignment: Text.AlignRight
-                    x: -parent.width*0.1
-                    y: (parent.parent.availableHeight - parent.parent.handle.height)/(maxVolume-miniVolume)*5*index
-                    color: (-5*index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
+                    x: -parent.width*0.15
+                    y: (parent.parent.availableHeight - parent.parent.handle.height)/(maxVolume-miniVolume)*index
+                    color: (-index+maxVolume ) <= 0 ? volumeBlueColor:volumeRedColor
                     font.pixelSize: height*0.3
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -156,5 +154,5 @@ Item {
         color: buttonTextColor
         font.pixelSize: height*0.3
     }
+    Component.onCompleted: slider.value = ((root.analog[control.channel])/(maxVolume- miniVolume))
 }
-
