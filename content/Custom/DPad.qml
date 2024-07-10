@@ -39,7 +39,7 @@ Item {
                 centerRadius: shapeCircle.width
                 focalX: shapeCircle.width/2 + pad.x
                 focalY: shapeCircle.height/2 + pad.y
-                focalRadius: shapeCircle.width/10 //Math.abs(pad.x)/2 + Math.abs(pad.y)/2
+                focalRadius: shapeCircle.width/10
                 GradientStop {
                     position: 0
                     color: mouseArea.pressed ? buttonCheckedColor:buttonColor
