@@ -23,7 +23,7 @@ Item {
                 }
             }
             GradientStop {
-                position: 0.4; color: control.checked? lightColor :buttonColor
+                position: 0.74; color: control.checked? buttonCheckedColor :buttonColor
                 Behavior on color{
                     ColorAnimation {
                         duration: 300
@@ -31,7 +31,15 @@ Item {
                 }
             }
             GradientStop {
-                position: 0.0; color: control.checked? lightColor :buttonColor
+                position: 0.73; color: control.checked? lightColor :buttonColor
+                Behavior on color{
+                    ColorAnimation {
+                        duration: 300
+                    }
+                }
+            }
+            GradientStop {
+                position: 0; color: control.checked? Qt.alpha(lightColor , 0.2) :buttonColor
                 Behavior on color{
                     ColorAnimation {
                         duration: 300

@@ -15,7 +15,6 @@ Item {
 
         width: parent.width
         height: parent.height
-
         anchors.centerIn: parent
 
         drag.target: dragButton
@@ -30,7 +29,6 @@ Item {
             dragButton.Drag.hotSpot.y = mouseY
             control.z = 1
         }
-
         ParallelAnimation{
             id: dragButtonAnimation
             NumberAnimation {
@@ -84,7 +82,6 @@ Item {
 
             border.width: height*0.02
             border.color: Qt.darker(btnColor,1.4)
-            //color: mouseArea.pressed ?  Qt.darker(btnColor,1.4) : btnColor
             gradient: Gradient {
                 GradientStop {
                     position: 1.0; color:  mouseArea.pressed ? Qt.darker(btnColor,1.6) : btnColor
@@ -98,10 +95,8 @@ Item {
                     position: 0; color: Qt.alpha(btnColor,0.4)
                 }
             }
-
             Drag.keys: [ input ]
             Drag.active: mouseArea.drag.active
-
             Behavior on color {
                 ColorAnimation {
                     duration: 200

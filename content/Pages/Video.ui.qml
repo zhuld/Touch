@@ -11,7 +11,6 @@ Item {
         id:row
         anchors.fill: parent
         spacing: width*0.02
-
         Category{
             widthRatio: 0.35
             Column{

@@ -34,7 +34,7 @@ Rectangle {
         id: textOutput
         height: parent.height*0.5
         font.pixelSize: height*0.5
-        x: parent.width*0.1
+        x: outputText.width
         verticalAlignment: Text.AlignVCenter
         text: "Output"
         color: buttonTextColor
@@ -55,7 +55,7 @@ Rectangle {
         id:textInput
         height: parent.height*0.5
         font.pixelSize: height*0.5
-        x:parent.width*0.9-width
+        x:parent.width-width-inputText.width
         anchors.margins: height*0.1
         anchors.bottom: parent.bottom
         color: buttonTextColor

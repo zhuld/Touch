@@ -3,7 +3,6 @@ import QtQuick
 Item{
     id: control
     property real widthRatio: 0.5
-
     height: parent.height
     width: (parent.width+parent.spacing)*widthRatio-parent.spacing
     Rectangle {
@@ -20,7 +19,15 @@ Item{
                 }
             }
             GradientStop {
-                position: 0.0; color: Qt.alpha(catagoryColor,0.8)
+                position: 0.1; color: catagoryColor
+                Behavior on color{
+                    ColorAnimation {
+                        duration: 200
+                    }
+                }
+            }
+            GradientStop {
+                position: 0.0; color: catagoryColor
                 Behavior on color{
                     ColorAnimation {
                         duration: 200
