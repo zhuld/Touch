@@ -73,16 +73,31 @@ Item {
             Text {
                 id: inputText
                 anchors.fill: parent
-                anchors.margins: height*0.3
+                anchors.margins: height*0.2
                 text: input
-                font.pixelSize: height*0.4
+                font.pixelSize: height
                 color: textColor
                 horizontalAlignment: Text.AlignRight
+                font.bold: true
+                opacity: 0.1
             }
 
             border.width: height*0.02
             border.color: Qt.darker(btnColor,1.4)
-            color: mouseArea.pressed ?  Qt.darker(btnColor,1.4) : btnColor
+            //color: mouseArea.pressed ?  Qt.darker(btnColor,1.4) : btnColor
+            gradient: Gradient {
+                GradientStop {
+                    position: 1.0; color:  mouseArea.pressed ? Qt.darker(btnColor,1.6) : btnColor
+                    Behavior on color{
+                        ColorAnimation {
+                            duration: 300
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0; color: Qt.alpha(btnColor,0.4)
+                }
+            }
 
             Drag.keys: [ input ]
             Drag.active: mouseArea.drag.active

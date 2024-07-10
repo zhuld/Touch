@@ -16,6 +16,7 @@ Button {
     icon.color:  buttonTextColor
     font.pixelSize: height*0.35
     contentItem: IconLabel {
+        anchors.fill: parent
         text: control.text
         font: control.font
         icon: control.icon
@@ -35,8 +36,6 @@ Button {
                 duration: 200
             }
         }
-        border.width: height*0.02
-        border.color: buttonCheckedColor
     }
     Text {
         id: channel

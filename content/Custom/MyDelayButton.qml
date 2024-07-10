@@ -18,13 +18,14 @@ DelayButton {
     icon.color:  buttonTextColor
     font.pixelSize: height*0.4
     contentItem: IconLabel {
+        anchors.fill: parent
         text: control.text
         font: control.font
         icon: control.icon
         opacity: enabled ? 1.0 : 0.3
         color: buttonTextColor
         display: AbstractButton.TextBesideIcon
-        spacing: width*0.1
+        spacing: width*0.05
     }
     background: Rectangle {
         anchors.fill: parent

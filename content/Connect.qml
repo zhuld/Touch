@@ -14,30 +14,39 @@ Item {
             id: textLogo
             text: qsTr(config.logoName)
             width: parent.width
-            height: parent.height*0.3
+            height: parent.height*0.2
             horizontalAlignment: Text.AlignLeft
-            font.pixelSize: height*0.25
+            font.pixelSize: height*0.4
             color: textColor
         }
         Text {
-            id: timerText
+            id: timeText
             width: parent.width
-            height: parent.height*0.5
+            height: parent.height*0.4
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height*0.3
+            font.pixelSize: height*0.7
             color: textColor
-            Timer{
-                id:timer
-                interval: 1000
-                repeat: true
-                running: true
-                triggeredOnStart: true
-            }
-            Connections{
-                target: timer
-                onTriggered: {
-                    timerText.text = Qt.formatDateTime(new Date(), "yyyy-MM-dd \n hh:mm:ss")
-                }
+        }
+        Text {
+            id: dateText
+            width: parent.width
+            height: parent.height*0.2
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: height*0.45
+            color: textColor
+        }
+        Timer{
+            id:timer
+            interval: 1000
+            repeat: true
+            running: true
+            triggeredOnStart: true
+        }
+        Connections{
+            target: timer
+            onTriggered: {
+                dateText.text = Qt.formatDate(new Date(), "yyyy-MM-dd ddd")
+                timeText.text = Qt.formatTime(new Date(), "hh:mm")
             }
         }
         Text {

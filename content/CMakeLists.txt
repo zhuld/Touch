@@ -29,10 +29,11 @@ qt6_add_qml_module(content
         Custom/VolumeBar.qml
         Custom/MyTabButton.qml
         Custom/MySwitch.qml
-        Custom/Light.qml
+        Custom/LightSwitch.qml
         Custom/Category.qml
         Custom/Background.qml
         Custom/ColorSwitch.qml
+        Custom/LightButton.qml
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         ws.js
@@ -46,4 +47,5 @@ qt6_add_qml_module(content
         RESOURCES icons/jieneng.png icons/quanguan.png icons/quankai.png
         RESOURCES icons/dengju.png
         RESOURCES images/shiyi.jpg
+        RESOURCES icons/shexiangji.png
 )

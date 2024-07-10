@@ -1,10 +1,9 @@
 import QtQuick
 
-//import Qt5Compat.GraphicalEffects
-
 Item{
     id: control
-    property real  widthRatio: 0.5
+    property real widthRatio: 0.5
+
     height: parent.height
     width: (parent.width+parent.spacing)*widthRatio-parent.spacing
     Rectangle {
@@ -13,7 +12,7 @@ Item{
         width: parent.width
         gradient: Gradient {
             GradientStop {
-                position: 1.0; color: Qt.alpha(catagoryColor,0.6)
+                position: 1.0; color: Qt.alpha(catagoryColor,0.2)
                 Behavior on color{
                     ColorAnimation {
                         duration: 200
@@ -21,7 +20,7 @@ Item{
                 }
             }
             GradientStop {
-                position: 0.0; color: catagoryColor
+                position: 0.0; color: Qt.alpha(catagoryColor,0.8)
                 Behavior on color{
                     ColorAnimation {
                         duration: 200
@@ -29,14 +28,8 @@ Item{
                 }
             }
         }
-        radius: height*0.02
+        radius: height*0.03
+        border.color:buttonCheckedColor
+        border.width: parent.height*0.002
     }
-    // DropShadow {
-    //     anchors.fill: rectangle
-    //     horizontalOffset: rectangle.radius/2
-    //     verticalOffset: rectangle.radius/2
-    //     radius:  rectangle.radius
-    //     color: catagoryColor
-    //     source: rectangle
-    // }
 }

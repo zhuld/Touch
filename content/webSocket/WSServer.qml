@@ -12,6 +12,7 @@ WebSocketServer {
     onClientConnected: (webSocket) =>{
                            webSocket.onTextMessageReceived.connect((message)=> {
                                                                        var msg
+                                                                       //root.titleSend.text = message
                                                                        //console.info("Server","Text Received:", message);
                                                                        if (message.indexOf("PUSH[") === 0){
                                                                            msg = message.replace("PUSH","ON")

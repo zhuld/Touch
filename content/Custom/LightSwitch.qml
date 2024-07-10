@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Controls
 
+import "qrc:/qt/qml/content/ws.js" as WS
+
 Item {
     id: control
     property int channel
@@ -63,21 +65,58 @@ Item {
         anchors.bottom: switchbtn.top
         horizontalAlignment: Text.AlignHCenter
     }
-    MySwitch{
+    Rectangle {
         id:switchbtn
         height: parent.height*0.2
-        channel: control.channel
+        width: height*2
+        radius: height*0.5
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: control.bottom
+        color: control.checked ? buttonCheckedColor:buttonColor
+        border.color: backgroundColor
+
+        Rectangle {
+            x: control.checked ? parent.width - parent.height : parent.height - height
+            width: parent.height*0.8
+            height: width
+            radius: height*0.5
+            color: buttonTextColor
+            anchors.verticalCenter: parent.verticalCenter
+            Text {
+                anchors.centerIn: parent
+                text: "✓"
+                color: buttonCheckedColor
+                font.pixelSize: parent.height*0.8
+                opacity: checked ? 1:0
+                Behavior on opacity {
+                    NumberAnimation{
+                        duration: 300
+                    }
+                }
+            }
+            Behavior on x {
+                NumberAnimation{
+                    easing.type: Easing.InOutCubic;
+                    duration: 300}
+            }
+        }
+        Behavior on color {
+            ColorAnimation{
+                duration: 300}
+        }
     }
-
-    checked: root.digital[control.channel]?root.digital[control.channel]:0
-
     Text {
         id: channel
-        height: switchbtn.height
+        height: parent.height
         text: root.settings.showChannel? "D"+control.channel : ""
-        color: textColor
-        font.pixelSize: height
+        color: buttonTextColor
+        font.pixelSize: height*0.1
+        anchors.left: parent.left
     }
+    MouseArea{
+        anchors.fill: parent
+        onPressed: WS.push(control.channel)
+        onReleased: WS.release(control.channel)
+    }
+    checked: root.digital[control.channel]?root.digital[control.channel]:0
 }

@@ -10,7 +10,6 @@ WebSocket {
     signal wsTextReceived(var message)
 
     onTextMessageReceived: (message)=> {
-                               //console.info("Client","Text Received:", message)
                                wsTextReceived(message)
                            }
     onBinaryMessageReceived: (message)=> {

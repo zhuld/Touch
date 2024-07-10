@@ -17,16 +17,7 @@ Item {
         radius: height*0.5
         color: control.checked ? buttonCheckedColor:buttonColor
         border.color: backgroundColor
-        // Text {
-        //     width: parent.width*0.7
-        //     height: parent.height
-        //     horizontalAlignment: control.checked ? Text.AlignLeft : Text.AlignRight
-        //     verticalAlignment: Text.AlignVCenter
-        //     anchors.horizontalCenter: parent.horizontalCenter
-        //     //text: control.checked ? "开":"关"
-        //     font.pixelSize: parent.height*0.6
-        //     color: buttonTextColor
-        // }
+
         Rectangle {
             x: control.checked ? parent.width - parent.height : parent.height - height
             width: parent.height*0.8
@@ -42,19 +33,19 @@ Item {
                 opacity: checked ? 1:0
                 Behavior on opacity {
                     NumberAnimation{
-                        duration: 600
+                        duration: 300
                     }
                 }
             }
             Behavior on x {
                 NumberAnimation{
                     easing.type: Easing.InOutCubic;
-                    duration: 500}
+                    duration: 300}
             }
         }
         Behavior on color {
             ColorAnimation{
-                duration: 500}
+                duration: 300}
         }
     }
     checked: root.digital[control.channel]?root.digital[control.channel]:0
@@ -63,8 +54,8 @@ Item {
         height: parent.height
         text: root.settings.showChannel? "D"+control.channel : ""
         color: buttonTextColor
-        font.pixelSize: height*0.3
-        z:1
+        font.pixelSize: height*0.5
+        anchors.right: parent.right
     }
     MouseArea{
         anchors.fill: parent

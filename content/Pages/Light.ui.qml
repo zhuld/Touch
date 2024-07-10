@@ -59,9 +59,9 @@ Item {
                 Grid{
                     id:grid
                     width: parent.width
-                    height: parent.height*0.80
+                    height: parent.height*0.85
                     columns: 3
-                    rowSpacing: height*0.1
+                    rowSpacing: height*0.02
                     columnSpacing: rowSpacing
                     anchors.margins: rowSpacing
                     Repeater{
@@ -74,13 +74,13 @@ Item {
                             ListElement{name: "灯带"}
                             ListElement{name: "其他"}
                         }
-                        delegate: Light {
+                        delegate: LightButton{
                             required property int index
                             required property string name
                             text:name
                             channel: 50+index
-                            width: (parent.width+parent.columnSpacing)/parent.columns-parent.columnSpacing
-                            height: (parent.height+parent.rowSpacing)/lightList.count*parent.columns-parent.rowSpacing
+                            width: (grid.width+grid.columnSpacing)/grid.columns-grid.columnSpacing
+                            height: (grid.height+grid.rowSpacing)/lightList.count*grid.columns-grid.rowSpacing
                         }
                     }
                 }

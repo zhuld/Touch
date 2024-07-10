@@ -20,7 +20,7 @@ Item {
 
     Slider{
         id:slider
-        height: parent.height*0.95
+        height: parent.height*0.94
         width: height*0.25
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -45,10 +45,9 @@ Item {
                 GradientStop { position: 0.0; color: input? "#07111B": "#57111B" }
                 GradientStop { position: 0.1; color: input? "#5598CF": "#A598CF" }
                 GradientStop { position: 0.2; color: input? "#182632": "#682632" }
-                GradientStop { position: 0.45; color: input? "#2F4E69": "#8F4E69" }
-                //GradientStop { position: 0.49; color: input? "#FFFFFF": "#FFFFFF" }
-                GradientStop { position: 0.5; color: input? "#FFFFFF": "#FFFFFF" }
-                GradientStop { position: 0.55; color: input? "#385E7E": "#885E7E" }
+                GradientStop { position: 0.47; color: input? "#2F4E69": "#8F4E69" }
+                GradientStop { position: 0.49; color: input? "#A8C8E8": "#A8C8E8" }
+                GradientStop { position: 0.51; color: input? "#385E7E": "#885E7E" }
                 GradientStop { position: 0.90; color: input? "#3F6C94": "#8F6C94" }
                 GradientStop { position: 1.0; color: input? "#07111B": "#57111B" }
             }
@@ -56,8 +55,8 @@ Item {
             Behavior on y{
                 enabled: !slider.pressed
                 NumberAnimation{
-                    easing.type: Easing.OutBack
-                    duration: 500}
+                    easing.type: Easing.OutCubic
+                    duration: 300}
             }
             z:1
         }
@@ -145,6 +144,7 @@ Item {
         icon.source: root.digital[control.muteChannel]? "qrc:/qt/qml/content/icons/mute.png":"qrc:/qt/qml/content/icons/unmute.png"
         icon.color: root.digital[control.muteChannel]? volumeRedColor:buttonTextColor
         channel: muteChannel
+        //font.pixelSize: height*0.5
         text: root.digital[control.muteChannel]? "静音" : root.analog[control.channel]? root.analog[control.channel]+miniVolume : miniVolume
     }
     Text {

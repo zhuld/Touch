@@ -1,5 +1,8 @@
 import QtQuick
 import QtQuick.Controls
+
+import QtQuick.Shapes
+
 import "qrc:/qt/qml/content/ws.js" as WS
 
 Item {
@@ -8,15 +11,48 @@ Item {
     property int channel
     implicitWidth: 100
     implicitHeight: 130
-    Rectangle{
+
+    Shape{
+        id:shapeCircle
         width: parent.width
         height: width
-        color: buttonColor
-        border.color: buttonCheckedColor
-        border.width: 2
-        radius: width/2
+        ShapePath{
+            strokeColor: buttonCheckedColor
+            strokeWidth: parent.width*0.005
+            startX: shapeCircle.width/2
+            startY: 0
+            PathArc{
+                x: shapeCircle.width/2
+                y: shapeCircle.height
+                radiusX: shapeCircle.width/2
+                radiusY: shapeCircle.height/2
+            }
+            PathArc{
+                x: shapeCircle.width/2
+                y: 0
+                radiusX: shapeCircle.width/2
+                radiusY: shapeCircle.height/2
+            }
+            fillGradient: RadialGradient {
+                centerX: shapeCircle.width/2 - pad.x
+                centerY: shapeCircle.height/2 - pad.y
+                centerRadius: shapeCircle.width
+                focalX: shapeCircle.width/2 + pad.x
+                focalY: shapeCircle.height/2 + pad.y
+                focalRadius: shapeCircle.width/10 //Math.abs(pad.x)/2 + Math.abs(pad.y)/2
+                GradientStop {
+                    position: 0
+                    color: mouseArea.pressed ? buttonCheckedColor:buttonColor
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 500
+                        }
+                    }
+                }
+                GradientStop { position: 0.2; color: "transparent" }
+            }
+        }
     }
-
     Grid{
         id:dpadBackground
         width: parent.width
@@ -43,7 +79,6 @@ Item {
                 required property int index
                 required property string dPadIcon
                 required property string iconUrl
-
                 width: (parent.width+parent.spacing)/parent.columns-parent.spacing
                 height:  (parent.height+parent.spacing)/dpadModel.count*parent.columns-parent.spacing
                 color: "transparent"
@@ -60,7 +95,6 @@ Item {
                         }
                     }
                 }
-
                 Text {
                     id: channel
                     height: parent.height
@@ -104,14 +138,10 @@ Item {
 
     MouseArea {
         id: mouseArea
-
         width: dpadBackground.width*0.3
         height: width
-
         anchors.centerIn: dpadBackground
-
         onReleased: dragButtonAnimation.start()
-
         ParallelAnimation{
             id: dragButtonAnimation
             NumberAnimation {
@@ -129,42 +159,22 @@ Item {
                 easing.type: Easing.OutBack
             }
         }
-
         drag.target: pad
-        drag.minimumX: -dpadBackground.width/2+width/2
-        drag.maximumX: dpadBackground.width/2-width/2
-        drag.minimumY: -dpadBackground.height/2+height/2
-        drag.maximumY: dpadBackground.height/2-height/2
-
+        drag.minimumX: -dpadBackground.width/2+width*0.7
+        drag.maximumX: dpadBackground.width/2-width*0.7
+        drag.minimumY: -dpadBackground.height/2+height*0.7
+        drag.maximumY: dpadBackground.height/2-height*0.7
         Rectangle{
             id:pad
             width: parent.width
             height: width
             radius: width/2
-            color: mouseArea.pressed ? buttonCheckedColor:buttonColor
-            border.width: height*0.02
-            border.color: buttonCheckedColor
-
+            color:"transparent"
             Drag.active: mouseArea.drag.active
-
             Drag.hotSpot.x: width/2
             Drag.hotSpot.y: height/2
-
-            IconLabel {
-                id:iconDpad
-                anchors.fill: parent
-                icon.height: height*0.6
-                icon.color: buttonTextColor
-                icon.source: "qrc:/qt/qml/content/icons/yuan.png"
-            }
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
         }
     }
-
     MyRoundButton{
         height: dpadBackground.height*0.3
         width: height

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Shapes
 
 Item {
     id:control
@@ -8,20 +9,24 @@ Item {
     Text {
         id:labelText
         text: qsTr("Label")
-        width: parent.width
-        height: parent.height*0.9
-        font.pixelSize: height*0.6
-        verticalAlignment: Text.AlignVCenter
+        anchors.fill: parent
+        font.pixelSize: height*0.5
+        verticalAlignment: Text.AlignTop
         horizontalAlignment: Text.AlignHCenter
         color: textColor
     }
-
-    Rectangle{
-        id:labelLine
-        width: parent.width
-        height: parent.height*0.02
-        color: textColor
-        anchors.bottom: parent.bottom
+    Shape{
+        anchors.fill: parent
+        ShapePath{
+            strokeColor: textColor
+            strokeStyle: ShapePath.SolidLine
+            strokeWidth: parent.height*0.003
+            startX: 0
+            startY: control.height
+            PathLine{
+                x:control.width
+                y:control.height
+            }
+        }
     }
-
 }

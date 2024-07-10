@@ -13,7 +13,7 @@ Item {
         spacing: width*0.02
 
         Category{
-            widthRatio: 0.4
+            widthRatio: 0.35
             Column{
                 anchors.fill: parent
                 anchors.margins: item.width*0.02
@@ -43,7 +43,7 @@ Item {
             }
         }
         Category{
-            widthRatio: 0.6
+            widthRatio: 0.65
             Column{
                 anchors.fill: parent
                 anchors.margins: item.width*0.02
@@ -63,12 +63,12 @@ Item {
                             id: inputModel
                             ListElement { name: qsTr("外网电脑");  inputChannel: 1 ; bgColor:"deepskyblue" ; iconSource:"qrc:/qt/qml/content/icons/zhuji.png"}
                             ListElement { name: qsTr("内网电脑");  inputChannel: 2 ; bgColor:"darkorange"; iconSource:"qrc:/qt/qml/content/icons/zhuji.png"}
-                            ListElement { name: qsTr("视频会议");  inputChannel: 3 ; bgColor:"forestgreen"; iconSource:"qrc:/qt/qml/content/icons/shipinhuiyi.png"}
+                            ListElement { name: qsTr("院内视频会议");  inputChannel: 3 ; bgColor:"forestgreen"; iconSource:"qrc:/qt/qml/content/icons/shipinhuiyi.png"}
                             ListElement { name: qsTr("无线投屏");  inputChannel: 4 ; bgColor:"darkviolet"; iconSource:"qrc:/qt/qml/content/icons/wuxiantouping.png"}
-                            ListElement { name: qsTr("预留输入");  inputChannel: 5 ; bgColor:"firebrick"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
+                            ListElement { name: qsTr("摄像机画面");  inputChannel: 5 ; bgColor:"firebrick"; iconSource:"qrc:/qt/qml/content/icons/shexiangji.png"}
                             ListElement { name: qsTr("预留输入");  inputChannel: 6 ; bgColor:"grey"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
                             ListElement { name: qsTr("预留输入");  inputChannel: 7 ; bgColor:"#3B48A1"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
-                            ListElement { name: qsTr("摄像机");  inputChannel: 8 ; bgColor:"olive"; iconSource:"qrc:/qt/qml/content/icons/shipinhuiyi.png"}
+                            ListElement { name: qsTr("预留输入");  inputChannel: 8 ; bgColor:"olive"; iconSource:"qrc:/qt/qml/content/icons/HDMIjiekou.png"}
                         }
                         delegate: InputButton {
                             required property string name
@@ -85,6 +85,7 @@ Item {
                             input: inputChannel
                             icon.source: iconSource
                         }
+
                     }
                 }
                 Text {

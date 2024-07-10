@@ -87,6 +87,7 @@ Item {
                 }
             }
         }
+
         Category{
             widthRatio: 0.2
             Column{
@@ -107,6 +108,7 @@ Item {
                     maxVolume: 0
                     input: false
                 }
+
             }
         }
     }

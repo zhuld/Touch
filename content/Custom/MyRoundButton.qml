@@ -13,6 +13,8 @@ RoundButton {
     icon.color:  buttonTextColor
 
     contentItem: IconLabel {
+        anchors.fill: parent
+        anchors.centerIn: parent
         icon: control.icon
         opacity: enabled ? 1.0 : 0.3
         color: buttonTextColor

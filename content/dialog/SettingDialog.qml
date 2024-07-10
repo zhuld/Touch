@@ -66,7 +66,7 @@ Dialog {
             ColorButton{
                 id:settingApply
                 width: parent.width*0.2
-                height: parent.height
+                height: parent.height*0.8
                 text: "应用"
                 font.pixelSize: height*0.4
                 onClicked: apply()
@@ -74,7 +74,7 @@ Dialog {
             ColorButton{
                 id:settingCancel
                 width: parent.width*0.2
-                height: parent.height
+                height: parent.height*0.8
                 text: "取消"
                 font.pixelSize: height*0.4
                 onClicked: rootSetting.reject()
@@ -82,7 +82,7 @@ Dialog {
             ColorButton{
                 id:settingOK
                 width: parent.width*0.2
-                height: parent.height
+                height: parent.height*0.8
                 text: "确定"
                 font.pixelSize: height*0.4
                 onClicked: rootSetting.accept()

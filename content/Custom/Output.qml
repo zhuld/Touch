@@ -13,75 +13,78 @@ Rectangle {
 
     readonly property var input: root.analog[output]
 
-    color: Qt.darker(buttonColor,1.4)
-    radius: height/10
-
-    Column{
-        id:column
-        anchors.fill: parent
-        spacing:height/40
-        Text {
-            id: textOutput
-            width: parent.width
-            height: parent.height*0.5
-            font.pixelSize: height*0.5
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            text: "Output"
-            color: buttonTextColor
-        }
-        IconLabel{
-            id:textInput
-            width: parent.width
-            height: parent.height*0.5 - parent.spacing
-            font.pixelSize: height*0.45
-            color: buttonTextColor
-            icon.height: height*0.4
-            icon.color: buttonTextColor
-            spacing: width*0.05
-        }
-    }
-    Shape{
-        anchors.fill: parent
-        ShapePath{
-            strokeColor: buttonColor
-            strokeStyle: ShapePath.SolidLine
-            strokeWidth: column.spacing
-            startX: 0
-            startY: column.height*0.5
-            PathLine{
-                x:column.width
-                y:column.height*0.5
+    gradient: Gradient {
+        GradientStop {
+            id:downColor
+            position: 1.0; color: buttonColor
+            Behavior on color{
+                ColorAnimation {
+                    duration: 300
+                }
             }
         }
+        GradientStop {
+            position: 0.3; color: Qt.darker(buttonColor,1.4)
+        }
+    }
+
+    radius: height/10
+
+    Text {
+        id: textOutput
+        height: parent.height*0.5
+        font.pixelSize: height*0.5
+        x: parent.width*0.1
+        verticalAlignment: Text.AlignVCenter
+        text: "Output"
+        color: buttonTextColor
+    }
+
+    Text {
+        id: outputText
+        height: parent.height
+        font.pixelSize: height*0.6
+        anchors.margins: height*0.1
+        anchors.left: parent.left
+        text: output
+        color: buttonTextColor
+        font.bold: true
+        opacity: 0.1
+    }
+    IconLabel{
+        id:textInput
+        height: parent.height*0.5
+        font.pixelSize: height*0.5
+        x:parent.width*0.9-width
+        anchors.margins: height*0.1
+        anchors.bottom: parent.bottom
+        color: buttonTextColor
+        icon.height: height*0.5
+        icon.color: buttonTextColor
+        spacing: width*0.05
+
+    }
+    Text {
+        id: inputText
+        height: parent.height*0.5
+        font.pixelSize: height
+        anchors.margins: height*0.1
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        text: input? input: ""
+        color: buttonTextColor
+        font.bold: true
+        opacity: 0.1
     }
     Text {
         id: channel
         height: parent.height
+        width: parent.width
+        horizontalAlignment: Text.AlignRight
         text: root.settings.showChannel? "A"+control.output : ""
         color: buttonTextColor
         font.pixelSize: height*0.3
     }
-    Text {
-        id: outputText
-        anchors.fill: parent
-        anchors.margins: height*0.1
-        text: output
-        font.pixelSize: height*0.3
-        color: buttonTextColor
-        horizontalAlignment: Text.AlignRight
-    }
-    Text {
-        id: inputText
-        anchors.fill: parent
-        anchors.margins: height*0.1
-        text: input? input:""
-        font.pixelSize: height*0.3
-        color: buttonTextColor
-        horizontalAlignment: Text.AlignRight
-        verticalAlignment: Text.AlignBottom
-    }
-
     DropArea{
         id:dropContainer
         anchors.fill: parent
@@ -112,12 +115,15 @@ Rectangle {
         }
     }
 
+    onWidthChanged: {
+        update(input)
+    }
+
     function update(inputChannel){
         if(inputChannel>0){
-            control.color = inputModel.get(inputChannel-1).bgColor
+            downColor.color = inputModel.get(inputChannel-1).bgColor
             textInput.text = inputModel.get(inputChannel-1).name
             textInput.icon.source = inputModel.get(inputChannel-1).iconSource
         }
     }
-
 }

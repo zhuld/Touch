@@ -11,8 +11,7 @@ Button {
     text: qsTr("Button")
 
     background:  Rectangle{
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         id: rect
         border.color:buttonCheckedColor
         border.width: 2
@@ -21,6 +20,7 @@ Button {
     }
 
     contentItem: Text {
+        anchors.fill: parent
         text: control.text
         font.pixelSize: control.height*0.4
         color: buttonTextColor

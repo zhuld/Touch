@@ -53,6 +53,7 @@ function checkMessage(message)
         var value
         var txt
 
+
         //ON[CHANNEL]
         if (msg.indexOf("ON[") === 0)
         {
@@ -63,6 +64,18 @@ function checkMessage(message)
                 var tmp1 = root.digital
                 tmp1[channel] = true
                 root.digital = tmp1
+            }
+        }
+        //PUSH[CHANNEL]
+        else if (msg.indexOf("PUSH[") === 0)
+        {
+            channel = parseInt(getBoundString(msg, "PUSH[", "]"), 10);
+
+            if (isNaN(channel) === false)
+            {
+                var tmp2 = root.digital
+                tmp2[channel] = true
+                root.digital = tmp2
             }
         }
         //OFF[CHANNEL]
@@ -77,12 +90,23 @@ function checkMessage(message)
                 root.digital = tmp2
             }
         }
+        //RELEASE[CHANNEL]
+        else if (msg.indexOf("RELEASE[") === 0)
+        {
+            channel = parseInt(getBoundString(msg, "RELEASE[", "]"), 10);
+
+            if (isNaN(channel) === false)
+            {
+                var tmp2 = root.digital
+                tmp2[channel] = false
+                root.digital = tmp2
+            }
+        }
         // LEVEL[CHANNEL,VALUE]
         else if (msg.indexOf("LEVEL[") === 0)
         {
             channel = parseInt(getBoundString(msg, "LEVEL[", ","), 10);
             value = parseInt(getBoundString(msg, ",", "]"), 10);
-
             var tmp3 = root.analog
             tmp3[channel] = value
             root.analog = tmp3
@@ -93,7 +117,6 @@ function checkMessage(message)
         {
             channel = parseInt(getBoundString(msg, "STRING[", ","), 10);
             txt = getBoundString_EndLastIndex(msg, ",", "]");
-
             var tmp4 = root.text
             tmp4[channel] = txt
             root.text = tmp4

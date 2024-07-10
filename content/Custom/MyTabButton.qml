@@ -3,12 +3,13 @@ import QtQuick.Controls
 
 TabButton {
     id: control
-    icon.width: height*0.5
-    icon.height: height*0.5
+    icon.width: height*0.4
+    icon.height: height*0.4
     icon.color:  buttonTextColor
     font.pixelSize: height*0.2
     anchors.margins: width*0.2
     contentItem: IconLabel {
+        anchors.fill: parent
         text: control.text
         font: control.font
         icon: control.icon
