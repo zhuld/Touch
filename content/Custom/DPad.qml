@@ -1,9 +1,7 @@
 import QtQuick
 import QtQuick.Controls
-
 import QtQuick.Shapes
 
-//import "qrc:/qt/qml/content/ws.js" as WS
 import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
 Item {
@@ -162,13 +160,11 @@ Item {
                             icon.icon.height = height * 0.9
                             cipClient.sendData(CrestronCIP.push(
                                                    control.channel + index))
-                            //WS.push(control.channel+index)
                         }
                         onExited: {
                             icon.icon.height = height * 0.5
                             cipClient.sendData(CrestronCIP.release(
                                                    control.channel + index))
-                            //WS.release(control.channel + index)
                         }
                     }
                 }

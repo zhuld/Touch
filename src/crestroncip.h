@@ -30,15 +30,11 @@ private slots:
     void onDisconnected();
     void onError(QAbstractSocket::SocketError socketError);
     void onStateChanged(QAbstractSocket::SocketState state);
-    void sendPing();  // 定时发送数据
 
 private:
     QTcpSocket *tcpSocket;
     QString currentHost;
     quint16 currentPort;
-
-    QTimer *timer;  // 定时器
-    QByteArray pingData;  // 定时发送的数据
 };
 
 #endif // CRESTRONCIP_H

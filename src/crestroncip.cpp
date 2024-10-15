@@ -4,8 +4,6 @@
 CrestronCIP::CrestronCIP(QObject *parent) : QObject(parent)
 {
     tcpSocket = new QTcpSocket(this);
-    timer = new QTimer(this);  // 初始化定时器
-    connect(timer, &QTimer::timeout, this, &CrestronCIP::sendPing);  // 定时器超时信号连接到发送函数
 
     connect(tcpSocket, &QTcpSocket::readyRead, this, &CrestronCIP::onReadyRead);
     connect(tcpSocket, &QTcpSocket::connected, this, &CrestronCIP::onConnected);
@@ -13,8 +11,6 @@ CrestronCIP::CrestronCIP(QObject *parent) : QObject(parent)
     connect(tcpSocket, &QTcpSocket::errorOccurred, this, &CrestronCIP::onError);
     connect(tcpSocket, &QTcpSocket::stateChanged, this, &CrestronCIP::onStateChanged);
 
-    // 设置默认定时发送的数据
-    pingData = QByteArray::fromHex("0D00020000");  // ping
 }
 
 void CrestronCIP::connectToServer(const QString &host, quint16 port)
@@ -37,7 +33,6 @@ void CrestronCIP::sendData(const QByteArray &data)
 void CrestronCIP::disconnectFromServer()
 {
     tcpSocket->disconnectFromHost();
-    timer->stop();  // 断开连接时停止定时发送
 }
 
 void CrestronCIP::onReadyRead()
@@ -49,10 +44,6 @@ void CrestronCIP::onReadyRead()
 void CrestronCIP::onConnected()
 {
     emit connected();
-    // 连接成功后自动开始定时发送数据，每隔15000毫秒发送一次
-    if (!timer->isActive()) {
-        timer->start(15000);  // 每15000毫秒发送一次数据
-    }
 }
 
 void CrestronCIP::onDisconnected()
@@ -69,11 +60,4 @@ void CrestronCIP::onError(QAbstractSocket::SocketError socketError)
 void CrestronCIP::onStateChanged(QAbstractSocket::SocketState state)
 {
     emit stateChanged(state);  // 发射自定义状态改变信号
-}
-
-void CrestronCIP::sendPing()
-{
-    if (tcpSocket->state() == QTcpSocket::ConnectedState) {
-        tcpSocket->write(pingData);  // 定时发送数据
-    }
 }

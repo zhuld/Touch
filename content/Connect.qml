@@ -21,7 +21,6 @@ Item {
             height: parent.height * 0.4
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.8
-            //font.family: "TP LCD"
             color: textColor
         }
         Text {
@@ -72,7 +71,6 @@ Item {
         Connections {
             target: socketAnimation
             onFinished: {
-                //wsClient.active = true
                 cipClient.connectToServer(settings.ipAddress, settings.ipPort)
                 socketStatusProgress.socketValue = 1
             }

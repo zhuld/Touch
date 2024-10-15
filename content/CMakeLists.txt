@@ -42,6 +42,5 @@ qt6_add_qml_module(content
         dialog/SettingDialog.qml
         dialog/MsgDialog.qml
         ws.js
-        Crestron.qml
         crestroncip.js
 )

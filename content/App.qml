@@ -2,26 +2,20 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 import QtQuick
 import QtQuick.Controls
-//import Touch
 import QtQuick.Shapes
 import QtWebSockets
 import QtQuick.Effects
-//import Qt5Compat.GraphicalEffects
 import Qt.labs.platform
 
 import "./dialog"
 import "./Pages"
 import "./Custom"
-//import "./webSocket"
-
-//import "qrc:/qt/qml/content/ws.js" as WS
 import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
 
     property alias pageLoader: pageLoader
-    //property alias wsClient: wsClient
     property alias settings: settingDialog.settings
     property alias pageList: config.pageList
 
@@ -188,50 +182,30 @@ Window {
             root.close()
         }
     }
-
-    // WSClient {
-    //     id: wsClient
-    //     active: true
-    // }
-
-    // WSServer {
-    //     id: wsServer
-    // }
+    Timer {
+        id: ping
+        interval: 15000
+        repeat: true
+        onTriggered: {
+            cipClient.sendData(CrestronCIP.ping())
+        }
+    }
     Connections {
-        // target: wsClient
-        // onWsStatusChanged: status => {
-        //                        if (wsClient.status === WebSocket.Open) {
-        //                            pageLoader.setSource(
-        //                                "qrc:/qt/qml/content/Base.qml")
-        //                            connectPage = false
-        //                        } else if ((wsClient.status === WebSocket.Closed)) {
-        //                            wsClient.active = false
-        //                            if (connectPage) {
-        //                                pageLoader.item.socketAnimation.start()
-        //                            } else {
-        //                                pageLoader.setSource(
-        //                                    "qrc:/qt/qml/content/Crestron.qml")
-        //                                connectPage = true
-        //                            }
-        //                        }
-        //                    }
-        // onWsTextReceived: message => {
-        //                       titleRecive.text = "收到：" + message
-        //                       WS.checkMessage(message)
-        //                   }
         target: cipClient
         onStateChanged: state => {
                             if (state === 3) {
                                 pageLoader.setSource(
                                     "qrc:/qt/qml/content/Base.qml")
                                 connectPage = false
-                            } else if ((state === 0)) {
+                                ping.running = true
+                            } else if (state === 0) {
                                 if (connectPage) {
                                     pageLoader.item.socketAnimation.start()
                                 } else {
                                     pageLoader.setSource(
                                         "qrc:/qt/qml/content/Connect.qml")
                                     connectPage = true
+                                    ping.running = false
                                 }
                             }
                         }

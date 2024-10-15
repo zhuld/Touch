@@ -95,3 +95,6 @@ function level(channel, value) {
                                     % 0x100, value / 0x100, value % 0x100])).buffer
     }
 }
+function ping() {
+    return cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])).buffer
+}

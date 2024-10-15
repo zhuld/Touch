@@ -35,8 +35,8 @@ Dialog {
         color: "#A0000000"
     }
 
-    NumberAnimation {
-        enter: Transition {
+    enter: Transition {
+        NumberAnimation {
             from: 0
             to: 1
             property: "opacity"
@@ -143,7 +143,6 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    //enabled: !webSocketServer.checked
                 }
                 Text {
                     text: "中控端口"
@@ -170,11 +169,10 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    //enabled: !webSocketServer.checked
                 }
 
                 Text {
-                    text: "中控IPID"
+                    text: "程序IPID"
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
@@ -198,7 +196,6 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    //enabled: !webSocketServer.checked
                 }
 
                 Text {
@@ -241,47 +238,6 @@ Dialog {
                         }
                     }
                 }
-                // Text {
-                //     text: "演示模式"
-                //     width: parent.width * 0.5
-                //     height: settingDialog.height / 12
-                //     font.pixelSize: height * 0.7
-                //     color: buttonTextColor
-                // }
-                // ColorSwitch {
-                //     height: settingDialog.height / 15
-                //     width: height * 2
-                //     id: webSocketServer
-                //     checked: settings.webSocketServer
-                // }
-                Text {
-                    text: "WebSocket服务器端口"
-                    width: parent.width * 0.5
-                    height: settingDialog.height / 12
-                    font.pixelSize: height * 0.7
-                    color: buttonTextColor
-                    visible: false
-                }
-                TextField {
-                    id: webSocketServerPort
-                    width: parent.width * 0.5
-                    height: settingDialog.height / 12
-                    font.pixelSize: height * 0.7
-                    text: settings.webSocketServerPort
-                    inputMethodHints: Qt.ImhDigitsOnly
-                    validator: IntValidator {
-                        bottom: 1024
-                        top: 49151
-                    }
-                    color: acceptableInput ? buttonTextColor : buttonTextRedColor
-                    onFocusChanged: {
-                        if (focus) {
-                            scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
-                        }
-                    }
-                    //enabled: webSocketServer.checked
-                    visible: false
-                }
                 Text {
                     text: "显示通道号码"
                     width: parent.width * 0.5
@@ -322,8 +278,6 @@ Dialog {
         ipId.text = settings.ipId
         fullscreen.checked = settings.fullscreen
         settingPassword.text = settings.settingPassword
-        //webSocketServer.checked = settings.webSocketServer
-        webSocketServerPort.text = settings.webSocketServerPort
         showChannel.checked = settings.showChannel
         darkTheme.checked = settings.darkTheme
         settings.sync()
@@ -334,8 +288,6 @@ Dialog {
         settings.ipId = ipId.text
         settings.fullscreen = fullscreen.checked
         settings.settingPassword = settingPassword.text
-        //settings.webSocketServer = webSocketServer.checked
-        settings.webSocketServerPort = webSocketServerPort.text
         settings.showChannel = showChannel.checked
         settings.darkTheme = darkTheme.checked
         settings.sync()

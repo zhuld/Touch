@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Controls
 
-//import "qrc:/qt/qml/content/ws.js" as WS
 import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
 Item {
