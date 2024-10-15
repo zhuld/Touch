@@ -35,8 +35,8 @@ Dialog {
         color: "#A0000000"
     }
 
-    enter: Transition {
-        NumberAnimation {
+    NumberAnimation {
+        enter: Transition {
             from: 0
             to: 1
             property: "opacity"
