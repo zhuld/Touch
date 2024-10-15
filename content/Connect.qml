@@ -1,68 +1,64 @@
 import QtQuick
 
 Item {
-    id:connectPage
+    id: connectPage
     anchors.fill: parent
-    anchors.margins: width*0.02
+    anchors.margins: width * 0.02
 
     property alias socketAnimation: socketAnimation
 
-    Column{
+    Column {
         width: parent.width
         height: parent.height
-        Text {
-            id: textLogo
-            text: qsTr(config.logoName)
+        spacing: parent.height * 0.05
+        Item {
+            height: parent.height * 0.1
             width: parent.width
-            height: parent.height*0.2
-            horizontalAlignment: Text.AlignLeft
-            font.pixelSize: height*0.4
-            color: textColor
         }
         Text {
             id: timeText
             width: parent.width
-            height: parent.height*0.4
+            height: parent.height * 0.4
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height*0.7
+            font.pixelSize: height * 0.8
+            //font.family: "TP LCD"
             color: textColor
         }
         Text {
             id: dateText
             width: parent.width
-            height: parent.height*0.2
+            height: parent.height * 0.1
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height*0.45
+            font.pixelSize: height * 0.5
             color: textColor
         }
-        Timer{
-            id:timer
+        Timer {
+            id: timer
             interval: 1000
             repeat: true
             running: true
             triggeredOnStart: true
-        }
-        Connections{
-            target: timer
             onTriggered: {
-                dateText.text = Qt.formatDate(new Date(), "yyyy-MM-dd ddd")
-                timeText.text = Qt.formatTime(new Date(), "hh:mm")
+                dateText.text = new Date().toLocaleDateString(
+                            Qt.locale("zh_CN"), "yy年MM月dd日 dddd")
+                timeText.text = new Date().toLocaleTimeString(
+                            Qt.locale("zh_CN"), "hh:mm")
             }
         }
         Text {
-            text: qsTr("重新连接中控...")
+            text: qsTr("正在连接中控...  ")
             width: parent.width
-            height: parent.height*0.2
+            height: parent.height * 0.15
             horizontalAlignment: Text.AlignRight
-            font.pixelSize: height*0.4
+            font.pixelSize: height * 0.6
             color: textColor
         }
     }
-    Rectangle{
+    Rectangle {
         id: socketStatusProgress
         property real socketValue: 1
-        y:parent.height -3
-        width: parent.width*socketValue
+        y: parent.height - 3
+        width: parent.width * socketValue
         height: 3
         color: "red"
         NumberAnimation {
@@ -70,19 +66,20 @@ Item {
             target: socketStatusProgress
             property: "socketValue"
             from: 1
-            to:0
-            duration: 3*1000
+            to: 0
+            duration: 3 * 1000
         }
-        Connections{
+        Connections {
             target: socketAnimation
             onFinished: {
-                wsClient.active = true
+                //wsClient.active = true
+                cipClient.connectToServer(settings.ipAddress, settings.ipPort)
                 socketStatusProgress.socketValue = 1
             }
         }
     }
 
-    Connections{
+    Connections {
         target: connectPage
         Component.onCompleted: socketAnimation.start()
     }

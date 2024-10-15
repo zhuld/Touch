@@ -1,32 +1,23 @@
 import QtQuick
 import QtQuick.Shapes
+import QtQuick.Effects
 
 Item {
-    id:control
-    property alias text : labelText.text
+    id: control
+    property alias text: labelText.text
     width: parent.width
-    height:100
+
     Text {
-        id:labelText
+        id: labelText
         text: qsTr("Label")
+        height: parent.height * 0.95
+        width: parent.width
         anchors.fill: parent
-        font.pixelSize: height*0.5
+        font.pixelSize: height * 0.5
+        //font.weight: Font.Light
         verticalAlignment: Text.AlignTop
         horizontalAlignment: Text.AlignHCenter
-        color: textColor
-    }
-    Shape{
-        anchors.fill: parent
-        ShapePath{
-            strokeColor: textColor
-            strokeStyle: ShapePath.SolidLine
-            strokeWidth: parent.height*0.003
-            startX: 0
-            startY: control.height
-            PathLine{
-                x:control.width
-                y:control.height
-            }
-        }
+        color: buttonTextColor
+        styleColor: buttonTextColor
     }
 }

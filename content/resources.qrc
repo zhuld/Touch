@@ -1,0 +1,43 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/camera.png</file>
+        <file>icons/close.png</file>
+        <file>icons/control.png</file>
+        <file>icons/deng.png</file>
+        <file>icons/dengju.png</file>
+        <file>icons/down.png</file>
+        <file>icons/fangda.png</file>
+        <file>icons/guanji.png</file>
+        <file>icons/hdmi.png</file>
+        <file>icons/HDMIjiekou.png</file>
+        <file>icons/home.png</file>
+        <file>icons/huiyizanzhuyantao.png</file>
+        <file>icons/jieneng.png</file>
+        <file>icons/kaiji.png</file>
+        <file>icons/left.png</file>
+        <file>icons/music.png</file>
+        <file>icons/mute.png</file>
+        <file>icons/pingmugongxiang.png</file>
+        <file>icons/quanguan.png</file>
+        <file>icons/quankai.png</file>
+        <file>icons/right.png</file>
+        <file>icons/shexiangji.png</file>
+        <file>icons/shexiangtou.png</file>
+        <file>icons/shipin.png</file>
+        <file>icons/shipinhuiyi.png</file>
+        <file>icons/suoxiao.png</file>
+        <file>icons/touyingji.png</file>
+        <file>icons/unmute.png</file>
+        <file>icons/up.png</file>
+        <file>icons/wuxiantouping.png</file>
+        <file>icons/xitong.png</file>
+        <file>icons/yuan.png</file>
+        <file>icons/zhuji.png</file>
+        <file>images/shiyi.jpg</file>
+        <file>images/shiyi.png</file>
+        <file>images/shiyilogo.png</file>
+        <file>fonts/TP-LCD.TTF</file>
+        <file>sound/click.wav</file>
+        <file>icons/control.ico</file>
+    </qresource>
+</RCC>

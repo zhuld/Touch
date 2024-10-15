@@ -14,6 +14,7 @@ Item {
 
         Category{
             widthRatio: 0.4
+
             Column{
                 anchors.fill: parent
                 anchors.margins: item.width*0.02
@@ -25,25 +26,25 @@ Item {
                 Repeater{
                     id:listMode
                     model: ListModel{
-                        ListElement{name: "大屏会议"; btnchannel: 6; sizeRatio : 1; buttonDarkColor : "green"; buttonLightColor : "lightgreen"; iconUrl: "qrc:/qt/qml/content/icons/pingmugongxiang.png"}
-                        ListElement{name: "普通会议"; btnchannel: 7; sizeRatio : 1; buttonDarkColor : "green"; buttonLightColor : "lightgreen"; iconUrl: "qrc:/qt/qml/content/icons/huiyizanzhuyantao.png"}
-                        ListElement{name: "会议结束"; btnchannel: 8; sizeRatio : 1; buttonDarkColor : "red"; buttonLightColor : "tomato"; iconUrl: "qrc:/qt/qml/content/icons/guanji.png"}
+                        ListElement{name: "大屏会议"; btnchannel: 1; sizeRatio : 1; buttonColor :"green" ; iconUrl: "qrc:/qt/qml/content/icons/pingmugongxiang.png"}
+                        ListElement{name: "普通会议"; btnchannel: 2; sizeRatio : 1; buttonColor :"green" ; iconUrl: "qrc:/qt/qml/content/icons/huiyizanzhuyantao.png"}
+                        ListElement{name: "会议结束"; btnchannel: 3; sizeRatio : 1; buttonColor :"red" ; iconUrl: "qrc:/qt/qml/content/icons/guanji.png"}
                     }
                     delegate:MyDelayButton{
                         required property string name
                         required property int btnchannel
                         required property real sizeRatio
-                        required property color buttonDarkColor
-                        required property color buttonLightColor
+                        required property color buttonColor
                         required property string iconUrl
                         width: parent.width
-                        height: parent.height*0.2*sizeRatio
+                        height: parent.height*0.2
                         text: name
                         channel: btnchannel
-                        btnColor: settings.darkTheme ? buttonDarkColor : buttonLightColor
+                        btnColor: buttonColor
                         icon.source: iconUrl
                     }
                 }
+
                 Text {
                     width: parent.width
                     height: parent.height*0.05
@@ -87,7 +88,6 @@ Item {
                 }
             }
         }
-
         Category{
             widthRatio: 0.2
             Column{
@@ -102,13 +102,11 @@ Item {
                     height: parent.height*0.9 - parent.spacing
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 9
-                    muteChannel: 45
-                    miniVolume: -40
+                    channel: 8
+                    muteChannel: 44
+                    miniVolume: -45
                     maxVolume: 0
-                    input: false
                 }
-
             }
         }
     }

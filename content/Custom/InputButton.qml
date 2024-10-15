@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 
 Item {
     id: control
@@ -48,6 +49,7 @@ Item {
         }
 
         Rectangle{
+            id:back
             anchors.fill: parent
             radius: height*0.1
             color: Qt.alpha(btnColor,0.2)
@@ -80,8 +82,6 @@ Item {
                 opacity: 0.1
             }
 
-            border.width: height*0.02
-            border.color: Qt.darker(btnColor,1.4)
             gradient: Gradient {
                 GradientStop {
                     position: 1.0; color:  mouseArea.pressed ? Qt.darker(btnColor,1.6) : btnColor
@@ -102,6 +102,15 @@ Item {
                     duration: 200
                 }
             }
+        }
+
+        MultiEffect {
+            source: back
+            anchors.fill: back
+            shadowEnabled:true
+            shadowColor: Qt.alpha(btnColor,0.8)
+            shadowHorizontalOffset: back.height/40
+            shadowVerticalOffset: shadowHorizontalOffset
         }
     }
 }

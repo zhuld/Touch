@@ -12,12 +12,15 @@ qt6_add_qml_module(content
         Connect.qml
         webSocket/WSClient.qml
         webSocket/WSServer.qml
-        Pages/System.ui.qml
-        Pages/Video.ui.qml
-        Pages/Camera.ui.qml
-        Pages/Volume.ui.qml
-        Pages/Light.ui.qml
-        Pages/ConfigModel.qml
+        Pages/System.qml
+        Pages/Video.qml
+        Pages/Camera.qml
+        Pages/Volume.qml
+        Pages/Light.qml
+        Pages/ShiyiMZ.qml
+        Pages/Config.qml
+        Pages/FontList.qml
+        Pages/TitleBar.qml
         Custom/MyLable.qml
         Custom/MyButton.qml
         Custom/MyDelayButton.qml
@@ -34,18 +37,11 @@ qt6_add_qml_module(content
         Custom/Background.qml
         Custom/ColorSwitch.qml
         Custom/LightButton.qml
+        Custom/IconButton.qml
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
+        dialog/MsgDialog.qml
         ws.js
-    RESOURCES
-        fonts/fonts.txt
-        RESOURCES icons/guanji.png icons/hdmi.png icons/HDMIjiekou.png icons/huiyizanzhuyantao.png icons/kaiji.png icons/music.png icons/pingmugongxiang.png icons/shexiangtou.png icons/shipin.png icons/shipinhuiyi.png icons/touyingji.png icons/wuxiantouping.png icons/xitong.png icons/zhuji.png
-        RESOURCES icons/yuan.png
-        RESOURCES icons/fangda.png icons/suoxiao.png
-        RESOURCES icons/mute.png icons/unmute.png icons/deng.png
-        RESOURCES icons/down.png icons/left.png icons/right.png icons/up.png
-        RESOURCES icons/jieneng.png icons/quanguan.png icons/quankai.png
-        RESOURCES icons/dengju.png
-        RESOURCES images/shiyi.jpg
-        RESOURCES icons/shexiangji.png
+        Crestron.qml
+        crestroncip.js
 )

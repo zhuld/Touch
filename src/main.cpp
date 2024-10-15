@@ -3,10 +3,13 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
+
+#include "crestroncip.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +28,9 @@ int main(int argc, char *argv[])
                 QCoreApplication::exit(-1);
         },
         Qt::QueuedConnection);
+
+    CrestronCIP cipClient;
+    engine.rootContext()->setContextProperty("cipClient", &cipClient);
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");

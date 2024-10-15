@@ -9,11 +9,15 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
 
+set(CMAKE_AUTORCC ON)
+
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
 qt_add_executable(TouchApp src/main.cpp
+    res.qrc
+    src/crestroncip.h src/crestroncip.cpp
     )
 
 qt_add_resources(TouchApp "configuration"

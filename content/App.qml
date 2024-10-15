@@ -1,226 +1,253 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
-
 import QtQuick
 import QtQuick.Controls
 //import Touch
 import QtQuick.Shapes
 import QtWebSockets
+import QtQuick.Effects
+//import Qt5Compat.GraphicalEffects
+import Qt.labs.platform
 
 import "./dialog"
 import "./Pages"
 import "./Custom"
-import "./webSocket"
+//import "./webSocket"
 
-import "qrc:/qt/qml/content/ws.js" as WS
+//import "qrc:/qt/qml/content/ws.js" as WS
+import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
 
     property alias pageLoader: pageLoader
-    property alias wsClient: wsClient
+    //property alias wsClient: wsClient
     property alias settings: settingDialog.settings
     property alias pageList: config.pageList
 
     property bool connectPage: false
 
-    property var digital:[500]
-    property var analog:[100]
-    property var text:[100]
+    property var digital: [500]
+    property var analog: [100]
+    property var text: [100]
 
-    property color backgroundColor:settings.darkTheme ? "#030A1D" :"lightgray"
+    property color backgroundColor: settings.darkTheme ? "#030A1D" : "lightgray"
 
-    property color buttonTextColor: settings.darkTheme ? "whitesmoke":"#0B1A38"
+    property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
-    property color buttonColor: settings.darkTheme?"#DD1B2A4B" : "#A0FAFAFA"
-    property color catagoryColor:  settings.darkTheme ? "#263B69":"#D7DBE4"
-    property color buttonCheckedColor: settings.darkTheme ? "#B0589BAB":"#C0589BAB"
+    property color buttonColor: settings.darkTheme ? "#E01B2A4B" : "#E0FAFAFA"
+    property color buttonRedColor: settings.darkTheme ? "#DD880015" : "#A0F08784"
+    property color catagoryColor: settings.darkTheme ? "#1B4F96" : "#D7DBE4"
+    property color buttonCheckedColor: settings.darkTheme ? "#E0589BAB" : "#E0589BAB"
 
     property color buttonTextRedColor: "red"
 
-    property color volumeBlueColor: settings.darkTheme ? "whitesmoke":"#0B1A38"
+    property color volumeBlueColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color volumeRedColor: "red"
 
-    property int usedIndex: 0
+    property string logoImage: config.logoImage
 
-    ConfigModel {
+    Config {
         id: config
     }
 
-    height: 800
-    width: 1280
-    minimumWidth: 800
-    minimumHeight: 480
+    FontLoader {
+        id: lcdFont
+        source: "qrc:/content/fonts/TP-LCD.TTF"
+    }
 
-    title: config.logoName+config.titleName
+    width: settings.windowWidth
+    height: settings.windowHeight
+    minimumWidth: 1280
+    minimumHeight: 800
 
-    visibility:settings.fullscreen? Window.FullScreen : Window.Windowed
+    title: config.logoName + config.titleName
+
+    visibility: settings.fullscreen ? Window.FullScreen : Window.Windowed
+    flags: Qt.FramelessWindowHint | Qt.Window
 
     visible: true
+    color: "transparent"
 
-    Rectangle{
+    Rectangle {
+        id: background
         anchors.fill: parent
         gradient: Gradient {
-            GradientStop { position: 0.0; color: backgroundColor }
-            GradientStop { position: 0.4; color: Qt.darker(backgroundColor,1.2) }
-            GradientStop { position: 1.0; color: Qt.darker(backgroundColor,1.6) }
+            GradientStop {
+                position: 0.0
+                color: backgroundColor
+            }
+            GradientStop {
+                position: 0.4
+                color: Qt.darker(backgroundColor, 1.2)
+            }
+            GradientStop {
+                position: 1.0
+                color: Qt.darker(backgroundColor, 1.6)
+            }
         }
+
         Image {
             anchors.fill: parent
             source: config.background
-            opacity: connectPage? 0.6:0.3
+            opacity: connectPage ? 0.6 : 0.3
             Behavior on opacity {
-                OpacityAnimator{
+                OpacityAnimator {
                     duration: 1000
                 }
             }
         }
+        radius: settings.fullscreen
+                || root.visibility == Window.Maximized ? 0 : width * 0.01
     }
-
-    Rectangle{
+    TitleBar {
         id: titleBar
-        width: parent.width*0.96
-        height: parent.height*0.08
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        gradient: Gradient {
-            GradientStop {
-                position: 1.0; color: Qt.alpha(catagoryColor,0.5)
-                Behavior on color{
-                    ColorAnimation {
-                        duration: 200
-                    }
-                }
-            }
-            GradientStop {
-                position: 0.0; color: catagoryColor
-                Behavior on color{
-                    ColorAnimation {
-                        duration: 200
-                    }
-                }
-            }
-        }
-        radius: height*0.2
-        visible: !root.connectPage
-        Text {
-            id: titleLogo
-            text: qsTr(config.logoName)
-            height: parent.height
-            anchors.left: parent.left
-            anchors.leftMargin: parent.width*0.02
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height*0.4
-            color: textColor
-        }
-        Text {
-            id: titleName
-            text: qsTr(config.titleName) + (settings.webSocketServer ? "-演示":"")
-            height: parent.height
-            anchors.centerIn: parent
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height*0.6
-            color: textColor
-        }
-        Text {
-            id: titleTime
-            height: parent.height
-            verticalAlignment: Text.AlignVCenter
-            anchors.right: themeSwitch.left
-            anchors.rightMargin: parent.width*0.01
-            font.pixelSize: height*0.4
-            color: textColor
-            Timer{
-                id:timer
-                interval: 1000
-                repeat: true
-                running: !root.connectPage
-                triggeredOnStart: true
-            }
-            Connections{
-                target: timer
-                onTriggered: {
-                    titleTime.text = Qt.formatDateTime(new Date(), "yyyy-MM-dd hh:mm")
-                }
-            }
-        }
-        ColorSwitch{
-            id:themeSwitch
-            height: parent.height*0.5
-            width: height*2
-            anchors.right: parent.right
-            anchors.rightMargin: parent.width*0.02
-            anchors.verticalCenter: parent.verticalCenter
-            checked: settings.darkTheme
-            onCheckedChanged: {
-                settings.darkTheme = checked
-            }
-        }
-
+        width: parent.width * 0.96
+        height: parent.height * 0.08
+        x: parent.width * 0.02
         Text {
             id: titleRecive
             visible: settings.showChannel
-            height: parent.height*0.4
+            height: parent.height * 0.4
             anchors.left: parent.left
-            y:parent.height*0.8
+            y: parent.height * 0.8
             font.pixelSize: height
             color: textColor
         }
     }
-
-    MouseArea{
-        height: titleBar.height
-        width: height*2
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        onClicked: passwordDialog.open()
+    MouseArea {
+        id: rightSide
+        height: parent.height * 0.96
+        width: parent.width * 0.01
+        cursorShape: settings.fullscreen ? Qt.ArrowCursor : Qt.SizeHorCursor
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        onPositionChanged: {
+            if (!pressed || settings.fullscreen)
+                return
+            var width = root.width + mouseX
+            if (width > root.minimumWidth) {
+                root.width = width
+            } else {
+                root.width = root.minimumWidth
+            }
+            titleRecive.text = "Window Width: " + root.width
+        }
+        onPressedChanged: {
+            settings.windowWidth = root.width
+        }
     }
-    Loader{
-        id:pageLoader
+    MouseArea {
+        id: bottomSide
+        height: parent.width * 0.01
+        width: parent.width * 0.98
+        cursorShape: settings.fullscreen ? Qt.ArrowCursor : Qt.SizeVerCursor
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        onPositionChanged: {
+            if (!pressed || settings.fullscreen)
+                return
+            var height = root.height + mouseY
+            if (height > root.minimumHeight) {
+                root.height = height
+            } else {
+                root.height = root.minimumHeight
+            }
+            titleRecive.text = "Window Height: " + root.height
+        }
+        onPressedChanged: {
+            settings.windowHeight = root.height
+        }
+    }
+    Loader {
+        id: pageLoader
         anchors.top: titleBar.bottom
         width: parent.width
         height: parent.height - titleBar.height
-        source: "qrc:/qt/qml/content/Connect.qml"
     }
-    PasswordDialog{
+    PasswordDialog {
         id: passwordDialog
-        onOkPressed: (password)=>{
-                         if((password === "314159")|(password === settingDialog.settings.settingPassword)){
+        onOkPressed: password => {
+                         if ((password === "314159")
+                             | (password === settingDialog.settings.settingPassword)) {
                              settingDialog.open()
                              passwordDialog.close()
                          }
                      }
     }
 
-    SettingDialog{ id: settingDialog }
-
-    WSClient{
-        id:wsClient
-        active: true
+    SettingDialog {
+        id: settingDialog
+    }
+    MsgDialog {
+        id: closeDialog
+        dialogIcon.source: "qrc:/content/icons/warn.png"
+        dialogInfomation: "确定关闭程序？"
+        dialogTitle: "提示"
+        onOkPress: {
+            root.close()
+        }
     }
 
-    WSServer{
-        id: wsServer
+    // WSClient {
+    //     id: wsClient
+    //     active: true
+    // }
+
+    // WSServer {
+    //     id: wsServer
+    // }
+    Connections {
+        // target: wsClient
+        // onWsStatusChanged: status => {
+        //                        if (wsClient.status === WebSocket.Open) {
+        //                            pageLoader.setSource(
+        //                                "qrc:/qt/qml/content/Base.qml")
+        //                            connectPage = false
+        //                        } else if ((wsClient.status === WebSocket.Closed)) {
+        //                            wsClient.active = false
+        //                            if (connectPage) {
+        //                                pageLoader.item.socketAnimation.start()
+        //                            } else {
+        //                                pageLoader.setSource(
+        //                                    "qrc:/qt/qml/content/Crestron.qml")
+        //                                connectPage = true
+        //                            }
+        //                        }
+        //                    }
+        // onWsTextReceived: message => {
+        //                       titleRecive.text = "收到：" + message
+        //                       WS.checkMessage(message)
+        //                   }
+        target: cipClient
+        onStateChanged: state => {
+                            if (state === 3) {
+                                pageLoader.setSource(
+                                    "qrc:/qt/qml/content/Base.qml")
+                                connectPage = false
+                            } else if ((state === 0)) {
+                                if (connectPage) {
+                                    pageLoader.item.socketAnimation.start()
+                                } else {
+                                    pageLoader.setSource(
+                                        "qrc:/qt/qml/content/Connect.qml")
+                                    connectPage = true
+                                }
+                            }
+                        }
+        onDataReceived: data => {
+                            var message = new Uint8Array(data)
+                            titleRecive.text = "Recive:" + message
+
+                            var mdata = CrestronCIP.messageCheck(message)
+                            if (mdata !== null) {
+                                cipClient.sendData(mdata)
+                            }
+                        }
     }
-    Connections{
-        target: wsClient
-        onWsStatusChanged: (status) =>{
-                               if (wsClient.status === WebSocket.Open){
-                                   pageLoader.setSource("qrc:/qt/qml/content/Base.qml")
-                                   connectPage = false
-                               }else if ((wsClient.status === WebSocket.Closed)){
-                                   wsClient.active = false
-                                   if(connectPage){
-                                       pageLoader.item.socketAnimation.start()
-                                   }else{
-                                       pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
-                                       connectPage = true
-                                   }
-                               }
-                           }
-        onWsTextReceived: (message) =>{
-                              titleRecive.text = "收到：" + message
-                              WS.checkMessage(message)
-                          }
+    Component.onCompleted: {
+        pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
+        connectPage = true
+        cipClient.connectToServer(settings.ipAddress, settings.ipPort)
     }
 }
