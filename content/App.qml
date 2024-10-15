@@ -195,7 +195,7 @@ Window {
         onStateChanged: state => {
                             if (state === 3) {
                                 pageLoader.setSource(
-                                    "qrc:/qt/qml/content/Base.qml")
+                                    "qrc:/qt/qml/content/Content.qml")
                                 connectPage = false
                                 ping.running = true
                             } else if (state === 0) {

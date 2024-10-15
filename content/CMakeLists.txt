@@ -8,10 +8,10 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        Base.qml
+        Content.qml
         Connect.qml
-        webSocket/WSClient.qml
-        webSocket/WSServer.qml
+
+
         Pages/System.qml
         Pages/Video.qml
         Pages/Camera.qml
@@ -41,6 +41,6 @@ qt6_add_qml_module(content
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         dialog/MsgDialog.qml
-        ws.js
+
         crestroncip.js
 )
