@@ -1,16 +1,16 @@
-#ifndef CRESTRONCIP_H
-#define CRESTRONCIP_H
+#ifndef TCPCLIENT_H
+#define TCPCLIENT_H
 
 #include <QObject>
 #include <QTcpSocket>
 #include <QTimer>
 #include <QString>
 
-class CrestronCIP : public QObject
+class TcpClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit CrestronCIP(QObject *parent = nullptr);
+    explicit TcpClient(QObject *parent = nullptr);
 
     Q_INVOKABLE void connectToServer(const QString &host, quint16 port);
     Q_INVOKABLE void sendData(const QByteArray &data);
@@ -37,4 +37,4 @@ private:
     quint16 currentPort;
 };
 
-#endif // CRESTRONCIP_H
+#endif // TCPCLIENT_H

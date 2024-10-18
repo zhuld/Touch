@@ -91,7 +91,6 @@ Rectangle {
         anchors.fill: parent
         Connections {
             onDropped: drop => {
-                           //WS.level(output, drop.keys[0])
                            cipClient.sendData(CrestronCIP.level(output,
                                                                 drop.keys[0]))
                            control.opacity = 1

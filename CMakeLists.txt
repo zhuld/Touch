@@ -17,7 +17,7 @@ endif()
 
 qt_add_executable(TouchApp src/main.cpp
     res.qrc
-    src/crestroncip.h src/crestroncip.cpp
+    src/TcpClient.h src/Tcpclient.cpp
     )
 
 qt_add_resources(TouchApp "configuration"

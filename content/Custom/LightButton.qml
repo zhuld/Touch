@@ -82,9 +82,6 @@ Item {
     }
     MouseArea {
         anchors.fill: parent
-
-        //onPressed: WS.push(control.channel)
-        //onReleased: WS.release(control.channel)
         onPressed: cipClient.sendData(CrestronCIP.push(control.channel))
         onReleased: cipClient.sendData(CrestronCIP.release(control.channel))
     }

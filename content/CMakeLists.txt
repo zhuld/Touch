@@ -11,7 +11,6 @@ qt6_add_qml_module(content
         Content.qml
         Connect.qml
 
-
         Pages/System.qml
         Pages/Video.qml
         Pages/Camera.qml

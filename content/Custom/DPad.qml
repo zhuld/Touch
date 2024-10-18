@@ -175,7 +175,6 @@ Item {
                             icon.icon.height = height * 0.9
                             cipClient.sendData(CrestronCIP.push(
                                                    control.channel + index))
-                            //WS.push(control.channel+index)
                         }
                     }
                     onReleased: {
@@ -183,7 +182,6 @@ Item {
                             icon.icon.height = height * 0.5
                             cipClient.sendData(CrestronCIP.release(
                                                    control.channel + index))
-                            //WS.release(control.channel + index)
                         }
                     }
                 }

@@ -9,7 +9,7 @@
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
 
-#include "crestroncip.h"
+#include "TcpClient.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
         },
         Qt::QueuedConnection);
 
-    CrestronCIP cipClient;
-    engine.rootContext()->setContextProperty("cipClient", &cipClient);
+    TcpClient tcpClient;
+    engine.rootContext()->setContextProperty("cipClient", &tcpClient);
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
