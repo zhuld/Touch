@@ -42,14 +42,14 @@ Item {
                     name: "会议音量"
                     vChannel: 8
                     mChannel: 44
-                    miniVol: -45
+                    miniVol: -40
                     maxVol: 0
                     inputType: false
                 }
                 ListElement {
                     name: "总音量"
-                    vChannel: 9
-                    mChannel: 45
+                    vChannel: 8
+                    mChannel: 44
                     miniVol: -40
                     maxVol: 0
                     inputType: false

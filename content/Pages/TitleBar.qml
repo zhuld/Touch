@@ -52,7 +52,7 @@ Rectangle {
     }
     Text {
         id: titleName
-        text: qsTr(config.titleName) + (settings.webSocketServer ? "-演示" : "")
+        text: qsTr(config.titleName) + (settings.demoMode ? "-演示" : "")
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter

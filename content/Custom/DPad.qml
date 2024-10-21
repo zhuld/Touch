@@ -16,7 +16,7 @@ Item {
         width: parent.width
         height: width
         ShapePath {
-            strokeColor: buttonCheckedColor
+            strokeColor: buttonTextColor
             strokeWidth: parent.width * 0.005
             startX: shapeCircle.width / 2
             startY: 0
@@ -158,12 +158,12 @@ Item {
                     Connections {
                         onEntered: {
                             icon.icon.height = height * 0.9
-                            cipClient.sendData(CrestronCIP.push(
+                            tcpClient.sendData(CrestronCIP.push(
                                                    control.channel + index))
                         }
                         onExited: {
                             icon.icon.height = height * 0.5
-                            cipClient.sendData(CrestronCIP.release(
+                            tcpClient.sendData(CrestronCIP.release(
                                                    control.channel + index))
                         }
                     }
@@ -173,14 +173,14 @@ Item {
                     onPressed: {
                         if (enable) {
                             icon.icon.height = height * 0.9
-                            cipClient.sendData(CrestronCIP.push(
+                            tcpClient.sendData(CrestronCIP.push(
                                                    control.channel + index))
                         }
                     }
                     onReleased: {
                         if (enable) {
                             icon.icon.height = height * 0.5
-                            cipClient.sendData(CrestronCIP.release(
+                            tcpClient.sendData(CrestronCIP.release(
                                                    control.channel + index))
                         }
                     }

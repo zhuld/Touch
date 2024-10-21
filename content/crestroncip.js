@@ -11,21 +11,20 @@ const op_Join_Request = 0x03
 const op_Client_Ping = 0x0D // 定时发送 0D 00 02 00 00
 const op_Server_Pong = 0x0E // 回复 0E 00 02 00 00
 
-function messageCheck(message) {
+function clientMessageCheck(message) {
     //连接消息
     if (message[0] === op_Server_Accept) {
         if (message.length === 4 & message[3] === 0x02) {
             return cipmessage(
                         op_Client_IPID,
-                        new Uint8Array([0x7F, 0x00, 0x00, 0x01, 0x00, settings.ipId, 0x40])).buffer
-            //return cipmessage( op_Client_IPID, new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x40, 0xFF, 0xFF, 0xF1, 0x01])).buffer
+                        new Uint8Array([0x7F, 0x00, 0x00, 0x01, 0x00, settings.ipId, 0x40]))
+            //return cipmessage( op_Client_IPID, new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x40, 0xFF, 0xFF, 0xF1, 0x01]))
         }
-    }
-    if (message[0] === op_Server_IPID) {
+    } else if (message[0] === op_Server_IPID) {
         if (message.length === 7 & message[6] === 0x03) {
             return cipmessage(
                         op_Join,
-                        new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])).buffer
+                        new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00]))
         }
     } else if (message[0] === op_Join) {
         //Join事件
@@ -59,22 +58,59 @@ function messageCheck(message) {
     }
 }
 
+function serverMessageCheck(message) {
+    if (message[0] === op_Client_IPID) {
+        // 收到IPID信息
+        if (message.length === 10) {
+            return cipmessage(op_Server_IPID,
+                              new Uint8Array([0x00, 0x00, 0x00, 0x03]))
+        }
+    } else if (message[0] === op_Client_Ping) {
+        // 收到ping，回复pong
+        if (message.length === 5) {
+            return pong()
+        }
+    } else if (message[0] === op_Join) {
+        // 收到Join查询指令，
+        if (message[6] === op_Join_Request) {
+
+            //Todo:处理查询指令
+        } else if (message[6] === op_Join_Digital) {
+            //digital
+            return message.buffer
+        } else if (message[6] === op_Join_Analog) {
+            if (message[2] === 0x08) {
+                if (message[7] === 0x00) {
+                    return cipmessage(
+                                op_Join,
+                                new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[8], message[9], message[10]]))
+                } else {
+                    return cipmessage(
+                                op_Join,
+                                new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[7], message[8], message[9], message[10]]))
+                }
+            }
+        }
+    }
+}
+
 function cipmessage(opCode, message) {
     var m = new Uint8Array(message.length + 3)
     m[0] = opCode
     m[1] = message.length / 0x100
     m[2] = message.length % 0x100
     m.set(message, 3)
-    return m
+    return m.buffer
 }
 
+//client
 function push(channel) {
     if (channel > 0 & channel < 32767) {
         channel = channel - 1
         return cipmessage(
                     op_Join,
                     new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, channel / 0x100])).buffer
+                                    % 0x100, channel / 0x100]))
     }
 }
 function release(channel) {
@@ -83,7 +119,7 @@ function release(channel) {
         return cipmessage(
                     op_Join,
                     new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, (channel / 0x100) | 0x80])).buffer
+                                    % 0x100, (channel / 0x100) | 0x80]))
     }
 }
 function level(channel, value) {
@@ -91,10 +127,32 @@ function level(channel, value) {
         channel = channel - 1
         return cipmessage(
                     op_Join,
-                    new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
-                                    % 0x100, value / 0x100, value % 0x100])).buffer
+                    new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel
+                                    / 0x100, channel % 0x100, value / 0x100, value % 0x100]))
     }
 }
 function ping() {
-    return cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])).buffer
+    return cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00]))
+}
+
+//Server
+function pong() {
+    return cipmessage(op_Server_Pong, new Uint8Array([0x00, 0x00]))
+}
+
+function accept() {
+    return cipmessage(op_Server_Accept, new Uint8Array([0x02]))
+}
+
+function toHexString(data) {
+    var hexMessage = ""
+    for (var i = 0; i < data.length; i++) {
+        var hex = data[i].toString(16)
+        // 将字节转换为十六进制
+        if (hex.length < 2) {
+            hex = "0" + hex // 补齐两位
+        }
+        hexMessage += hex + " "
+    }
+    return hexMessage.toUpperCase()
 }

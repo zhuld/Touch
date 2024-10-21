@@ -71,7 +71,12 @@ Item {
         Connections {
             target: socketAnimation
             onFinished: {
-                cipClient.connectToServer(settings.ipAddress, settings.ipPort)
+                if (root.settings.demoMode) {
+                    tcpClient.connectToServer("127.0.0.1", 41793)
+                } else {
+                    tcpClient.connectToServer(settings.ipAddress,
+                                              settings.ipPort)
+                }
                 socketStatusProgress.socketValue = 1
             }
         }

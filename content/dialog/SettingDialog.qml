@@ -23,8 +23,7 @@ Dialog {
         property int ipId: 3
         property bool fullscreen: true
         property string settingPassword: "123"
-        property bool webSocketServer: false
-        property int webSocketServerPort: 9880
+        property bool demoMode: false
         property bool showChannel: false
         property bool darkTheme: false
         property int windowWidth: 1280
@@ -143,6 +142,7 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
+                    enabled: !demoMode.checked
                 }
                 Text {
                     text: "中控端口"
@@ -169,6 +169,7 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
+                    enabled: !demoMode.checked
                 }
 
                 Text {
@@ -196,6 +197,20 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
+                    enabled: !demoMode.checked
+                }
+                Text {
+                    text: "演示模式"
+                    width: parent.width * 0.5
+                    height: settingDialog.height / 12
+                    font.pixelSize: height * 0.7
+                    color: buttonTextColor
+                }
+                ColorSwitch {
+                    height: settingDialog.height / 15
+                    width: height * 2
+                    id: demoMode
+                    checked: settings.demoMode
                 }
 
                 Text {
@@ -277,6 +292,7 @@ Dialog {
         ipPort.text = settings.ipPort
         ipId.text = settings.ipId
         fullscreen.checked = settings.fullscreen
+        demoMode.checked = settings.demoMode
         settingPassword.text = settings.settingPassword
         showChannel.checked = settings.showChannel
         darkTheme.checked = settings.darkTheme
@@ -287,6 +303,18 @@ Dialog {
         settings.ipPort = ipPort.text
         settings.ipId = ipId.text
         settings.fullscreen = fullscreen.checked
+        if (settings.demoMode !== demoMode.checked) {
+            settings.demoMode = demoMode.checked
+            tcpClient.disconnectFromServer()
+            if (settings.demoMode) {
+                tcpServer.startServer(41793, "127.0.0.1")
+                tcpClient.connectToServer("127.0.0.1", 41793)
+            } else {
+                tcpServer.stopServer()
+                tcpClient.connectToServer(settings.ipAddress, settings.ipPort)
+            }
+        }
+
         settings.settingPassword = settingPassword.text
         settings.showChannel = showChannel.checked
         settings.darkTheme = darkTheme.checked

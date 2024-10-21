@@ -55,10 +55,10 @@ Button {
         color: buttonTextColor
         font.pixelSize: height * 0.3
     }
-    onPressed: cipClient.sendData(CrestronCIP.push(control.channel))
-    onReleased: cipClient.sendData(CrestronCIP.release(control.channel))
+    onPressed: tcpClient.sendData(CrestronCIP.push(control.channel))
+    onReleased: tcpClient.sendData(CrestronCIP.release(control.channel))
     onHoveredChanged: if (pressed) {
-                          cipClient.sendData(CrestronCIP.release(
+                          tcpClient.sendData(CrestronCIP.release(
                                                  control.channel))
                       }
 }

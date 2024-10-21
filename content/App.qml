@@ -187,11 +187,11 @@ Window {
         interval: 15000
         repeat: true
         onTriggered: {
-            cipClient.sendData(CrestronCIP.ping())
+            tcpClient.sendData(CrestronCIP.ping())
         }
     }
     Connections {
-        target: cipClient
+        target: tcpClient
         onStateChanged: state => {
                             if (state === 3) {
                                 pageLoader.setSource(
@@ -210,18 +210,41 @@ Window {
                             }
                         }
         onDataReceived: data => {
-                            var message = new Uint8Array(data)
-                            titleRecive.text = "Recive:" + message
-
-                            var mdata = CrestronCIP.messageCheck(message)
+                            titleRecive.text = "Recived: " + CrestronCIP.toHexString(
+                                new Uint8Array(data))
+                            var mdata = CrestronCIP.clientMessageCheck(
+                                new Uint8Array(data))
                             if (mdata !== null) {
-                                cipClient.sendData(mdata)
+                                tcpClient.sendData(mdata)
                             }
                         }
+    }
+
+    Connections {
+        target: tcpServer // 监听 TCPServer 的信号
+        onDataReceived: data => {
+                            // 显示收到的消息
+                            titleRecive.text = "Sended: " + CrestronCIP.toHexString(
+                                new Uint8Array(data))
+                            var mdata = CrestronCIP.serverMessageCheck(
+                                new Uint8Array(data))
+                            if (mdata !== null) {
+                                tcpServer.sendData(mdata)
+                            }
+                        }
+        onClientConnected: {
+            tcpServer.sendData(CrestronCIP.accept())
+        }
     }
     Component.onCompleted: {
         pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
         connectPage = true
-        cipClient.connectToServer(settings.ipAddress, settings.ipPort)
+        if (root.settings.demoMode) {
+            tcpServer.startServer(41793, "127.0.0.1")
+            tcpClient.connectToServer("127.0.0.1", 41793)
+        } else {
+            tcpServer.stopServer()
+            tcpClient.connectToServer(settings.ipAddress, settings.ipPort)
+        }
     }
 }

@@ -17,7 +17,10 @@ endif()
 
 qt_add_executable(TouchApp src/main.cpp
     res.qrc
-    src/TcpClient.h src/TcpClient.cpp
+    src/TcpClient.h
+    src/TcpClient.cpp
+    src/TcpServer.h
+    src/TcpServer.cpp
     )
 
 qt_add_resources(TouchApp "configuration"

@@ -56,7 +56,7 @@ Item {
                             required property int index
                             required property string name
                             text: name
-                            channel: 1 + index
+                            channel: 51 + index
                             width: (grid.width + grid.spacing) / grid.columns - grid.spacing
                             height: (grid.height + grid.spacing) / lightList.count
                                     * grid.columns - grid.spacing

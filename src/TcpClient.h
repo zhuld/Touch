@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include <QTimer>
 #include <QString>
 
 class TcpClient : public QObject

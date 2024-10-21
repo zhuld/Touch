@@ -15,10 +15,15 @@ Item {
 
     property int muteChannel
     property int channel
-    property int volume: 0
+    property int volume: root.analog[control.channel] + 0
 
     property bool input: true
 
+    Binding {
+        target: slider
+        property: "value"
+        value: volume / (maxVolume - miniVolume)
+    }
     Slider {
         id: slider
         height: parent.height * 0.92
@@ -31,9 +36,25 @@ Item {
         stepSize: 1 / (maxVolume - miniVolume)
         snapMode: Slider.SnapAlways
 
-        WheelHandler {
-            property: "value"
-            rotationScale: -1 / 1000
+        property real lastValue
+
+        state: "MOVING"
+        states: [
+            State {
+                name: "STOPED"
+            },
+            State {
+                name: "MOVING"
+            }
+        ]
+
+        onStateChanged: {
+            if (state === "STOPED") {
+                tcpClient.sendData(
+                            CrestronCIP.level(
+                                control.channel, Math.round(
+                                    position * (maxVolume - miniVolume))))
+            }
         }
 
         handle: Rectangle {
@@ -151,20 +172,29 @@ Item {
             }
         }
 
-        onMoved: {
-            volume = Math.round(
-                        ((1 - visualPosition) * (maxVolume - miniVolume)))
-            cipClient.sendData(CrestronCIP.level(control.channel, volume))
-            //WS.level(control.channel, volume)
+        onPressedChanged: {
+            if (!pressed) {
+                moveTimer.stop()
+                slider.state = "STOPED"
+            } else {
+                moveTimer.start()
+            }
         }
 
-        onValueChanged: {
-            volume = Math.round(
-                        ((1 - visualPosition) * (maxVolume - miniVolume)))
-            //WS.level(control.channel, volume)
-            cipClient.sendData(CrestronCIP.level(control.channel, volume))
+        //用于检测滑块停止滑动
+        Timer {
+            id: moveTimer
+            interval: 100 // 毫秒
+            repeat: true
+            onTriggered: {
+                if (slider.lastValue === slider.value) {
+                    slider.state = "STOPED"
+                } else {
+                    slider.state = "MOVING"
+                    slider.lastValue = slider.value
+                }
+            }
         }
-
         Repeater {
             id: repeater
             model: (maxVolume - miniVolume) + 1
@@ -226,6 +256,7 @@ Item {
             }
         }
     }
+
     MyButton {
         id: mute
         height: parent.height * 0.1
@@ -236,7 +267,9 @@ Item {
         icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
         textColor: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
         channel: muteChannel
-        text: root.digital[control.muteChannel] ? "静音" : root.analog[control.channel] ? root.analog[control.channel] + miniVolume : miniVolume
+        text: root.digital[control.muteChannel] ? "静音" : Math.round(
+                                                      slider.position
+                                                      * (maxVolume - miniVolume) + miniVolume)
     }
     Text {
         id: channel
@@ -245,6 +278,4 @@ Item {
         color: buttonTextColor
         font.pixelSize: height * 0.3
     }
-    Component.onCompleted: slider.value = ((root.analog[control.channel])
-                                           / (maxVolume - miniVolume))
 }

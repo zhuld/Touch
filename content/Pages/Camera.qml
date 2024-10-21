@@ -66,7 +66,7 @@ Item {
                         width: parent.width * 0.5
                         height: width * 0.05
                         anchors.horizontalCenter: parent.horizontalCenter
-                        border.color: buttonCheckedColor
+                        border.color: buttonTextColor
                         border.width: width * 0.01
                         color: "transparent"
                     }
@@ -78,7 +78,7 @@ Item {
                         anchors.horizontalCenter: tv.horizontalCenter
                         source: "qrc:/content/icons/camera.png"
                         rotation: 90
-                        color: buttonCheckedColor
+                        color: buttonTextColor
                         Behavior on rotation {
                             NumberAnimation {
                                 duration: 300
@@ -91,7 +91,7 @@ Item {
                         height: parent.height * 0.86
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
-                        border.color: buttonCheckedColor
+                        border.color: buttonTextColor
                         border.width: width * 0.01
                         color: "transparent"
                         radius: width * 0.05
@@ -140,7 +140,10 @@ Item {
                                     Connections {
                                         onCheckedChanged: if (checked) {
                                                               camera.rotation = rotation
+                                                          } else {
+                                                              camera.rotation = 90
                                                           }
+
                                         Component.onCompleted: if (checked) {
                                                                    camera.rotation = rotation
                                                                }

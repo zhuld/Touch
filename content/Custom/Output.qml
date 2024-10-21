@@ -91,7 +91,7 @@ Rectangle {
         anchors.fill: parent
         Connections {
             onDropped: drop => {
-                           cipClient.sendData(CrestronCIP.level(output,
+                           tcpClient.sendData(CrestronCIP.level(output,
                                                                 drop.keys[0]))
                            control.opacity = 1
                        }
@@ -103,22 +103,27 @@ Rectangle {
             }
         }
     }
-    Component.onCompleted: {
-        update(input)
-    }
 
-    onInputChanged: {
-        update(input)
+    Binding {
+        target: downColor
+        property: "color"
+        value: input > 0 ? inputModel.get(input - 1).bgColor : buttonColor
+    }
+    Binding {
+        target: textInput
+        property: "text"
+        value: input > 0 ? inputModel.get(input - 1).name : null
+    }
+    Binding {
+        target: textInput
+        property: "icon.source"
+        value: input > 0 ? inputModel.get(input - 1).iconSource : null
     }
 
     Behavior on color {
         ColorAnimation {
             duration: 400
         }
-    }
-
-    onWidthChanged: {
-        update(input)
     }
 
     function update(inputChannel) {

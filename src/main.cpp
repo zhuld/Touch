@@ -10,6 +10,7 @@
 #include "import_qml_plugins.h"
 
 #include "TcpClient.h"
+#include "TcpServer.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +31,12 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
 
     TcpClient tcpClient;
-    engine.rootContext()->setContextProperty("cipClient", &tcpClient);
+    engine.rootContext()->setContextProperty("tcpClient", &tcpClient);
+
+
+    TcpServer tcpServer;
+    //tcpServer.startServer(41793 ,"127.0.0.1");  // 启动服务器监听端口41794
+    engine.rootContext()->setContextProperty("tcpServer", &tcpServer);
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
