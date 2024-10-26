@@ -19,15 +19,15 @@ Item {
                 anchors.margins: item.width * 0.02
                 spacing: height * 0.05
                 MyLable {
-                    text: "总音量"
+                    text: "总音量输出"
                     height: parent.height * 0.1
                 }
                 VolumeBar {
                     height: parent.height * 0.9 - parent.spacing
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 9
-                    muteChannel: 45
+                    channel: 8
+                    muteChannel: 44
                     miniVolume: -40
                     maxVolume: 0
                     input: false

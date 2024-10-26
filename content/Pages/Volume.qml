@@ -15,7 +15,7 @@ Item {
             model: ListModel {
                 id: volList
                 ListElement {
-                    name: "鹅颈话筒"
+                    name: "鹅颈话筒输入"
                     vChannel: 5
                     mChannel: 41
                     miniVol: -40
@@ -23,7 +23,7 @@ Item {
                     inputType: true
                 }
                 ListElement {
-                    name: "手持话筒"
+                    name: "手持话筒输入"
                     vChannel: 6
                     mChannel: 42
                     miniVol: -40
@@ -31,23 +31,25 @@ Item {
                     inputType: true
                 }
                 ListElement {
-                    name: "音频"
+                    name: "音频输入"
                     vChannel: 7
                     mChannel: 43
                     miniVol: -30
                     maxVol: 10
                     inputType: true
                 }
+
                 ListElement {
-                    name: "会议音量"
+                    name: "总音量输出"
                     vChannel: 8
                     mChannel: 44
                     miniVol: -40
                     maxVol: 0
                     inputType: false
                 }
+
                 ListElement {
-                    name: "总音量"
+                    name: "总音量输出"
                     vChannel: 8
                     mChannel: 44
                     miniVol: -40

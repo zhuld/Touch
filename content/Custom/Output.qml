@@ -20,7 +20,7 @@ Rectangle {
             color: buttonColor
             Behavior on color {
                 ColorAnimation {
-                    duration: 300
+                    duration: 500
                 }
             }
         }
@@ -57,13 +57,25 @@ Rectangle {
         id: textInput
         height: parent.height * 0.5
         font.pixelSize: height * 0.5
-        x: parent.width - width - inputText.width
+        width: parent.width - inputText.width
+        //anchors.right: inputText.left
+        alignment: Text.AlignRight
         anchors.margins: height * 0.1
         anchors.bottom: parent.bottom
         color: buttonTextColor
         icon.height: height * 0.5
         icon.color: buttonTextColor
         spacing: width * 0.05
+
+        Behavior on text {
+            PropertyAnimation {
+                target: textInput
+                properties: "x"
+                from: width * 0.1
+                to: 0
+                duration: 300
+            }
+        }
     }
     Text {
         id: inputText
@@ -118,19 +130,5 @@ Rectangle {
         target: textInput
         property: "icon.source"
         value: input > 0 ? inputModel.get(input - 1).iconSource : null
-    }
-
-    Behavior on color {
-        ColorAnimation {
-            duration: 400
-        }
-    }
-
-    function update(inputChannel) {
-        if (inputChannel > 0) {
-            downColor.color = inputModel.get(inputChannel - 1).bgColor
-            textInput.text = inputModel.get(inputChannel - 1).name
-            textInput.icon.source = inputModel.get(inputChannel - 1).iconSource
-        }
     }
 }

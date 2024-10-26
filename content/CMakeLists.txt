@@ -10,7 +10,6 @@ qt6_add_qml_module(content
         App.qml
         Content.qml
         Connect.qml
-
         Pages/System.qml
         Pages/Video.qml
         Pages/Camera.qml
@@ -40,6 +39,5 @@ qt6_add_qml_module(content
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         dialog/MsgDialog.qml
-
         crestroncip.js
 )

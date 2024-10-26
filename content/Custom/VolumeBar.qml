@@ -27,7 +27,7 @@ Item {
     Slider {
         id: slider
         height: parent.height * 0.92
-        width: height * 0.25
+        width: height * 0.3
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: -handle.height / 4
@@ -260,7 +260,7 @@ Item {
     MyButton {
         id: mute
         height: parent.height * 0.1
-        width: slider.width
+        width: parent.width * 0.8
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"

@@ -6,4 +6,4 @@
 #include <QtQml/qqmlextensionplugin.h>
 
 Q_IMPORT_QML_PLUGIN(contentPlugin)
-Q_IMPORT_QML_PLUGIN(TouchPlugin)
+//Q_IMPORT_QML_PLUGIN(TouchPlugin)

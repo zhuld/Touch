@@ -92,13 +92,13 @@ Item {
                             ListElement {
                                 name: qsTr("无线投屏")
                                 inputChannel: 4
-                                bgColor: "darkviolet"
+                                bgColor: "violet"
                                 iconSource: "qrc:/content/icons/wuxiantouping.png"
                             }
                             ListElement {
                                 name: qsTr("摄像机")
                                 inputChannel: 5
-                                bgColor: "firebrick"
+                                bgColor: "orangered"
                                 iconSource: "qrc:/content/icons/shexiangji.png"
                             }
                             ListElement {

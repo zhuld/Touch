@@ -8,8 +8,8 @@ Item {
     property string input
     property color btnColor: buttonCheckedColor
     property color textColor: buttonTextColor
-    property alias text : label.text
-    property alias icon : label.icon
+    property alias text: label.text
+    property alias icon: label.icon
 
     MouseArea {
         id: mouseArea
@@ -23,57 +23,60 @@ Item {
         onReleased: {
             dragButton.Drag.drop()
             dragButtonAnimation.start()
-            control.z = 0
         }
-        onPressed:{
+        onPressed: {
             dragButton.Drag.hotSpot.x = mouseX
             dragButton.Drag.hotSpot.y = mouseY
-            control.z = 1
         }
-        ParallelAnimation{
+        ParallelAnimation {
             id: dragButtonAnimation
             NumberAnimation {
                 target: dragButton
                 property: "x"
                 duration: 400
-                to:0
+                to: 0
                 easing.type: Easing.OutBack
             }
             NumberAnimation {
                 target: dragButton
                 property: "y"
                 duration: 400
-                to:0
+                to: 0
                 easing.type: Easing.OutBack
             }
         }
 
-        Rectangle{
-            id:back
-            anchors.fill: parent
-            radius: height*0.1
-            color: Qt.alpha(btnColor,0.2)
-        }
-
         Rectangle {
-            id: dragButton
-            width: control.width
-            height: control.height
-            radius: height*0.1
-            IconLabel{
-                id:label
-                anchors.fill: parent
-                text: "Input"
-                font.pixelSize: height*0.35
-                color: textColor
-                icon.height: height*0.35
-                icon.color: textColor
-                spacing: width*0.05
+            id: back
+            anchors.fill: parent
+            radius: height * 0.1
+            color: Qt.alpha(btnColor, 0.2)
+            gradient: Gradient {
+                GradientStop {
+                    position: 1.0
+                    color: mouseArea.pressed ? Qt.darker(btnColor,
+                                                         1.4) : btnColor
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 300
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0
+                    color: Qt.alpha(btnColor, 0.4)
+                }
             }
+            Behavior on color {
+                ColorAnimation {
+                    duration: 200
+                }
+            }
+
             Text {
                 id: inputText
                 anchors.fill: parent
-                anchors.margins: height*0.2
+                anchors.margins: height * 0.2
                 text: input
                 font.pixelSize: height
                 color: textColor
@@ -81,35 +84,36 @@ Item {
                 font.bold: true
                 opacity: 0.1
             }
+        }
 
-            gradient: Gradient {
-                GradientStop {
-                    position: 1.0; color:  mouseArea.pressed ? Qt.darker(btnColor,1.6) : btnColor
-                    Behavior on color{
-                        ColorAnimation {
-                            duration: 300
-                        }
-                    }
-                }
-                GradientStop {
-                    position: 0; color: Qt.alpha(btnColor,0.4)
-                }
+        Rectangle {
+            id: dragButton
+            width: control.width
+            height: control.height
+            radius: height * 0.1
+            color: "transparent"
+            z: 1
+            IconLabel {
+                id: label
+                anchors.fill: parent
+                text: "Input"
+                font.pixelSize: height * 0.35
+                color: buttonTextColor
+                icon.height: height * 0.35
+                icon.color: buttonTextColor
+                spacing: width * 0.05
             }
-            Drag.keys: [ input ]
+
+            Drag.keys: [input]
             Drag.active: mouseArea.drag.active
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
         }
 
         MultiEffect {
             source: back
             anchors.fill: back
-            shadowEnabled:true
-            shadowColor: Qt.alpha(btnColor,0.8)
-            shadowHorizontalOffset: back.height/40
+            shadowEnabled: true
+            shadowColor: Qt.alpha(btnColor, 0.5)
+            shadowHorizontalOffset: back.height / 40
             shadowVerticalOffset: shadowHorizontalOffset
         }
     }

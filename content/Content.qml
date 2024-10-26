@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
-import Touch
 
+//import Touch
 import "./Custom"
 import "./Pages"
 
