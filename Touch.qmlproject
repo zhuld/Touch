@@ -2,32 +2,32 @@ import QmlProject
 
 Project {
     mainFile: "content/App.qml"
-    mainUiFile: "content/Screen01.ui.qml"
+    //mainUiFile: "content/Screen01.ui.qml"
 
     /* Include .qml, .js, and image files from current directory and subdirectories */
     QmlFiles {
         directory: "content"
     }
 
-    QmlFiles {
-        directory: "imports"
-    }
+    // QmlFiles {
+    //     directory: "imports"
+    // }
 
     JavaScriptFiles {
         directory: "content"
     }
 
-    JavaScriptFiles {
-        directory: "imports"
-    }
+    // JavaScriptFiles {
+    //     directory: "imports"
+    // }
 
     ImageFiles {
         directory: "content"
     }
 
-    ImageFiles {
-        directory: "asset_imports"
-    }
+    // ImageFiles {
+    //     directory: "asset_imports"
+    // }
 
     Files {
         filter: "*.conf"
