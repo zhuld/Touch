@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Shapes
 import QtQuick.Controls
+import QtQuick.Effects
 
 import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
@@ -58,7 +59,6 @@ Rectangle {
         height: parent.height * 0.5
         font.pixelSize: height * 0.5
         width: parent.width - inputText.width
-        //anchors.right: inputText.left
         alignment: Text.AlignRight
         anchors.margins: height * 0.1
         anchors.bottom: parent.bottom
@@ -70,10 +70,11 @@ Rectangle {
         Behavior on text {
             PropertyAnimation {
                 target: textInput
+                easing.type: Easing.OutCubic
                 properties: "x"
-                from: width * 0.1
+                from: -width * 0.4
                 to: 0
-                duration: 300
+                duration: 500
             }
         }
     }

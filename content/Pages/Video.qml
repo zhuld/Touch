@@ -12,6 +12,7 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
+            id: outputCategory
             widthRatio: 0.35
             Column {
                 anchors.fill: parent
@@ -33,7 +34,7 @@ Item {
                             outputChannel: 2
                         }
                         ListElement {
-                            name: qsTr("院外会议辅流")
+                            name: qsTr("远程会议辅流")
                             outputChannel: 3
                         }
                         ListElement {
@@ -53,7 +54,9 @@ Item {
                 }
             }
         }
+
         Category {
+            id: inputCategory
             widthRatio: 0.65
             Column {
                 anchors.fill: parent
@@ -105,18 +108,6 @@ Item {
                                 name: qsTr("预留输入")
                                 inputChannel: 6
                                 bgColor: "grey"
-                                iconSource: "qrc:/content/icons/HDMIjiekou.png"
-                            }
-                            ListElement {
-                                name: qsTr("预留输入")
-                                inputChannel: 7
-                                bgColor: "#3B48A1"
-                                iconSource: "qrc:/content/icons/HDMIjiekou.png"
-                            }
-                            ListElement {
-                                name: qsTr("预留输入")
-                                inputChannel: 8
-                                bgColor: "olive"
                                 iconSource: "qrc:/content/icons/HDMIjiekou.png"
                             }
                         }

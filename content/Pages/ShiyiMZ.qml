@@ -3,7 +3,7 @@ import QtQuick
 Item {
     readonly property string logoName: "门诊大楼指挥中心"
     readonly property string titleName: "集中控制系统"
-    readonly property string version: "202408"
+    readonly property string version: "202411"
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property string logoImage: "qrc:/content/shiyilogo.png"
 
@@ -28,10 +28,10 @@ Item {
             pageUrl: "qrc:/qt/qml/content/Pages/Volume.qml"
             iconUrl: "qrc:/content/icons/music.png"
         }
-        ListElement {
-            name: qsTr("灯光")
-            pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
-            iconUrl: "qrc:/content/icons/deng.png"
-        }
+        // ListElement {
+        //     name: qsTr("灯光")
+        //     pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
+        //     iconUrl: "qrc:/content/icons/deng.png"
+        // }
     }
 }

@@ -119,7 +119,7 @@ Window {
         onPositionChanged: {
             if (!pressed || settings.fullscreen)
                 return
-            var width = root.width + mouseX
+            let width = root.width + mouseX
             if (width > root.minimumWidth) {
                 root.width = width
             } else {
@@ -141,7 +141,7 @@ Window {
         onPositionChanged: {
             if (!pressed || settings.fullscreen)
                 return
-            var height = root.height + mouseY
+            let height = root.height + mouseY
             if (height > root.minimumHeight) {
                 root.height = height
             } else {
@@ -212,11 +212,12 @@ Window {
         onDataReceived: data => {
                             titleRecive.text = "Recived: " + CrestronCIP.toHexString(
                                 new Uint8Array(data))
-                            var mdata = CrestronCIP.clientMessageCheck(
-                                new Uint8Array(data))
-                            if (mdata !== null) {
-                                tcpClient.sendData(mdata)
-                            }
+                            //let mdata = CrestronCIP.clientMessageCheck(
+                            //    new Uint8Array(data))
+                            //if (mdata !== null) {
+                            tcpClient.sendData(CrestronCIP.clientMessageCheck(
+                                                   new Uint8Array(data)))
+                            // }
                         }
     }
 
@@ -226,7 +227,7 @@ Window {
                             // 显示收到的消息
                             titleRecive.text = "Sended: " + CrestronCIP.toHexString(
                                 new Uint8Array(data))
-                            var mdata = CrestronCIP.serverMessageCheck(
+                            let mdata = CrestronCIP.serverMessageCheck(
                                 new Uint8Array(data))
                             if (mdata !== null) {
                                 tcpServer.sendData(mdata)

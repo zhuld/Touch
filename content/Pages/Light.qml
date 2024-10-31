@@ -56,7 +56,7 @@ Item {
                             required property int index
                             required property string name
                             text: name
-                            channel: 51 + index
+                            channel: 61 + index
                             width: (grid.width + grid.spacing) / grid.columns - grid.spacing
                             height: (grid.height + grid.spacing) / lightList.count
                                     * grid.columns - grid.spacing
@@ -81,22 +81,22 @@ Item {
                         id: lightModel
                         ListElement {
                             name: qsTr("全开")
-                            btnchannel: 46
+                            btnchannel: 67
                             iconUrl: "qrc:/content/icons/quankai.png"
                         }
                         ListElement {
                             name: qsTr("全关")
-                            btnchannel: 47
+                            btnchannel: 68
                             iconUrl: "qrc:/content/icons/quanguan.png"
                         }
                         ListElement {
                             name: qsTr("会议")
-                            btnchannel: 48
+                            btnchannel: 69
                             iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
                         }
                         ListElement {
                             name: qsTr("节电")
-                            btnchannel: 49
+                            btnchannel: 70
                             iconUrl: "qrc:/content/icons/jieneng.png"
                         }
                     }

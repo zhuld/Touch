@@ -21,10 +21,12 @@ Item {
         drag.target: dragButton
 
         onReleased: {
+            //dragButton.z = 1
             dragButton.Drag.drop()
             dragButtonAnimation.start()
         }
         onPressed: {
+            //dragButton.z = 20
             dragButton.Drag.hotSpot.x = mouseX
             dragButton.Drag.hotSpot.y = mouseY
         }
@@ -47,10 +49,10 @@ Item {
         }
 
         Rectangle {
-            id: back
-            anchors.fill: parent
+            id: dragButton
+            width: control.width
+            height: control.height
             radius: height * 0.1
-            color: Qt.alpha(btnColor, 0.2)
             gradient: Gradient {
                 GradientStop {
                     position: 1.0
@@ -67,31 +69,6 @@ Item {
                     color: Qt.alpha(btnColor, 0.4)
                 }
             }
-            Behavior on color {
-                ColorAnimation {
-                    duration: 200
-                }
-            }
-
-            Text {
-                id: inputText
-                anchors.fill: parent
-                anchors.margins: height * 0.2
-                text: input
-                font.pixelSize: height
-                color: textColor
-                horizontalAlignment: Text.AlignRight
-                font.bold: true
-                opacity: 0.1
-            }
-        }
-
-        Rectangle {
-            id: dragButton
-            width: control.width
-            height: control.height
-            radius: height * 0.1
-            color: "transparent"
             z: 1
             IconLabel {
                 id: label
@@ -106,6 +83,25 @@ Item {
 
             Drag.keys: [input]
             Drag.active: mouseArea.drag.active
+        }
+
+        Rectangle {
+            id: back
+            anchors.fill: parent
+            radius: height * 0.1
+            color: Qt.alpha(btnColor, 0.2)
+
+            Text {
+                id: inputText
+                anchors.fill: parent
+                anchors.margins: height * 0.2
+                text: input
+                font.pixelSize: height
+                color: textColor
+                horizontalAlignment: Text.AlignRight
+                font.bold: true
+                opacity: 0.1
+            }
         }
 
         MultiEffect {

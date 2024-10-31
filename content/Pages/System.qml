@@ -19,17 +19,17 @@ Item {
                 anchors.margins: item.width * 0.02
                 spacing: height * 0.05
                 MyLable {
-                    text: "总音量输出"
+                    text: "总音量"
                     height: parent.height * 0.1
                 }
                 VolumeBar {
                     height: parent.height * 0.9 - parent.spacing
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 8
-                    muteChannel: 44
+                    channel: 9
+                    muteChannel: 55
                     miniVolume: -40
-                    maxVolume: 0
+                    maxVolume: 5
                     input: false
                 }
             }
@@ -75,7 +75,6 @@ Item {
                         required property int btnchannel
                         required property real sizeRatio
                         required property color buttonColor
-                        //required property color buttonLightColor
                         required property string iconUrl
                         width: parent.width
                         height: parent.height * 0.2 * sizeRatio
@@ -110,12 +109,12 @@ Item {
                     model: ListModel {
                         id: buttonModel
                         ListElement {
-                            name: qsTr("远程视频会议")
+                            name: qsTr("院内视频会议")
                             btnchannel: 11
                             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
                         }
                         ListElement {
-                            name: qsTr("院内视频会议")
+                            name: qsTr("远程视频会议")
                             btnchannel: 12
                             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
                         }

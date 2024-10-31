@@ -15,45 +15,45 @@ Item {
             model: ListModel {
                 id: volList
                 ListElement {
-                    name: "鹅颈话筒输入"
+                    name: "鹅颈话筒"
                     vChannel: 5
-                    mChannel: 41
+                    mChannel: 51
                     miniVol: -40
-                    maxVol: 20
+                    maxVol: 0
                     inputType: true
                 }
                 ListElement {
-                    name: "手持话筒输入"
+                    name: "手持话筒"
                     vChannel: 6
-                    mChannel: 42
+                    mChannel: 52
+                    miniVol: -40
+                    maxVol: 0
+                    inputType: true
+                }
+                ListElement {
+                    name: "电脑音频"
+                    vChannel: 7
+                    mChannel: 53
                     miniVol: -40
                     maxVol: 5
                     inputType: true
                 }
+
                 ListElement {
-                    name: "音频输入"
-                    vChannel: 7
-                    mChannel: 43
-                    miniVol: -30
-                    maxVol: 10
+                    name: "外接音频"
+                    vChannel: 8
+                    mChannel: 54
+                    miniVol: -40
+                    maxVol: 5
                     inputType: true
                 }
 
                 ListElement {
-                    name: "总音量输出"
-                    vChannel: 8
-                    mChannel: 44
+                    name: "总音量"
+                    vChannel: 9
+                    mChannel: 55
                     miniVol: -40
-                    maxVol: 0
-                    inputType: false
-                }
-
-                ListElement {
-                    name: "总音量输出"
-                    vChannel: 8
-                    mChannel: 44
-                    miniVol: -40
-                    maxVol: 0
+                    maxVol: 5
                     inputType: false
                 }
             }

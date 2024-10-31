@@ -22,7 +22,7 @@ Item {
     Binding {
         target: slider
         property: "value"
-        value: volume / (maxVolume - miniVolume)
+        value: volume / 65535
     }
     Slider {
         id: slider
@@ -50,10 +50,9 @@ Item {
 
         onStateChanged: {
             if (state === "STOPED") {
-                tcpClient.sendData(
-                            CrestronCIP.level(
-                                control.channel, Math.round(
-                                    position * (maxVolume - miniVolume))))
+                tcpClient.sendData(CrestronCIP.level(control.channel,
+                                                     Math.round(
+                                                         position * 65535)))
             }
         }
 
@@ -119,12 +118,12 @@ Item {
             anchors.fill: handle
             shadowEnabled: true
             shadowColor: Qt.alpha(buttonCheckedColor, 0.8)
-            shadowHorizontalOffset: handle.height / 10
-            shadowVerticalOffset: shadowHorizontalOffset * volume / (maxVolume - miniVolume)
+            shadowHorizontalOffset: handle.height / 20
+            shadowVerticalOffset: shadowHorizontalOffset * slider.value
         }
         background: Rectangle {
             height: parent.availableHeight - handle.height + width
-            width: parent.width * 0.12
+            width: parent.width * 0.06
             y: handle.height / 2 - width / 2
             anchors.horizontalCenter: parent.horizontalCenter
             radius: width / 2
@@ -152,7 +151,7 @@ Item {
                 gradient: Gradient {
                     GradientStop {
                         position: 1
-                        color: buttonColor
+                        color: buttonCheckedColor
                     }
                     GradientStop {
                         position: (maxVolume + 5) > 0 ? (maxVolume + 5)
@@ -166,8 +165,9 @@ Item {
                 }
                 Rectangle {
                     height: slider.visualPosition * parent.height
+                    radius: width / 2
                     width: parent.width
-                    color: backgroundColor
+                    color: buttonColor
                 }
             }
         }
@@ -208,7 +208,7 @@ Item {
                         strokeWidth: (Math.floor(
                                           index / 5) * 5 === index) ? 2 : 1
                         startX: (Math.floor(index / 5) * 5
-                                 === index) ? parent.width * 0.2 : parent.width * 0.3
+                                 === index) ? parent.width * 0.3 : parent.width * 0.3
                         startY: parent.handle.height / 2
                                 + (parent.availableHeight - parent.handle.height)
                                 / (maxVolume - miniVolume) * index
@@ -233,7 +233,7 @@ Item {
                                 / (maxVolume - miniVolume) * index
                         PathLine {
                             x: (Math.floor(index / 5) * 5
-                                === index) ? parent.width * 0.9 : parent.width * 0.7
+                                === index) ? parent.width * 0.8 : parent.width * 0.7
                             y: parent.handle.height / 2
                                + (parent.availableHeight - parent.handle.height)
                                / (maxVolume - miniVolume) * index
@@ -246,7 +246,7 @@ Item {
                     width: parent.parent.width * 0.3
                     height: parent.parent.handle.height
                     horizontalAlignment: Text.AlignRight
-                    x: -parent.width * 0.15
+                    x: -parent.width * 0.1
                     y: (parent.parent.availableHeight - parent.parent.handle.height)
                        / (maxVolume - miniVolume) * index
                     color: (-index + maxVolume) <= 0 ? volumeBlueColor : volumeRedColor
@@ -268,8 +268,8 @@ Item {
         textColor: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
         channel: muteChannel
         text: root.digital[control.muteChannel] ? "静音" : Math.round(
-                                                      slider.position
-                                                      * (maxVolume - miniVolume) + miniVolume)
+                                                      slider.position * (maxVolume - miniVolume)
+                                                      + miniVolume) + " dB"
     }
     Text {
         id: channel

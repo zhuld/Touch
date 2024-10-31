@@ -10,7 +10,7 @@ DelayButton {
     property int channel
     property color btnColor: buttonColor
 
-    delay: 2000
+    delay: 2500
 
     text: qsTr("DelayBtn")
 

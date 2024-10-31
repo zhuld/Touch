@@ -37,7 +37,6 @@ Item {
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02
-                //spacing: height*0.05
                 MyLable {
                     text: qsTr("话筒跟踪")
                     height: parent.height * 0.1
@@ -133,9 +132,9 @@ Item {
                                     required property int rotation
                                     width: table.width * 0.2
                                     height: width
-                                    channel: 31 + index
+                                    channel: 39 - index
                                     font.pixelSize: height * 0.6
-                                    text: index + 1
+                                    text: 9 - index
                                     radius: height * 0.2
                                     Connections {
                                         onCheckedChanged: if (checked) {
@@ -143,7 +142,6 @@ Item {
                                                           } else {
                                                               camera.rotation = 90
                                                           }
-
                                         Component.onCompleted: if (checked) {
                                                                    camera.rotation = rotation
                                                                }
@@ -155,8 +153,8 @@ Item {
                             id: button9
                             width: table.width * 0.2
                             height: width
-                            channel: 39
-                            text: "9"
+                            channel: 31
+                            text: "1"
                             anchors.bottom: table.bottom
                             anchors.horizontalCenter: parent.horizontalCenter
                             font.pixelSize: height * 0.6

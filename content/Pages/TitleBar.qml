@@ -82,16 +82,6 @@ Rectangle {
                 }
             }
         }
-        ColorSwitch {
-            id: themeSwitch
-            height: parent.height * 0.5
-            width: height * 2
-            anchors.verticalCenter: parent.verticalCenter
-            checked: settings.darkTheme
-            onCheckedChanged: {
-                settings.darkTheme = checked
-            }
-        }
         IconButton {
             id: setup
             height: parent.height * 0.7
@@ -104,17 +94,6 @@ Rectangle {
             tipText: "设置"
         }
         IconButton {
-            id: min
-            height: parent.height * 0.7
-            width: height
-            anchors.verticalCenter: parent.verticalCenter
-            icon.source: "qrc:/content/icons/MinimizedWindow.png"
-            onClicked: {
-                root.visibility = Window.Minimized
-            }
-            visible: settings.fullscreen ? false : true
-        }
-        IconButton {
             id: close
             height: parent.height * 0.7
             width: height
@@ -122,9 +101,9 @@ Rectangle {
             icon.source: "qrc:/content/icons/close.png"
             backColor: buttonRedColor
             onClicked: {
-                //root.close()
                 closeDialog.open()
             }
+            visible: Qt.platform.os === "windows" ? true : false
         }
     }
 }

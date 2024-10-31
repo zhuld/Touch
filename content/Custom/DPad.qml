@@ -16,7 +16,7 @@ Item {
         width: parent.width
         height: width
         ShapePath {
-            strokeColor: buttonTextColor
+            strokeColor: "transparent"
             strokeWidth: parent.width * 0.005
             startX: shapeCircle.width / 2
             startY: 0

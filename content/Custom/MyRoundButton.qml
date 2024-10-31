@@ -28,7 +28,7 @@ RoundButton {
         radius: width / 2
         Behavior on color {
             ColorAnimation {
-                duration: 200
+                duration: 400
             }
         }
     }
