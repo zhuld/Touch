@@ -44,5 +44,6 @@
         <file>content/icons/windowed.png</file>
         <file>content/icons/config.png</file>
         <file>content/icons/warn.png</file>
+        <file>content/fonts/AlibabaPuHuiTi-3-55-Regular.ttf</file>
     </qresource>
 </RCC>

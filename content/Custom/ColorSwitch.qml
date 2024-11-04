@@ -43,6 +43,7 @@ Switch {
                 text: checked ? "✓" : ""
                 color: buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
+                font.family: alibabaPuHuiTi.font.family
             }
             Behavior on x {
                 NumberAnimation {

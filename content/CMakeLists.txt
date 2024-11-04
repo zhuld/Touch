@@ -38,6 +38,6 @@ qt6_add_qml_module(content
         Custom/IconButton.qml
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
-        dialog/MsgDialog.qml
+        dialog/ConfirmDialog.qml
         crestroncip.js
 )

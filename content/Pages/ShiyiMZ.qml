@@ -28,10 +28,10 @@ Item {
             pageUrl: "qrc:/qt/qml/content/Pages/Volume.qml"
             iconUrl: "qrc:/content/icons/music.png"
         }
-        // ListElement {
-        //     name: qsTr("灯光")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
-        //     iconUrl: "qrc:/content/icons/deng.png"
-        // }
+        ListElement {
+            name: qsTr("灯光")
+            pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
+            iconUrl: "qrc:/content/icons/deng.png"
+        }
     }
 }

@@ -26,7 +26,7 @@ Item {
                 }
             }
             GradientStop {
-                position: 0.74
+                position: 0.735
                 color: control.checked ? buttonCheckedColor : buttonColor
                 Behavior on color {
                     ColorAnimation {
@@ -62,13 +62,14 @@ Item {
             anchors.bottom: parent.bottom
             color: buttonTextColor
             horizontalAlignment: Text.AlignHCenter
+            font.family: alibabaPuHuiTi.font.family
         }
     }
     MultiEffect {
         source: rect
         anchors.fill: rect
         shadowEnabled: true
-        shadowColor: Qt.alpha(buttonCheckedColor, 0.8)
+        shadowColor: buttonShadowColor
         shadowHorizontalOffset: rect.height / 100
         shadowVerticalOffset: shadowHorizontalOffset
     }
@@ -79,11 +80,12 @@ Item {
         color: buttonTextColor
         font.pixelSize: height * 0.1
         anchors.left: parent.left
+        font.family: alibabaPuHuiTi.font.family
     }
     MouseArea {
         anchors.fill: parent
-        onPressed: tcpClient.sendData(CrestronCIP.push(control.channel))
-        onReleased: tcpClient.sendData(CrestronCIP.release(control.channel))
+        onPressed: CrestronCIP.push(control.channel)
+        onReleased: CrestronCIP.release(control.channel)
     }
     checked: root.digital[control.channel] ? root.digital[control.channel] : 0
 }

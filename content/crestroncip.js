@@ -13,6 +13,7 @@ const op_Server_Pong = 0x0E // 回复 0E 00 02 00 00
 
 function clientMessageCheck(message) {
     let index = 0
+    //console.log("client: ", toHexString(message))
     while (index < message.length) {
         let payloadType = message[index]
         let payloadLength = message[index + 2]
@@ -21,17 +22,19 @@ function clientMessageCheck(message) {
         switch (payloadType) {
         case op_Server_Accept:
             if (payload.length === 1 && payload[0] === 0x02) {
-                return cipmessage(
-                            op_Client_IPID,
-                            new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01]))
+                tcpClient.sendData(
+                            cipmessage(
+                                op_Client_IPID,
+                                new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])))
             }
             break
         case op_Server_IPID:
             if (toHexString(payload) === "0000200F") {
                 //"0000001F",0000200F
-                return cipmessage(
-                            op_Join,
-                            new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00]))
+                tcpClient.sendData(
+                            cipmessage(
+                                op_Join,
+                                new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])))
             } else if (toHexString(payload) === "FFFF02") {
                 console.log("registration failed")
             }
@@ -75,6 +78,7 @@ function clientMessageCheck(message) {
 
 function serverMessageCheck(message) {
     let index = 0
+    //console.log("server: ", toHexString(message))
     while (index < message.length) {
         let payloadType = message[index]
         let payloadLength = message[index + 2]
@@ -83,13 +87,16 @@ function serverMessageCheck(message) {
         case op_Client_IPID:
             // 收到IPID信息
             if (payloadLength === 11 & payload[5] === settings.ipId) {
-                return cipmessage(
-                            op_Server_IPID,
-                            new Uint8Array([0x00, 0x00, 0x20, 0x0F])) //0000200f
+                tcpServer.sendData(
+                            cipmessage(
+                                op_Server_IPID,
+                                new Uint8Array([0x00, 0x00, 0x20, 0x0F]))) //0000200f
             } else {
-                return cipmessage(op_Server_IPID,
-                                  new Uint8Array([0xFF, 0xFF, 0x02]))
+                tcpServer.sendData(cipmessage(
+                                       op_Server_IPID,
+                                       new Uint8Array([0xFF, 0xFF, 0x02])))
             }
+            break
         case op_Client_Ping:
             // 收到ping，回复pong
             if (payloadLength === 2) {
@@ -105,17 +112,20 @@ function serverMessageCheck(message) {
                 break
             case op_Join_Digital:
                 //digital
-                return cipmessage(op_Join, payload)
+                tcpServer.sendData(cipmessage(op_Join, payload))
+                break
             case op_Join_Analog:
                 if (payloadLength === 8) {
                     if (payload[4] === 0x00) {
-                        return cipmessage(
-                                    op_Join,
-                                    new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, payload[5], payload[6], payload[7]]))
+                        tcpServer.sendData(
+                                    cipmessage(
+                                        op_Join,
+                                        new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, payload[5], payload[6], payload[7]])))
                     } else {
-                        return cipmessage(
-                                    op_Join,
-                                    new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[4], payload[5], payload[6], payload[7]]))
+                        tcpServer.sendData(
+                                    cipmessage(
+                                        op_Join,
+                                        new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[4], payload[5], payload[6], payload[7]])))
                     }
                 }
                 break
@@ -139,41 +149,44 @@ function cipmessage(opCode, message) {
 function push(channel) {
     if (channel > 0 & channel < 32767) {
         channel = channel - 1
-        return cipmessage(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, channel / 0x100]))
+        tcpClient.sendData(
+                    cipmessage(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
+                                        % 0x100, channel / 0x100])))
     }
 }
 function release(channel) {
     if (channel > 0 & channel < 32767) {
         channel = channel - 1
-        return cipmessage(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, (channel / 0x100) | 0x80]))
+        tcpClient.sendData(
+                    cipmessage(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
+                                        % 0x100, (channel / 0x100) | 0x80])))
     }
 }
 function level(channel, value) {
     if (channel > 0 & channel < 65536) {
         channel = channel - 1
-        return cipmessage(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel
-                                    / 0x100, channel % 0x100, value / 0x100, value % 0x100]))
+        tcpClient.sendData(
+                    cipmessage(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
+                                        % 0x100, value / 0x100, value % 0x100])))
     }
 }
 function ping() {
-    return cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00]))
+    tcpClient.sendData(cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])))
 }
 
 //Server
 function pong() {
-    return cipmessage(op_Server_Pong, new Uint8Array([0x00, 0x00]))
+    tcpServer.sendData(cipmessage(op_Server_Pong, new Uint8Array([0x00, 0x00])))
 }
 
 function accept() {
-    return cipmessage(op_Server_Accept, new Uint8Array([0x02]))
+    tcpServer.sendData(cipmessage(op_Server_Accept, new Uint8Array([0x02])))
 }
 
 function toHexString(data) {

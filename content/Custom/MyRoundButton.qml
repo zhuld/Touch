@@ -7,19 +7,13 @@ import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 RoundButton {
     id: control
     property int channel
-    text: qsTr("Button")
 
+    //text: qsTr("Button")
     icon.width: height * 0.5
     icon.height: height * 0.5
     icon.color: buttonTextColor
+    font.family: alibabaPuHuiTi.font.family
 
-    contentItem: IconLabel {
-        anchors.fill: parent
-        anchors.centerIn: parent
-        icon: control.icon
-        opacity: enabled ? 1.0 : 0.3
-        color: buttonTextColor
-    }
     background: Rectangle {
         id: rect
         anchors.fill: parent
@@ -37,7 +31,7 @@ RoundButton {
         source: rect
         anchors.fill: rect
         shadowEnabled: true
-        shadowColor: Qt.alpha(rect.color, 0.8)
+        shadowColor: buttonShadowColor
         shadowHorizontalOffset: rect.height / 40
         shadowVerticalOffset: shadowHorizontalOffset
     }
@@ -47,11 +41,11 @@ RoundButton {
         text: root.settings.showChannel ? "D" + control.channel : ""
         color: buttonTextColor
         font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
     }
-    onPressed: tcpClient.sendData(CrestronCIP.push(control.channel))
-    onReleased: tcpClient.sendData(CrestronCIP.release(control.channel))
+    onPressed: CrestronCIP.push(control.channel)
+    onReleased: CrestronCIP.release(control.channel)
     onHoveredChanged: if (pressed) {
-                          tcpClient.sendData(CrestronCIP.release(
-                                                 control.channel))
+                          CrestronCIP.release(control.channel)
                       }
 }

@@ -11,17 +11,13 @@ TabButton {
 
     icon.color: buttonTextColor
     font.pixelSize: height * 0.2
+    font.family: alibabaPuHuiTi.font.family
+
+    Material.accent: buttonTextColor
+
     anchors.margins: width * 0.2
-    contentItem: IconLabel {
-        anchors.fill: parent
-        text: control.text
-        font: control.font
-        icon: control.icon
-        opacity: enabled ? 1.0 : 0.3
-        color: buttonTextColor
-        display: AbstractButton.TextUnderIcon
-        spacing: parent.height * 0.1
-    }
+
+    display: AbstractButton.TextUnderIcon
 
     background: Rectangle {
         id: rectangle
@@ -40,7 +36,7 @@ TabButton {
         source: rectangle
         anchors.fill: rectangle
         shadowEnabled: true
-        shadowColor: Qt.alpha(rectangle.color, 0.8)
+        shadowColor: buttonShadowColor
         shadowHorizontalOffset: rectangle.height / 40
         shadowVerticalOffset: shadowHorizontalOffset
     }

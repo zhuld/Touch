@@ -8,8 +8,10 @@ import "./Pages"
 Item {
     id: main
     anchors.fill: parent
-    anchors.margins: width * 0.02
-
+    anchors.bottomMargin: parent.width * 0.02
+    anchors.leftMargin: parent.width * 0.02
+    anchors.rightMargin: parent.width * 0.02
+    //anchors.margins: width * 0.02
     property int usedIndex: 0
 
     Column {
@@ -17,7 +19,7 @@ Item {
         width: parent.width * 0.12
         height: parent.height
         anchors.margins: 0
-        spacing: height * 0.02
+        spacing: height * 0.03
         Repeater {
             id: repeater
             model: root.pageList

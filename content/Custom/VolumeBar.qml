@@ -50,9 +50,7 @@ Item {
 
         onStateChanged: {
             if (state === "STOPED") {
-                tcpClient.sendData(CrestronCIP.level(control.channel,
-                                                     Math.round(
-                                                         position * 65535)))
+                CrestronCIP.level(control.channel, Math.round(position * 65535))
             }
         }
 
@@ -77,7 +75,7 @@ Item {
                     color: input ? "#182632" : "#682632"
                 }
                 GradientStop {
-                    position: 0.49
+                    position: 0.48
                     color: input ? "#2F4E69" : "#8F4E69"
                 }
                 GradientStop {
@@ -85,7 +83,7 @@ Item {
                     color: input ? "#A8C8E8" : "#A8C8E8"
                 }
                 GradientStop {
-                    position: 0.51
+                    position: 0.52
                     color: input ? "#385E7E" : "#885E7E"
                 }
                 GradientStop {
@@ -117,7 +115,7 @@ Item {
             source: handle
             anchors.fill: handle
             shadowEnabled: true
-            shadowColor: Qt.alpha(buttonCheckedColor, 0.8)
+            shadowColor: buttonShadowColor
             shadowHorizontalOffset: handle.height / 20
             shadowVerticalOffset: shadowHorizontalOffset * slider.value
         }
@@ -252,6 +250,7 @@ Item {
                     color: (-index + maxVolume) <= 0 ? volumeBlueColor : volumeRedColor
                     font.pixelSize: height * 0.3
                     verticalAlignment: Text.AlignVCenter
+                    font.family: alibabaPuHuiTi.font.family
                 }
             }
         }
@@ -265,11 +264,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
         icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
-        textColor: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
         channel: muteChannel
         text: root.digital[control.muteChannel] ? "静音" : Math.round(
-                                                      slider.position * (maxVolume - miniVolume)
-                                                      + miniVolume) + " dB"
+                                                      slider.position
+                                                      * (maxVolume - miniVolume) + miniVolume)
     }
     Text {
         id: channel
@@ -277,5 +275,6 @@ Item {
         text: root.settings.showChannel ? "A" + control.channel : ""
         color: buttonTextColor
         font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
     }
 }

@@ -77,6 +77,7 @@ Dialog {
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignLeft
             color: textColor
+            font.family: alibabaPuHuiTi.font.family
             IconButton {
                 id: close
                 height: parent.height
@@ -105,6 +106,7 @@ Dialog {
             focus: true
             echoMode: TextInput.Password
             passwordMaskDelay: 500
+            font.family: alibabaPuHuiTi.font.family
         }
 
         Grid {

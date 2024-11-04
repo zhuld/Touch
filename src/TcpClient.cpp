@@ -25,8 +25,12 @@ void TcpClient::connectToServer(const QString &host, quint16 port)
 
 void TcpClient::sendData(const QByteArray &data)
 {
-    if (tcpSocket->state() == QTcpSocket::ConnectedState) {
-        tcpSocket->write(data);
+    if(data.toHex()!=""){
+        if (tcpSocket->state() == QTcpSocket::ConnectedState) {
+            tcpSocket->write(data);
+            tcpSocket->flush();
+        }
+        //qDebug() << "Data send to server:" << data.toHex();
     }
 }
 

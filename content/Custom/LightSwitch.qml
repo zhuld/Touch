@@ -111,6 +111,7 @@ Item {
                 color: buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 opacity: checked ? 1 : 0
+                font.family: alibabaPuHuiTi.font.family
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 300
@@ -137,11 +138,12 @@ Item {
         color: buttonTextColor
         font.pixelSize: height * 0.1
         anchors.left: parent.left
+        font.family: alibabaPuHuiTi.font.family
     }
     MouseArea {
         anchors.fill: parent
-        onPressed: tcpClient.sendData(CrestronCIP.push(control.channel))
-        onReleased: tcpClient.sendData(CrestronCIP.releasea(control.channel))
+        onPressed: CrestronCIP.push(control.channel)
+        onReleased: CrestronCIP.release(control.channel)
     }
     checked: root.digital[control.channel] ? root.digital[control.channel] : 0
 }

@@ -7,7 +7,6 @@ Button {
 
     implicitHeight: parent.height
     implicitWidth: parent.width
-
     text: qsTr("Button")
 
     background: Rectangle {
@@ -29,8 +28,8 @@ Button {
         text: control.text
         font.pixelSize: control.height * 0.4
         color: buttonTextColor
-        wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+        font.family: alibabaPuHuiTi.font.family
     }
 }

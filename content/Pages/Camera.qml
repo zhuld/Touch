@@ -53,6 +53,7 @@ Item {
                             font.pixelSize: parent.height * 0.7
                             color: buttonTextColor
                             anchors.right: parent.left
+                            font.family: alibabaPuHuiTi.font.family
                         }
                     }
                 }
@@ -69,7 +70,7 @@ Item {
                         border.width: width * 0.01
                         color: "transparent"
                     }
-                    IconImage {
+                    Image {
                         id: camera
                         height: tv.height * 3
                         width: height
@@ -77,7 +78,7 @@ Item {
                         anchors.horizontalCenter: tv.horizontalCenter
                         source: "qrc:/content/icons/camera.png"
                         rotation: 90
-                        color: buttonTextColor
+                        //color: buttonTextColor
                         Behavior on rotation {
                             NumberAnimation {
                                 duration: 300

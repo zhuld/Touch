@@ -54,6 +54,7 @@ Item {
                             sizeRatio: 1
                             buttonColor: "forestgreen"
                             iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            showDialog: true
                         }
                         ListElement {
                             name: "普通会议"
@@ -61,6 +62,7 @@ Item {
                             sizeRatio: 1
                             buttonColor: "forestgreen"
                             iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
+                            showDialog: true
                         }
                         ListElement {
                             name: "会议结束"
@@ -68,29 +70,24 @@ Item {
                             sizeRatio: 1
                             buttonColor: "tomato"
                             iconUrl: "qrc:/content/icons/guanji.png"
+                            showDialog: true
                         }
                     }
-                    delegate: MyDelayButton {
+                    delegate: MyButton {
                         required property string name
                         required property int btnchannel
                         required property real sizeRatio
-                        required property color buttonColor
+                        //required property color buttonColor
                         required property string iconUrl
+                        required property bool showDialog
                         width: parent.width
                         height: parent.height * 0.2 * sizeRatio
                         text: name
                         channel: btnchannel
-                        btnColor: buttonColor
+                        //btnColor: buttonColor
                         icon.source: iconUrl
+                        confirm: showDialog
                     }
-                }
-                Text {
-                    width: parent.width
-                    height: parent.height * 0.05
-                    font.pixelSize: height
-                    color: textColor
-                    horizontalAlignment: Text.AlignRight
-                    text: qsTr("长按2秒启动")
                 }
             }
         }

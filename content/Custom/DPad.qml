@@ -132,13 +132,14 @@ Item {
                         * parent.columns - parent.spacing
                 color: "transparent"
                 radius: width / 2
-                IconLabel {
+                Image {
                     id: icon
-                    anchors.fill: parent
-                    icon.height: height * 0.5
-                    icon.color: buttonTextColor
-                    icon.source: iconUrl
-                    Behavior on icon.height {
+                    anchors.centerIn: parent
+                    height: parent.height * 0.5
+                    width: height
+                    //icon.color: buttonTextColor
+                    source: iconUrl
+                    Behavior on height {
                         NumberAnimation {
                             duration: 200
                         }
@@ -150,6 +151,7 @@ Item {
                     text: root.settings.showChannel & enable ? "D" + (control.channel + index) : ""
                     color: buttonTextColor
                     font.pixelSize: height * 0.3
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 DropArea {
                     id: dropContainer
@@ -157,14 +159,12 @@ Item {
                     anchors.fill: parent
                     Connections {
                         onEntered: {
-                            icon.icon.height = height * 0.9
-                            tcpClient.sendData(CrestronCIP.push(
-                                                   control.channel + index))
+                            icon.height = height * 0.9
+                            CrestronCIP.push(control.channel + index)
                         }
                         onExited: {
-                            icon.icon.height = height * 0.5
-                            tcpClient.sendData(CrestronCIP.release(
-                                                   control.channel + index))
+                            icon.height = height * 0.5
+                            CrestronCIP.release(control.channel + index)
                         }
                     }
                 }
@@ -172,16 +172,14 @@ Item {
                     anchors.fill: parent
                     onPressed: {
                         if (enable) {
-                            icon.icon.height = height * 0.9
-                            tcpClient.sendData(CrestronCIP.push(
-                                                   control.channel + index))
+                            icon.height = height * 0.9
+                            CrestronCIP.push(control.channel + index)
                         }
                     }
                     onReleased: {
                         if (enable) {
-                            icon.icon.height = height * 0.5
-                            tcpClient.sendData(CrestronCIP.release(
-                                                   control.channel + index))
+                            icon.height = height * 0.5
+                            CrestronCIP.release(control.channel + index)
                         }
                     }
                 }

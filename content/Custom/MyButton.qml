@@ -2,34 +2,29 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 
+import "../dialog"
 import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 
 Button {
     id: control
     property int channel
-    property alias radius: rect.radius
-    property color textColor: buttonTextColor
+    property alias radius: back.radius
+    property bool confirm: false
+
+    implicitHeight: parent.height
+    implicitWidth: parent.width
 
     checked: root.digital[control.channel] ? root.digital[control.channel] : false
-
-    text: qsTr("Button")
-
     icon.width: height * 0.5
     icon.height: height * 0.5
     icon.color: buttonTextColor
     font.pixelSize: height * 0.35
-    contentItem: IconLabel {
-        anchors.fill: parent
-        text: control.text
-        font: control.font
-        icon: control.icon
-        color: textColor
-        display: AbstractButton.TextBesideIcon
-        spacing: width * 0.05
-    }
+    font.family: alibabaPuHuiTi.font.family
+
+    Material.accent: buttonTextColor
 
     background: Rectangle {
-        id: rect
+        id: back
         anchors.fill: parent
         color: root.digital[control.channel] ? buttonCheckedColor : buttonColor
         radius: height * 0.1
@@ -39,13 +34,25 @@ Button {
             }
         }
     }
+
     MultiEffect {
-        source: rect
-        anchors.fill: rect
+        source: back
+        anchors.fill: back
         shadowEnabled: true
-        shadowColor: Qt.alpha(rect.color, 0.8)
-        shadowHorizontalOffset: rect.height / 40
+        shadowColor: buttonShadowColor
+        shadowHorizontalOffset: back.height / 40
         shadowVerticalOffset: shadowHorizontalOffset
+    }
+
+    ConfirmDialog {
+        id: confirmdialog
+        dialogIcon: "qrc:/content/icons/warn.png"
+        dialogInfomation: "确定" + text + "？"
+        dialogTitle: "提示"
+        onOkPress: {
+            CrestronCIP.push(control.channel)
+            CrestronCIP.release(control.channel)
+        }
     }
 
     Text {
@@ -55,10 +62,19 @@ Button {
         color: buttonTextColor
         font.pixelSize: height * 0.3
     }
-    onPressed: tcpClient.sendData(CrestronCIP.push(control.channel))
-    onReleased: tcpClient.sendData(CrestronCIP.release(control.channel))
+    onPressed: {
+        if (!confirm) {
+            CrestronCIP.push(control.channel)
+        } else {
+            confirmdialog.open()
+        }
+    }
+    onReleased: {
+        if (!confirm) {
+            CrestronCIP.release(control.channel)
+        }
+    }
     onHoveredChanged: if (pressed) {
-                          tcpClient.sendData(CrestronCIP.release(
-                                                 control.channel))
+                          CrestronCIP.release(control.channel)
                       }
 }

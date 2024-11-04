@@ -14,7 +14,7 @@ Item {
         gradient: Gradient {
             GradientStop {
                 position: 1.0
-                color: Qt.alpha(catagoryColor, 0.5)
+                color: Qt.alpha(catagoryColor, 0.3)
                 Behavior on color {
                     ColorAnimation {
                         duration: 200
@@ -22,7 +22,7 @@ Item {
                 }
             }
             GradientStop {
-                position: 0.115
+                position: 0.114
                 color: Qt.alpha(catagoryColor, 0.5)
                 Behavior on color {
                     ColorAnimation {
@@ -47,7 +47,7 @@ Item {
         source: rectangle
         anchors.fill: rectangle
         shadowEnabled: true
-        shadowColor: Qt.alpha(buttonCheckedColor, 0.8)
+        shadowColor: buttonShadowColor
         shadowHorizontalOffset: rectangle.height / 200
         shadowVerticalOffset: shadowHorizontalOffset
     }

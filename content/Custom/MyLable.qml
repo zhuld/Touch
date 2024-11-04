@@ -14,10 +14,10 @@ Item {
         width: parent.width
         anchors.fill: parent
         font.pixelSize: height * 0.5
-        //font.weight: Font.Light
         verticalAlignment: Text.AlignTop
         horizontalAlignment: Text.AlignHCenter
         color: buttonTextColor
         styleColor: buttonTextColor
+        font.family: alibabaPuHuiTi.font.family
     }
 }

@@ -10,7 +10,8 @@ Rectangle {
 
     property string output
     property alias textOutput: textOutput.text
-    property alias textInput: textInput.text
+    property alias textInput: label.text
+    property string disableInput
 
     readonly property var input: root.analog[output]
 
@@ -25,9 +26,15 @@ Rectangle {
                 }
             }
         }
+
         GradientStop {
-            position: 0.3
+            position: 0.2
             color: Qt.darker(buttonColor, 1.4)
+            Behavior on color {
+                ColorAnimation {
+                    duration: 500
+                }
+            }
         }
     }
 
@@ -41,6 +48,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         text: "Output"
         color: buttonTextColor
+        font.family: alibabaPuHuiTi.font.family
     }
 
     Text {
@@ -53,30 +61,37 @@ Rectangle {
         color: buttonTextColor
         font.bold: true
         opacity: 0.1
+        font.family: alibabaPuHuiTi.font.family
     }
-    IconLabel {
+    Row {
         id: textInput
+        anchors.top: textOutput.bottom
         height: parent.height * 0.5
-        font.pixelSize: height * 0.5
-        width: parent.width - inputText.width
-        alignment: Text.AlignRight
-        anchors.margins: height * 0.1
-        anchors.bottom: parent.bottom
-        color: buttonTextColor
-        icon.height: height * 0.5
-        icon.color: buttonTextColor
-        spacing: width * 0.05
-
-        Behavior on text {
-            PropertyAnimation {
-                target: textInput
-                easing.type: Easing.OutCubic
-                properties: "x"
-                from: -width * 0.4
-                to: 0
-                duration: 500
+        Image {
+            id: icon
+            height: control.height * 0.35
+            width: height
+            anchors.top: label.top
+        }
+        Text {
+            id: label
+            height: control.height * 0.5
+            font.pixelSize: height * 0.5
+            color: buttonTextColor
+            font.family: alibabaPuHuiTi.font.family
+            Behavior on text {
+                PropertyAnimation {
+                    target: textInput
+                    easing.type: Easing.OutCubic
+                    properties: "x"
+                    from: 0
+                    to: control.width * 0.3
+                    duration: 500
+                }
             }
         }
+        x: control.width * 0.3
+        spacing: width * 0.05
     }
     Text {
         id: inputText
@@ -89,6 +104,7 @@ Rectangle {
         color: buttonTextColor
         font.bold: true
         opacity: 0.1
+        font.family: alibabaPuHuiTi.font.family
     }
     Text {
         id: channel
@@ -98,19 +114,23 @@ Rectangle {
         text: root.settings.showChannel ? "A" + control.output : ""
         color: buttonTextColor
         font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
     }
     DropArea {
         id: dropContainer
         anchors.fill: parent
         Connections {
             onDropped: drop => {
-                           tcpClient.sendData(CrestronCIP.level(output,
-                                                                drop.keys[0]))
+                           if (disableInput !== drop.keys[0]) {
+                               CrestronCIP.level(output, drop.keys[0])
+                           }
                            control.opacity = 1
                        }
-            onEntered: {
-                control.opacity = 0.6
-            }
+            onEntered: drop => {
+                           if (disableInput !== drop.keys[0]) {
+                               control.opacity = 0.6
+                           }
+                       }
             onExited: {
                 control.opacity = 1
             }
@@ -123,13 +143,13 @@ Rectangle {
         value: input > 0 ? inputModel.get(input - 1).bgColor : buttonColor
     }
     Binding {
-        target: textInput
+        target: label
         property: "text"
         value: input > 0 ? inputModel.get(input - 1).name : null
     }
     Binding {
-        target: textInput
-        property: "icon.source"
-        value: input > 0 ? inputModel.get(input - 1).iconSource : null
+        target: icon
+        property: "source"
+        value: input > 0 ? inputModel.get(input - 1).source : null
     }
 }

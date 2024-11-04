@@ -19,8 +19,6 @@ Window {
     property alias settings: settingDialog.settings
     property alias pageList: config.pageList
 
-    property bool connectPage: false
-
     property var digital: [500]
     property var analog: [100]
     property var text: [100]
@@ -29,9 +27,10 @@ Window {
 
     property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
-    property color buttonColor: settings.darkTheme ? "#E01B2A4B" : "#E0FAFAFA"
+    property color buttonColor: settings.darkTheme ? "#E01B2A4B" : "whitesmoke"
+    property color buttonShadowColor: settings.darkTheme ? "midnightblue" : "grey"
     property color buttonRedColor: settings.darkTheme ? "#DD880015" : "#A0F08784"
-    property color catagoryColor: settings.darkTheme ? "#1B4F96" : "#D7DBE4"
+    property color catagoryColor: settings.darkTheme ? "#1B4F96" : "mintcream"
     property color buttonCheckedColor: settings.darkTheme ? "#E0589BAB" : "#E0589BAB"
 
     property color buttonTextRedColor: "red"
@@ -48,6 +47,10 @@ Window {
     FontLoader {
         id: lcdFont
         source: "qrc:/content/fonts/TP-LCD.TTF"
+    }
+    FontLoader {
+        id: alibabaPuHuiTi
+        source: "qrc:/content/fonts/AlibabaPuHuiTi-3-55-Regular.ttf"
     }
 
     width: settings.windowWidth
@@ -84,7 +87,7 @@ Window {
         Image {
             anchors.fill: parent
             source: config.background
-            opacity: connectPage ? 0.6 : 0.3
+            opacity: ping.running ? 0.3 : 0.6
             Behavior on opacity {
                 OpacityAnimator {
                     duration: 1000
@@ -97,17 +100,8 @@ Window {
     TitleBar {
         id: titleBar
         width: parent.width * 0.96
-        height: parent.height * 0.08
+        height: parent.height * 0.07
         x: parent.width * 0.02
-        Text {
-            id: titleRecive
-            visible: settings.showChannel
-            height: parent.height * 0.4
-            anchors.left: parent.left
-            y: parent.height * 0.8
-            font.pixelSize: height
-            color: textColor
-        }
     }
     MouseArea {
         id: rightSide
@@ -125,7 +119,7 @@ Window {
             } else {
                 root.width = root.minimumWidth
             }
-            titleRecive.text = "Window Width: " + root.width
+            titleBar.titleRecive = "Window Width: " + root.width
         }
         onPressedChanged: {
             settings.windowWidth = root.width
@@ -147,7 +141,7 @@ Window {
             } else {
                 root.height = root.minimumHeight
             }
-            titleRecive.text = "Window Height: " + root.height
+            titleBar.titleRecive = "Window Height: " + root.height
         }
         onPressedChanged: {
             settings.windowHeight = root.height
@@ -155,7 +149,8 @@ Window {
     }
     Loader {
         id: pageLoader
-        anchors.top: titleBar.bottom
+        //anchors.top: titleBar.bottom
+        y: titleBar.height
         width: parent.width
         height: parent.height - titleBar.height
     }
@@ -173,9 +168,9 @@ Window {
     SettingDialog {
         id: settingDialog
     }
-    MsgDialog {
+    ConfirmDialog {
         id: closeDialog
-        dialogIcon.source: "qrc:/content/icons/warn.png"
+        dialogIcon: "qrc:/content/icons/warn.png"
         dialogInfomation: "确定关闭程序？"
         dialogTitle: "提示"
         onOkPress: {
@@ -186,38 +181,35 @@ Window {
         id: ping
         interval: 15000
         repeat: true
-        onTriggered: {
-            tcpClient.sendData(CrestronCIP.ping())
-        }
+        onTriggered: CrestronCIP.ping()
     }
+
     Connections {
         target: tcpClient
         onStateChanged: state => {
-                            if (state === 3) {
-                                pageLoader.setSource(
-                                    "qrc:/qt/qml/content/Content.qml")
-                                connectPage = false
-                                ping.running = true
-                            } else if (state === 0) {
-                                if (connectPage) {
-                                    pageLoader.item.socketAnimation.start()
-                                } else {
+                            switch (state) {
+                                case 0:
+                                //disconneted
+                                if (ping.running) {
                                     pageLoader.setSource(
                                         "qrc:/qt/qml/content/Connect.qml")
-                                    connectPage = true
                                     ping.running = false
+                                } else {
+                                    pageLoader.item.socketAnimation.start()
                                 }
+                                break
+                                case 3:
+                                //connected
+                                pageLoader.setSource(
+                                    "qrc:/qt/qml/content/Content.qml")
+                                ping.running = true
+                                break
                             }
                         }
         onDataReceived: data => {
-                            titleRecive.text = "Recived: " + CrestronCIP.toHexString(
+                            titleBar.titleRecive = "Recived: " + CrestronCIP.toHexString(
                                 new Uint8Array(data))
-                            //let mdata = CrestronCIP.clientMessageCheck(
-                            //    new Uint8Array(data))
-                            //if (mdata !== null) {
-                            tcpClient.sendData(CrestronCIP.clientMessageCheck(
-                                                   new Uint8Array(data)))
-                            // }
+                            CrestronCIP.clientMessageCheck(new Uint8Array(data))
                         }
     }
 
@@ -225,21 +217,17 @@ Window {
         target: tcpServer // 监听 TCPServer 的信号
         onDataReceived: data => {
                             // 显示收到的消息
-                            titleRecive.text = "Sended: " + CrestronCIP.toHexString(
-                                new Uint8Array(data))
-                            let mdata = CrestronCIP.serverMessageCheck(
-                                new Uint8Array(data))
-                            if (mdata !== null) {
-                                tcpServer.sendData(mdata)
-                            }
+                            // titleBar.titleRecive = "Sended: " + CrestronCIP.toHexString(
+                            //     new Uint8Array(data))
+                            CrestronCIP.serverMessageCheck(new Uint8Array(data))
                         }
         onClientConnected: {
-            tcpServer.sendData(CrestronCIP.accept())
+            CrestronCIP.accept()
         }
     }
     Component.onCompleted: {
+
         pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
-        connectPage = true
         if (root.settings.demoMode) {
             tcpServer.startServer(41793, "127.0.0.1")
             tcpClient.connectToServer("127.0.0.1", 41793)

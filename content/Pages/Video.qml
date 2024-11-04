@@ -32,10 +32,12 @@ Item {
                         ListElement {
                             name: qsTr("院内会议辅流")
                             outputChannel: 2
+                            disable: "3"
                         }
                         ListElement {
                             name: qsTr("远程会议辅流")
                             outputChannel: 3
+                            disable: "1"
                         }
                         ListElement {
                             name: qsTr("预留输出")
@@ -46,10 +48,12 @@ Item {
                         id: output
                         required property string name
                         required property int outputChannel
+                        required property string disable
                         width: parent.width
                         height: (parent.height * 0.9) / outputModel.count - parent.spacing
                         output: outputChannel
                         textOutput: name
+                        disableInput: disable
                     }
                 }
             }
@@ -78,44 +82,56 @@ Item {
                                 name: qsTr("外网电脑")
                                 inputChannel: 1
                                 bgColor: "deepskyblue"
-                                iconSource: "qrc:/content/icons/zhuji.png"
+                                source: "qrc:/content/icons/zhuji.png"
                             }
                             ListElement {
                                 name: qsTr("内网电脑")
                                 inputChannel: 2
                                 bgColor: "darkorange"
-                                iconSource: "qrc:/content/icons/zhuji.png"
+                                source: "qrc:/content/icons/zhuji.png"
                             }
                             ListElement {
                                 name: qsTr("视频会议")
                                 inputChannel: 3
                                 bgColor: "forestgreen"
-                                iconSource: "qrc:/content/icons/shipinhuiyi.png"
+                                source: "qrc:/content/icons/shipinhuiyi.png"
                             }
                             ListElement {
                                 name: qsTr("无线投屏")
                                 inputChannel: 4
                                 bgColor: "violet"
-                                iconSource: "qrc:/content/icons/wuxiantouping.png"
+                                source: "qrc:/content/icons/wuxiantouping.png"
                             }
                             ListElement {
                                 name: qsTr("摄像机")
                                 inputChannel: 5
                                 bgColor: "orangered"
-                                iconSource: "qrc:/content/icons/shexiangji.png"
+                                source: "qrc:/content/icons/shexiangji.png"
                             }
                             ListElement {
-                                name: qsTr("预留输入")
+                                name: qsTr("预留输入1")
                                 inputChannel: 6
-                                bgColor: "grey"
-                                iconSource: "qrc:/content/icons/HDMIjiekou.png"
+                                bgColor: "yellowgreen"
+                                source: "qrc:/content/icons/HDMIjiekou.png"
+                            }
+                            ListElement {
+                                name: qsTr("预留输入2")
+                                inputChannel: 7
+                                bgColor: "khaki"
+                                source: "qrc:/content/icons/HDMIjiekou.png"
+                            }
+                            ListElement {
+                                name: qsTr("预留输入3")
+                                inputChannel: 8
+                                bgColor: "royalblue"
+                                source: "qrc:/content/icons/HDMIjiekou.png"
                             }
                         }
                         delegate: InputButton {
                             required property string name
                             required property int inputChannel
                             required property color bgColor
-                            required property string iconSource
+                            required property string source
                             required property int index
 
                             width: (parent.width + parent.spacing) / parent.columns - parent.spacing
@@ -123,9 +139,9 @@ Item {
                                     * parent.columns - parent.spacing
 
                             btnColor: bgColor
-                            text: name
+                            textInput: name
                             input: inputChannel
-                            icon.source: iconSource
+                            iconSource: source
                         }
                     }
                 }
@@ -133,9 +149,10 @@ Item {
                     width: parent.width
                     height: parent.height * 0.05
                     font.pixelSize: height
-                    color: textColor
+                    color: catagoryColor
                     horizontalAlignment: Text.AlignRight
                     text: qsTr("拖拽输入信号到输出")
+                    font.family: alibabaPuHuiTi.font.family
                 }
             }
         }

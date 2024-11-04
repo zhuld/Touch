@@ -5,11 +5,11 @@ import QtQuick.Effects
 Item {
     id: control
 
-    property string input
+    property int input
     property color btnColor: buttonCheckedColor
     property color textColor: buttonTextColor
-    property alias text: label.text
-    property alias icon: label.icon
+    property alias textInput: label.text
+    property alias iconSource: icon.source
 
     MouseArea {
         id: mouseArea
@@ -21,12 +21,10 @@ Item {
         drag.target: dragButton
 
         onReleased: {
-            //dragButton.z = 1
             dragButton.Drag.drop()
             dragButtonAnimation.start()
         }
         onPressed: {
-            //dragButton.z = 20
             dragButton.Drag.hotSpot.x = mouseX
             dragButton.Drag.hotSpot.y = mouseY
         }
@@ -70,14 +68,23 @@ Item {
                 }
             }
             z: 1
-            IconLabel {
-                id: label
-                anchors.fill: parent
-                text: "Input"
-                font.pixelSize: height * 0.35
-                color: buttonTextColor
-                icon.height: height * 0.35
-                icon.color: buttonTextColor
+            Row {
+                id: iconLabel
+                anchors.centerIn: parent
+                height: dragButton.height
+                Image {
+                    id: icon
+                    height: dragButton.height * 0.35
+                    width: height
+                    anchors.verticalCenter: iconLabel.verticalCenter
+                }
+                Text {
+                    id: label
+                    font.pixelSize: dragButton.height * 0.35
+                    anchors.verticalCenter: iconLabel.verticalCenter
+                    color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
+                }
                 spacing: width * 0.05
             }
 
@@ -101,6 +108,7 @@ Item {
                 horizontalAlignment: Text.AlignRight
                 font.bold: true
                 opacity: 0.1
+                font.family: alibabaPuHuiTi.font.family
             }
         }
 
@@ -108,7 +116,7 @@ Item {
             source: back
             anchors.fill: back
             shadowEnabled: true
-            shadowColor: Qt.alpha(btnColor, 0.5)
+            shadowColor: buttonShadowColor
             shadowHorizontalOffset: back.height / 40
             shadowVerticalOffset: shadowHorizontalOffset
         }

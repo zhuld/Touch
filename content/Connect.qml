@@ -4,7 +4,6 @@ Item {
     id: connectPage
     anchors.fill: parent
     anchors.margins: width * 0.02
-
     property alias socketAnimation: socketAnimation
 
     Column {
@@ -39,7 +38,7 @@ Item {
             triggeredOnStart: true
             onTriggered: {
                 dateText.text = new Date().toLocaleDateString(
-                            Qt.locale("zh_CN"), "yy年MM月dd日 dddd")
+                            Qt.locale("zh_CN"), "yyyy年MM月dd日 dddd")
                 timeText.text = new Date().toLocaleTimeString(
                             Qt.locale("zh_CN"), "hh:mm")
             }

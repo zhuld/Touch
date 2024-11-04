@@ -23,7 +23,7 @@ Dialog {
         property int ipId: 3
         property bool fullscreen: true
         property string settingPassword: "123"
-        property bool demoMode: false
+        property bool demoMode: true
         property bool showChannel: false
         property bool darkTheme: false
         property int windowWidth: 1280
@@ -97,6 +97,7 @@ Dialog {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignLeft
                 color: buttonTextColor
+                font.family: alibabaPuHuiTi.font.family
             }
         }
         ScrollView {
@@ -106,7 +107,6 @@ Dialog {
             contentWidth: parent.width * 0.9
             contentHeight: Grid.height
             anchors.margins: height / 20
-
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {
                     duration: 250
@@ -124,6 +124,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
 
                 TextField {
@@ -143,6 +144,7 @@ Dialog {
                         }
                     }
                     enabled: !demoMode.checked
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 Text {
                     text: "中控端口"
@@ -150,6 +152,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
 
                 TextField {
@@ -170,6 +173,7 @@ Dialog {
                         }
                     }
                     enabled: !demoMode.checked
+                    font.family: alibabaPuHuiTi.font.family
                 }
 
                 Text {
@@ -178,6 +182,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
 
                 TextField {
@@ -198,6 +203,7 @@ Dialog {
                         }
                     }
                     enabled: !demoMode.checked
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 Text {
                     text: "演示模式"
@@ -205,6 +211,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
                     height: settingDialog.height / 15
@@ -219,6 +226,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
                     height: settingDialog.height / 15
@@ -233,6 +241,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
 
                 TextField {
@@ -252,6 +261,7 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 Text {
                     text: "显示通道号码"
@@ -259,6 +269,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
                     height: settingDialog.height / 15
@@ -272,6 +283,7 @@ Dialog {
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
+                    font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
                     height: settingDialog.height / 15

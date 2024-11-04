@@ -8,22 +8,8 @@ import "../dialog"
 
 Rectangle {
     id: control
-
     color: "transparent"
-    Shape {
-        anchors.fill: parent
-        ShapePath {
-            strokeColor: textColor
-            strokeStyle: ShapePath.SolidLine
-            strokeWidth: parent.height * 0.002
-            startX: 0
-            startY: control.height
-            PathLine {
-                x: control.width
-                y: control.height
-            }
-        }
-    }
+    property alias titleRecive: titleRecive.text
 
     MouseArea {
         property var clickPosition: Qt.point(0, 0)
@@ -49,6 +35,17 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: height * 0.4
         color: textColor
+        font.family: alibabaPuHuiTi.font.family
+    }
+    Text {
+        id: titleRecive
+        visible: settings.showChannel
+        height: parent.height
+        anchors.left: titleLogo.right
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: height * 0.4
+        color: textColor
+        font.family: alibabaPuHuiTi.font.family
     }
     Text {
         id: titleName
@@ -56,9 +53,9 @@ Rectangle {
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: height * 0.5
-        font.weight: Font.Bold
+        font.pixelSize: height * 0.4
         color: textColor
+        font.family: alibabaPuHuiTi.font.family
     }
     Row {
         height: parent.height
@@ -70,6 +67,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: height * 0.4
             color: textColor
+            font.family: alibabaPuHuiTi.font.family
             Timer {
                 id: timer
                 interval: 1000
@@ -77,25 +75,41 @@ Rectangle {
                 running: true
                 triggeredOnStart: true
                 onTriggered: {
-                    titleTime.text = Qt.formatDateTime(new Date(),
-                                                       "MM-dd hh:mm")
+                    titleTime.text = new Date().toLocaleDateString(
+                                Qt.locale("zh_CN"),
+                                "MM月dd日 dddd") + new Date().toLocaleTimeString(
+                                Qt.locale("zh_CN"), " hh:mm")
                 }
             }
         }
+        Switch {
+            id: dark
+            height: parent.height * 0.8
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                settings.darkTheme = !settings.darkTheme
+                if (settings.darkTheme) {
+                    app.Material.Theme = "Dark"
+                } else {
+                    app.Material.Theme = "Light"
+                }
+            }
+            //checked: settings.darkTheme
+        }
+
         IconButton {
             id: setup
-            height: parent.height * 0.7
+            height: parent.height * 0.8
             width: height
             anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/config.png"
             onClicked: {
                 passwordDialog.open()
             }
-            tipText: "设置"
         }
         IconButton {
             id: close
-            height: parent.height * 0.7
+            height: parent.height * 0.8
             width: height
             anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/close.png"
