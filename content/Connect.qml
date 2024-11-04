@@ -21,6 +21,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.8
             color: textColor
+            font.family: alibabaPuHuiTi.font.family
         }
         Text {
             id: dateText
@@ -29,6 +30,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.5
             color: textColor
+            font.family: alibabaPuHuiTi.font.family
         }
         Timer {
             id: timer
@@ -50,6 +52,16 @@ Item {
             horizontalAlignment: Text.AlignRight
             font.pixelSize: height * 0.6
             color: textColor
+            font.family: alibabaPuHuiTi.font.family
+        }
+        Text {
+            text: qsTr("隽捷信息")
+            width: parent.width
+            height: parent.height * 0.05
+            horizontalAlignment: Text.AlignRight
+            font.pixelSize: height * 0.6
+            color: textColor
+            font.family: alibabaPuHuiTi.font.family
         }
     }
     Rectangle {

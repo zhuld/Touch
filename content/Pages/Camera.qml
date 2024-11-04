@@ -70,15 +70,20 @@ Item {
                         border.width: width * 0.01
                         color: "transparent"
                     }
-                    Image {
+                    IconButton {
                         id: camera
-                        height: tv.height * 3
+                        height: tv.height * 5
                         width: height
-                        anchors.top: tv.bottom
+                        enabled: false
+                        background: Rectangle{
+                            anchors.fill: parent
+                            color: "transparent"
+                        }
+                        anchors.top: tv.top
                         anchors.horizontalCenter: tv.horizontalCenter
-                        source: "qrc:/content/icons/camera.png"
+                        icon.source: "qrc:/content/icons/camera.png"
+                        icon.color: buttonTextColor
                         rotation: 90
-                        //color: buttonTextColor
                         Behavior on rotation {
                             NumberAnimation {
                                 duration: 300

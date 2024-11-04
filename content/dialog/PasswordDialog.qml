@@ -22,7 +22,7 @@ Dialog {
     closePolicy: Popup.CloseOnPressOutside
 
     Overlay.modal: Rectangle {
-        color: "#A0000000"
+        color: "#80000000"
     }
 
     enter: Transition {
@@ -165,6 +165,7 @@ Dialog {
                     btnRadius: width / 2
                     font.pixelSize: width * 0.5
                     text: name
+                    backColor: "transparent"
                     onClicked: {
                         switch (name) {
                         case "1":

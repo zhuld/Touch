@@ -6,16 +6,19 @@ Dialog {
     id: confirmDialog
     property alias dialogTitle: title.text
     property alias dialogInfomation: info.text
-    property alias dialogIcon: icon.source
+    property alias dialogIcon: icon.icon.source
     signal okPress
+
+    property int during: 30
 
     anchors.centerIn: Overlay.overlay
     width: root.width * 0.5
     height: root.height * 0.5
 
+    closePolicy: Popup.NoAutoClose
     modal: true
     Overlay.modal: Rectangle {
-        color: "#A0000000"
+        color: "#80000000"
     }
 
     background: Background {}
@@ -41,32 +44,52 @@ Dialog {
         anchors.fill: parent
         anchors.centerIn: parent
         anchors.margins: height * 0.05
-        spacing: height * 0.25
+        spacing: height * 0.15
         Text {
             id: title
             width: parent.width
-            height: parent.height * 0.1
-            font.pixelSize: height
+            height: parent.height * 0.2
+            font.pixelSize: height * 0.6
             horizontalAlignment: Text.AlignLeft
             color: textColor
             text: qsTr("标题")
             font.family: alibabaPuHuiTi.font.family
+            IconButton {
+                id: close
+                height: parent.height * 0.8
+                width: height
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                icon.source: "qrc:/content/icons/close.png"
+                onClicked: {
+                    confirmDialog.close()
+                }
+                visible: during < 20
+            }
         }
 
         Row {
             width: parent.width
-            height: parent.height * 0.15
-            Image {
+            height: parent.height * 0.25
+            IconButton {
                 id: icon
                 height: parent.height
                 width: height
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+                enabled: false
+                icon.color: textColor
             }
+
             Text {
                 id: info
                 color: textColor
                 height: parent.height
-                font.pixelSize: height * 0.8
+                font.pixelSize: height * 0.5
                 anchors.top: parent.top
+                verticalAlignment: Text.AlignVCenter
                 font.family: alibabaPuHuiTi.font.family
             }
             spacing: width * 0.05
@@ -85,6 +108,8 @@ Dialog {
                     okPress()
                     confirmDialog.close()
                 }
+                backColor: buttonRedColor
+                btnRadius: width / 20
             }
             ColorButton {
                 id: settingCancel
@@ -93,7 +118,27 @@ Dialog {
                 text: "取消"
                 font.pixelSize: height * 0.6
                 onClicked: confirmDialog.close()
+                backColor: buttonGreenColor
+                btnRadius: width / 20
             }
         }
+    }
+    Timer {
+        id: countDownTimer
+        interval: 1000
+        repeat: true
+        triggeredOnStart: false
+        onTriggered: {
+            during--
+            if (during === 0) {
+                confirmDialog.close()
+            }
+        }
+    }
+    onOpened: countDownTimer.start()
+
+    onClosed: {
+        countDownTimer.stop()
+        during = 30
     }
 }

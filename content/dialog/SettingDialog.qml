@@ -330,6 +330,11 @@ Dialog {
         settings.settingPassword = settingPassword.text
         settings.showChannel = showChannel.checked
         settings.darkTheme = darkTheme.checked
+        if (settings.darkTheme) {
+            root.Material.theme = Material.Dark
+        } else {
+            root.Material.theme = Material.Light
+        }
         settings.sync()
     }
 }

@@ -74,7 +74,6 @@ Item {
                 ListElement {
                     name: "2"
                     enable: true
-                    dPadIcon: "qrc:/content/icons/dpad-up.png"
                     iconUrl: "qrc:/content/icons/up.png"
                 }
                 ListElement {
@@ -86,7 +85,6 @@ Item {
                 ListElement {
                     name: "4"
                     enable: true
-                    dPadIcon: "qrc:/content/icons/dpad-left.png"
                     iconUrl: "qrc:/content/icons/left.png"
                 }
                 ListElement {
@@ -98,7 +96,6 @@ Item {
                 ListElement {
                     name: "6"
                     enable: true
-                    dPadIcon: "qrc:/content/icons/dpad-right.png"
                     iconUrl: "qrc:/content/icons/right.png"
                 }
                 ListElement {
@@ -110,7 +107,6 @@ Item {
                 ListElement {
                     name: "8"
                     enable: true
-                    dPadIcon: "qrc:/content/icons/dpad-down.png"
                     iconUrl: "qrc:/content/icons/down.png"
                 }
                 ListElement {
@@ -120,31 +116,32 @@ Item {
                     iconUrl: ""
                 }
             }
-            delegate: Rectangle {
+            delegate: Button {
                 id: dpadDrog
                 required property string name
                 required property bool enable
                 required property int index
-                required property string dPadIcon
                 required property string iconUrl
                 width: (parent.width + parent.spacing) / parent.columns - parent.spacing
                 height: (parent.height + parent.spacing) / dpadModel.count
                         * parent.columns - parent.spacing
-                color: "transparent"
-                radius: width / 2
-                Image {
-                    id: icon
-                    anchors.centerIn: parent
-                    height: parent.height * 0.5
-                    width: height
-                    //icon.color: buttonTextColor
-                    source: iconUrl
-                    Behavior on height {
-                        NumberAnimation {
-                            duration: 200
-                        }
+
+                icon.source: iconUrl
+                icon.height: height * 0.5
+                icon.width: height * 0.5
+                icon.color: buttonTextColor
+                Behavior on icon.width {
+                    NumberAnimation {
+                        target: dpadDrog
+                        property: "icon.width"
+                        duration: 300
                     }
                 }
+                background: Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                }
+
                 Text {
                     id: channel
                     height: parent.height
@@ -159,28 +156,29 @@ Item {
                     anchors.fill: parent
                     Connections {
                         onEntered: {
-                            icon.height = height * 0.9
+                            icon.height = height
+                            icon.width = height
                             CrestronCIP.push(control.channel + index)
                         }
                         onExited: {
                             icon.height = height * 0.5
+                            icon.width = height * 0.5
                             CrestronCIP.release(control.channel + index)
                         }
                     }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: {
-                        if (enable) {
-                            icon.height = height * 0.9
-                            CrestronCIP.push(control.channel + index)
-                        }
+                onPressed: {
+                    if (enable) {
+                        icon.height = height
+                        icon.width = height
+                        CrestronCIP.push(control.channel + index)
                     }
-                    onReleased: {
-                        if (enable) {
-                            icon.height = height * 0.5
-                            CrestronCIP.release(control.channel + index)
-                        }
+                }
+                onReleased: {
+                    if (enable) {
+                        icon.height = height * 0.5
+                        icon.width = height * 0.5
+                        CrestronCIP.release(control.channel + index)
                     }
                 }
             }

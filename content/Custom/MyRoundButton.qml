@@ -7,8 +7,8 @@ import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
 RoundButton {
     id: control
     property int channel
+    property color backColor: buttonColor
 
-    //text: qsTr("Button")
     icon.width: height * 0.5
     icon.height: height * 0.5
     icon.color: buttonTextColor
@@ -18,7 +18,7 @@ RoundButton {
         id: rect
         anchors.fill: parent
         opacity: enabled ? 1 : 0.3
-        color: root.digital[control.channel] ? buttonCheckedColor : buttonColor
+        color: root.digital[control.channel] ? buttonCheckedColor : backColor
         radius: width / 2
         Behavior on color {
             ColorAnimation {

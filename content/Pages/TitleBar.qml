@@ -84,17 +84,18 @@ Rectangle {
         }
         Switch {
             id: dark
-            height: parent.height * 0.8
+            height: parent.height
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 settings.darkTheme = !settings.darkTheme
                 if (settings.darkTheme) {
-                    app.Material.Theme = "Dark"
+                    root.Material.theme = Material.Dark
                 } else {
-                    app.Material.Theme = "Light"
+                    root.Material.theme = Material.Light
                 }
             }
-            //checked: settings.darkTheme
+            checked: settings.darkTheme
+            Material.accent: buttonCheckedColor
         }
 
         IconButton {

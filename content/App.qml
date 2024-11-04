@@ -29,7 +29,8 @@ Window {
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
     property color buttonColor: settings.darkTheme ? "#E01B2A4B" : "whitesmoke"
     property color buttonShadowColor: settings.darkTheme ? "midnightblue" : "grey"
-    property color buttonRedColor: settings.darkTheme ? "#DD880015" : "#A0F08784"
+    property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
+    property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
     property color catagoryColor: settings.darkTheme ? "#1B4F96" : "mintcream"
     property color buttonCheckedColor: settings.darkTheme ? "#E0589BAB" : "#E0589BAB"
 
@@ -234,6 +235,11 @@ Window {
         } else {
             tcpServer.stopServer()
             tcpClient.connectToServer(settings.ipAddress, settings.ipPort)
+        }
+        if (settings.darkTheme) {
+            root.Material.theme = Material.Dark
+        } else {
+            root.Material.theme = Material.Light
         }
     }
 }

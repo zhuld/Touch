@@ -1,20 +1,22 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 
 Button {
     id: control
     property real btnRadius: 0
+    property color backColor: buttonColor
 
     implicitHeight: parent.height
     implicitWidth: parent.width
     text: qsTr("Button")
 
     background: Rectangle {
+        id: back
         anchors.fill: parent
-        id: rect
         border.color: buttonCheckedColor
-        border.width: 2
-        color: control.down | control.checked ? buttonCheckedColor : buttonColor
+        border.width: control.height * 0.02
+        color: control.down | control.checked ? buttonCheckedColor : backColor
         radius: btnRadius
         Behavior on color {
             ColorAnimation {
@@ -22,7 +24,14 @@ Button {
             }
         }
     }
-
+    MultiEffect {
+        source: back
+        anchors.fill: back
+        shadowEnabled: true
+        shadowColor: buttonShadowColor
+        shadowHorizontalOffset: back.height / 40
+        shadowVerticalOffset: shadowHorizontalOffset
+    }
     contentItem: Text {
         anchors.fill: parent
         text: control.text

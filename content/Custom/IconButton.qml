@@ -8,8 +8,8 @@ Button {
     property alias tipText: tip.text
     property color backColor: buttonColor
 
-    icon.width: height * 0.5
-    icon.height: height * 0.5
+    icon.width: height
+    icon.height: height
     icon.color: buttonTextColor
 
     background: Rectangle {
