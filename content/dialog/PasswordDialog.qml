@@ -7,8 +7,9 @@ Dialog {
     id: rootPassword
 
     readonly property real ratio: 0.9
+    property int autoClose: 30
 
-    property int during: 30
+    property int during
 
     implicitWidth: parent.width / parent.height
                    < ratio ? parent.width * 0.9 : parent.height * 0.9 * ratio
@@ -54,12 +55,14 @@ Dialog {
             }
         }
     }
-    onOpened: countDownTimer.start()
+    onOpened: {
+        during = autoClose
+        countDownTimer.start()
+    }
 
     onClosed: {
         password.text = ""
         countDownTimer.stop()
-        during = 30
     }
     background: Background {}
 
@@ -88,7 +91,7 @@ Dialog {
                 onClicked: {
                     rootPassword.close()
                 }
-                visible: during < 20
+                visible: during < 10
             }
         }
 

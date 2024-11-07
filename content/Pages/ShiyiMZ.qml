@@ -1,15 +1,15 @@
 import QtQuick
 
 Item {
-    readonly property string logoName: "门诊大楼指挥中心"
-    readonly property string titleName: "集中控制系统"
+    readonly property string logoName: "上海市第一人民医院"
+    readonly property string titleName: "门诊大楼指挥中心"
     readonly property string version: "202411"
     readonly property string background: "qrc:/content/images/shiyi.jpg"
-    readonly property string logoImage: "qrc:/content/shiyilogo.png"
+    readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
 
     readonly property var pageList: ListModel {
         ListElement {
-            name: qsTr("首页")
+            name: qsTr("系统")
             pageUrl: "qrc:/qt/qml/content/Pages/System.qml"
             iconUrl: "qrc:/content/icons/home.png"
         }
@@ -33,5 +33,15 @@ Item {
             pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
         }
+        ListElement {
+            name: qsTr("数据")
+            pageUrl: "qrc:/qt/qml/content/Pages/DataList.qml"
+            iconUrl: "qrc:/content/icons/table.png"
+        }
+        // ListElement {
+        //     name: qsTr("测试")
+        //     pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
+        //     iconUrl: "qrc:/content/icons/table.png"
+        // }
     }
 }

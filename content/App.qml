@@ -10,7 +10,7 @@ import Qt.labs.platform
 import "./dialog"
 import "./Pages"
 import "./Custom"
-import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
@@ -19,11 +19,13 @@ Window {
     property alias settings: settingDialog.settings
     property alias pageList: config.pageList
 
-    property var digital: [500]
-    property var analog: [100]
-    property var text: [100]
+    property var digital: []
+    property var analog: []
+    property var text: []
 
-    property color backgroundColor: settings.darkTheme ? "#030A1D" : "lightgray"
+    property ListModel listModel: ListModel {}
+
+    property color backgroundColor: settings.darkTheme ? "midnightblue" : "lightgray"
 
     property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
@@ -104,6 +106,7 @@ Window {
         height: parent.height * 0.07
         x: parent.width * 0.02
     }
+
     MouseArea {
         id: rightSide
         height: parent.height * 0.96
@@ -120,7 +123,6 @@ Window {
             } else {
                 root.width = root.minimumWidth
             }
-            titleBar.titleRecive = "Window Width: " + root.width
         }
         onPressedChanged: {
             settings.windowWidth = root.width
@@ -142,7 +144,6 @@ Window {
             } else {
                 root.height = root.minimumHeight
             }
-            titleBar.titleRecive = "Window Height: " + root.height
         }
         onPressedChanged: {
             settings.windowHeight = root.height
@@ -150,7 +151,6 @@ Window {
     }
     Loader {
         id: pageLoader
-        //anchors.top: titleBar.bottom
         y: titleBar.height
         width: parent.width
         height: parent.height - titleBar.height
@@ -178,6 +178,13 @@ Window {
             root.close()
         }
     }
+    ProcessDialog {
+        id: processDialog
+        dialogInfomation: "正在执行指令，请稍后..."
+        dialogTitle: "提示"
+        channel: 1
+        autoClose: 50
+    }
     Timer {
         id: ping
         interval: 15000
@@ -185,6 +192,9 @@ Window {
         onTriggered: CrestronCIP.ping()
     }
 
+    // ListModel {
+    //     id: listModel
+    // }
     Connections {
         target: tcpClient
         onStateChanged: state => {
@@ -208,8 +218,13 @@ Window {
                             }
                         }
         onDataReceived: data => {
-                            titleBar.titleRecive = "Recived: " + CrestronCIP.toHexString(
-                                new Uint8Array(data))
+                            // listModel.append({
+                            //                      "time": new Date().toLocaleTimeString(
+                            //                                  ),
+                            //                      "direction": "Recived: ",
+                            //                      "data": CrestronCIP.toHexString(
+                            //                                  new Uint8Array(data))
+                            //                  })
                             CrestronCIP.clientMessageCheck(new Uint8Array(data))
                         }
     }
@@ -217,9 +232,13 @@ Window {
     Connections {
         target: tcpServer // 监听 TCPServer 的信号
         onDataReceived: data => {
-                            // 显示收到的消息
-                            // titleBar.titleRecive = "Sended: " + CrestronCIP.toHexString(
-                            //     new Uint8Array(data))
+                            // listModel.append({
+                            //                      "time": new Date().toLocaleTimeString(
+                            //                                  ),
+                            //                      "direction": "Sended: ",
+                            //                      "data": CrestronCIP.toHexString(
+                            //                                  new Uint8Array(data))
+                            //                  })
                             CrestronCIP.serverMessageCheck(new Uint8Array(data))
                         }
         onClientConnected: {
@@ -227,7 +246,6 @@ Window {
         }
     }
     Component.onCompleted: {
-
         pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
         if (root.settings.demoMode) {
             tcpServer.startServer(41793, "127.0.0.1")
@@ -240,6 +258,15 @@ Window {
             root.Material.theme = Material.Dark
         } else {
             root.Material.theme = Material.Light
+        }
+        for (var digitali = 0; digitali <= 500; digitali++) {
+            digital[digitali] = false
+        }
+        for (var analogi = 0; analogi <= 100; analogi++) {
+            analog[analogi] = 0
+        }
+        for (var texti = 0; texti <= 100; texti++) {
+            text[texti] = ""
         }
     }
 }

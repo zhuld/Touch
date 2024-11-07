@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control
@@ -11,6 +11,9 @@ Item {
     property color lightColor: "khaki"
     property bool checked
 
+    property int disEnableChannel: 0
+    enabled: root.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.6
     Rectangle {
         id: rect
         anchors.fill: parent
@@ -79,7 +82,15 @@ Item {
         text: root.settings.showChannel ? "D" + control.channel : ""
         color: buttonTextColor
         font.pixelSize: height * 0.1
-        anchors.left: parent.left
+        font.family: alibabaPuHuiTi.font.family
+    }
+    Text {
+        id: disEnableChannel
+        height: parent.height
+        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
+        color: buttonTextColor
+        font.pixelSize: height * 0.1
+        anchors.right: parent.right
         font.family: alibabaPuHuiTi.font.family
     }
     MouseArea {

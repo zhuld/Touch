@@ -12,15 +12,20 @@ Item {
     anchors.rightMargin: parent.width * 0.02
     property int usedIndex: 0
 
+    ListModel {
+        id: filteredModel
+    }
+
     Column {
         id: tabBar
-        width: parent.width * 0.12
+        width: parent.height / repeater.model.count
         height: parent.height
         anchors.margins: 0
-        spacing: height * 0.03
+        spacing: height / repeater.model.count * 0.12
+
         Repeater {
             id: repeater
-            model: root.pageList
+            model: filteredModel //root.pageList
             delegate: MyTabButton {
                 id: tabButton
                 required property string name
@@ -52,44 +57,30 @@ Item {
         width: parent.width * 0.98 - tabBar.width
         height: parent.height
     }
-    // Row {
-    //     id: tabBar
-    //     width: parent.width * 0.98
-    //     height: parent.height * 0.20
-    //     anchors.top: loader.bottom
-    //     anchors.topMargin: height * 0.1
-    //     spacing: height * 0.03
-    //     Repeater {
-    //         id: repeater
-    //         model: root.pageList
-    //         delegate: MyTabButton {
-    //             id: tabButton
-    //             required property string name
-    //             required property string iconUrl
-    //             required property string pageUrl
-    //             required property int index
-    //             text: name
-    //             height: parent.height
-    //             width: (parent.width + parent.spacing) / repeater.model.count - parent.spacing
-    //             icon.source: iconUrl
-    //             onClicked: {
-    //                 if (usedIndex !== index) {
-    //                     loader.setSource(pageUrl)
-    //                     usedIndex = index
-    //                 }
-    //             }
-    //             Component.onCompleted: {
-    //                 if (index === usedIndex) {
-    //                     tabButton.checked = true
-    //                     loader.setSource(pageUrl)
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-    // Loader {
-    //     id: loader
-    //     width: parent.width * 0.98
-    //     height: parent.height - tabBar.height
-    // }
+
+    Component.onCompleted: {
+
+        // Clear the filtered model
+        filteredModel.clear()
+
+        // Loop through original model and add filtered items to filteredModel
+        for (var i = 0; i < root.pageList.count; i++) {
+            var item = root.pageList.get(i)
+            if (item.name !== "数据" || root.settings.showChannel) {
+                filteredModel.append(item)
+            }
+        }
+    }
+    Connections {
+        target: settingDialog
+        onShowChannelChanged: {
+            filteredModel.clear()
+            for (var i = 0; i < root.pageList.count; i++) {
+                var item = root.pageList.get(i)
+                if (item.name !== "数据" || root.settings.showChannel) {
+                    filteredModel.append(item)
+                }
+            }
+        }
+    }
 }

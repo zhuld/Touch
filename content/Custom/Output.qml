@@ -3,17 +3,21 @@ import QtQuick.Shapes
 import QtQuick.Controls
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Rectangle {
     id: control
 
-    property string output
+    property int output
     property alias textOutput: textOutput.text
     property alias textInput: label.text
     property string disableInput
 
     readonly property var input: root.analog[output]
+
+    property int disEnableChannel: 0
+    enabled: root.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.6
 
     gradient: Gradient {
         GradientStop {
@@ -67,17 +71,18 @@ Rectangle {
         id: textInput
         anchors.top: textOutput.bottom
         height: parent.height * 0.5
-        Image {
+        IconButton {
             id: icon
-            height: control.height * 0.35
-            width: height
-            anchors.top: label.top
+            height: parent.height
+            icon.color: buttonTextColor
+            anchors.verticalCenter: textInput.verticalCenter
         }
         Text {
             id: label
-            height: control.height * 0.5
+            height: parent.height
             font.pixelSize: height * 0.5
             color: buttonTextColor
+            verticalAlignment: Text.AlignVCenter
             font.family: alibabaPuHuiTi.font.family
             Behavior on text {
                 PropertyAnimation {
@@ -85,13 +90,13 @@ Rectangle {
                     easing.type: Easing.OutCubic
                     properties: "x"
                     from: 0
-                    to: control.width * 0.3
+                    to: control.width * 0.2
                     duration: 500
                 }
             }
         }
-        x: control.width * 0.3
-        spacing: width * 0.05
+        x: control.width * 0.2
+        spacing: 0
     }
     Text {
         id: inputText
@@ -109,11 +114,18 @@ Rectangle {
     Text {
         id: channel
         height: parent.height
-        width: parent.width
-        horizontalAlignment: Text.AlignRight
         text: root.settings.showChannel ? "A" + control.output : ""
         color: buttonTextColor
         font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
+    }
+    Text {
+        id: disEnableChannel
+        height: parent.height
+        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
+        color: buttonTextColor
+        font.pixelSize: height * 0.3
+        anchors.right: parent.right
         font.family: alibabaPuHuiTi.font.family
     }
     DropArea {
@@ -128,7 +140,7 @@ Rectangle {
                        }
             onEntered: drop => {
                            if (disableInput !== drop.keys[0]) {
-                               control.opacity = 0.6
+                               control.opacity = 0.5
                            }
                        }
             onExited: {
@@ -149,7 +161,7 @@ Rectangle {
     }
     Binding {
         target: icon
-        property: "source"
+        property: "icon.source"
         value: input > 0 ? inputModel.get(input - 1).source : null
     }
 }

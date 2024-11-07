@@ -5,11 +5,10 @@ Button {
     id: control
     property int channel
     property alias radius: background.radius
-    property alias tipText: tip.text
     property color backColor: buttonColor
 
-    icon.width: height
-    icon.height: height
+    icon.width: height * 0.5
+    icon.height: height * 0.5
     icon.color: buttonTextColor
 
     background: Rectangle {
@@ -23,16 +22,5 @@ Button {
                 duration: 300
             }
         }
-    }
-
-    Text {
-        id: tip
-        visible: control.hovered
-        height: control.height * 0.4
-        color: textColor
-        font.pixelSize: height
-        anchors.top: control.bottom
-        anchors.horizontalCenter: control.horizontalCenter
-        font.family: alibabaPuHuiTi.font.family
     }
 }

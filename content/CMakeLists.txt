@@ -19,6 +19,8 @@ qt6_add_qml_module(content
         Pages/Config.qml
         Pages/FontList.qml
         Pages/TitleBar.qml
+        Pages/DataList.qml
+        Pages/Test.qml
         Custom/MyLable.qml
         Custom/MyButton.qml
         Custom/MyDelayButton.qml
@@ -39,5 +41,7 @@ qt6_add_qml_module(content
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         dialog/ConfirmDialog.qml
-        crestroncip.js
+        dialog/ProcessDialog.qml
+        js/crestroncip.js
+
 )

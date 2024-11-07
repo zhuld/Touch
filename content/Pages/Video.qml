@@ -111,7 +111,7 @@ Item {
                             ListElement {
                                 name: qsTr("预留输入1")
                                 inputChannel: 6
-                                bgColor: "yellowgreen"
+                                bgColor: "dimgray"
                                 source: "qrc:/content/icons/HDMIjiekou.png"
                             }
                             ListElement {

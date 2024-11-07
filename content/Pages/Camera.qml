@@ -72,17 +72,13 @@ Item {
                     }
                     IconButton {
                         id: camera
-                        height: tv.height * 5
-                        width: height
-                        enabled: false
-                        background: Rectangle{
-                            anchors.fill: parent
-                            color: "transparent"
-                        }
+                        height: tv.height * 8
+                        width: camera.height
                         anchors.top: tv.top
                         anchors.horizontalCenter: tv.horizontalCenter
                         icon.source: "qrc:/content/icons/camera.png"
                         icon.color: buttonTextColor
+                        backColor: "transparent"
                         rotation: 90
                         Behavior on rotation {
                             NumberAnimation {

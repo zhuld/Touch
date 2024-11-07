@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control
@@ -17,7 +17,12 @@ Item {
     property int channel
     property int volume: root.analog[control.channel] + 0
 
+    property int disEnableChannel: 0
+
     property bool input: true
+
+    enabled: root.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.6
 
     Binding {
         target: slider
@@ -265,9 +270,11 @@ Item {
         icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
         icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
         channel: muteChannel
+        disEnableChannel: control.disEnableChannel
         text: root.digital[control.muteChannel] ? "静音" : Math.round(
                                                       slider.position
                                                       * (maxVolume - miniVolume) + miniVolume)
+        font.pixelSize: height * 0.4
     }
     Text {
         id: channel
@@ -275,6 +282,15 @@ Item {
         text: root.settings.showChannel ? "A" + control.channel : ""
         color: buttonTextColor
         font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
+    }
+    Text {
+        id: disChannel
+        height: parent.height * 0.2
+        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
+        color: buttonTextColor
+        font.pixelSize: height * 0.3
+        anchors.right: parent.right
         font.family: alibabaPuHuiTi.font.family
     }
 }

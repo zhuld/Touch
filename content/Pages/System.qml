@@ -50,25 +50,28 @@ Item {
                     model: ListModel {
                         ListElement {
                             name: "大屏会议"
-                            btnchannel: 6
+                            btnchannel: 2
+                            disBtnChannel: 0
                             sizeRatio: 1
-                            buttonColor: "forestgreen"
+                            bColor: "forestgreen"
                             iconUrl: "qrc:/content/icons/pingmugongxiang.png"
                             showDialog: true
                         }
                         ListElement {
                             name: "普通会议"
-                            btnchannel: 7
+                            btnchannel: 3
+                            disBtnChannel: 0
                             sizeRatio: 1
-                            buttonColor: "forestgreen"
+                            bColor: "forestgreen"
                             iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
                             showDialog: true
                         }
                         ListElement {
                             name: "会议结束"
-                            btnchannel: 8
+                            btnchannel: 4
+                            disBtnChannel: 0
                             sizeRatio: 1
-                            buttonColor: "tomato"
+                            bColor: "tomato"
                             iconUrl: "qrc:/content/icons/guanji.png"
                             showDialog: true
                         }
@@ -76,17 +79,19 @@ Item {
                     delegate: MyButton {
                         required property string name
                         required property int btnchannel
+                        required property int disBtnChannel
                         required property real sizeRatio
-                        //required property color buttonColor
                         required property string iconUrl
                         required property bool showDialog
+                        required property color bColor
                         width: parent.width
                         height: parent.height * 0.2 * sizeRatio
                         text: name
                         channel: btnchannel
-                        //btnColor: buttonColor
+                        disEnableChannel: disBtnChannel
                         icon.source: iconUrl
                         confirm: showDialog
+                        btnColor: bColor
                     }
                 }
             }

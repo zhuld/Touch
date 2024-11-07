@@ -14,6 +14,8 @@ Dialog {
 
     closePolicy: Popup.NoAutoClose
 
+    signal showChannelChanged
+
     property alias settings: settings
 
     Settings {
@@ -202,7 +204,6 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    enabled: !demoMode.checked
                     font.family: alibabaPuHuiTi.font.family
                 }
                 Text {
@@ -328,7 +329,11 @@ Dialog {
         }
 
         settings.settingPassword = settingPassword.text
-        settings.showChannel = showChannel.checked
+        if (settings.showChannel !== showChannel.checked) {
+            settings.showChannel = showChannel.checked
+            showChannelChanged()
+        }
+
         settings.darkTheme = darkTheme.checked
         if (settings.darkTheme) {
             root.Material.theme = Material.Dark

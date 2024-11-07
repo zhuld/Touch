@@ -2,12 +2,17 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 
-import "qrc:/qt/qml/content/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control
 
     property int channel
+
+    property int disEnableChannel: 0
+    enabled: root.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.6
+
     implicitWidth: 100
     implicitHeight: 130
 
@@ -240,5 +245,15 @@ Item {
         icon.source: "qrc:/content/icons/suoxiao.png"
         icon.color: buttonTextColor
         channel: control.channel + 10
+    }
+
+    Text {
+        id: disEnableChannel
+        height: parent.height * 0.2
+        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
+        color: buttonTextColor
+        font.pixelSize: height * 0.3
+        anchors.right: parent.right
+        font.family: alibabaPuHuiTi.font.family
     }
 }

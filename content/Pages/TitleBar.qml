@@ -9,7 +9,6 @@ import "../dialog"
 Rectangle {
     id: control
     color: "transparent"
-    property alias titleRecive: titleRecive.text
 
     MouseArea {
         property var clickPosition: Qt.point(0, 0)
@@ -20,8 +19,6 @@ Rectangle {
                 return
             root.x += mouseX - clickPosition.x
             root.y += mouseY - clickPosition.y
-
-            titleRecive.text = "Window Position： " + root.x + "," + root.y
         }
         onPressedChanged: {
             clickPosition = Qt.point(mouseX, mouseY)
@@ -33,27 +30,18 @@ Rectangle {
         height: parent.height
         anchors.left: parent.left
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: height * 0.4
+        font.pixelSize: height * 0.5
         color: textColor
         font.family: alibabaPuHuiTi.font.family
     }
-    Text {
-        id: titleRecive
-        visible: settings.showChannel
-        height: parent.height
-        anchors.left: titleLogo.right
-        verticalAlignment: Text.AlignVCenter
-        font.pixelSize: height * 0.4
-        color: textColor
-        font.family: alibabaPuHuiTi.font.family
-    }
+
     Text {
         id: titleName
         text: qsTr(config.titleName) + (settings.demoMode ? "-演示" : "")
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: height * 0.4
+        font.pixelSize: height * 0.5
         color: textColor
         font.family: alibabaPuHuiTi.font.family
     }
@@ -65,7 +53,7 @@ Rectangle {
             id: titleTime
             height: parent.height
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: height * 0.4
+            font.pixelSize: height * 0.5
             color: textColor
             font.family: alibabaPuHuiTi.font.family
             Timer {
@@ -83,8 +71,7 @@ Rectangle {
             }
         }
         Switch {
-            id: dark
-            height: parent.height
+            id: themeSwtich
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 settings.darkTheme = !settings.darkTheme
@@ -96,11 +83,12 @@ Rectangle {
             }
             checked: settings.darkTheme
             Material.accent: buttonCheckedColor
+            visible: Qt.platform.os === "windows" ? true : false
         }
 
         IconButton {
             id: setup
-            height: parent.height * 0.8
+            height: parent.height
             width: height
             anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/config.png"
@@ -110,7 +98,7 @@ Rectangle {
         }
         IconButton {
             id: close
-            height: parent.height * 0.8
+            height: parent.height
             width: height
             anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/close.png"

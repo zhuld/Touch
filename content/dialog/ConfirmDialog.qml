@@ -9,7 +9,8 @@ Dialog {
     property alias dialogIcon: icon.icon.source
     signal okPress
 
-    property int during: 30
+    property int autoClose: 30
+    property int during
 
     anchors.centerIn: Overlay.overlay
     width: root.width * 0.5
@@ -56,7 +57,7 @@ Dialog {
             font.family: alibabaPuHuiTi.font.family
             IconButton {
                 id: close
-                height: parent.height * 0.8
+                height: parent.height
                 width: height
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
@@ -64,7 +65,7 @@ Dialog {
                 onClicked: {
                     confirmDialog.close()
                 }
-                visible: during < 20
+                visible: during < 10
             }
         }
 
@@ -108,7 +109,6 @@ Dialog {
                     okPress()
                     confirmDialog.close()
                 }
-                backColor: buttonRedColor
                 btnRadius: width / 20
             }
             ColorButton {
@@ -118,7 +118,6 @@ Dialog {
                 text: "取消"
                 font.pixelSize: height * 0.6
                 onClicked: confirmDialog.close()
-                backColor: buttonGreenColor
                 btnRadius: width / 20
             }
         }
@@ -135,10 +134,12 @@ Dialog {
             }
         }
     }
-    onOpened: countDownTimer.start()
+    onOpened: {
+        during = autoClose
+        countDownTimer.start()
+    }
 
     onClosed: {
         countDownTimer.stop()
-        during = 30
     }
 }

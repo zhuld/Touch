@@ -9,7 +9,7 @@ Item {
     property color btnColor: buttonCheckedColor
     property color textColor: buttonTextColor
     property alias textInput: label.text
-    property alias iconSource: icon.source
+    property alias iconSource: icon.icon.source
 
     MouseArea {
         id: mouseArea
@@ -48,8 +48,8 @@ Item {
 
         Rectangle {
             id: dragButton
-            width: control.width
-            height: control.height
+            width: parent.width
+            height: parent.height
             radius: height * 0.1
             gradient: Gradient {
                 GradientStop {
@@ -70,22 +70,22 @@ Item {
             z: 1
             Row {
                 id: iconLabel
-                anchors.centerIn: parent
-                height: dragButton.height
-                Image {
+                height: parent.height
+                anchors.horizontalCenter: dragButton.horizontalCenter
+                IconButton {
                     id: icon
-                    height: dragButton.height * 0.35
-                    width: height
+                    height: parent.height * 0.8
+                    icon.color: buttonTextColor
                     anchors.verticalCenter: iconLabel.verticalCenter
                 }
                 Text {
                     id: label
-                    font.pixelSize: dragButton.height * 0.35
+                    font.pixelSize: parent.height * 0.35
                     anchors.verticalCenter: iconLabel.verticalCenter
                     color: buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
-                spacing: width * 0.05
+                spacing: 0
             }
 
             Drag.keys: [input]
