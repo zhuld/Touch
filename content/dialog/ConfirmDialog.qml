@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+
 import "../Custom/"
 
 Dialog {
@@ -29,7 +30,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
     exit: Transition {
@@ -37,7 +38,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
 
@@ -109,7 +110,7 @@ Dialog {
                     okPress()
                     confirmDialog.close()
                 }
-                btnRadius: width / 20
+                btnRadius: width * 0.03
             }
             ColorButton {
                 id: settingCancel
@@ -118,7 +119,7 @@ Dialog {
                 text: "取消"
                 font.pixelSize: height * 0.6
                 onClicked: confirmDialog.close()
-                btnRadius: width / 20
+                btnRadius: width * 0.03
             }
         }
     }

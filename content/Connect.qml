@@ -93,8 +93,5 @@ Item {
         }
     }
 
-    Connections {
-        target: connectPage
-        Component.onCompleted: socketAnimation.start()
-    }
+    Component.onCompleted: socketAnimation.start()
 }

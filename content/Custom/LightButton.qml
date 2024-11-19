@@ -67,15 +67,20 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             font.family: alibabaPuHuiTi.font.family
         }
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: buttonShadowColor
+            shadowHorizontalOffset: control.checked ? height / 60 : height / 40
+            shadowVerticalOffset: shadowHorizontalOffset
+            Behavior on shadowHorizontalOffset {
+                NumberAnimation {
+                    duration: 100
+                }
+            }
+        }
     }
-    MultiEffect {
-        source: rect
-        anchors.fill: rect
-        shadowEnabled: true
-        shadowColor: buttonShadowColor
-        shadowHorizontalOffset: rect.height / 100
-        shadowVerticalOffset: shadowHorizontalOffset
-    }
+
     Text {
         id: channel
         height: parent.height
@@ -95,8 +100,13 @@ Item {
     }
     MouseArea {
         anchors.fill: parent
-        onPressed: CrestronCIP.push(control.channel)
-        onReleased: CrestronCIP.release(control.channel)
+        onPressedChanged: {
+            if (pressed) {
+                CrestronCIP.push(control.channel)
+            } else {
+                CrestronCIP.release(control.channel)
+            }
+        }
     }
     checked: root.digital[control.channel] ? root.digital[control.channel] : 0
 }

@@ -1,14 +1,13 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
+import QtQuick.Effects
 
 import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control
-
     property int channel
-
     property int disEnableChannel: 0
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
@@ -21,8 +20,8 @@ Item {
         width: parent.width
         height: width
         ShapePath {
-            strokeColor: "transparent"
-            strokeWidth: parent.width * 0.005
+            strokeColor: catagoryColor
+            strokeWidth: parent.width * 0.01
             startX: shapeCircle.width / 2
             startY: 0
             PathArc {
@@ -229,21 +228,24 @@ Item {
             Drag.hotSpot.y: height / 2
         }
     }
-    MyRoundButton {
-        height: dpadBackground.height * 0.3
+    MyButton {
+        height: dpadBackground.height * 0.25
         width: height
-        anchors.top: dpadBackground.bottom
+        y: dpadBackground.height
+        //anchors.top: dpadBackground.bottom
         icon.source: "qrc:/content/icons/fangda.png"
         icon.color: buttonTextColor
+        radius: width / 2
         channel: control.channel + 9
     }
-    MyRoundButton {
-        height: dpadBackground.height * 0.3
+    MyButton {
+        height: dpadBackground.height * 0.25
         width: height
-        anchors.top: dpadBackground.bottom
+        y: dpadBackground.height
         anchors.right: dpadBackground.right
         icon.source: "qrc:/content/icons/suoxiao.png"
         icon.color: buttonTextColor
+        radius: width / 2
         channel: control.channel + 10
     }
 

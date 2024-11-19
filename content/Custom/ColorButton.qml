@@ -15,23 +15,45 @@ Button {
         id: back
         anchors.fill: parent
         border.color: buttonCheckedColor
-        border.width: control.height * 0.02
-        color: control.down | control.checked ? buttonCheckedColor : backColor
+        border.width: 0 //height / 40
+        gradient: Gradient {
+            GradientStop {
+                position: 0.2
+                color: down | checked ? Qt.darker(buttonCheckedColor,
+                                                  1.2) : backColor
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+            }
+            GradientStop {
+                position: 1
+                color: down | checked ? buttonCheckedColor : Qt.darker(
+                                            backColor, 1.2)
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+            }
+        }
         radius: btnRadius
-        Behavior on color {
-            ColorAnimation {
-                duration: 300
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: buttonShadowColor
+            shadowHorizontalOffset: (control.checked
+                                     || control.pressed) ? height / 60 : height / 20
+            shadowVerticalOffset: shadowHorizontalOffset
+            Behavior on shadowHorizontalOffset {
+                NumberAnimation {
+                    duration: 100
+                }
             }
         }
     }
-    MultiEffect {
-        source: back
-        anchors.fill: back
-        shadowEnabled: true
-        shadowColor: buttonShadowColor
-        shadowHorizontalOffset: back.height / 40
-        shadowVerticalOffset: shadowHorizontalOffset
-    }
+
     contentItem: Text {
         anchors.fill: parent
         text: control.text
@@ -40,5 +62,18 @@ Button {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: alibabaPuHuiTi.font.family
+    }
+
+    onPressedChanged: {
+        if (pressed) {
+            y += height / 40
+        } else {
+            y -= height / 40
+        }
+    }
+    Behavior on y {
+        NumberAnimation {
+            duration: 100
+        }
     }
 }

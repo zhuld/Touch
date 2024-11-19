@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 
 Rectangle {
     anchors.fill: parent
@@ -13,4 +14,12 @@ Rectangle {
         }
     }
     radius: width * 0.02
+    layer.enabled: true
+    layer.effect: MultiEffect {
+        brightness: 0.2
+        saturation: 0.1
+        blurEnabled: true
+        blurMax: height / 40
+        blur: 1.0
+    }
 }

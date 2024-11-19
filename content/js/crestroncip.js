@@ -4,7 +4,7 @@ const op_Server_IPID = 0x02 // 回复 02 00 04 00 00 00 1F ok; 02 00 03 FF FF 02
 
 const op_Join = 0x05 // 发送 Join信息
 const op_Join_Digital = 0x00
-const op_Join_Analog = 0x01
+const op_Join_Analog = 0x014
 const op_Join_Serial = 0x02
 const op_Join_Request = 0x03
 
@@ -34,10 +34,9 @@ function clientMessageCheck(message) {
             }
             break
         case op_Server_IPID:
-            if (toHexString(payload) === "0000200F") {
+            if (toHexString(payload) === "0000001F") {
                 recivedAppendList(message, index, payloadLength,
                                   "服务器确认IPID：" + settings.ipId + "，注册成功")
-                //"0000001F",0000200F
                 tcpClient.sendData(
                             cipmessage(
                                 op_Join,
@@ -73,16 +72,16 @@ function clientMessageCheck(message) {
                 let tmpA = root.analog
                 if (payloadLength === 8) {
                     channelA = payload[4] * 0x100 + payload[5] + 1
+                    if (isNaN(channelA) === false) {
+                        tmpA[channelA] = payload[6] * 0x100 + payload[7]
+                        root.analog = tmpA
+                    }
                 } else if (payloadLength === 7) {
                     channelA = payload[4] + 1
-                }
-                if (isNaN(channelA) === false) {
-                    if (channelA > 0x100) {
-                        tmpA[channelA] = payload[6] * 0x100 + payload[7]
-                    } else {
+                    if (isNaN(channelA) === false) {
                         tmpA[channelA] = payload[5] * 0x100 + payload[6]
+                        root.analog = tmpA
                     }
-                    root.analog = tmpA
                 }
                 recivedAppendList(
                             message, index, payloadLength,
@@ -109,7 +108,7 @@ function serverMessageCheck(message) {
                 tcpServer.sendData(
                             cipmessage(
                                 op_Server_IPID,
-                                new Uint8Array([0x00, 0x00, 0x20, 0x0F]))) //0000200f
+                                new Uint8Array([0x00, 0x00, 0x00, 0x1F]))) //0000001F
             } else {
                 tcpServer.sendData(cipmessage(
                                        op_Server_IPID,
@@ -135,17 +134,10 @@ function serverMessageCheck(message) {
                 break
             case op_Join_Analog:
                 if (payloadLength === 8) {
-                    if (payload[4] === 0x00) {
-                        tcpServer.sendData(
-                                    cipmessage(
-                                        op_Join,
-                                        new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, payload[5], payload[6], payload[7]])))
-                    } else {
-                        tcpServer.sendData(
-                                    cipmessage(
-                                        op_Join,
-                                        new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[4], payload[5], payload[6], payload[7]])))
-                    }
+                    tcpServer.sendData(
+                                cipmessage(
+                                    op_Join,
+                                    new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[4], payload[5], payload[6], payload[7]])))
                 }
                 break
             }
@@ -182,13 +174,13 @@ function push(channel) {
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, channel / 0x100])))
+        sendAppendList(
+                    cipmessage2(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
+                                        % 0x100, channel / 0x100])),
+                    "Digital:" + (channel + 1) + " -> " + "Push")
     }
-    sendAppendList(
-                cipmessage2(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, channel / 0x100])),
-                "Digital:" + (channel + 1) + " -> " + "Push")
 }
 function release(channel) {
     if (channel > 0 & channel < 32767) {
@@ -198,13 +190,13 @@ function release(channel) {
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, (channel / 0x100) | 0x80])))
+        sendAppendList(
+                    cipmessage2(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
+                                        % 0x100, channel / 0x100])),
+                    "Digital:" + (channel + 1) + " -> " + "Release")
     }
-    sendAppendList(
-                cipmessage2(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                    % 0x100, channel / 0x100])),
-                "Digital:" + (channel + 1) + " -> " + "Release")
 }
 function level(channel, value) {
     if (channel > 0 & channel < 65536) {
@@ -214,13 +206,13 @@ function level(channel, value) {
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
                                         % 0x100, value / 0x100, value % 0x100])))
+        sendAppendList(
+                    cipmessage2(
+                        op_Join,
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
+                                        % 0x100, value / 0x100, value % 0x100])),
+                    "Analog:" + (channel + 1) + " -> " + value)
     }
-    sendAppendList(
-                cipmessage2(
-                    op_Join,
-                    new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
-                                    % 0x100, value / 0x100, value % 0x100])),
-                "Analog:" + (channel + 1) + " -> " + value)
 }
 function ping() {
     tcpClient.sendData(cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])))

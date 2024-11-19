@@ -22,11 +22,11 @@ Dialog {
         id: settings
         property string ipAddress: "192.168.1.10"
         property int ipPort: 41794
-        property int ipId: 3
-        property bool fullscreen: true
+        property int ipId: 8
+        property bool fullscreen: Qt.platform.os === "windows" ? false : true
         property string settingPassword: "123"
         property bool demoMode: true
-        property bool showChannel: false
+        property bool showChannel: true
         property bool darkTheme: false
         property int windowWidth: 1280
         property int windowHeight: 800
@@ -41,7 +41,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
     exit: Transition {
@@ -49,7 +49,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
 
@@ -228,12 +228,14 @@ Dialog {
                     font.pixelSize: height * 0.7
                     color: buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
+                    visible: Qt.platform.os === "windows"
                 }
                 ColorSwitch {
                     height: settingDialog.height / 15
                     width: height * 2
                     id: fullscreen
                     checked: settings.fullscreen
+                    visible: Qt.platform.os === "windows"
                 }
 
                 Text {
@@ -265,7 +267,7 @@ Dialog {
                     font.family: alibabaPuHuiTi.font.family
                 }
                 Text {
-                    text: "显示通道号码"
+                    text: "显示调试页面"
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7

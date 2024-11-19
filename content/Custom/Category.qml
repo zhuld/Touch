@@ -10,23 +10,22 @@ Item {
         id: rectangle
         height: parent.height
         width: parent.width
-
         gradient: Gradient {
             GradientStop {
                 position: 1.0
-                color: Qt.alpha(catagoryColor, 0.3)
+                color: Qt.alpha(catagoryColor, 0.2)
                 Behavior on color {
                     ColorAnimation {
-                        duration: 200
+                        duration: 100
                     }
                 }
             }
             GradientStop {
                 position: 0.114
-                color: Qt.alpha(catagoryColor, 0.5)
+                color: Qt.alpha(catagoryColor, 0.6)
                 Behavior on color {
                     ColorAnimation {
-                        duration: 200
+                        duration: 100
                     }
                 }
             }
@@ -35,20 +34,18 @@ Item {
                 color: catagoryColor
                 Behavior on color {
                     ColorAnimation {
-                        duration: 200
+                        duration: 100
                     }
                 }
             }
         }
         radius: height * 0.03
-    }
-
-    MultiEffect {
-        source: rectangle
-        anchors.fill: rectangle
-        shadowEnabled: true
-        shadowColor: buttonShadowColor
-        shadowHorizontalOffset: rectangle.height / 200
-        shadowVerticalOffset: shadowHorizontalOffset
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: buttonShadowColor
+            shadowHorizontalOffset: height / 100
+            shadowVerticalOffset: shadowHorizontalOffset / 2
+        }
     }
 }

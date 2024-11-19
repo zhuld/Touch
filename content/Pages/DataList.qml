@@ -13,7 +13,7 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 1
+            widthRatio: 0.98
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02
@@ -37,6 +37,7 @@ Item {
                     id: scrollView
                     width: parent.width
                     height: parent.height * 0.86
+                    clip: true
                     ListView {
                         readonly property int lines: 20
                         width: scrollView.width

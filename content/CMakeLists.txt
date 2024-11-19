@@ -16,19 +16,16 @@ qt6_add_qml_module(content
         Pages/Volume.qml
         Pages/Light.qml
         Pages/ShiyiMZ.qml
-        Pages/Config.qml
         Pages/FontList.qml
         Pages/TitleBar.qml
         Pages/DataList.qml
         Pages/Test.qml
         Custom/MyLable.qml
         Custom/MyButton.qml
-        Custom/MyDelayButton.qml
         Custom/InputButton.qml
         Custom/Output.qml
         Custom/ColorButton.qml
         Custom/DPad.qml
-        Custom/MyRoundButton.qml
         Custom/VolumeBar.qml
         Custom/MyTabButton.qml
         Custom/MySwitch.qml
@@ -38,10 +35,10 @@ qt6_add_qml_module(content
         Custom/ColorSwitch.qml
         Custom/LightButton.qml
         Custom/IconButton.qml
+        Custom/ControlPad.qml
         dialog/PasswordDialog.qml
         dialog/SettingDialog.qml
         dialog/ConfirmDialog.qml
         dialog/ProcessDialog.qml
         js/crestroncip.js
-
 )

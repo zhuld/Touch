@@ -11,7 +11,7 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 1
+            widthRatio: 0.98
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02

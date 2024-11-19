@@ -11,6 +11,8 @@ Item {
     property alias textInput: label.text
     property alias iconSource: icon.icon.source
 
+    signal pressedChanged(bool pressed)
+
     MouseArea {
         id: mouseArea
 
@@ -19,15 +21,17 @@ Item {
         anchors.centerIn: parent
 
         drag.target: dragButton
+        onPressedChanged: {
+            control.pressedChanged(mouseArea.pressed)
+            if (pressed) {
+                dragButton.Drag.hotSpot.x = mouseX
+                dragButton.Drag.hotSpot.y = mouseY
+            } else {
+                dragButton.Drag.drop()
+                dragButtonAnimation.start()
+            }
+        }
 
-        onReleased: {
-            dragButton.Drag.drop()
-            dragButtonAnimation.start()
-        }
-        onPressed: {
-            dragButton.Drag.hotSpot.x = mouseX
-            dragButton.Drag.hotSpot.y = mouseY
-        }
         ParallelAnimation {
             id: dragButtonAnimation
             NumberAnimation {
@@ -48,8 +52,22 @@ Item {
 
         Rectangle {
             id: dragButton
-            width: parent.width
+            width: mouseArea.pressed ? parent.width * 0.8 : parent.width
+            x: mouseArea.pressed ? parent.width * 0.1 : 0
+            Behavior on width {
+                NumberAnimation {
+                    easing.type: Easing.OutCubic
+                    duration: 200
+                }
+            }
+            Behavior on x {
+                NumberAnimation {
+                    easing.type: Easing.OutCubic
+                    duration: 200
+                }
+            }
             height: parent.height
+
             radius: height * 0.1
             gradient: Gradient {
                 GradientStop {
@@ -58,16 +76,16 @@ Item {
                                                          1.4) : btnColor
                     Behavior on color {
                         ColorAnimation {
-                            duration: 300
+                            duration: 100
                         }
                     }
                 }
                 GradientStop {
-                    position: 0
+                    position: 0.2
                     color: Qt.alpha(btnColor, 0.4)
                 }
             }
-            z: 1
+            //z: 1
             Row {
                 id: iconLabel
                 height: parent.height
@@ -90,6 +108,19 @@ Item {
 
             Drag.keys: [input]
             Drag.active: mouseArea.drag.active
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                id: effect
+                shadowEnabled: true
+                shadowColor: buttonShadowColor
+                shadowHorizontalOffset: mouseArea.pressed ? 0 : height / 30
+                shadowVerticalOffset: shadowHorizontalOffset
+                Behavior on shadowHorizontalOffset {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+            }
         }
 
         Rectangle {
@@ -107,18 +138,9 @@ Item {
                 color: textColor
                 horizontalAlignment: Text.AlignRight
                 font.bold: true
-                opacity: 0.1
+                opacity: 0.3
                 font.family: alibabaPuHuiTi.font.family
             }
-        }
-
-        MultiEffect {
-            source: back
-            anchors.fill: back
-            shadowEnabled: true
-            shadowColor: buttonShadowColor
-            shadowHorizontalOffset: back.height / 40
-            shadowVerticalOffset: shadowHorizontalOffset
         }
     }
 }

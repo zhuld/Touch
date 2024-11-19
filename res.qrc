@@ -46,5 +46,6 @@
         <file>content/icons/warn.png</file>
         <file>content/fonts/AlibabaPuHuiTi-3-55-Regular.ttf</file>
         <file>content/icons/table.png</file>
+        <file>content/icons/test.png</file>
     </qresource>
 </RCC>

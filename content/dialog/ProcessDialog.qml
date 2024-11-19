@@ -13,7 +13,6 @@ Dialog {
     property int autoClose: 60
     property int during
 
-    visible: root.digital[processDialog.channel] ? true : false
     anchors.centerIn: Overlay.overlay
     width: root.width * 0.5
     height: root.height * 0.5
@@ -31,7 +30,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
     exit: Transition {
@@ -39,7 +38,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
 
@@ -74,16 +73,14 @@ Dialog {
             width: height
             Material.accent: catagoryColor
             anchors.centerIn: parent
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                shadowEnabled: true
+                shadowColor: buttonShadowColor
+                shadowHorizontalOffset: height / 40
+                shadowVerticalOffset: shadowHorizontalOffset
+            }
         }
-        MultiEffect {
-            source: busy
-            anchors.fill: busy
-            shadowEnabled: true
-            shadowColor: buttonShadowColor
-            shadowHorizontalOffset: height / 40
-            shadowVerticalOffset: shadowHorizontalOffset
-        }
-
         Timer {
             id: countDownTimer
             interval: 1000
@@ -91,7 +88,6 @@ Dialog {
             triggeredOnStart: false
             onTriggered: {
                 during--
-                console.log(during)
                 if (during === 0) {
                     processDialog.close()
                 }
@@ -128,4 +124,7 @@ Dialog {
         root.digital = tmpD
         countDownTimer.stop()
     }
+    // Component.onCompleted: {
+    visible: root.digital[channel] ? true : false
+    // }
 }

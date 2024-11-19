@@ -15,34 +15,40 @@ Item {
             widthRatio: 0.5
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
+                anchors.rightMargin: item.width * 0.03
+                anchors.leftMargin: item.width * 0.03
+                anchors.topMargin: item.width * 0.02
+                anchors.bottomMargin: item.width * 0.02
                 spacing: height * 0.04
                 MyLable {
                     id: label
-                    text: qsTr("摄像机控制")
+                    text: config.cameraPadName
                     height: parent.height * 0.1
                 }
-                DPad {
+                ControlPad {
                     id: dpadControl
                     width: parent.width * 1.3 > parent.height
                            * 0.83 ? parent.height * 0.83 / 1.3 : parent.width
                     height: width * 1.3
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 20
+                    channel: config.cameraPadChannel
                 }
             }
         }
         Category {
-            widthRatio: 0.5
+            widthRatio: 0.48
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
+                anchors.rightMargin: item.width * 0.03
+                anchors.leftMargin: item.width * 0.03
+                anchors.topMargin: item.width * 0.02
+                anchors.bottomMargin: item.width * 0.02
                 MyLable {
-                    text: qsTr("话筒跟踪")
+                    text: config.cameraAutoName
                     height: parent.height * 0.1
                     MySwitch {
                         height: parent.height * 0.6
-                        channel: 40
+                        channel: config.cameraAutoChannel
                         anchors.right: parent.right
                         anchors.top: parent.top
                         Text {
@@ -63,10 +69,10 @@ Item {
                     color: "transparent"
                     Rectangle {
                         id: tv
-                        width: parent.width * 0.5
+                        width: parent.width * 0.6
                         height: width * 0.05
                         anchors.horizontalCenter: parent.horizontalCenter
-                        border.color: buttonTextColor
+                        border.color: catagoryColor
                         border.width: width * 0.01
                         color: "transparent"
                     }
@@ -77,8 +83,9 @@ Item {
                         anchors.top: tv.top
                         anchors.horizontalCenter: tv.horizontalCenter
                         icon.source: "qrc:/content/icons/camera.png"
-                        icon.color: buttonTextColor
+                        icon.color: catagoryColor
                         backColor: "transparent"
+                        hoverEnabled: false
                         rotation: 90
                         Behavior on rotation {
                             NumberAnimation {
@@ -88,87 +95,45 @@ Item {
                     }
                     Rectangle {
                         id: table
-                        width: parent.width * 0.7
+                        width: parent.width * 0.8
                         height: parent.height * 0.86
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
-                        border.color: buttonTextColor
+                        border.color: catagoryColor
                         border.width: width * 0.01
                         color: "transparent"
-                        radius: width * 0.05
+                        radius: width * 0.08
                         Grid {
                             anchors.fill: parent
-                            columns: 2
-                            rowSpacing: parent.height * 0.05
-                            columnSpacing: parent.width * 0.4
+                            columns: 3
+                            rowSpacing: parent.height * 0.04
+                            columnSpacing: parent.width * 0.1
                             anchors.margins: parent.width * 0.1
                             Repeater {
-                                model: ListModel {
-                                    ListElement {
-                                        rotation: 135
-                                    }
-                                    ListElement {
-                                        rotation: 45
-                                    }
-                                    ListElement {
-                                        rotation: 120
-                                    }
-                                    ListElement {
-                                        rotation: 60
-                                    }
-                                    ListElement {
-                                        rotation: 111
-                                    }
-                                    ListElement {
-                                        rotation: 69
-                                    }
-                                    ListElement {
-                                        rotation: 105
-                                    }
-                                    ListElement {
-                                        rotation: 75
-                                    }
-                                }
+                                model: config.cameraAutoList
                                 delegate: MyButton {
-                                    required property int index
-                                    required property int rotation
+                                    required property int btnchannel
+                                    required property int cameraRotation
+                                    required property string label
+                                    required property bool used
                                     width: table.width * 0.2
                                     height: width
-                                    channel: 39 - index
+                                    channel: btnchannel
                                     font.pixelSize: height * 0.6
-                                    text: 9 - index
+                                    text: label
+                                    opacity: used ? 1 : 0
                                     radius: height * 0.2
-                                    Connections {
-                                        onCheckedChanged: if (checked) {
-                                                              camera.rotation = rotation
-                                                          } else {
-                                                              camera.rotation = 90
-                                                          }
-                                        Component.onCompleted: if (checked) {
-                                                                   camera.rotation = rotation
-                                                               }
+                                    onCheckedChanged: {
+                                        if (checked) {
+                                            camera.rotation = cameraRotation
+                                        }
+                                    }
+                                    Component.onCompleted: {
+                                        if (checked) {
+                                            camera.rotation = cameraRotation
+                                        }
                                     }
                                 }
-                            }
-                        }
-                        MyButton {
-                            id: button9
-                            width: table.width * 0.2
-                            height: width
-                            channel: 31
-                            text: "1"
-                            anchors.bottom: table.bottom
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: height * 0.6
-                            anchors.bottomMargin: table.width * 0.1
-                            radius: height * 0.2
-                            Connections {
-                                onCheckedChanged: if (button9.checked) {
-                                                      camera.rotation = 90
-                                                  }
-                                Component.onCompleted: if (button9.checked) {
-                                                           camera.rotation = 90
-                                                       }
                             }
                         }
                     }

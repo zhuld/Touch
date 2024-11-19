@@ -31,7 +31,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
     exit: Transition {
@@ -39,7 +39,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 200
+            duration: 100
         }
     }
 
@@ -120,7 +120,7 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
 
             columns: 3
-            spacing: width * 0.02
+            spacing: width * 0.05
             Repeater {
                 model: ListModel {
                     id: numberModel
@@ -168,7 +168,7 @@ Dialog {
                     btnRadius: width / 2
                     font.pixelSize: width * 0.5
                     text: name
-                    backColor: "transparent"
+                    //backColor: "transparent"
                     onClicked: {
                         switch (name) {
                         case "1":

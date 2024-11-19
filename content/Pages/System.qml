@@ -13,69 +13,47 @@ Item {
         spacing: width * 0.02
 
         Category {
-            widthRatio: 0.2
+            widthRatio: 0.19
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
+                anchors.rightMargin: item.width * 0.02
+                anchors.leftMargin: item.width * 0.02
+                anchors.topMargin: item.width * 0.02
+                anchors.bottomMargin: item.width * 0.03
                 spacing: height * 0.05
                 MyLable {
-                    text: "总音量"
+                    text: config.systemVolumeName
                     height: parent.height * 0.1
                 }
                 VolumeBar {
                     height: parent.height * 0.9 - parent.spacing
                     width: parent.width
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 9
-                    muteChannel: 55
-                    miniVolume: -40
-                    maxVolume: 5
-                    input: false
+                    channel: config.systemVolumeChannel
+                    muteChannel: config.systemVolumeMuteChannel
+                    miniVolume: config.systemVolumeMiniVolume
+                    maxVolume: config.systemVolumeMaxVolume
+                    input: config.systemVolumeInput
                 }
             }
         }
 
         Category {
-            widthRatio: 0.4
+            widthRatio: 0.38
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
+                anchors.rightMargin: item.width * 0.03
+                anchors.leftMargin: item.width * 0.03
+                anchors.topMargin: item.width * 0.02
+                anchors.bottomMargin: item.width * 0.02
                 spacing: height * 0.05
                 MyLable {
-                    text: qsTr("会议模式")
+                    text: config.systemPowerName
                     height: parent.height * 0.1
                 }
                 Repeater {
                     id: listMode
-                    model: ListModel {
-                        ListElement {
-                            name: "大屏会议"
-                            btnchannel: 2
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            bColor: "forestgreen"
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
-                            showDialog: true
-                        }
-                        ListElement {
-                            name: "普通会议"
-                            btnchannel: 3
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            bColor: "forestgreen"
-                            iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
-                            showDialog: true
-                        }
-                        ListElement {
-                            name: "会议结束"
-                            btnchannel: 4
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            bColor: "tomato"
-                            iconUrl: "qrc:/content/icons/guanji.png"
-                            showDialog: true
-                        }
-                    }
+                    model: config.systemPowerList
                     delegate: MyButton {
                         required property string name
                         required property int btnchannel
@@ -98,46 +76,27 @@ Item {
         }
 
         Category {
-            widthRatio: 0.4
+            widthRatio: 0.41
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
+                anchors.rightMargin: item.width * 0.03
+                anchors.leftMargin: item.width * 0.03
+                anchors.topMargin: item.width * 0.02
+                anchors.bottomMargin: item.width * 0.02
                 spacing: height * 0.05
                 MyLable {
-                    text: qsTr("信号选择")
+                    text: config.systemSignalName
                     height: parent.height * 0.1
                 }
                 Repeater {
-                    model: ListModel {
-                        id: buttonModel
-                        ListElement {
-                            name: qsTr("院内视频会议")
-                            btnchannel: 11
-                            iconUrl: "qrc:/content/icons/shipinhuiyi.png"
-                        }
-                        ListElement {
-                            name: qsTr("远程视频会议")
-                            btnchannel: 12
-                            iconUrl: "qrc:/content/icons/shipinhuiyi.png"
-                        }
-                        ListElement {
-                            name: qsTr("内网电脑")
-                            btnchannel: 13
-                            iconUrl: "qrc:/content/icons/zhuji.png"
-                        }
-                        ListElement {
-                            name: qsTr("无线投屏")
-                            btnchannel: 14
-                            iconUrl: "qrc:/content/icons/wuxiantouping.png"
-                        }
-                    }
+                    model: config.systemSignalList
                     delegate: MyButton {
                         id: myButton
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
                         width: parent.width
-                        height: parent.height * 0.9 / buttonModel.count - parent.spacing
+                        height: parent.height * 0.9 / config.systemSignalList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         icon.source: iconUrl

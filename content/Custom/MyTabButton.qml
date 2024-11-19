@@ -27,17 +27,20 @@ TabButton {
         radius: width / 10
         Behavior on color {
             ColorAnimation {
-                duration: 200
+                duration: 100
             }
         }
-    }
-
-    MultiEffect {
-        source: rectangle
-        anchors.fill: rectangle
-        shadowEnabled: true
-        shadowColor: buttonShadowColor
-        shadowHorizontalOffset: rectangle.height / 40
-        shadowVerticalOffset: shadowHorizontalOffset
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: buttonShadowColor
+            shadowHorizontalOffset: control.checked ? height / 60 : height / 20
+            shadowVerticalOffset: shadowHorizontalOffset
+            Behavior on shadowHorizontalOffset {
+                NumberAnimation {
+                    duration: 100
+                }
+            }
+        }
     }
 }

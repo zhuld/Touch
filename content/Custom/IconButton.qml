@@ -19,7 +19,7 @@ Button {
         radius: height * 0.1
         Behavior on color {
             ColorAnimation {
-                duration: 300
+                duration: 100
             }
         }
     }

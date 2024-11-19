@@ -16,33 +16,46 @@ Rectangle {
     readonly property var input: root.analog[output]
 
     property int disEnableChannel: 0
-    enabled: root.digital[control.disEnableChannel] ? false : true
-    opacity: enabled ? 1 : 0.6
 
+    enabled: root.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.2
+    radius: height / 10
+
+    layer.enabled: true
+    layer.effect: MultiEffect {
+        shadowEnabled: true
+        shadowColor: dropContainer.containsDrag ? buttonRedColor : buttonShadowColor
+        shadowHorizontalOffset: height / 30
+        shadowVerticalOffset: dropContainer.containsDrag ? shadowHorizontalOffset
+                                                           * 2 : shadowHorizontalOffset
+        Behavior on shadowColor {
+            ColorAnimation {
+                duration: 200
+            }
+        }
+    }
     gradient: Gradient {
         GradientStop {
             id: downColor
             position: 1.0
-            color: buttonColor
+            color: input > 0 ? config.videoInputList.get(
+                                   input - 1).bgColor : buttonColor
             Behavior on color {
                 ColorAnimation {
-                    duration: 500
+                    duration: 300
                 }
             }
         }
-
         GradientStop {
             position: 0.2
             color: Qt.darker(buttonColor, 1.4)
             Behavior on color {
                 ColorAnimation {
-                    duration: 500
+                    duration: 300
                 }
             }
         }
     }
-
-    radius: height / 10
 
     Text {
         id: textOutput
@@ -76,6 +89,9 @@ Rectangle {
             height: parent.height
             icon.color: buttonTextColor
             anchors.verticalCenter: textInput.verticalCenter
+            backColor: "transparent"
+            icon.source: input > 0 ? config.videoInputList.get(
+                                         input - 1).source : ""
         }
         Text {
             id: label
@@ -90,10 +106,11 @@ Rectangle {
                     easing.type: Easing.OutCubic
                     properties: "x"
                     from: 0
-                    to: control.width * 0.2
+                    to: control.width * 0.3
                     duration: 500
                 }
             }
+            text: input > 0 ? config.videoInputList.get(input - 1).name : null
         }
         x: control.width * 0.2
         spacing: 0
@@ -136,32 +153,13 @@ Rectangle {
                            if (disableInput !== drop.keys[0]) {
                                CrestronCIP.level(output, drop.keys[0])
                            }
-                           control.opacity = 1
                        }
-            onEntered: drop => {
-                           if (disableInput !== drop.keys[0]) {
-                               control.opacity = 0.5
-                           }
-                       }
-            onExited: {
-                control.opacity = 1
-            }
         }
     }
 
-    Binding {
-        target: downColor
-        property: "color"
-        value: input > 0 ? inputModel.get(input - 1).bgColor : buttonColor
-    }
-    Binding {
-        target: label
-        property: "text"
-        value: input > 0 ? inputModel.get(input - 1).name : null
-    }
-    Binding {
-        target: icon
-        property: "icon.source"
-        value: input > 0 ? inputModel.get(input - 1).source : null
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 200
+        }
     }
 }

@@ -56,14 +56,14 @@ Item {
                     duration: 300
                 }
             }
-        }
-        MultiEffect {
-            source: rect
-            anchors.fill: rect
-            shadowEnabled: true
-            shadowColor: buttonShadowColor
-            shadowHorizontalOffset: rect.height / 10
-            shadowVerticalOffset: shadowHorizontalOffset
+
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                shadowEnabled: true
+                shadowColor: buttonShadowColor
+                shadowHorizontalOffset: height / 40
+                shadowVerticalOffset: shadowHorizontalOffset
+            }
         }
     }
     checked: root.digital[control.channel] ? root.digital[control.channel] : 0
@@ -78,7 +78,14 @@ Item {
     }
     MouseArea {
         anchors.fill: parent
-        onPressed: CrestronCIP.push(control.channel)
-        onReleased: CrestronCIP.release(control.channel)
+        onPressedChanged: {
+            if (pressed) {
+                CrestronCIP.push(control.channel)
+            } else {
+                CrestronCIP.release(control.channel)
+            }
+        }
+        // onPressed: CrestronCIP.push(control.channel)
+        // onReleased: CrestronCIP.release(control.channel)
     }
 }

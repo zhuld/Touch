@@ -32,27 +32,46 @@ Button {
     background: Rectangle {
         id: back
         anchors.fill: parent
-        color: checked ? buttonCheckedColor : btnColor
         radius: height * 0.1
-        Behavior on color {
-            ColorAnimation {
-                duration: 200
+        gradient: Gradient {
+            GradientStop {
+                position: 0.2
+                color: down | checked ? Qt.darker(buttonCheckedColor,
+                                                  1.3) : btnColor
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+            }
+            GradientStop {
+                position: 1
+                color: down | checked ? buttonCheckedColor : Qt.darker(
+                                            btnColor, 1.4)
+                Behavior on color {
+                    ColorAnimation {
+                        duration: 100
+                    }
+                }
+            }
+        }
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: buttonShadowColor
+            shadowHorizontalOffset: control.checked ? height / 60 : height / 20
+            shadowVerticalOffset: shadowHorizontalOffset
+            Behavior on shadowHorizontalOffset {
+                NumberAnimation {
+                    duration: 100
+                }
             }
         }
     }
 
-    MultiEffect {
-        source: back
-        anchors.fill: back
-        shadowEnabled: true
-        shadowColor: buttonShadowColor
-        shadowHorizontalOffset: back.height / 40
-        shadowVerticalOffset: shadowHorizontalOffset
-    }
-
     ConfirmDialog {
         id: confirmdialog
-        dialogIcon: "qrc:/content/icons/warn.png"
+        dialogIcon: icon.source
         dialogInfomation: "确定" + text + "？"
         dialogTitle: "提示"
         onOkPress: {
@@ -79,23 +98,17 @@ Button {
         anchors.right: parent.right
         font.family: alibabaPuHuiTi.font.family
     }
-    onPressed: {
-        if (!confirm) {
-            CrestronCIP.push(control.channel)
+    onPressedChanged: {
+        if (pressed) {
+            if (!confirm) {
+                CrestronCIP.push(control.channel)
+            } else {
+                confirmdialog.open()
+            }
         } else {
-            confirmdialog.open()
+            if (!confirm) {
+                CrestronCIP.release(control.channel)
+            }
         }
-    }
-    onReleased: {
-        if (!confirm) {
-            CrestronCIP.release(control.channel)
-        }
-    }
-    onHoveredChanged: if (pressed) {
-                          CrestronCIP.release(control.channel)
-                      }
-
-    Component.onCompleted: {
-
     }
 }

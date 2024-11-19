@@ -17,23 +17,26 @@ Window {
 
     property alias pageLoader: pageLoader
     property alias settings: settingDialog.settings
-    property alias pageList: config.pageList
+
+    ShiyiMZ {
+        id: config
+    }
 
     property var digital: []
     property var analog: []
-    property var text: []
 
+    //property var text: [] // not support yet
     property ListModel listModel: ListModel {}
 
     property color backgroundColor: settings.darkTheme ? "midnightblue" : "lightgray"
 
     property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
-    property color buttonColor: settings.darkTheme ? "#E01B2A4B" : "whitesmoke"
-    property color buttonShadowColor: settings.darkTheme ? "midnightblue" : "grey"
+    property color buttonColor: settings.darkTheme ? "#16417C" : "whitesmoke"
+    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "dimgrey"
     property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
     property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
-    property color catagoryColor: settings.darkTheme ? "#1B4F96" : "mintcream"
+    property color catagoryColor: settings.darkTheme ? "#1A5A94" : "gainsboro"
     property color buttonCheckedColor: settings.darkTheme ? "#E0589BAB" : "#E0589BAB"
 
     property color buttonTextRedColor: "red"
@@ -42,10 +45,6 @@ Window {
     property color volumeRedColor: "red"
 
     property string logoImage: config.logoImage
-
-    Config {
-        id: config
-    }
 
     FontLoader {
         id: lcdFont
@@ -59,7 +58,7 @@ Window {
     width: settings.windowWidth
     height: settings.windowHeight
     minimumWidth: 1280
-    minimumHeight: 800
+    minimumHeight: 720
 
     title: config.logoName + config.titleName
 
@@ -93,7 +92,7 @@ Window {
             opacity: ping.running ? 0.3 : 0.6
             Behavior on opacity {
                 OpacityAnimator {
-                    duration: 1000
+                    duration: 100
                 }
             }
         }
@@ -123,6 +122,12 @@ Window {
             } else {
                 root.width = root.minimumWidth
             }
+            let height = width / minimumWidth * minimumHeight
+            if (height > root.minimumHeight) {
+                root.height = height
+            } else {
+                root.height = root.minimumHeight
+            }
         }
         onPressedChanged: {
             settings.windowWidth = root.width
@@ -143,6 +148,12 @@ Window {
                 root.height = height
             } else {
                 root.height = root.minimumHeight
+            }
+            let width = height * minimumWidth / minimumHeight
+            if (width > root.minimumWidth) {
+                root.width = width
+            } else {
+                root.width = root.minimumWidth
             }
         }
         onPressedChanged: {
@@ -165,7 +176,6 @@ Window {
                          }
                      }
     }
-
     SettingDialog {
         id: settingDialog
     }
@@ -182,7 +192,7 @@ Window {
         id: processDialog
         dialogInfomation: "正在执行指令，请稍后..."
         dialogTitle: "提示"
-        channel: 1
+        channel: config.processDialogChannel
         autoClose: 50
     }
     Timer {
@@ -192,14 +202,14 @@ Window {
         onTriggered: CrestronCIP.ping()
     }
 
-    // ListModel {
-    //     id: listModel
-    // }
     Connections {
         target: tcpClient
         onStateChanged: state => {
+                            //console.log("state", state)
                             switch (state) {
                                 case 0:
+                                //case 2:
+                                //case 1:
                                 //disconneted
                                 if (ping.running) {
                                     pageLoader.setSource(
@@ -218,13 +228,6 @@ Window {
                             }
                         }
         onDataReceived: data => {
-                            // listModel.append({
-                            //                      "time": new Date().toLocaleTimeString(
-                            //                                  ),
-                            //                      "direction": "Recived: ",
-                            //                      "data": CrestronCIP.toHexString(
-                            //                                  new Uint8Array(data))
-                            //                  })
                             CrestronCIP.clientMessageCheck(new Uint8Array(data))
                         }
     }
@@ -232,13 +235,6 @@ Window {
     Connections {
         target: tcpServer // 监听 TCPServer 的信号
         onDataReceived: data => {
-                            // listModel.append({
-                            //                      "time": new Date().toLocaleTimeString(
-                            //                                  ),
-                            //                      "direction": "Sended: ",
-                            //                      "data": CrestronCIP.toHexString(
-                            //                                  new Uint8Array(data))
-                            //                  })
                             CrestronCIP.serverMessageCheck(new Uint8Array(data))
                         }
         onClientConnected: {
@@ -259,14 +255,15 @@ Window {
         } else {
             root.Material.theme = Material.Light
         }
-        for (var digitali = 0; digitali <= 500; digitali++) {
-            digital[digitali] = false
+        for (var i = 0; i <= 500; i++) {
+            digital[i] = false
         }
-        for (var analogi = 0; analogi <= 100; analogi++) {
-            analog[analogi] = 0
+        for (var i = 0; i <= 100; i++) {
+            analog[i] = 0
         }
-        for (var texti = 0; texti <= 100; texti++) {
-            text[texti] = ""
-        }
+        //analog[9] = 21111
+        // for (var i = 0; i <= 100; i++) {
+        //     text[i] = ""
+        // }
     }
 }
