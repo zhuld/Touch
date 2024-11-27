@@ -1,11 +1,14 @@
 import QtQuick
 
 Item {
-    readonly property string logoName: "XX医院"
-    readonly property string titleName: "门诊大楼指挥中心"
-    readonly property string version: "202411"
+    readonly property string logoName: qsTr("XX医院")
+    readonly property string titleName: qsTr("门诊大楼指挥中心")
+    readonly property string version: qsTr("202411")
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
+    readonly property string cipServerIP: "192.168.2.105"
+    readonly property int cipPort: 41794
+    readonly property int ipId: 8
     readonly property int processDialogChannel: 1
 
     //页面List
@@ -14,44 +17,57 @@ Item {
             name: qsTr("系统")
             pageUrl: "qrc:/qt/qml/content/Pages/System.qml"
             iconUrl: "qrc:/content/icons/home.png"
+            test: false
         }
         ListElement {
             name: qsTr("视频")
             pageUrl: "qrc:/qt/qml/content/Pages/Video.qml"
             iconUrl: "qrc:/content/icons/shipin.png"
+            test: false
         }
         ListElement {
             name: qsTr("摄像机")
             pageUrl: "qrc:/qt/qml/content/Pages/Camera.qml"
             iconUrl: "qrc:/content/icons/shexiangtou.png"
+            test: false
         }
         ListElement {
             name: qsTr("音量")
             pageUrl: "qrc:/qt/qml/content/Pages/Volume.qml"
             iconUrl: "qrc:/content/icons/music.png"
+            test: false
         }
         ListElement {
             name: qsTr("灯光")
             pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
+            test: true
         }
         ListElement {
             name: qsTr("数据")
             pageUrl: "qrc:/qt/qml/content/Pages/DataList.qml"
             iconUrl: "qrc:/content/icons/table.png"
+            test: true
         }
         ListElement {
             name: qsTr("测试")
             pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
             iconUrl: "qrc:/content/icons/test.png"
+            test: true
+        }
+        ListElement {
+            name: qsTr("字体")
+            pageUrl: "qrc:/qt/qml/content/Pages/FontList.qml"
+            iconUrl: "qrc:/content/icons/test.png"
+            test: true
         }
     }
 
     //系统
-    readonly property string systemPowerName: "会议模式"
+    readonly property string systemPowerName: qsTr("会议模式")
     readonly property var systemPowerList: ListModel {
         ListElement {
-            name: "大屏会议"
+            name: qsTr("大屏会议")
             btnchannel: 2
             disBtnChannel: 0
             sizeRatio: 1
@@ -60,7 +76,7 @@ Item {
             showDialog: true
         }
         ListElement {
-            name: "普通会议"
+            name: qsTr("普通会议")
             btnchannel: 3
             disBtnChannel: 0
             sizeRatio: 1
@@ -69,7 +85,7 @@ Item {
             showDialog: true
         }
         ListElement {
-            name: "会议结束"
+            name: qsTr("会议结束")
             btnchannel: 4
             disBtnChannel: 0
             sizeRatio: 1
@@ -79,7 +95,7 @@ Item {
         }
     }
 
-    readonly property string systemSignalName: "信号选择"
+    readonly property string systemSignalName: qsTr("信号选择")
     readonly property var systemSignalList: ListModel {
         id: buttonModel
         ListElement {
@@ -103,16 +119,9 @@ Item {
             iconUrl: "qrc:/content/icons/wuxiantouping.png"
         }
     }
-    // 系统页，总音量调节
-    readonly property string systemVolumeName: "总音量"
-    readonly property int systemVolumeChannel: 9
-    readonly property int systemVolumeMuteChannel: 55
-    readonly property int systemVolumeMiniVolume: -40
-    readonly property int systemVolumeMaxVolume: 5
-    readonly property bool systemVolumeInput: false
 
     //视频切换页 输出
-    readonly property string videoOutputName: "输出"
+    readonly property string videoOutputName: qsTr("输出")
     readonly property var videoOutputList: ListModel {
         ListElement {
             name: qsTr("大屏")
@@ -134,8 +143,8 @@ Item {
         }
     }
 
-    //视频切换页 输出
-    readonly property string videoInputName: "输入信号"
+    //视频切换页 输入
+    readonly property string videoInputName: qsTr("输入信号")
     readonly property var videoInputList: ListModel {
         ListElement {
             name: qsTr("外网电脑")
@@ -188,9 +197,9 @@ Item {
     }
 
     // 摄像机页，dpad
-    readonly property string cameraPadName: "摄像机控制"
+    readonly property string cameraPadName: qsTr("摄像机控制")
     readonly property int cameraPadChannel: 20
-    readonly property string cameraAutoName: "摄像机控制"
+    readonly property string cameraAutoName: qsTr("摄像跟踪")
     readonly property int cameraAutoChannel: 40
     readonly property var cameraAutoList: ListModel {
         ListElement {
@@ -267,7 +276,7 @@ Item {
     // 音量页
     readonly property var volumeList: ListModel {
         ListElement {
-            name: "鹅颈话筒"
+            name: qsTr("鹅颈话筒")
             vChannel: 5
             mChannel: 51
             miniVol: -40
@@ -275,7 +284,7 @@ Item {
             inputType: true
         }
         ListElement {
-            name: "手持话筒"
+            name: qsTr("手持话筒")
             vChannel: 6
             mChannel: 52
             miniVol: -40
@@ -283,7 +292,7 @@ Item {
             inputType: true
         }
         ListElement {
-            name: "电脑音频"
+            name: qsTr("电脑音频")
             vChannel: 7
             mChannel: 53
             miniVol: -40
@@ -292,7 +301,7 @@ Item {
         }
 
         ListElement {
-            name: "外接音频"
+            name: qsTr("外接音频")
             vChannel: 8
             mChannel: 54
             miniVol: -40
@@ -301,7 +310,7 @@ Item {
         }
 
         ListElement {
-            name: "总音量"
+            name: qsTr("总音量")
             vChannel: 9
             mChannel: 55
             miniVol: -40
@@ -311,31 +320,31 @@ Item {
     }
 
     //灯光页 灯光
-    readonly property string lightName: "单独控制"
-    readonly property string lightModeName: "灯光模式"
+    readonly property string lightName: qsTr("单独控制")
+    readonly property string lightModeName: qsTr("灯光模式")
     readonly property var lightList: ListModel {
         ListElement {
-            name: "左吸顶灯"
+            name: qsTr("左吸顶灯")
             btnChannel: 61
         }
         ListElement {
-            name: "右吸顶灯"
+            name: qsTr("右吸顶灯")
             btnChannel: 62
         }
         ListElement {
-            name: "前筒灯"
+            name: qsTr("前筒灯")
             btnChannel: 63
         }
         ListElement {
-            name: "四周筒灯"
+            name: qsTr("四周筒灯")
             btnChannel: 64
         }
         ListElement {
-            name: "灯带"
+            name: qsTr("灯带")
             btnChannel: 65
         }
         ListElement {
-            name: "其他"
+            name: qsTr("其他")
             btnChannel: 66
         }
     }

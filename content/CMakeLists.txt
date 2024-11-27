@@ -10,12 +10,12 @@ qt6_add_qml_module(content
         App.qml
         Content.qml
         Connect.qml
+        Config/ShiyiMZ.qml
         Pages/System.qml
         Pages/Video.qml
         Pages/Camera.qml
         Pages/Volume.qml
         Pages/Light.qml
-        Pages/ShiyiMZ.qml
         Pages/FontList.qml
         Pages/TitleBar.qml
         Pages/DataList.qml
@@ -36,9 +36,9 @@ qt6_add_qml_module(content
         Custom/LightButton.qml
         Custom/IconButton.qml
         Custom/ControlPad.qml
-        dialog/PasswordDialog.qml
-        dialog/SettingDialog.qml
-        dialog/ConfirmDialog.qml
-        dialog/ProcessDialog.qml
-        js/crestroncip.js
+        Dialog/PasswordDialog.qml
+        Dialog/SettingDialog.qml
+        Dialog/ConfirmDialog.qml
+        Dialog/ProcessDialog.qml
+        Js/crestroncip.js
 )

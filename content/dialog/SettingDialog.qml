@@ -20,12 +20,12 @@ Dialog {
 
     Settings {
         id: settings
-        property string ipAddress: "192.168.1.10"
-        property int ipPort: 41794
-        property int ipId: 8
+        property string ipAddress: config.cipServerIP
+        property int ipPort: config.cipPort
+        property int ipId: config.ipId
         property bool fullscreen: Qt.platform.os === "windows" ? false : true
         property string settingPassword: "123"
-        property bool demoMode: true
+        property bool demoMode: false
         property bool showChannel: true
         property bool darkTheme: false
         property int windowWidth: 1280

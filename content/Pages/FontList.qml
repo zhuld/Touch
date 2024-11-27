@@ -11,7 +11,6 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.98
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02
@@ -21,18 +20,25 @@ Item {
                     text: qsTr("字体列表")
                     height: parent.height * 0.1
                 }
-                ListView {
-                    id: fonts
+                ScrollView {
+                    id: scrollView
                     width: parent.width
                     height: parent.height * 0.86
-                    model: Qt.fontFamilies()
-                    delegate: Text {
-                        height: fonts.height / 10
-                        width: fonts.width
-                        color: textColor
-                        font.pixelSize: height * 0.8
-                        font.family: modelData
-                        text: index + ": " + modelData
+                    clip: true
+                    ListView {
+                        id: fonts
+                        width: parent.width
+                        height: parent.height * 0.86
+                        model: Qt.fontFamilies()
+                        delegate: Text {
+                            height: fonts.height / 20
+                            width: fonts.width
+                            color: textColor
+                            font.pixelSize: height * 0.8
+                            font.family: modelData
+                            text: index + ": " + modelData
+                                  + "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                        }
                     }
                 }
             }

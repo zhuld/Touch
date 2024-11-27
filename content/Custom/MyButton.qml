@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 
-import "../dialog"
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "../Dialog"
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Button {
     id: control
@@ -70,13 +70,23 @@ Button {
     }
 
     ConfirmDialog {
-        id: confirmdialog
+        id: confirmDialog
         dialogIcon: icon.source
         dialogInfomation: "确定" + text + "？"
         dialogTitle: "提示"
+        Timer {
+            id: releaseTimer
+            interval: 100
+            repeat: false
+            triggeredOnStart: false
+            onTriggered: {
+                confirmDialog.close()
+                CrestronCIP.release(control.channel)
+            }
+        }
         onOkPress: {
             CrestronCIP.push(control.channel)
-            CrestronCIP.release(control.channel)
+            releaseTimer.start()
         }
     }
 
@@ -103,7 +113,7 @@ Button {
             if (!confirm) {
                 CrestronCIP.push(control.channel)
             } else {
-                confirmdialog.open()
+                confirmDialog.open()
             }
         } else {
             if (!confirm) {

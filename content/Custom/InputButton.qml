@@ -52,20 +52,7 @@ Item {
 
         Rectangle {
             id: dragButton
-            width: mouseArea.pressed ? parent.width * 0.8 : parent.width
-            x: mouseArea.pressed ? parent.width * 0.1 : 0
-            Behavior on width {
-                NumberAnimation {
-                    easing.type: Easing.OutCubic
-                    duration: 200
-                }
-            }
-            Behavior on x {
-                NumberAnimation {
-                    easing.type: Easing.OutCubic
-                    duration: 200
-                }
-            }
+            width: parent.width
             height: parent.height
 
             radius: height * 0.1
@@ -85,7 +72,7 @@ Item {
                     color: Qt.alpha(btnColor, 0.4)
                 }
             }
-            //z: 1
+
             Row {
                 id: iconLabel
                 height: parent.height
@@ -138,7 +125,7 @@ Item {
                 color: textColor
                 horizontalAlignment: Text.AlignRight
                 font.bold: true
-                opacity: 0.3
+                opacity: 0.1
                 font.family: alibabaPuHuiTi.font.family
             }
         }

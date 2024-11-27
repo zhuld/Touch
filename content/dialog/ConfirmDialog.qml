@@ -14,7 +14,7 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.5
+    width: root.width * 0.6
     height: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
@@ -41,38 +41,24 @@ Dialog {
             duration: 100
         }
     }
-
     Column {
         anchors.fill: parent
         anchors.centerIn: parent
         anchors.margins: height * 0.05
-        spacing: height * 0.15
+        spacing: height * 0.1
         Text {
             id: title
             width: parent.width
-            height: parent.height * 0.2
-            font.pixelSize: height * 0.6
+            height: parent.height * 0.12
+            font.pixelSize: height
             horizontalAlignment: Text.AlignLeft
             color: textColor
             text: qsTr("标题")
             font.family: alibabaPuHuiTi.font.family
-            IconButton {
-                id: close
-                height: parent.height
-                width: height
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                icon.source: "qrc:/content/icons/close.png"
-                onClicked: {
-                    confirmDialog.close()
-                }
-                visible: during < 10
-            }
         }
-
         Row {
             width: parent.width
-            height: parent.height * 0.25
+            height: parent.height * 0.4
             IconButton {
                 id: icon
                 height: parent.height
@@ -84,21 +70,19 @@ Dialog {
                 enabled: false
                 icon.color: textColor
             }
-
             Text {
                 id: info
                 color: textColor
                 height: parent.height
-                font.pixelSize: height * 0.5
+                font.pixelSize: height * 0.4
                 anchors.top: parent.top
                 verticalAlignment: Text.AlignVCenter
                 font.family: alibabaPuHuiTi.font.family
             }
-            spacing: width * 0.05
         }
         Row {
             width: parent.width
-            height: parent.height * 0.25
+            height: parent.height * 0.27
             spacing: width * 0.06
             ColorButton {
                 id: settingOK
@@ -108,7 +92,7 @@ Dialog {
                 font.pixelSize: height * 0.6
                 onClicked: {
                     okPress()
-                    confirmDialog.close()
+                    //confirmDialog.close()
                 }
                 btnRadius: width * 0.03
             }
@@ -139,7 +123,6 @@ Dialog {
         during = autoClose
         countDownTimer.start()
     }
-
     onClosed: {
         countDownTimer.stop()
     }

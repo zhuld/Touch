@@ -7,10 +7,11 @@ import QtWebSockets
 import QtQuick.Effects
 import Qt.labs.platform
 
-import "./dialog"
+import "./Dialog"
 import "./Pages"
 import "./Custom"
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "./Config"
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
@@ -28,7 +29,7 @@ Window {
     //property var text: [] // not support yet
     property ListModel listModel: ListModel {}
 
-    property color backgroundColor: settings.darkTheme ? "midnightblue" : "lightgray"
+    property color backgroundColor: settings.darkTheme ? "#02111C" : "lightgray"
 
     property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
     property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
@@ -53,6 +54,10 @@ Window {
     FontLoader {
         id: alibabaPuHuiTi
         source: "qrc:/content/fonts/AlibabaPuHuiTi-3-55-Regular.ttf"
+    }
+    FontLoader {
+        id: sourceCodePro
+        source: "qrc:/content/fonts/SourceCodePro-Regular.ttf"
     }
 
     width: settings.windowWidth
@@ -185,6 +190,7 @@ Window {
         dialogInfomation: "确定关闭程序？"
         dialogTitle: "提示"
         onOkPress: {
+            closeDialog.close()
             root.close()
         }
     }
@@ -243,7 +249,7 @@ Window {
     }
     Component.onCompleted: {
         pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
-        if (root.settings.demoMode) {
+        if (settings.demoMode) {
             tcpServer.startServer(41793, "127.0.0.1")
             tcpClient.connectToServer("127.0.0.1", 41793)
         } else {
@@ -255,15 +261,10 @@ Window {
         } else {
             root.Material.theme = Material.Light
         }
-        for (var i = 0; i <= 500; i++) {
+        //初始化
+        for (var i = 0; i <= 300; i++) {
             digital[i] = false
-        }
-        for (var i = 0; i <= 100; i++) {
             analog[i] = 0
         }
-        //analog[9] = 21111
-        // for (var i = 0; i <= 100; i++) {
-        //     text[i] = ""
-        // }
     }
 }

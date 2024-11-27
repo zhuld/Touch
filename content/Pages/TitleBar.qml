@@ -4,7 +4,7 @@ import QtQuick.Dialogs
 import QtQuick.Shapes
 
 import "../Custom"
-import "../dialog"
+import "../Dialog"
 
 Rectangle {
     id: control
@@ -26,7 +26,7 @@ Rectangle {
     }
     Text {
         id: titleLogo
-        text: qsTr(config.logoName)
+        text: config.logoName
         height: parent.height
         anchors.left: parent.left
         verticalAlignment: Text.AlignVCenter
@@ -37,7 +37,7 @@ Rectangle {
 
     Text {
         id: titleName
-        text: qsTr(config.titleName) + (settings.demoMode ? "-演示" : "")
+        text: config.titleName + (settings.demoMode ? "-演示" : "")
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter

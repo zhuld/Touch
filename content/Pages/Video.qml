@@ -13,7 +13,7 @@ Item {
         spacing: width * 0.02
         Category {
             id: outputCategory
-            widthRatio: 0.34
+            widthRatio: 0.35
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02
@@ -43,7 +43,7 @@ Item {
 
         Category {
             id: inputCategory
-            widthRatio: 0.64
+            widthRatio: 0.65
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02

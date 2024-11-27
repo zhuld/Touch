@@ -15,7 +15,7 @@ Item {
             model: config.volumeList
 
             delegate: Category {
-                widthRatio: 0.98 / config.volumeList.count
+                widthRatio: 1 / config.volumeList.count
                 required property string name
                 required property int vChannel
                 required property int mChannel

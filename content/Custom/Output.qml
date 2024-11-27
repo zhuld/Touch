@@ -3,7 +3,7 @@ import QtQuick.Shapes
 import QtQuick.Controls
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Rectangle {
     id: control
@@ -106,7 +106,7 @@ Rectangle {
                     easing.type: Easing.OutCubic
                     properties: "x"
                     from: 0
-                    to: control.width * 0.3
+                    to: control.width * 0.2
                     duration: 500
                 }
             }

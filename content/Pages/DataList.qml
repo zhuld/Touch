@@ -13,7 +13,6 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.98
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02
@@ -42,18 +41,18 @@ Item {
                         readonly property int lines: 20
                         width: scrollView.width
                         model: root.listModel
-
                         delegate: Rectangle {
+                            id: dataRect
                             width: scrollView.width
-                            height: scrollView.height * 0.06
+                            height: scrollView.height * 0.05
                             color: model.direction === "发" ? buttonColor : buttonCheckedColor
                             Row {
                                 width: scrollView.width
-                                spacing: width * 0.02
+                                spacing: width * 0.01
                                 Text {
                                     text: model.time
-                                    width: parent.width * 0.12
-                                    height: scrollView.height / 20
+                                    width: parent.width * 0.09
+                                    height: dataRect.height * 0.8
                                     color: buttonTextColor
                                     font.pixelSize: height
                                     font.family: alibabaPuHuiTi.font.family
@@ -62,7 +61,7 @@ Item {
                                 Text {
                                     text: model.direction
                                     width: parent.width * 0.02
-                                    height: scrollView.height / 20
+                                    height: dataRect.height * 0.8
                                     color: buttonTextColor
                                     font.pixelSize: height
                                     font.family: alibabaPuHuiTi.font.family
@@ -70,16 +69,16 @@ Item {
 
                                 Text {
                                     text: model.data
-                                    width: parent.width * 0.4
-                                    height: scrollView.height / 20
+                                    width: parent.width * 0.56
+                                    height: dataRect.height * 0.8
                                     color: buttonTextColor
                                     font.pixelSize: height
-                                    font.family: alibabaPuHuiTi.font.family
+                                    font.family: sourceCodePro.font.family
                                 }
                                 Text {
                                     text: model.detail
-                                    width: parent.width * 0.4
-                                    height: scrollView.height / 20
+                                    width: parent.width * 0.30
+                                    height: dataRect.height * 0.8
                                     color: buttonTextColor
                                     font.pixelSize: height
                                     font.family: alibabaPuHuiTi.font.family

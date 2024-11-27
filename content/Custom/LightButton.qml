@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control

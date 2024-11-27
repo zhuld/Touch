@@ -55,7 +55,7 @@ Item {
             font.family: alibabaPuHuiTi.font.family
         }
         Text {
-            text: qsTr("隽捷信息")
+            text: settings.ipAddress + ":" + settings.ipPort + "@" + settings.ipId
             width: parent.width
             height: parent.height * 0.05
             horizontalAlignment: Text.AlignRight
@@ -82,7 +82,7 @@ Item {
         Connections {
             target: socketAnimation
             onFinished: {
-                if (root.settings.demoMode) {
+                if (settings.demoMode) {
                     tcpClient.connectToServer("127.0.0.1", 41793)
                 } else {
                     tcpClient.connectToServer(settings.ipAddress,

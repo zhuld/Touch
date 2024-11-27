@@ -3,9 +3,9 @@ import QtQuick.Effects
 
 Item {
     id: control
-    property real widthRatio: 0.5
+    property real widthRatio: 1
     height: parent.height
-    width: (parent.width + parent.spacing) * widthRatio - parent.spacing
+    width: (parent.width * 0.98 + parent.spacing) * widthRatio - parent.spacing
     Rectangle {
         id: rectangle
         height: parent.height

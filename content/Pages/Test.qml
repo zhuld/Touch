@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 import "../Custom"
 
@@ -17,7 +17,6 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.98
             Column {
                 anchors.fill: parent
                 anchors.margins: item.width * 0.02

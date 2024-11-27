@@ -18,7 +18,7 @@ Item {
     Column {
         id: tabBar
         property int currentPage: 0
-        width: parent.height / repeater.model.count
+        width: height * 0.9 / repeater.model.count
         height: parent.height
         anchors.margins: 0
         spacing: height / repeater.model.count * 0.12
@@ -29,7 +29,6 @@ Item {
                 id: tabButton
                 required property string name
                 required property string iconUrl
-                //required property string pageUrl
                 required property int index
                 text: name
                 width: parent.width
@@ -70,8 +69,7 @@ Item {
         // Loop through original model and add filtered items to filteredModel
         for (var i = 0; i < config.pageList.count; i++) {
             var item = config.pageList.get(i)
-            if ((item.name !== "数据" && item.name !== "测试")
-                    || root.settings.showChannel) {
+            if (!item.test || root.settings.showChannel) {
                 filteredModel.append(item)
             }
         }
@@ -79,12 +77,10 @@ Item {
     Connections {
         target: settingDialog
         onShowChannelChanged: {
-
             filteredModel.clear()
             for (var i = 0; i < config.pageList.count; i++) {
                 var item = config.pageList.get(i)
-                if ((item.name !== "数据" && item.name !== "测试")
-                        || root.settings.showChannel) {
+                if (!item.test || root.settings.showChannel) {
                     filteredModel.append(item)
                 }
             }

@@ -36,7 +36,7 @@ Item {
             }
         }
         Category {
-            widthRatio: 0.48
+            widthRatio: 0.5
             Column {
                 anchors.fill: parent
                 anchors.rightMargin: item.width * 0.03
@@ -95,7 +95,7 @@ Item {
                     }
                     Rectangle {
                         id: table
-                        width: parent.width * 0.8
+                        width: parent.width * 0.7
                         height: parent.height * 0.86
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom

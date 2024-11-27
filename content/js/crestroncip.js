@@ -4,7 +4,8 @@ const op_Server_IPID = 0x02 // 回复 02 00 04 00 00 00 1F ok; 02 00 03 FF FF 02
 
 const op_Join = 0x05 // 发送 Join信息
 const op_Join_Digital = 0x00
-const op_Join_Analog = 0x014
+const op_Join_Analog1 = 0x01
+const op_Join_Analog2 = 0x14
 const op_Join_Serial = 0x02
 const op_Join_Request = 0x03
 
@@ -13,7 +14,7 @@ const op_Server_Pong = 0x0E // 回复 0E 00 02 00 00
 
 function clientMessageCheck(message) {
     let index = 0
-    //console.log("client: ", toHexString(message))
+    //console.log("client: ", toHexString(message," "))
     while (index < message.length) {
         let payloadType = message[index]
         let payloadLength = message[index + 2]
@@ -34,7 +35,7 @@ function clientMessageCheck(message) {
             }
             break
         case op_Server_IPID:
-            if (toHexString(payload) === "0000001F") {
+            if (toHexString(payload, "") === "0000001F") {
                 recivedAppendList(message, index, payloadLength,
                                   "服务器确认IPID：" + settings.ipId + "，注册成功")
                 tcpClient.sendData(
@@ -46,9 +47,9 @@ function clientMessageCheck(message) {
                                 op_Join,
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])),
                             "发送查询指令")
-            } else if (toHexString(payload) === "FFFF02") {
+            } else if (toHexString(payload, "") === "FFFF02") {
                 recivedAppendList(message, index, payloadLength, "服务器注册失败")
-                console.log("registration failed")
+                //console.log("registration failed")
             }
             break
         case op_Join:
@@ -66,7 +67,8 @@ function clientMessageCheck(message) {
                                   "Digital:" + channelD + " -> "
                                   + (root.digital[channelD] ? "High" : "Low"))
                 break
-            case op_Join_Analog:
+            case op_Join_Analog1:
+            case op_Join_Analog2:
                 //analog
                 let channelA
                 let tmpA = root.analog
@@ -87,7 +89,16 @@ function clientMessageCheck(message) {
                             message, index, payloadLength,
                             "Analog:" + channelA + " -> " + root.analog[channelA])
                 break
+            default:
+                recivedAppendList(message, index, payloadLength, "其他Join事件")
+                break
             }
+            break
+        case op_Server_Pong:
+            //recivedAppendList(message, index, payloadLength, "服务器回复Pong")
+            break
+        default:
+            recivedAppendList(message, index, payloadLength, "其他未知事件")
             break
         }
         index = index + payloadLength + 3
@@ -96,7 +107,7 @@ function clientMessageCheck(message) {
 
 function serverMessageCheck(message) {
     let index = 0
-    //console.log("server: ", toHexString(message))
+    //console.log("server: ", toHexString(message," "))
     while (index < message.length) {
         let payloadType = message[index]
         let payloadLength = message[index + 2]
@@ -132,12 +143,13 @@ function serverMessageCheck(message) {
                 //digital
                 tcpServer.sendData(cipmessage(op_Join, payload))
                 break
-            case op_Join_Analog:
+            case op_Join_Analog1:
+            case op_Join_Analog2:
                 if (payloadLength === 8) {
                     tcpServer.sendData(
                                 cipmessage(
                                     op_Join,
-                                    new Uint8Array([0x00, 0x00, 0x04, op_Join_Analog, message[4], payload[5], payload[6], payload[7]])))
+                                    new Uint8Array([0x00, 0x00, 0x05, payload[3], message[4], payload[5], payload[6], payload[7]])))
                 }
                 break
             }
@@ -194,7 +206,7 @@ function release(channel) {
                     cipmessage2(
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
-                                        % 0x100, channel / 0x100])),
+                                        % 0x100, channel / 0x100 | 0x80])),
                     "Digital:" + (channel + 1) + " -> " + "Release")
     }
 }
@@ -204,18 +216,19 @@ function level(channel, value) {
         tcpClient.sendData(
                     cipmessage(
                         op_Join,
-                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog2, channel / 0x100, channel
                                         % 0x100, value / 0x100, value % 0x100])))
         sendAppendList(
                     cipmessage2(
                         op_Join,
-                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog2, channel / 0x100, channel
                                         % 0x100, value / 0x100, value % 0x100])),
                     "Analog:" + (channel + 1) + " -> " + value)
     }
 }
 function ping() {
     tcpClient.sendData(cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])))
+    //sendAppendList(cipmessage2(op_Client_Ping,new Uint8Array([0x00, 0x00])), "发送Ping")
 }
 
 //Server
@@ -227,8 +240,9 @@ function accept() {
     tcpServer.sendData(cipmessage(op_Server_Accept, new Uint8Array([0x02])))
 }
 
-function toHexString(data) {
+function toHexString(data, space) {
     let hexMessage = ""
+    let s = space
     for (var i = 0; i < data.length; i++) {
         let hex = data[i].toString(16)
         // 将字节转换为十六进制
@@ -236,6 +250,7 @@ function toHexString(data) {
             hex = "0" + hex // 补齐两位
         }
         hexMessage += hex
+        hexMessage += s
     }
     return hexMessage.toUpperCase()
 }
@@ -248,7 +263,7 @@ function recivedAppendList(message, index, payloadLength, detail) {
                               "data": toHexString(
                                           message.slice(
                                               index,
-                                              index + 3 + payloadLength)),
+                                              index + 3 + payloadLength), " "),
                               "detail": detail
                           })
 }
@@ -257,7 +272,7 @@ function sendAppendList(data, detail) {
                               "time": new Date().toLocaleTimeString(
                                           Qt.locale("zh_CN"), " hh:mm:ss"),
                               "direction": "发",
-                              "data": toHexString(data),
+                              "data": toHexString(data, " "),
                               "detail": detail
                           })
 }

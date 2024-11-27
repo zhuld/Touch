@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "qrc:/qt/qml/content/js/crestroncip.js" as CrestronCIP
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
     id: control
@@ -15,8 +15,6 @@ Item {
 
     property int muteChannel
     property int channel
-    property int volume: root.analog[control.channel] + 0
-
     property int disEnableChannel: 0
 
     property bool input: true
@@ -24,14 +22,8 @@ Item {
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
-    Binding {
-        target: slider
-        property: "value"
-        value: volume / 65535
-    }
     Column {
         anchors.fill: parent
-
         Slider {
             id: slider
             height: parent.height * 0.92
@@ -39,28 +31,15 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: -handle.height / 4
             orientation: Qt.Vertical
+            live: false
+            value: Math.round(
+                       root.analog[control.channel] * (maxVolume - miniVolume) / 65535 + miniVolume)
 
-            stepSize: 1 / (maxVolume - miniVolume)
+            from: miniVolume
+            to: maxVolume
+            stepSize: 1
+
             snapMode: Slider.SnapAlways
-
-            property real lastValue
-
-            state: "MOVING"
-            states: [
-                State {
-                    name: "STOPED"
-                },
-                State {
-                    name: "MOVING"
-                }
-            ]
-
-            onStateChanged: {
-                if (state === "STOPED") {
-                    CrestronCIP.level(control.channel,
-                                      Math.round(position * 65535))
-                }
-            }
 
             handle: Rectangle {
                 id: handle
@@ -103,20 +82,14 @@ Item {
                         color: input ? "#07111B" : "#57111B"
                     }
                 }
-                radius: width * 0.2
-                // Behavior on y {
-                //     enabled: !slider.pressed
-                //     NumberAnimation {
-                //         easing.type: Easing.OutCubic
-                //         duration: 300
-                //     }
-                // }
+                radius: width * 0.1
+
                 layer.enabled: true
                 layer.effect: MultiEffect {
                     shadowEnabled: true
                     shadowColor: buttonShadowColor
-                    shadowHorizontalOffset: parent.pressed ? height / 25 : height / 10
-                    shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.value)
+                    shadowHorizontalOffset: parent.pressed ? height / 25 : height / 12
+                    shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: 100
@@ -176,27 +149,18 @@ Item {
                 }
             }
 
-            onPressedChanged: {
-                if (!pressed) {
-                    moveTimer.stop()
-                    slider.state = "STOPED"
-                } else {
-                    moveTimer.start()
-                }
+            onMoved: {
+                moveTimer.restart()
             }
-
             //用于检测滑块停止滑动
             Timer {
                 id: moveTimer
-                interval: 100 // 毫秒
-                repeat: true
+                interval: 200 // 毫秒
+                repeat: false
                 onTriggered: {
-                    if (slider.lastValue === slider.value) {
-                        slider.state = "STOPED"
-                    } else {
-                        slider.state = "MOVING"
-                        slider.lastValue = slider.value
-                    }
+                    CrestronCIP.level(control.channel,
+                                      Math.round(slider.position * 65535))
+                    // (maxVolume - miniVolume)
                 }
             }
             Repeater {
@@ -273,9 +237,11 @@ Item {
             icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
             channel: muteChannel
             disEnableChannel: control.disEnableChannel
-            text: root.digital[control.muteChannel] ? "静音" : Math.round(
-                                                          slider.position
-                                                          * (maxVolume - miniVolume) + miniVolume)
+            // text: root.digital[control.muteChannel] ? "静音" : Math.round(
+            //                                               slider.position
+            //                                               * (maxVolume - miniVolume) + miniVolume)
+            text: root.digital[control.muteChannel] ? "静音" : slider.value
+
             font.pixelSize: height * 0.35
         }
     }

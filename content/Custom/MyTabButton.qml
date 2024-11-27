@@ -6,8 +6,13 @@ TabButton {
     id: control
     width: parent.width
     height: parent.height
-    icon.width: control.checked ? height * 0.5 : height * 0.4
-    icon.height: control.checked ? height * 0.5 : height * 0.4
+    icon.width: control.checked ? height * 0.4 : height * 0.3
+    icon.height: control.checked ? height * 0.4 : height * 0.3
+    Behavior on icon.width {
+        NumberAnimation {
+            duration: 300
+        }
+    }
 
     icon.color: buttonTextColor
     font.pixelSize: height * 0.2

@@ -12,34 +12,33 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
 
+        // Category {
+        //     widthRatio: 0.19
+        //     Column {
+        //         anchors.fill: parent
+        //         anchors.rightMargin: item.width * 0.02
+        //         anchors.leftMargin: item.width * 0.02
+        //         anchors.topMargin: item.width * 0.02
+        //         anchors.bottomMargin: item.width * 0.03
+        //         spacing: height * 0.05
+        //         MyLable {
+        //             text: config.systemVolumeName
+        //             height: parent.height * 0.1
+        //         }
+        //         VolumeBar {
+        //             height: parent.height * 0.9 - parent.spacing
+        //             width: parent.width
+        //             anchors.horizontalCenter: parent.horizontalCenter
+        //             channel: config.systemVolumeChannel
+        //             muteChannel: config.systemVolumeMuteChannel
+        //             miniVolume: config.systemVolumeMiniVolume
+        //             maxVolume: config.systemVolumeMaxVolume
+        //             input: config.systemVolumeInput
+        //         }
+        //     }
+        // }
         Category {
-            widthRatio: 0.19
-            Column {
-                anchors.fill: parent
-                anchors.rightMargin: item.width * 0.02
-                anchors.leftMargin: item.width * 0.02
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.03
-                spacing: height * 0.05
-                MyLable {
-                    text: config.systemVolumeName
-                    height: parent.height * 0.1
-                }
-                VolumeBar {
-                    height: parent.height * 0.9 - parent.spacing
-                    width: parent.width
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    channel: config.systemVolumeChannel
-                    muteChannel: config.systemVolumeMuteChannel
-                    miniVolume: config.systemVolumeMiniVolume
-                    maxVolume: config.systemVolumeMaxVolume
-                    input: config.systemVolumeInput
-                }
-            }
-        }
-
-        Category {
-            widthRatio: 0.38
+            widthRatio: 0.5
             Column {
                 anchors.fill: parent
                 anchors.rightMargin: item.width * 0.03
@@ -63,7 +62,7 @@ Item {
                         required property bool showDialog
                         required property color bColor
                         width: parent.width
-                        height: parent.height * 0.2 * sizeRatio
+                        height: parent.height * 0.9 / config.systemPowerList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -76,7 +75,7 @@ Item {
         }
 
         Category {
-            widthRatio: 0.41
+            widthRatio: 0.5
             Column {
                 anchors.fill: parent
                 anchors.rightMargin: item.width * 0.03
