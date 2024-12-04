@@ -8,7 +8,7 @@ import "./Pages"
 Item {
     id: main
     anchors.fill: parent
-    anchors.bottomMargin: parent.width * 0.02
+    //anchors.bottomMargin: parent.width * 0.02
     anchors.leftMargin: parent.width * 0.02
 
     ListModel {
@@ -18,10 +18,10 @@ Item {
     Column {
         id: tabBar
         property int currentPage: 0
-        width: height * 0.9 / repeater.model.count
-        height: parent.height
+        width: parent.width * 0.1
+        height: parent.height - parent.width * 0.02
         anchors.margins: 0
-        spacing: height / repeater.model.count * 0.12
+        spacing: height / repeater.model.count * 0.1
         Repeater {
             id: repeater
             model: filteredModel
@@ -32,6 +32,7 @@ Item {
                 required property int index
                 text: name
                 width: parent.width
+                //height: width
                 height: (parent.height + parent.spacing) / repeater.model.count - parent.spacing
                 icon.source: iconUrl
                 onClicked: {
@@ -48,7 +49,6 @@ Item {
         }
     }
     StackLayout {
-        id: stackLayout
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
         height: parent.height
@@ -63,7 +63,6 @@ Item {
         }
     }
     Component.onCompleted: {
-
         // Clear the filtered model
         filteredModel.clear()
         // Loop through original model and add filtered items to filteredModel
@@ -84,7 +83,7 @@ Item {
                     filteredModel.append(item)
                 }
             }
-            tabBar.currentPage = 0
+            repeater.itemAt(0).checked = true
         }
     }
 }

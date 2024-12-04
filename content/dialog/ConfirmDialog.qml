@@ -14,7 +14,7 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.6
+    width: root.width * 0.5
     height: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
@@ -90,11 +90,8 @@ Dialog {
                 height: parent.height
                 text: "确定"
                 font.pixelSize: height * 0.6
-                onClicked: {
-                    okPress()
-                    //confirmDialog.close()
-                }
-                btnRadius: width * 0.03
+                onClicked: okPress()
+                radius: height * 0.1
             }
             ColorButton {
                 id: settingCancel
@@ -103,7 +100,7 @@ Dialog {
                 text: "取消"
                 font.pixelSize: height * 0.6
                 onClicked: confirmDialog.close()
-                btnRadius: width * 0.03
+                radius: height * 0.1
             }
         }
     }

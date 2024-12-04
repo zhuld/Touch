@@ -13,15 +13,15 @@ Item {
         spacing: width * 0.02
         Category {
             id: outputCategory
-            widthRatio: 0.35
+            widthRatio: config.videoOutputRatio
+            lable: config.videoOutputName
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
-                spacing: height * 0.03
-                MyLable {
-                    text: config.videoOutputName
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Repeater {
                     id: outputList
                     model: config.videoOutputList
@@ -31,7 +31,7 @@ Item {
                         required property int outputChannel
                         required property int disable
                         width: parent.width
-                        height: (parent.height * 0.9)
+                        height: (parent.height + parent.spacing)
                                 / config.videoOutputList.count - parent.spacing
                         output: outputChannel
                         textOutput: name
@@ -43,18 +43,18 @@ Item {
 
         Category {
             id: inputCategory
-            widthRatio: 0.65
+            widthRatio: config.videoInputRatio
+            lable: config.videoInputName
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
-                spacing: height * 0.03
-                MyLable {
-                    text: config.videoInputName
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Grid {
                     width: parent.width
-                    height: parent.height * 0.78
+                    height: parent.height * 0.9
                     columns: 2
                     spacing: height * 0.05
                     Repeater {

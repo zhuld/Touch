@@ -29,12 +29,11 @@ Window {
     //property var text: [] // not support yet
     property ListModel listModel: ListModel {}
 
-    property color backgroundColor: settings.darkTheme ? "#02111C" : "lightgray"
-
+    property color backgroundColor: settings.darkTheme ? "#02112C" : "lightgray"
     property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
-    property color textColor: settings.darkTheme ? "lightskyblue" : "dark" //文字颜色
-    property color buttonColor: settings.darkTheme ? "#16417C" : "whitesmoke"
-    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "dimgrey"
+    property color textColor: settings.darkTheme ? "lightskyblue" : "#0B1A38" //文字颜色
+    property color buttonColor: settings.darkTheme ? "#16417C" : "lightgray"
+    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
     property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
     property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
     property color catagoryColor: settings.darkTheme ? "#1A5A94" : "gainsboro"
@@ -266,5 +265,6 @@ Window {
             digital[i] = false
             analog[i] = 0
         }
+        //digital[11] = true
     }
 }

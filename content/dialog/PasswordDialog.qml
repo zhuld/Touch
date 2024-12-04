@@ -106,7 +106,6 @@ Dialog {
             height: width * 1.33
             anchors.margins: parent.width * 0.1
             anchors.horizontalCenter: parent.horizontalCenter
-
             columns: 3
             spacing: width * 0.05
             Repeater {
@@ -153,10 +152,9 @@ Dialog {
                     width: (numberPad.width + numberPad.spacing)
                            / numberPad.columns - numberPad.spacing
                     height: width
-                    btnRadius: width / 2
+                    radius: width / 2
                     font.pixelSize: width * 0.5
                     text: name
-                    //backColor: "transparent"
                     onClicked: {
                         switch (name) {
                         case "1":

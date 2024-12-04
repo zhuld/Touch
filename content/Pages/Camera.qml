@@ -12,23 +12,18 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            widthRatio: config.cameraPadRatio
+            lable: config.cameraPadName
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
                 spacing: height * 0.04
-                MyLable {
-                    id: label
-                    text: config.cameraPadName
-                    height: parent.height * 0.1
-                }
                 ControlPad {
                     id: dpadControl
-                    width: parent.width * 1.3 > parent.height
-                           * 0.83 ? parent.height * 0.83 / 1.3 : parent.width
+                    width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
                     height: width * 1.3
                     anchors.horizontalCenter: parent.horizontalCenter
                     channel: config.cameraPadChannel
@@ -36,36 +31,35 @@ Item {
             }
         }
         Category {
-            widthRatio: 0.5
+            widthRatio: config.cameraAutoRatio
+            lable: config.cameraAutoName
+            MySwitch {
+                height: parent.height * 0.06
+                channel: config.cameraAutoChannel
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.topMargin: height * 0.4
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    text: parent.checked ? "自动" : "手动"
+                    font.pixelSize: parent.height * 0.7
+                    color: buttonTextColor
+                    anchors.right: parent.left
+                    font.family: alibabaPuHuiTi.font.family
+                }
+            }
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
-                MyLable {
-                    text: config.cameraAutoName
-                    height: parent.height * 0.1
-                    MySwitch {
-                        height: parent.height * 0.6
-                        channel: config.cameraAutoChannel
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-                        Text {
-                            width: parent.width
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: parent.checked ? "自动" : "手动"
-                            font.pixelSize: parent.height * 0.7
-                            color: buttonTextColor
-                            anchors.right: parent.left
-                            font.family: alibabaPuHuiTi.font.family
-                        }
-                    }
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Rectangle {
                     width: parent.width
-                    height: parent.height * 0.9
+                    height: parent.height
                     color: "transparent"
                     Rectangle {
                         id: tv
@@ -96,7 +90,7 @@ Item {
                     Rectangle {
                         id: table
                         width: parent.width * 0.7
-                        height: parent.height * 0.86
+                        height: parent.height * 0.9
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.bottom
                         border.color: catagoryColor
@@ -106,8 +100,8 @@ Item {
                         Grid {
                             anchors.fill: parent
                             columns: 3
-                            rowSpacing: parent.height * 0.04
-                            columnSpacing: parent.width * 0.1
+                            rowSpacing: parent.height * 0.03
+                            columnSpacing: parent.width * 0.07
                             anchors.margins: parent.width * 0.1
                             Repeater {
                                 model: config.cameraAutoList
@@ -116,13 +110,13 @@ Item {
                                     required property int cameraRotation
                                     required property string label
                                     required property bool used
-                                    width: table.width * 0.2
+                                    width: table.width * 0.22
                                     height: width
                                     channel: btnchannel
                                     font.pixelSize: height * 0.6
                                     text: label
                                     opacity: used ? 1 : 0
-                                    radius: height * 0.2
+                                    radius: height * 0.5
                                     onCheckedChanged: {
                                         if (checked) {
                                             camera.rotation = cameraRotation

@@ -1,19 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Shapes
 
 TabButton {
     id: control
     width: parent.width
     height: parent.height
-    icon.width: control.checked ? height * 0.4 : height * 0.3
-    icon.height: control.checked ? height * 0.4 : height * 0.3
-    Behavior on icon.width {
-        NumberAnimation {
-            duration: 300
-        }
-    }
-
+    icon.width: height * 0.4
+    icon.height: height * 0.4
     icon.color: buttonTextColor
     font.pixelSize: height * 0.2
     font.family: alibabaPuHuiTi.font.family
@@ -25,11 +20,53 @@ TabButton {
     display: AbstractButton.TextUnderIcon
 
     background: Rectangle {
-        id: rectangle
+        id: back
         anchors.fill: parent
         opacity: enabled ? 1 : 0.3
-        color: control.checked ? buttonCheckedColor : buttonColor
         radius: width / 10
+        Shape {
+            anchors.fill: parent
+            ShapePath {
+                strokeWidth: 0
+                strokeColor: "transparent"
+                PathRectangle {
+                    x: 0
+                    y: 0
+                    radius: back.radius
+                    width: back.width
+                    height: back.height
+                }
+                fillGradient: RadialGradient {
+                    centerX: back.width * 0.5
+                    centerY: back.height * 0.5
+                    centerRadius: back.width
+                    focalX: back.width * 0.25
+                    focalY: back.height * 0.25
+                    GradientStop {
+                        position: 1
+                        color: down | checked ? Qt.lighter(buttonCheckedColor,
+                                                           1.3) : Qt.lighter(
+                                                    buttonColor, 1.4)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
+                    }
+                    GradientStop {
+                        position: 0
+                        color: down | checked ? Qt.darker(buttonCheckedColor,
+                                                          1.1) : Qt.darker(
+                                                    buttonColor, 1.1)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
+                    }
+                }
+            }
+        }
         Behavior on color {
             ColorAnimation {
                 duration: 100
@@ -39,8 +76,8 @@ TabButton {
         layer.effect: MultiEffect {
             shadowEnabled: true
             shadowColor: buttonShadowColor
-            shadowHorizontalOffset: control.checked ? height / 60 : height / 20
-            shadowVerticalOffset: shadowHorizontalOffset
+            shadowHorizontalOffset: shadowVerticalOffset / 2
+            shadowVerticalOffset: checked ? height / 40 : height / 20
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100

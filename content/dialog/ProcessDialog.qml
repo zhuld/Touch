@@ -54,18 +54,6 @@ Dialog {
             horizontalAlignment: Text.AlignLeft
             color: textColor
             font.family: alibabaPuHuiTi.font.family
-            // IconButton {
-            //     id: close
-            //     height: parent.height * 1.5
-            //     width: height
-            //     anchors.verticalCenter: parent.verticalCenter
-            //     anchors.right: parent.right
-            //     icon.source: "qrc:/content/icons/close.png"
-            //     onClicked: {
-            //         processDialog.close()
-            //     }
-            //     visible: during < 10
-            // }
         }
         BusyIndicator {
             id: busy

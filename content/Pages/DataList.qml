@@ -8,37 +8,37 @@ Item {
     id: dataList
     implicitWidth: parent.width
     implicitHeight: parent.height
+
     Row {
         id: row
         anchors.fill: parent
         spacing: width * 0.02
         Category {
+            lable: qsTr("收发数据")
+            ColorButton {
+                text: "清除"
+                anchors.top: parent.top
+                anchors.topMargin: height * 0.4
+                anchors.right: parent.right
+                width: parent.width * 0.1
+                height: parent.height * 0.06
+                onClicked: {
+                    root.listModel.clear()
+                }
+            }
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
-                spacing: height * 0.04
-                MyLable {
-                    id: label
-                    text: qsTr("收发数据")
-                    height: parent.height * 0.1
-                    ColorButton {
-                        text: "清除"
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        width: parent.width / 8
-                        height: parent.height * 0.7
-                        onClicked: {
-                            root.listModel.clear()
-                        }
-                    }
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.05
                 ScrollView {
                     id: scrollView
                     width: parent.width
-                    height: parent.height * 0.86
+                    height: parent.height
                     clip: true
                     ListView {
-                        readonly property int lines: 20
                         width: scrollView.width
                         model: root.listModel
                         delegate: Rectangle {

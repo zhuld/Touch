@@ -6,7 +6,7 @@ Item {
     readonly property string version: qsTr("202411")
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
-    readonly property string cipServerIP: "192.168.2.105"
+    readonly property string cipServerIP: "192.168.1.10"
     readonly property int cipPort: 41794
     readonly property int ipId: 8
     readonly property int processDialogChannel: 1
@@ -41,7 +41,7 @@ Item {
             name: qsTr("灯光")
             pageUrl: "qrc:/qt/qml/content/Pages/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
-            test: true
+            test: false
         }
         ListElement {
             name: qsTr("数据")
@@ -64,7 +64,9 @@ Item {
     }
 
     //系统
+    readonly property real systemVolumeRatio: 0.2
     readonly property string systemPowerName: qsTr("会议模式")
+    readonly property real systemPowerRatio: 0.45
     readonly property var systemPowerList: ListModel {
         ListElement {
             name: qsTr("大屏会议")
@@ -85,7 +87,7 @@ Item {
             showDialog: true
         }
         ListElement {
-            name: qsTr("会议结束")
+            name: qsTr("结束会议")
             btnchannel: 4
             disBtnChannel: 0
             sizeRatio: 1
@@ -96,6 +98,7 @@ Item {
     }
 
     readonly property string systemSignalName: qsTr("信号选择")
+    readonly property real systemSignalRatio: 0.35
     readonly property var systemSignalList: ListModel {
         id: buttonModel
         ListElement {
@@ -114,14 +117,20 @@ Item {
             iconUrl: "qrc:/content/icons/zhuji.png"
         }
         ListElement {
-            name: qsTr("无线投屏")
+            name: qsTr("外网电脑")
             btnchannel: 14
+            iconUrl: "qrc:/content/icons/zhuji.png"
+        }
+        ListElement {
+            name: qsTr("无线投屏")
+            btnchannel: 15
             iconUrl: "qrc:/content/icons/wuxiantouping.png"
         }
     }
 
     //视频切换页 输出
     readonly property string videoOutputName: qsTr("输出")
+    readonly property real videoOutputRatio: 0.35
     readonly property var videoOutputList: ListModel {
         ListElement {
             name: qsTr("大屏")
@@ -145,6 +154,7 @@ Item {
 
     //视频切换页 输入
     readonly property string videoInputName: qsTr("输入信号")
+    readonly property real videoInputRatio: 0.65
     readonly property var videoInputList: ListModel {
         ListElement {
             name: qsTr("外网电脑")
@@ -173,19 +183,19 @@ Item {
         ListElement {
             name: qsTr("摄像机")
             inputChannel: 5
-            bgColor: "orangered"
+            bgColor: "indianred"
             source: "qrc:/content/icons/shexiangji.png"
         }
         ListElement {
             name: qsTr("预留输入1")
             inputChannel: 6
-            bgColor: "dimgray"
+            bgColor: "cadetblue"
             source: "qrc:/content/icons/HDMIjiekou.png"
         }
         ListElement {
             name: qsTr("预留输入2")
             inputChannel: 7
-            bgColor: "khaki"
+            bgColor: "slateblue"
             source: "qrc:/content/icons/HDMIjiekou.png"
         }
         ListElement {
@@ -198,8 +208,10 @@ Item {
 
     // 摄像机页，dpad
     readonly property string cameraPadName: qsTr("摄像机控制")
+    readonly property real cameraPadRatio: 0.5
     readonly property int cameraPadChannel: 20
     readonly property string cameraAutoName: qsTr("摄像跟踪")
+    readonly property real cameraAutoRatio: 0.5
     readonly property int cameraAutoChannel: 40
     readonly property var cameraAutoList: ListModel {
         ListElement {
@@ -279,7 +291,7 @@ Item {
             name: qsTr("鹅颈话筒")
             vChannel: 5
             mChannel: 51
-            miniVol: -40
+            minVol: -40
             maxVol: 0
             inputType: true
         }
@@ -287,7 +299,7 @@ Item {
             name: qsTr("手持话筒")
             vChannel: 6
             mChannel: 52
-            miniVol: -40
+            minVol: -40
             maxVol: 0
             inputType: true
         }
@@ -295,7 +307,7 @@ Item {
             name: qsTr("电脑音频")
             vChannel: 7
             mChannel: 53
-            miniVol: -40
+            minVol: -40
             maxVol: 5
             inputType: true
         }
@@ -304,7 +316,7 @@ Item {
             name: qsTr("外接音频")
             vChannel: 8
             mChannel: 54
-            miniVol: -40
+            minVol: -40
             maxVol: 5
             inputType: true
         }
@@ -313,7 +325,7 @@ Item {
             name: qsTr("总音量")
             vChannel: 9
             mChannel: 55
-            miniVol: -40
+            minVol: -40
             maxVol: 5
             inputType: false
         }
@@ -321,7 +333,7 @@ Item {
 
     //灯光页 灯光
     readonly property string lightName: qsTr("单独控制")
-    readonly property string lightModeName: qsTr("灯光模式")
+    readonly property real lightRatio: 0.7
     readonly property var lightList: ListModel {
         ListElement {
             name: qsTr("左吸顶灯")
@@ -348,6 +360,8 @@ Item {
             btnChannel: 66
         }
     }
+    readonly property string lightModeName: qsTr("灯光模式")
+    readonly property real lightModeRatio: 0.3
     readonly property var lightModeList: ListModel {
         ListElement {
             name: qsTr("全开")

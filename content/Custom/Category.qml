@@ -4,7 +4,9 @@ import QtQuick.Effects
 Item {
     id: control
     property real widthRatio: 1
-    height: parent.height
+    property alias lable: _lable.text
+
+    height: parent.height - parent.width * 0.02
     width: (parent.width * 0.98 + parent.spacing) * widthRatio - parent.spacing
     Rectangle {
         id: rectangle
@@ -13,7 +15,7 @@ Item {
         gradient: Gradient {
             GradientStop {
                 position: 1.0
-                color: Qt.alpha(catagoryColor, 0.2)
+                color: Qt.alpha(catagoryColor, 0.5)
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -21,8 +23,8 @@ Item {
                 }
             }
             GradientStop {
-                position: 0.114
-                color: Qt.alpha(catagoryColor, 0.6)
+                position: 0.112
+                color: Qt.alpha(catagoryColor, 0.7)
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -44,8 +46,20 @@ Item {
         layer.effect: MultiEffect {
             shadowEnabled: true
             shadowColor: buttonShadowColor
-            shadowHorizontalOffset: height / 100
-            shadowVerticalOffset: shadowHorizontalOffset / 2
+            shadowHorizontalOffset: shadowVerticalOffset / 2
+            shadowVerticalOffset: height / 100
         }
+    }
+    Text {
+        id: _lable
+        text: qsTr("Label")
+        height: parent.height * 0.1
+        width: parent.width
+        font.pixelSize: height * 0.5
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        color: buttonTextColor
+        styleColor: buttonTextColor
+        font.family: alibabaPuHuiTi.font.family
     }
 }

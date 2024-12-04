@@ -11,45 +11,39 @@ Item {
         id: row
         anchors.fill: parent
         spacing: width * 0.02
-
-        // Category {
-        //     widthRatio: 0.19
-        //     Column {
-        //         anchors.fill: parent
-        //         anchors.rightMargin: item.width * 0.02
-        //         anchors.leftMargin: item.width * 0.02
-        //         anchors.topMargin: item.width * 0.02
-        //         anchors.bottomMargin: item.width * 0.03
-        //         spacing: height * 0.05
-        //         MyLable {
-        //             text: config.systemVolumeName
-        //             height: parent.height * 0.1
-        //         }
-        //         VolumeBar {
-        //             height: parent.height * 0.9 - parent.spacing
-        //             width: parent.width
-        //             anchors.horizontalCenter: parent.horizontalCenter
-        //             channel: config.systemVolumeChannel
-        //             muteChannel: config.systemVolumeMuteChannel
-        //             miniVolume: config.systemVolumeMiniVolume
-        //             maxVolume: config.systemVolumeMaxVolume
-        //             input: config.systemVolumeInput
-        //         }
-        //     }
-        // }
         Category {
-            widthRatio: 0.5
+            widthRatio: config.systemVolumeRatio
+            lable: config.volumeList.get(4).name
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
-                spacing: height * 0.05
-                MyLable {
-                    text: config.systemPowerName
-                    height: parent.height * 0.1
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
+                VolumeBar {
+                    height: parent.height
+                    width: parent.width
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    channel: config.volumeList.get(4).vChannel
+                    muteChannel: config.volumeList.get(4).mChannel
+                    miniVolume: config.volumeList.get(4).minVol
+                    maxVolume: config.volumeList.get(4).maxVol
+                    input: config.volumeList.get(4).inputType
                 }
+            }
+        }
+
+        Category {
+            widthRatio: config.systemPowerRatio
+            lable: config.systemPowerName
+            Column {
+                anchors.fill: parent
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.05
                 Repeater {
                     id: listMode
                     model: config.systemPowerList
@@ -62,7 +56,8 @@ Item {
                         required property bool showDialog
                         required property color bColor
                         width: parent.width
-                        height: parent.height * 0.9 / config.systemPowerList.count - parent.spacing
+                        height: (parent.height - parent.spacing)
+                                / config.systemPowerList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -75,18 +70,15 @@ Item {
         }
 
         Category {
-            widthRatio: 0.5
+            widthRatio: config.systemSignalRatio
+            lable: config.systemSignalName
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
-                spacing: height * 0.05
-                MyLable {
-                    text: config.systemSignalName
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Repeater {
                     model: config.systemSignalList
                     delegate: MyButton {
@@ -95,7 +87,8 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: parent.width
-                        height: parent.height * 0.9 / config.systemSignalList.count - parent.spacing
+                        height: (parent.height + parent.spacing)
+                                / config.systemSignalList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         icon.source: iconUrl

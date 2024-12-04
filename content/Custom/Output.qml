@@ -13,6 +13,9 @@ Rectangle {
     property alias textInput: label.text
     property string disableInput
 
+    property color dragShadowColor
+
+    //: buttonRedColor
     readonly property var input: root.analog[output]
 
     property int disEnableChannel: 0
@@ -24,34 +27,60 @@ Rectangle {
     layer.enabled: true
     layer.effect: MultiEffect {
         shadowEnabled: true
-        shadowColor: dropContainer.containsDrag ? buttonRedColor : buttonShadowColor
+        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : buttonShadowColor
         shadowHorizontalOffset: height / 30
-        shadowVerticalOffset: dropContainer.containsDrag ? shadowHorizontalOffset
-                                                           * 2 : shadowHorizontalOffset
+        shadowVerticalOffset: shadowHorizontalOffset * 2
         Behavior on shadowColor {
             ColorAnimation {
-                duration: 200
+                duration: 300
+                easing.type: Easing.OutCubic
             }
         }
     }
-    gradient: Gradient {
-        GradientStop {
-            id: downColor
-            position: 1.0
-            color: input > 0 ? config.videoInputList.get(
-                                   input - 1).bgColor : buttonColor
-            Behavior on color {
-                ColorAnimation {
-                    duration: 300
-                }
+    Shape {
+        id: back
+        anchors.fill: parent
+        ShapePath {
+            strokeWidth: 0
+            strokeColor: "transparent"
+            PathRectangle {
+                x: 0
+                y: 0
+                radius: control.radius
+                width: back.width
+                height: back.height
             }
-        }
-        GradientStop {
-            position: 0.2
-            color: Qt.darker(buttonColor, 1.4)
-            Behavior on color {
-                ColorAnimation {
-                    duration: 300
+            fillGradient: RadialGradient {
+                centerX: back.width * 0.5
+                centerY: back.height * 0.5
+                centerRadius: back.width
+                focalX: back.width * 0.25
+                focalY: back.height * 0.25
+                GradientStop {
+                    position: 1
+                    color: input > 0 & input < 9 ? Qt.lighter(
+                                                       config.videoInputList.get(
+                                                           input - 1).bgColor,
+                                                       1.1) : Qt.lighter(
+                                                       buttonColor, 1.2)
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0
+                    color: input > 0 & input < 9 ? Qt.darker(
+                                                       config.videoInputList.get(
+                                                           input - 1).bgColor,
+                                                       1.3) : Qt.darker(
+                                                       buttonColor, 1.2)
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
                 }
             }
         }
@@ -90,8 +119,8 @@ Rectangle {
             icon.color: buttonTextColor
             anchors.verticalCenter: textInput.verticalCenter
             backColor: "transparent"
-            icon.source: input > 0 ? config.videoInputList.get(
-                                         input - 1).source : ""
+            icon.source: input > 0 & input < 9 ? config.videoInputList.get(
+                                                     input - 1).source : ""
         }
         Text {
             id: label
@@ -110,7 +139,8 @@ Rectangle {
                     duration: 500
                 }
             }
-            text: input > 0 ? config.videoInputList.get(input - 1).name : null
+            text: input > 0 & input < 9 ? config.videoInputList.get(
+                                              input - 1).name : null
         }
         x: control.width * 0.2
         spacing: 0
@@ -148,18 +178,12 @@ Rectangle {
     DropArea {
         id: dropContainer
         anchors.fill: parent
-        Connections {
-            onDropped: drop => {
-                           if (disableInput !== drop.keys[0]) {
-                               CrestronCIP.level(output, drop.keys[0])
-                           }
+        onDropped: drop => {
+                       if (disableInput !== drop.keys[0]) {
+                           CrestronCIP.level(output, drop.keys[0])
                        }
-        }
-    }
+                   }
 
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 200
-        }
+        onEntered: drop => control.dragShadowColor = drop.keys[1]
     }
 }

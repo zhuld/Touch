@@ -14,22 +14,19 @@ Item {
         spacing: width * 0.02
 
         Category {
-            widthRatio: 0.7
+            widthRatio: config.lightRatio
+            lable: config.lightName
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
-                spacing: height * 0.05
-                MyLable {
-                    text: config.lightName
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Grid {
                     id: grid
                     width: parent.width
-                    height: parent.height * 0.85
+                    height: parent.height
                     columns: 3
                     spacing: height * 0.05
                     Repeater {
@@ -49,18 +46,15 @@ Item {
         }
 
         Category {
-            widthRatio: 0.3
+            widthRatio: config.lightModeRatio
+            lable: config.lightModeName
             Column {
                 anchors.fill: parent
-                anchors.rightMargin: item.width * 0.03
-                anchors.leftMargin: item.width * 0.03
-                anchors.topMargin: item.width * 0.02
-                anchors.bottomMargin: item.width * 0.02
-                spacing: height * 0.05
-                MyLable {
-                    text: config.lightModeName
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.04
                 Repeater {
                     model: config.lightModeList
                     delegate: MyButton {
@@ -69,7 +63,8 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: parent.width
-                        height: parent.height * 0.9 / config.lightModeList.count - parent.spacing
+                        height: (parent.height + parent.spacing)
+                                / config.lightModeList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         icon.source: iconUrl

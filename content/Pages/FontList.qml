@@ -11,24 +11,23 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
+            lable: qsTr("字体列表")
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
-                spacing: height * 0.04
-                MyLable {
-                    id: label
-                    text: qsTr("字体列表")
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.05
                 ScrollView {
                     id: scrollView
                     width: parent.width
-                    height: parent.height * 0.86
+                    height: parent.height
                     clip: true
                     ListView {
                         id: fonts
                         width: parent.width
-                        height: parent.height * 0.86
+                        height: parent.height
                         model: Qt.fontFamilies()
                         delegate: Text {
                             height: fonts.height / 20

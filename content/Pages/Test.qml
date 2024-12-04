@@ -17,15 +17,14 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
+            lable: qsTr("测试")
             Column {
                 anchors.fill: parent
-                anchors.margins: item.width * 0.02
-                spacing: height * 0.04
-                MyLable {
-                    id: label
-                    text: qsTr("测试")
-                    height: parent.height * 0.1
-                }
+                anchors.topMargin: parent.height * 0.15
+                anchors.bottomMargin: parent.height * 0.04
+                anchors.leftMargin: parent.height * 0.04
+                anchors.rightMargin: anchors.leftMargin
+                spacing: height * 0.05
             }
         }
     }

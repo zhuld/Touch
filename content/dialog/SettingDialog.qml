@@ -26,7 +26,7 @@ Dialog {
         property bool fullscreen: Qt.platform.os === "windows" ? false : true
         property string settingPassword: "123"
         property bool demoMode: false
-        property bool showChannel: true
+        property bool showChannel: false
         property bool darkTheme: false
         property int windowWidth: 1280
         property int windowHeight: 800
@@ -73,6 +73,7 @@ Dialog {
                 height: parent.height
                 text: "应用"
                 font.pixelSize: height * 0.4
+                radius: height * 0.1
                 onClicked: apply()
             }
             ColorButton {
@@ -81,6 +82,7 @@ Dialog {
                 height: parent.height
                 text: "取消"
                 font.pixelSize: height * 0.4
+                radius: height * 0.1
                 onClicked: rootSetting.reject()
             }
             ColorButton {
@@ -89,6 +91,7 @@ Dialog {
                 height: parent.height
                 text: "确定"
                 font.pixelSize: height * 0.4
+                radius: height * 0.1
                 onClicked: rootSetting.accept()
             }
             Text {

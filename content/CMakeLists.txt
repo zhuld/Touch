@@ -20,7 +20,6 @@ qt6_add_qml_module(content
         Pages/TitleBar.qml
         Pages/DataList.qml
         Pages/Test.qml
-        Custom/MyLable.qml
         Custom/MyButton.qml
         Custom/InputButton.qml
         Custom/Output.qml

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Shapes
 
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
@@ -12,6 +13,8 @@ Button {
     property alias radius: back.radius
     property bool confirm: false
     property color btnColor: buttonColor
+    property real initY
+    property bool inited: false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
@@ -33,24 +36,46 @@ Button {
         id: back
         anchors.fill: parent
         radius: height * 0.1
-        gradient: Gradient {
-            GradientStop {
-                position: 0.2
-                color: down | checked ? Qt.darker(buttonCheckedColor,
-                                                  1.3) : btnColor
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 100
-                    }
+        Shape {
+            antialiasing: true
+            anchors.fill: parent
+            ShapePath {
+                strokeWidth: 0
+                strokeColor: "transparent"
+                PathRectangle {
+                    x: 0
+                    y: 0
+                    radius: back.radius
+                    width: back.width
+                    height: back.height
                 }
-            }
-            GradientStop {
-                position: 1
-                color: down | checked ? buttonCheckedColor : Qt.darker(
-                                            btnColor, 1.4)
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 100
+                fillGradient: RadialGradient {
+                    centerX: back.width * 0.5
+                    centerY: back.height * 0.5
+                    centerRadius: back.width
+                    focalX: back.width * 0.25
+                    focalY: back.height * 0.25
+                    GradientStop {
+                        position: 1
+                        color: down | checked ? Qt.lighter(buttonCheckedColor,
+                                                           1.3) : Qt.lighter(
+                                                    btnColor, 1.4)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
+                    }
+                    GradientStop {
+                        position: 0
+                        color: down | checked ? Qt.darker(buttonCheckedColor,
+                                                          1.2) : Qt.darker(
+                                                    btnColor, 1.2)
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
                     }
                 }
             }
@@ -59,8 +84,8 @@ Button {
         layer.effect: MultiEffect {
             shadowEnabled: true
             shadowColor: buttonShadowColor
-            shadowHorizontalOffset: control.checked ? height / 60 : height / 20
-            shadowVerticalOffset: shadowHorizontalOffset
+            shadowHorizontalOffset: shadowVerticalOffset / 2
+            shadowVerticalOffset: checked || pressed ? height / 60 : height / 30
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -119,6 +144,23 @@ Button {
             if (!confirm) {
                 CrestronCIP.release(control.channel)
             }
+        }
+    }
+
+    onCheckedChanged: {
+        if (!inited) {
+            initY = y
+            inited = true
+        }
+        if (checked) {
+            y = initY + height / 40
+        } else {
+            y = initY
+        }
+    }
+    Behavior on y {
+        NumberAnimation {
+            duration: 100
         }
     }
 }

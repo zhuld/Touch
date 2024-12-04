@@ -22,13 +22,15 @@ Item {
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
-    Column {
+    Rectangle {
         anchors.fill: parent
+        color: "transparent"
         Slider {
             id: slider
             height: parent.height * 0.92
             width: height * 0.3
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
             anchors.topMargin: -handle.height / 4
             orientation: Qt.Vertical
             live: false
@@ -83,12 +85,11 @@ Item {
                     }
                 }
                 radius: width * 0.1
-
                 layer.enabled: true
                 layer.effect: MultiEffect {
                     shadowEnabled: true
                     shadowColor: buttonShadowColor
-                    shadowHorizontalOffset: parent.pressed ? height / 25 : height / 12
+                    shadowHorizontalOffset: parent.pressed ? height / 40 : height / 20
                     shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
@@ -160,7 +161,6 @@ Item {
                 onTriggered: {
                     CrestronCIP.level(control.channel,
                                       Math.round(slider.position * 65535))
-                    // (maxVolume - miniVolume)
                 }
             }
             Repeater {
@@ -230,19 +230,18 @@ Item {
 
         MyButton {
             id: mute
-            height: parent.height * 0.1
+            height: parent.height * 0.11
             width: parent.width * 0.8
+            anchors.bottom: parent.bottom
+            radius: height * 0.2
             anchors.horizontalCenter: parent.horizontalCenter
             icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
             icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
             channel: muteChannel
             disEnableChannel: control.disEnableChannel
-            // text: root.digital[control.muteChannel] ? "静音" : Math.round(
-            //                                               slider.position
-            //                                               * (maxVolume - miniVolume) + miniVolume)
-            text: root.digital[control.muteChannel] ? "静音" : slider.value
-
+            text: slider.value
             font.pixelSize: height * 0.35
+            Material.accent: volumeRedColor
         }
     }
     Text {

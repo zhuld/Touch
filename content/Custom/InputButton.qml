@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Shapes
 
 Item {
     id: control
@@ -15,7 +16,6 @@ Item {
 
     MouseArea {
         id: mouseArea
-
         width: parent.width
         height: parent.height
         anchors.centerIn: parent
@@ -54,25 +54,52 @@ Item {
             id: dragButton
             width: parent.width
             height: parent.height
-
             radius: height * 0.1
-            gradient: Gradient {
-                GradientStop {
-                    position: 1.0
-                    color: mouseArea.pressed ? Qt.darker(btnColor,
-                                                         1.4) : btnColor
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 100
+            Shape {
+                anchors.fill: parent
+                ShapePath {
+                    strokeWidth: 0
+                    strokeColor: "transparent"
+                    PathRectangle {
+                        x: 0
+                        y: 0
+                        radius: back.radius
+                        width: back.width
+                        height: back.height
+                    }
+                    fillGradient: RadialGradient {
+                        centerX: back.width * 0.5
+                        centerY: back.height * 0.5
+                        centerRadius: back.width
+                        focalX: back.width * 0.25
+                        focalY: back.height * 0.25
+                        GradientStop {
+                            position: 1
+                            color: mouseArea.pressed ? Qt.lighter(
+                                                           btnColor,
+                                                           1.2) : Qt.lighter(
+                                                           btnColor, 1.3)
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 100
+                                }
+                            }
+                        }
+                        GradientStop {
+                            position: 0
+                            color: mouseArea.pressed ? Qt.darker(
+                                                           btnColor,
+                                                           1.5) : Qt.darker(
+                                                           btnColor, 1.3)
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 100
+                                }
+                            }
                         }
                     }
                 }
-                GradientStop {
-                    position: 0.2
-                    color: Qt.alpha(btnColor, 0.4)
-                }
             }
-
             Row {
                 id: iconLabel
                 height: parent.height
@@ -93,33 +120,25 @@ Item {
                 spacing: 0
             }
 
-            Drag.keys: [input]
+            Drag.keys: [input, btnColor]
             Drag.active: mouseArea.drag.active
             layer.enabled: true
             layer.effect: MultiEffect {
                 id: effect
                 shadowEnabled: true
                 shadowColor: buttonShadowColor
-                shadowHorizontalOffset: mouseArea.pressed ? 0 : height / 30
-                shadowVerticalOffset: shadowHorizontalOffset
+                shadowHorizontalOffset: shadowVerticalOffset / 2
+                shadowVerticalOffset: mouseArea.pressed ? 0 : height / 30
                 Behavior on shadowHorizontalOffset {
                     NumberAnimation {
                         duration: 100
                     }
                 }
             }
-        }
-
-        Rectangle {
-            id: back
-            anchors.fill: parent
-            radius: height * 0.1
-            color: Qt.alpha(btnColor, 0.2)
-
             Text {
                 id: inputText
-                anchors.fill: parent
-                anchors.margins: height * 0.2
+                width: parent.width
+                height: parent.height
                 text: input
                 font.pixelSize: height
                 color: textColor
@@ -127,7 +146,15 @@ Item {
                 font.bold: true
                 opacity: 0.1
                 font.family: alibabaPuHuiTi.font.family
+                clip: true
             }
         }
+    }
+    Rectangle {
+        id: back
+        anchors.fill: parent
+        radius: height * 0.1
+        color: btnColor
+        opacity: 0.2
     }
 }
