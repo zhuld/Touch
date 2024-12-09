@@ -13,7 +13,7 @@ Rectangle {
             color: Qt.darker(backgroundColor, 1.3)
         }
     }
-    radius: width * 0.02
+    radius: height / 20
     layer.enabled: true
     // layer.effect: MultiEffect {
     //     brightness: 0.2

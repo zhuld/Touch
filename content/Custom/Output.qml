@@ -10,28 +10,30 @@ Rectangle {
 
     property int output
     property alias textOutput: textOutput.text
-    property alias textInput: label.text
     property string disableInput
-
     property color dragShadowColor
-
-    //: buttonRedColor
     readonly property var input: root.analog[output]
-
     property int disEnableChannel: 0
+    property var inputListMode
 
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.2
-    radius: height / 10
-
+    radius: height / 4
     layer.enabled: true
     layer.effect: MultiEffect {
+        id: effect
         shadowEnabled: true
         shadowColor: dropContainer.containsDrag ? control.dragShadowColor : buttonShadowColor
-        shadowHorizontalOffset: height / 30
-        shadowVerticalOffset: shadowHorizontalOffset * 2
+        shadowHorizontalOffset: height / 60
+        shadowVerticalOffset: dropContainer.containsDrag ? height / 15 : height / 60
         Behavior on shadowColor {
             ColorAnimation {
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+        Behavior on shadowVerticalOffset {
+            PropertyAnimation {
                 duration: 300
                 easing.type: Easing.OutCubic
             }
@@ -58,11 +60,12 @@ Rectangle {
                 focalY: back.height * 0.25
                 GradientStop {
                     position: 1
-                    color: input > 0 & input < 9 ? Qt.lighter(
-                                                       config.videoInputList.get(
-                                                           input - 1).bgColor,
-                                                       1.1) : Qt.lighter(
-                                                       buttonColor, 1.2)
+                    color: input > 0 & input
+                           <= inputListMode.count ? Qt.lighter(
+                                                        inputListMode.get(
+                                                            input - 1).bgColor,
+                                                        1.1) : Qt.lighter(
+                                                        buttonColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -71,11 +74,12 @@ Rectangle {
                 }
                 GradientStop {
                     position: 0
-                    color: input > 0 & input < 9 ? Qt.darker(
-                                                       config.videoInputList.get(
-                                                           input - 1).bgColor,
-                                                       1.3) : Qt.darker(
-                                                       buttonColor, 1.2)
+                    color: input > 0 & input
+                           <= inputListMode.count ? Qt.darker(
+                                                        inputListMode.get(
+                                                            input - 1).bgColor,
+                                                        1.3) : Qt.darker(
+                                                        buttonColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -119,8 +123,8 @@ Rectangle {
             icon.color: buttonTextColor
             anchors.verticalCenter: textInput.verticalCenter
             backColor: "transparent"
-            icon.source: input > 0 & input < 9 ? config.videoInputList.get(
-                                                     input - 1).source : ""
+            icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
+                                                                        input - 1).source : ""
         }
         Text {
             id: label
@@ -139,8 +143,8 @@ Rectangle {
                     duration: 500
                 }
             }
-            text: input > 0 & input < 9 ? config.videoInputList.get(
-                                              input - 1).name : null
+            text: input > 0 & input <= inputListMode.count ? inputListMode.get(
+                                                                 input - 1).name : null
         }
         x: control.width * 0.2
         spacing: 0
@@ -183,7 +187,6 @@ Rectangle {
                            CrestronCIP.level(output, drop.keys[0])
                        }
                    }
-
         onEntered: drop => control.dragShadowColor = drop.keys[1]
     }
 }

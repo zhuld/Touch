@@ -54,7 +54,7 @@ Item {
             id: dragButton
             width: parent.width
             height: parent.height
-            radius: height * 0.1
+            radius: height / 4
             Shape {
                 anchors.fill: parent
                 ShapePath {
@@ -153,7 +153,7 @@ Item {
     Rectangle {
         id: back
         anchors.fill: parent
-        radius: height * 0.1
+        radius: dragButton.radius
         color: btnColor
         opacity: 0.2
     }

@@ -16,10 +16,10 @@ Dialog {
 
     signal showChannelChanged
 
-    property alias settings: settings
+    property alias settings: _settings
 
     Settings {
-        id: settings
+        id: _settings
         property string ipAddress: config.cipServerIP
         property int ipPort: config.cipPort
         property int ipId: config.ipId
@@ -73,7 +73,7 @@ Dialog {
                 height: parent.height
                 text: "应用"
                 font.pixelSize: height * 0.4
-                radius: height * 0.1
+                //radius: height * 0.1
                 onClicked: apply()
             }
             ColorButton {
@@ -82,7 +82,7 @@ Dialog {
                 height: parent.height
                 text: "取消"
                 font.pixelSize: height * 0.4
-                radius: height * 0.1
+                //radius: height * 0.1
                 onClicked: rootSetting.reject()
             }
             ColorButton {
@@ -91,7 +91,7 @@ Dialog {
                 height: parent.height
                 text: "确定"
                 font.pixelSize: height * 0.4
-                radius: height * 0.1
+                //radius: height * 0.1
                 onClicked: rootSetting.accept()
             }
             Text {

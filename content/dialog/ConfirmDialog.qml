@@ -91,7 +91,7 @@ Dialog {
                 text: "确定"
                 font.pixelSize: height * 0.6
                 onClicked: okPress()
-                radius: height * 0.1
+                //radius: height * 0.1
             }
             ColorButton {
                 id: settingCancel
@@ -100,7 +100,7 @@ Dialog {
                 text: "取消"
                 font.pixelSize: height * 0.6
                 onClicked: confirmDialog.close()
-                radius: height * 0.1
+                //radius: height * 0.1
             }
         }
     }

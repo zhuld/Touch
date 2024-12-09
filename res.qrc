@@ -48,5 +48,13 @@
         <file>content/icons/table.png</file>
         <file>content/icons/test.png</file>
         <file>content/fonts/SourceCodePro-Regular.ttf</file>
+        <file>content/images/haishi.png</file>
+        <file>content/icons/yitiji.png</file>
+        <file>content/icons/vr.png</file>
+        <file>content/icons/pip.png</file>
+        <file>content/icons/kouxiang.png</file>
+        <file>content/icons/shouxie.png</file>
+        <file>content/icons/led.png</file>
+        <file>content/icons/danhuamian.png</file>
     </qresource>
 </RCC>

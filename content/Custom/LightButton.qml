@@ -61,7 +61,7 @@ Item {
                 }
             }
         }
-        radius: width * 0.1
+        radius: height/10
         Text {
             id: label
             width: parent.width

@@ -19,6 +19,8 @@ Item {
 
     property bool input: true
 
+    property bool muteBtn: true
+
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
@@ -89,7 +91,7 @@ Item {
                 layer.effect: MultiEffect {
                     shadowEnabled: true
                     shadowColor: buttonShadowColor
-                    shadowHorizontalOffset: parent.pressed ? height / 40 : height / 20
+                    shadowHorizontalOffset: parent.pressed ? height / 30 : height / 15
                     shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
@@ -228,20 +230,34 @@ Item {
             }
         }
 
-        MyButton {
-            id: mute
+        Rectangle {
             height: parent.height * 0.11
-            width: parent.width * 0.8
+            width: parent.width
             anchors.bottom: parent.bottom
-            radius: height * 0.2
-            anchors.horizontalCenter: parent.horizontalCenter
-            icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
-            icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
-            channel: muteChannel
-            disEnableChannel: control.disEnableChannel
-            text: slider.value
-            font.pixelSize: height * 0.35
-            Material.accent: volumeRedColor
+            color: "transparent"
+            MyButton {
+                height: parent.height
+                width: parent.width * 0.9
+                anchors.horizontalCenter: parent.horizontalCenter
+                icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
+                icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
+                channel: muteChannel
+                disEnableChannel: control.disEnableChannel
+                text: slider.value
+                font.pixelSize: height * 0.35
+                Material.accent: volumeRedColor
+                visible: control.muteBtn
+            }
+            Text {
+                height: parent.height
+                width: parent.width
+                text: slider.value
+                font.pixelSize: height * 0.5
+                color: buttonTextColor
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                visible: !control.muteBtn
+            }
         }
     }
     Text {

@@ -11,11 +11,17 @@ qt6_add_qml_module(content
         Content.qml
         Connect.qml
         Config/ShiyiMZ.qml
-        Pages/System.qml
-        Pages/Video.qml
-        Pages/Camera.qml
-        Pages/Volume.qml
-        Pages/Light.qml
+        Config/Haishi410.qml
+        Pages/Shiyi/System.qml
+        Pages/Shiyi/Video.qml
+        Pages/Shiyi/Camera.qml
+        Pages/Shiyi/Volume.qml
+        Pages/Shiyi/Light.qml
+        Pages/Haishi/SingleScreen.qml
+        Pages/Haishi/VR.qml
+        Pages/Haishi/Camera.qml
+        Pages/Haishi/Remote.qml
+        Pages/Haishi/LED.qml
         Pages/FontList.qml
         Pages/TitleBar.qml
         Pages/DataList.qml

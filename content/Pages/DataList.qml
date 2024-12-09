@@ -10,7 +10,6 @@ Item {
     implicitHeight: parent.height
 
     Row {
-        id: row
         anchors.fill: parent
         spacing: width * 0.02
         Category {

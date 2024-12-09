@@ -41,7 +41,7 @@ Item {
                 }
             }
         }
-        radius: height * 0.03
+        radius: height * 0.05
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true

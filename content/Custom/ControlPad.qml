@@ -43,7 +43,7 @@ Item {
                     }
                 }
                 IconButton {
-                    height: parent.height * 0.25
+                    height: parent.height * 0.2
                     width: height
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
@@ -148,7 +148,7 @@ Item {
 
             Shape {
                 id: leftButton
-                property int channel: control.channel + 1
+                property int channel: control.channel + 2
                 property bool checked: root.digital[leftButton.channel] ? true : false
                 width: parent.width
                 height: width
@@ -159,7 +159,7 @@ Item {
                     }
                 }
                 IconButton {
-                    height: parent.height * 0.25
+                    height: parent.height * 0.2
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
                     icon.height: height
@@ -264,7 +264,7 @@ Item {
 
             Shape {
                 id: rightButton
-                property int channel: control.channel + 2
+                property int channel: control.channel + 3
                 property bool checked: root.digital[rightButton.channel] ? true : false
                 width: parent.width
                 height: width
@@ -275,7 +275,7 @@ Item {
                     }
                 }
                 IconButton {
-                    height: parent.height * 0.25
+                    height: parent.height * 0.2
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
                     icon.height: height
@@ -380,7 +380,7 @@ Item {
 
             Shape {
                 id: downButton
-                property int channel: control.channel + 3
+                property int channel: control.channel + 1
                 property bool checked: root.digital[downButton.channel] ? true : false
                 width: parent.width
                 height: width
@@ -391,7 +391,7 @@ Item {
                     }
                 }
                 IconButton {
-                    height: parent.height * 0.25
+                    height: parent.height * 0.2
                     width: height
                     anchors.horizontalCenter: parent.horizontalCenter
                     icon.height: height
@@ -503,7 +503,7 @@ Item {
                 width: height
                 icon.source: "qrc:/content/icons/fangda.png"
                 icon.color: buttonTextColor
-                radius: width / 2
+                //radius: height / 2
                 channel: control.channel + 4
             }
             MyButton {
@@ -512,7 +512,7 @@ Item {
                 anchors.right: parent.right
                 icon.source: "qrc:/content/icons/suoxiao.png"
                 icon.color: buttonTextColor
-                radius: width / 2
+                //radius: height / 2
                 channel: control.channel + 5
             }
         }

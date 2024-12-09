@@ -3,8 +3,12 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+
 TabButton {
     id: control
+    property int channel
+
     width: parent.width
     height: parent.height
     icon.width: height * 0.4
@@ -23,7 +27,7 @@ TabButton {
         id: back
         anchors.fill: parent
         opacity: enabled ? 1 : 0.3
-        radius: width / 10
+        radius: width / 4
         Shape {
             anchors.fill: parent
             ShapePath {
@@ -84,5 +88,20 @@ TabButton {
                 }
             }
         }
+    }
+    onCheckedChanged: {
+        if (checked) {
+            CrestronCIP.push(control.channel)
+        } else {
+            CrestronCIP.release(control.channel)
+        }
+    }
+    Text {
+        id: channel
+        height: parent.height
+        text: root.settings.showChannel ? "D" + control.channel : ""
+        color: buttonTextColor
+        font.pixelSize: height * 0.3
+        font.family: alibabaPuHuiTi.font.family
     }
 }

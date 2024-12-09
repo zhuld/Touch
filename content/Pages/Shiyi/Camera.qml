@@ -2,18 +2,17 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 
-import "../Custom"
+import "../../Custom"
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
     Row {
-        id: row
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: config.cameraPadRatio
-            lable: config.cameraPadName
+            widthRatio: 0.5
+            lable: qsTr("摄像机控制")
             Column {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
@@ -26,16 +25,16 @@ Item {
                     width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
                     height: width * 1.3
                     anchors.horizontalCenter: parent.horizontalCenter
-                    channel: config.cameraPadChannel
+                    channel: 20
                 }
             }
         }
         Category {
-            widthRatio: config.cameraAutoRatio
-            lable: config.cameraAutoName
+            widthRatio: 0.5
+            lable: qsTr("摄像跟踪")
             MySwitch {
                 height: parent.height * 0.06
-                channel: config.cameraAutoChannel
+                channel: 40
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.topMargin: height * 0.4
@@ -98,25 +97,99 @@ Item {
                         color: "transparent"
                         radius: width * 0.08
                         Grid {
+                            id: grid
                             anchors.fill: parent
                             columns: 3
-                            rowSpacing: parent.height * 0.03
-                            columnSpacing: parent.width * 0.07
+                            spacing: parent.height * 0.05
                             anchors.margins: parent.width * 0.1
                             Repeater {
-                                model: config.cameraAutoList
+                                model: ListModel {
+                                    id: positionList
+                                    ListElement {
+                                        cameraRotation: 135
+                                        btnchannel: 39
+                                        label: "9"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                    ListElement {
+                                        cameraRotation: 45
+                                        btnchannel: 38
+                                        label: "8"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        cameraRotation: 120
+                                        btnchannel: 37
+                                        label: "7"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                    ListElement {
+                                        cameraRotation: 60
+                                        btnchannel: 36
+                                        label: "6"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        cameraRotation: 111
+                                        btnchannel: 35
+                                        label: "5"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                    ListElement {
+                                        cameraRotation: 69
+                                        btnchannel: 34
+                                        label: "4"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        cameraRotation: 105
+                                        btnchannel: 33
+                                        label: "3"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                    ListElement {
+                                        cameraRotation: 75
+                                        btnchannel: 32
+                                        label: "2"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                    ListElement {
+                                        cameraRotation: 90
+                                        btnchannel: 31
+                                        label: "1"
+                                        used: true
+                                    }
+                                    ListElement {
+                                        used: false
+                                    }
+                                }
                                 delegate: MyButton {
                                     required property int btnchannel
                                     required property int cameraRotation
                                     required property string label
                                     required property bool used
-                                    width: table.width * 0.22
-                                    height: width
+                                    width: (grid.width + grid.spacing) / grid.columns - grid.spacing
+                                    height: (grid.height + grid.spacing) / positionList.count
+                                            * grid.columns - grid.spacing
                                     channel: btnchannel
                                     font.pixelSize: height * 0.6
                                     text: label
                                     opacity: used ? 1 : 0
-                                    radius: height * 0.5
                                     onCheckedChanged: {
                                         if (checked) {
                                             camera.rotation = cameraRotation

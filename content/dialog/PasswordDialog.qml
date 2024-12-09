@@ -152,7 +152,7 @@ Dialog {
                     width: (numberPad.width + numberPad.spacing)
                            / numberPad.columns - numberPad.spacing
                     height: width
-                    radius: width / 2
+                    //radius: width / 2
                     font.pixelSize: width * 0.5
                     text: name
                     onClicked: {

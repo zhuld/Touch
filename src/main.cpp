@@ -4,7 +4,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QSurfaceFormat>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"

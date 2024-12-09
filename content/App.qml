@@ -3,9 +3,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
-import QtWebSockets
 import QtQuick.Effects
-import Qt.labs.platform
+import QtCore
+import Qt5Compat.GraphicalEffects
 
 import "./Dialog"
 import "./Pages"
@@ -16,13 +16,11 @@ import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 Window {
     id: root
 
-    property alias pageLoader: pageLoader
-    property alias settings: settingDialog.settings
-
     ShiyiMZ {
         id: config
     }
 
+    property alias settings: settingDialog.settings
     property var digital: []
     property var analog: []
 
@@ -69,27 +67,13 @@ Window {
     visibility: settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
 
-    visible: true
+    //visible: true
     color: "transparent"
-
     Rectangle {
         id: background
         anchors.fill: parent
-        gradient: Gradient {
-            GradientStop {
-                position: 0.0
-                color: backgroundColor
-            }
-            GradientStop {
-                position: 0.4
-                color: Qt.darker(backgroundColor, 1.2)
-            }
-            GradientStop {
-                position: 1.0
-                color: Qt.darker(backgroundColor, 1.6)
-            }
-        }
-
+        color: backgroundColor
+        //clip: true
         Image {
             anchors.fill: parent
             source: config.background
@@ -99,9 +83,17 @@ Window {
                     duration: 100
                 }
             }
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    width: background.width
+                    height: background.height
+                    radius: background.radius
+                }
+            }
         }
         radius: settings.fullscreen
-                || root.visibility == Window.Maximized ? 0 : width * 0.01
+                || root.visibility == Window.Maximized ? 0 : height / 20
     }
     TitleBar {
         id: titleBar

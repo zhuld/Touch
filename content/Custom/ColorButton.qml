@@ -5,7 +5,7 @@ import QtQuick.Shapes
 
 Button {
     id: control
-    property alias radius: back.radius
+    //property alias radius: back.radius
     property color backColor: buttonColor
     property real initY
     property bool inited: false
@@ -59,7 +59,7 @@ Button {
             }
         }
 
-        radius: height * 0.1
+        radius: height / 4
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true

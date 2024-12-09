@@ -8,7 +8,6 @@ import "./Pages"
 Item {
     id: main
     anchors.fill: parent
-    //anchors.bottomMargin: parent.width * 0.02
     anchors.leftMargin: parent.width * 0.02
 
     ListModel {
@@ -30,11 +29,12 @@ Item {
                 required property string name
                 required property string iconUrl
                 required property int index
+                required property int pageChannel
                 text: name
                 width: parent.width
-                //height: width
-                height: (parent.height + parent.spacing) / repeater.model.count - parent.spacing
+                height: (parent.height + parent.spacing) / (repeater.model.count) - parent.spacing
                 icon.source: iconUrl
+                channel: pageChannel
                 onClicked: {
                     if (tabBar.currentPage !== index) {
                         tabBar.currentPage = index
@@ -52,7 +52,7 @@ Item {
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
         height: parent.height
-        clip: true
+        //clip: true
         currentIndex: tabBar.currentPage
         Repeater {
             model: filteredModel

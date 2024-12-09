@@ -10,7 +10,7 @@ Button {
     id: control
     property int channel
     property int disEnableChannel: 0
-    property alias radius: back.radius
+    //property alias radius: back.radius
     property bool confirm: false
     property color btnColor: buttonColor
     property real initY
@@ -35,7 +35,7 @@ Button {
     background: Rectangle {
         id: back
         anchors.fill: parent
-        radius: height * 0.1
+        radius: height / 4
         Shape {
             antialiasing: true
             anchors.fill: parent
@@ -69,7 +69,7 @@ Button {
                     GradientStop {
                         position: 0
                         color: down | checked ? Qt.darker(buttonCheckedColor,
-                                                          1.2) : Qt.darker(
+                                                          1.3) : Qt.darker(
                                                     btnColor, 1.2)
                         Behavior on color {
                             ColorAnimation {
