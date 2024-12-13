@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QIcon>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("Zhuld");
     app.setOrganizationDomain("zld.com");
     app.setApplicationName("Touch");
-
+    app.setWindowIcon(QIcon(":/content/icons/control.png"));
     engine.load(url);
 
     if (engine.rootObjects().isEmpty()) {

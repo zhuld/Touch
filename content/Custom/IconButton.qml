@@ -5,11 +5,11 @@ Button {
     id: control
     property int channel
     property alias radius: background.radius
-    property color backColor: buttonColor
+    property color backColor: config.buttonColor
 
     icon.width: height * 0.5
     icon.height: height * 0.5
-    icon.color: buttonTextColor
+    icon.color: config.buttonTextColor
 
     background: Rectangle {
         id: background

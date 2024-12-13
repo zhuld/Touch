@@ -20,27 +20,13 @@ Window {
         id: config
     }
 
+    property real channelSize: height * 0.02
     property alias settings: settingDialog.settings
     property var digital: []
     property var analog: []
 
     //property var text: [] // not support yet
     property ListModel listModel: ListModel {}
-
-    property color backgroundColor: settings.darkTheme ? "#02112C" : "lightgray"
-    property color buttonTextColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
-    property color textColor: settings.darkTheme ? "lightskyblue" : "#0B1A38" //文字颜色
-    property color buttonColor: settings.darkTheme ? "#16417C" : "lightgray"
-    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
-    property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
-    property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
-    property color catagoryColor: settings.darkTheme ? "#1A5A94" : "gainsboro"
-    property color buttonCheckedColor: settings.darkTheme ? "#E0589BAB" : "#E0589BAB"
-
-    property color buttonTextRedColor: "red"
-
-    property color volumeBlueColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
-    property color volumeRedColor: "red"
 
     property string logoImage: config.logoImage
 
@@ -72,7 +58,7 @@ Window {
     Rectangle {
         id: background
         anchors.fill: parent
-        color: backgroundColor
+        color: config.backgroundColor
         //clip: true
         Image {
             anchors.fill: parent

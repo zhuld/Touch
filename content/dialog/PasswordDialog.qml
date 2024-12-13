@@ -79,7 +79,7 @@ Dialog {
             font.pixelSize: height * 0.7
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignLeft
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
 
@@ -92,7 +92,7 @@ Dialog {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.5
             font.letterSpacing: parent.width * 0.06
-            color: textColor
+            color: config.textColor
             enabled: false
             focus: true
             echoMode: TextInput.Password

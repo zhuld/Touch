@@ -90,7 +90,7 @@ Item {
                 layer.enabled: true
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: buttonShadowColor
+                    shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: parent.pressed ? height / 30 : height / 15
                     shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                     Behavior on shadowHorizontalOffset {
@@ -111,15 +111,15 @@ Item {
                     orientation: Qt.Horizontal
                     GradientStop {
                         position: 0
-                        color: Qt.darker(backgroundColor, 1.2)
+                        color: Qt.darker(config.backgroundColor, 1.2)
                     }
                     GradientStop {
                         position: 0.2
-                        color: backgroundColor
+                        color: config.backgroundColor
                     }
                     GradientStop {
                         position: 1
-                        color: backgroundColor
+                        color: config.backgroundColor
                     }
                 }
                 opacity: 0.9
@@ -131,12 +131,12 @@ Item {
                     gradient: Gradient {
                         GradientStop {
                             position: 1
-                            color: buttonCheckedColor
+                            color: config.buttonCheckedColor
                         }
                         GradientStop {
                             position: (maxVolume + 5) > 0 ? (maxVolume + 5)
                                                             / (maxVolume - miniVolume) : 0
-                            color: buttonCheckedColor
+                            color: config.buttonCheckedColor
                         }
                         GradientStop {
                             position: 0
@@ -147,7 +147,7 @@ Item {
                         height: slider.visualPosition * parent.height
                         radius: width / 2
                         width: parent.width
-                        color: buttonColor
+                        color: config.buttonColor
                     }
                 }
             }
@@ -175,7 +175,7 @@ Item {
                         anchors.fill: parent
                         ShapePath {
                             strokeColor: (-index + maxVolume)
-                                         <= 0 ? volumeBlueColor : volumeRedColor
+                                         <= 0 ? config.volumeBlueColor : config.volumeRedColor
                             strokeWidth: (Math.floor(
                                               index / 5) * 5 === index) ? 2 : 1
                             startX: (Math.floor(index / 5) * 5
@@ -196,7 +196,7 @@ Item {
                         anchors.fill: parent
                         ShapePath {
                             strokeColor: (-index + maxVolume)
-                                         <= 0 ? volumeBlueColor : volumeRedColor
+                                         <= 0 ? config.volumeBlueColor : config.volumeRedColor
                             strokeWidth: (Math.floor(
                                               index / 5) * 5 === index) ? 2 : 1
                             startX: parent.width * 0.6
@@ -221,8 +221,9 @@ Item {
                         x: -parent.width * 0.1
                         y: (parent.parent.availableHeight - parent.parent.handle.height)
                            / (maxVolume - miniVolume) * index
-                        color: (-index + maxVolume) <= 0 ? volumeBlueColor : volumeRedColor
-                        font.pixelSize: height * 0.3
+                        color: (-index + maxVolume)
+                               <= 0 ? config.volumeBlueColor : config.volumeRedColor
+                        font.pixelSize: height * 0.2
                         verticalAlignment: Text.AlignVCenter
                         font.family: alibabaPuHuiTi.font.family
                     }
@@ -240,12 +241,12 @@ Item {
                 width: parent.width * 0.9
                 anchors.horizontalCenter: parent.horizontalCenter
                 icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
-                icon.color: root.digital[control.muteChannel] ? volumeRedColor : buttonTextColor
+                icon.color: root.digital[control.muteChannel] ? config.volumeRedColor : config.buttonTextColor
                 channel: muteChannel
                 disEnableChannel: control.disEnableChannel
                 text: slider.value
                 font.pixelSize: height * 0.35
-                Material.accent: volumeRedColor
+                Material.accent: config.volumeRedColor
                 visible: control.muteBtn
             }
             Text {
@@ -253,7 +254,7 @@ Item {
                 width: parent.width
                 text: slider.value
                 font.pixelSize: height * 0.5
-                color: buttonTextColor
+                color: config.buttonTextColor
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 visible: !control.muteBtn
@@ -262,19 +263,11 @@ Item {
     }
     Text {
         id: channel
-        height: parent.height * 0.2
-        text: root.settings.showChannel ? "A" + control.channel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
-        font.family: alibabaPuHuiTi.font.family
-    }
-    Text {
-        id: disChannel
-        height: parent.height * 0.2
-        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
-        anchors.right: parent.right
+        height: parent.height
+        text: root.settings.showChannel ? "A" + control.channel + "E"
+                                          + control.disEnableChannel : ""
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
 }

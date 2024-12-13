@@ -6,7 +6,7 @@ import QtQuick.Shapes
 Button {
     id: control
     //property alias radius: back.radius
-    property color backColor: buttonColor
+    property color backColor: config.buttonColor
     property real initY
     property bool inited: false
 
@@ -35,8 +35,9 @@ Button {
                     focalY: back.height * 0.25
                     GradientStop {
                         position: 1
-                        color: down | checked ? Qt.lighter(buttonCheckedColor,
-                                                           1.3) : Qt.lighter(
+                        color: down | checked ? Qt.lighter(
+                                                    config.buttonCheckedColor,
+                                                    1.3) : Qt.lighter(
                                                     backColor, 1.4)
                         Behavior on color {
                             ColorAnimation {
@@ -46,9 +47,10 @@ Button {
                     }
                     GradientStop {
                         position: 0
-                        color: down | checked ? Qt.darker(buttonCheckedColor,
-                                                          1.2) : Qt.darker(
-                                                    backColor, 1.1)
+                        color: down | checked ? Qt.darker(
+                                                    config.buttonCheckedColor,
+                                                    1.2) : Qt.darker(backColor,
+                                                                     1.1)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -63,7 +65,7 @@ Button {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: buttonShadowColor
+            shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
             shadowVerticalOffset: checked || pressed ? height / 60 : height / 30
             Behavior on shadowHorizontalOffset {
@@ -78,7 +80,7 @@ Button {
         anchors.fill: parent
         text: control.text
         font.pixelSize: control.height * 0.4
-        color: buttonTextColor
+        color: config.buttonTextColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.family: alibabaPuHuiTi.font.family

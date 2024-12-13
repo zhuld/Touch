@@ -16,11 +16,11 @@ Item {
 
     Column {
         id: tabBar
-        property int currentPage: 0
+        //property int currentPage: 10
         width: parent.width * 0.1
         height: parent.height - parent.width * 0.02
         anchors.margins: 0
-        spacing: height / repeater.model.count * 0.1
+        spacing: height * 0.03
         Repeater {
             id: repeater
             model: filteredModel
@@ -32,28 +32,26 @@ Item {
                 required property int pageChannel
                 text: name
                 width: parent.width
-                height: (parent.height + parent.spacing) / (repeater.model.count) - parent.spacing
+                height: (parent.height + parent.spacing) / (filteredModel.count) - parent.spacing
+                        < width ? (parent.height + parent.spacing)
+                                  / (filteredModel.count) - parent.spacing : width
                 icon.source: iconUrl
                 channel: pageChannel
-                onClicked: {
-                    if (tabBar.currentPage !== index) {
-                        tabBar.currentPage = index
-                    }
-                }
-                Component.onCompleted: {
-                    if (index === tabBar.currentPage) {
-                        tabButton.checked = true
+                onCheckedChanged: {
+                    if (checked) {
+                        if (stackLayout.currentIndex !== index) {
+                            stackLayout.currentIndex = index
+                        }
                     }
                 }
             }
         }
     }
     StackLayout {
+        id: stackLayout
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
         height: parent.height
-        //clip: true
-        currentIndex: tabBar.currentPage
         Repeater {
             model: filteredModel
             delegate: Loader {
@@ -83,7 +81,6 @@ Item {
                     filteredModel.append(item)
                 }
             }
-            repeater.itemAt(0).checked = true
         }
     }
 }

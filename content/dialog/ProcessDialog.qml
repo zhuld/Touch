@@ -52,19 +52,19 @@ Dialog {
             height: parent.height * 0.12
             font.pixelSize: height
             horizontalAlignment: Text.AlignLeft
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
         BusyIndicator {
             id: busy
             height: parent.height / 2
             width: height
-            Material.accent: catagoryColor
+            Material.accent: config.catagoryColor
             anchors.centerIn: parent
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: buttonShadowColor
+                shadowColor: config.buttonShadowColor
                 shadowHorizontalOffset: height / 40
                 shadowVerticalOffset: shadowHorizontalOffset
             }
@@ -88,7 +88,7 @@ Dialog {
             font.pixelSize: height
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
         Text {
@@ -96,7 +96,7 @@ Dialog {
             height: parent.height * 0.12
             anchors.right: parent.right
             text: root.settings.showChannel ? "D" + processDialog.channel : ""
-            color: buttonTextColor
+            color: config.buttonTextColor
             font.pixelSize: height
             font.family: alibabaPuHuiTi.font.family
         }

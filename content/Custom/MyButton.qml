@@ -10,9 +10,9 @@ Button {
     id: control
     property int channel
     property int disEnableChannel: 0
-    //property alias radius: back.radius
+    property alias radius: back.radius
     property bool confirm: false
-    property color btnColor: buttonColor
+    property color btnColor: config.buttonColor
     property real initY
     property bool inited: false
 
@@ -25,12 +25,13 @@ Button {
 
     icon.width: height * 0.5
     icon.height: height * 0.5
-    icon.color: buttonTextColor
+    icon.color: config.buttonTextColor
     font.pixelSize: height * 0.35
     font.family: alibabaPuHuiTi.font.family
     spacing: width * 0.05
 
-    Material.accent: buttonTextColor
+    Material.accent: config.buttonTextColor
+    Material.foreground: config.buttonTextColor
 
     background: Rectangle {
         id: back
@@ -57,9 +58,10 @@ Button {
                     focalY: back.height * 0.25
                     GradientStop {
                         position: 1
-                        color: down | checked ? Qt.lighter(buttonCheckedColor,
-                                                           1.3) : Qt.lighter(
-                                                    btnColor, 1.4)
+                        color: down | checked ? Qt.lighter(
+                                                    config.buttonCheckedColor,
+                                                    1.3) : Qt.lighter(btnColor,
+                                                                      1.4)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -68,9 +70,10 @@ Button {
                     }
                     GradientStop {
                         position: 0
-                        color: down | checked ? Qt.darker(buttonCheckedColor,
-                                                          1.3) : Qt.darker(
-                                                    btnColor, 1.2)
+                        color: down | checked ? Qt.darker(
+                                                    config.buttonCheckedColor,
+                                                    1.3) : Qt.darker(btnColor,
+                                                                     1.2)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -83,7 +86,7 @@ Button {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: buttonShadowColor
+            shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
             shadowVerticalOffset: checked || pressed ? height / 60 : height / 30
             Behavior on shadowHorizontalOffset {
@@ -118,21 +121,13 @@ Button {
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "D" + control.channel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
+        text: root.settings.showChannel ? "D" + control.channel + "E"
+                                          + control.disEnableChannel : ""
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
 
-    Text {
-        id: disEnableChannel
-        height: parent.height
-        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
-        anchors.right: parent.right
-        font.family: alibabaPuHuiTi.font.family
-    }
     onPressedChanged: {
         if (pressed) {
             if (!confirm) {

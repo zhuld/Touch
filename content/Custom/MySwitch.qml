@@ -20,8 +20,8 @@ Item {
             width: parent.width * 0.7
             height: parent.height / 2
             radius: height / 2
-            color: control.checked ? buttonCheckedColor : buttonColor
-            border.color: buttonTextColor
+            color: control.checked ? config.buttonCheckedColor : config.buttonColor
+            border.color: config.buttonTextColor
             anchors.centerIn: parent
             Behavior on color {
                 ColorAnimation {
@@ -35,12 +35,12 @@ Item {
             width: parent.height * 0.8
             height: width
             radius: height * 0.5
-            color: buttonTextColor
+            color: config.buttonTextColor
             anchors.verticalCenter: parent.verticalCenter
             Text {
                 anchors.centerIn: parent
                 text: "✓"
-                color: buttonCheckedColor
+                color: config.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 opacity: checked ? 1 : 0
                 font.family: alibabaPuHuiTi.font.family
@@ -60,7 +60,7 @@ Item {
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: buttonShadowColor
+                shadowColor: config.buttonShadowColor
                 shadowHorizontalOffset: height / 40
                 shadowVerticalOffset: shadowHorizontalOffset
             }
@@ -71,8 +71,8 @@ Item {
         id: channel
         height: parent.height
         text: root.settings.showChannel ? "D" + control.channel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.5
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         anchors.right: parent.right
         font.family: alibabaPuHuiTi.font.family
     }
@@ -85,7 +85,5 @@ Item {
                 CrestronCIP.release(control.channel)
             }
         }
-        // onPressed: CrestronCIP.push(control.channel)
-        // onReleased: CrestronCIP.release(control.channel)
     }
 }

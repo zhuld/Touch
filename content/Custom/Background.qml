@@ -6,11 +6,11 @@ Rectangle {
     gradient: Gradient {
         GradientStop {
             position: 0.0
-            color: Qt.lighter(backgroundColor, 1.1)
+            color: Qt.lighter(config.backgroundColor, 1.1)
         }
         GradientStop {
             position: 0.8
-            color: Qt.darker(backgroundColor, 1.3)
+            color: Qt.darker(config.backgroundColor, 1.3)
         }
     }
     radius: height / 20

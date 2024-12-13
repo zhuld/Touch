@@ -5,24 +5,25 @@ import QtQuick.Shapes
 
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-TabButton {
+Button {
     id: control
     property int channel
 
     width: parent.width
     height: parent.height
+    anchors.margins: width * 0.2
     icon.width: height * 0.4
     icon.height: height * 0.4
-    icon.color: buttonTextColor
+    icon.color: config.buttonTextColor
     font.pixelSize: height * 0.2
     font.family: alibabaPuHuiTi.font.family
 
-    Material.accent: buttonTextColor
-
-    anchors.margins: width * 0.2
+    Material.accent: config.buttonTextColor
+    Material.foreground: config.buttonTextColor
 
     display: AbstractButton.TextUnderIcon
 
+    checked: root.digital[control.channel] ? true : false
     background: Rectangle {
         id: back
         anchors.fill: parent
@@ -48,9 +49,9 @@ TabButton {
                     focalY: back.height * 0.25
                     GradientStop {
                         position: 1
-                        color: down | checked ? Qt.lighter(buttonCheckedColor,
-                                                           1.3) : Qt.lighter(
-                                                    buttonColor, 1.4)
+                        color: checked ? Qt.lighter(config.buttonCheckedColor,
+                                                    1.3) : Qt.lighter(
+                                             config.buttonColor, 1.4)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -59,9 +60,9 @@ TabButton {
                     }
                     GradientStop {
                         position: 0
-                        color: down | checked ? Qt.darker(buttonCheckedColor,
-                                                          1.1) : Qt.darker(
-                                                    buttonColor, 1.1)
+                        color: checked ? Qt.darker(config.buttonCheckedColor,
+                                                   1.1) : Qt.darker(
+                                             config.buttonColor, 1.1)
                         Behavior on color {
                             ColorAnimation {
                                 duration: 100
@@ -79,7 +80,7 @@ TabButton {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: buttonShadowColor
+            shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
             shadowVerticalOffset: checked ? height / 40 : height / 20
             Behavior on shadowHorizontalOffset {
@@ -89,8 +90,8 @@ TabButton {
             }
         }
     }
-    onCheckedChanged: {
-        if (checked) {
+    onPressedChanged: {
+        if (pressed) {
             CrestronCIP.push(control.channel)
         } else {
             CrestronCIP.release(control.channel)
@@ -100,8 +101,8 @@ TabButton {
         id: channel
         height: parent.height
         text: root.settings.showChannel ? "D" + control.channel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
 }

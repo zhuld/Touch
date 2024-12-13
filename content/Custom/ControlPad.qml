@@ -55,8 +55,8 @@ Item {
                     Text {
                         height: parent.height
                         text: root.settings.showChannel ? "D" + upButton.channel : ""
-                        color: buttonTextColor
-                        font.pixelSize: height * 0.3
+                        color: config.buttonTextColor
+                        font.pixelSize: channelSize
                         font.family: alibabaPuHuiTi.font.family
                     }
                 }
@@ -65,7 +65,7 @@ Item {
                 layer.samples: 16
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: buttonShadowColor
+                    shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
                     shadowVerticalOffset: upButton.checked ? 0 : height / 60
                     Behavior on shadowHorizontalOffset {
@@ -85,9 +85,10 @@ Item {
                         GradientStop {
                             position: 1
                             color: upButton.checked ? Qt.lighter(
-                                                          buttonCheckedColor,
-                                                          1.3) : Qt.lighter(
-                                                          buttonColor, 1.4)
+                                                          config.buttonCheckedColor,
+                                                          1.2) : Qt.lighter(
+                                                          config.buttonColor,
+                                                          1.2)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -97,9 +98,10 @@ Item {
                         GradientStop {
                             position: 0
                             color: upButton.checked ? Qt.darker(
-                                                          buttonCheckedColor,
-                                                          1.2) : Qt.darker(
-                                                          buttonColor, 1.2)
+                                                          config.buttonCheckedColor,
+                                                          1.4) : Qt.darker(
+                                                          config.buttonColor,
+                                                          1.4)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -171,8 +173,8 @@ Item {
                     Text {
                         height: parent.height
                         text: root.settings.showChannel ? "D" + leftButton.channel : ""
-                        color: buttonTextColor
-                        font.pixelSize: height * 0.3
+                        color: config.buttonTextColor
+                        font.pixelSize: channelSize
                         font.family: alibabaPuHuiTi.font.family
                     }
                 }
@@ -181,7 +183,7 @@ Item {
                 layer.samples: 16
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: buttonShadowColor
+                    shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
                     shadowVerticalOffset: leftButton.checked ? 0 : height / 60
                     Behavior on shadowHorizontalOffset {
@@ -201,9 +203,10 @@ Item {
                         GradientStop {
                             position: 1
                             color: leftButton.checked ? Qt.lighter(
-                                                            buttonCheckedColor,
-                                                            1.3) : Qt.lighter(
-                                                            buttonColor, 1.4)
+                                                            config.buttonCheckedColor,
+                                                            1.2) : Qt.lighter(
+                                                            config.buttonColor,
+                                                            1.2)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -213,9 +216,10 @@ Item {
                         GradientStop {
                             position: 0
                             color: leftButton.checked ? Qt.darker(
-                                                            buttonCheckedColor,
-                                                            1.2) : Qt.darker(
-                                                            buttonColor, 1.2)
+                                                            config.buttonCheckedColor,
+                                                            1.4) : Qt.darker(
+                                                            config.buttonColor,
+                                                            1.4)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -287,8 +291,8 @@ Item {
                     Text {
                         height: parent.height
                         text: root.settings.showChannel ? "D" + rightButton.channel : ""
-                        color: buttonTextColor
-                        font.pixelSize: height * 0.3
+                        color: config.buttonTextColor
+                        font.pixelSize: channelSize
                         font.family: alibabaPuHuiTi.font.family
                     }
                 }
@@ -297,7 +301,7 @@ Item {
                 layer.samples: 16
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: buttonShadowColor
+                    shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
                     shadowVerticalOffset: rightButton.checked ? 0 : height / 60
                     Behavior on shadowHorizontalOffset {
@@ -317,9 +321,10 @@ Item {
                         GradientStop {
                             position: 1
                             color: rightButton.checked ? Qt.lighter(
-                                                             buttonCheckedColor,
-                                                             1.3) : Qt.lighter(
-                                                             buttonColor, 1.4)
+                                                             config.buttonCheckedColor,
+                                                             1.2) : Qt.lighter(
+                                                             config.buttonColor,
+                                                             1.2)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -329,9 +334,10 @@ Item {
                         GradientStop {
                             position: 0
                             color: rightButton.checked ? Qt.darker(
-                                                             buttonCheckedColor,
-                                                             1.2) : Qt.darker(
-                                                             buttonColor, 1.2)
+                                                             config.buttonCheckedColor,
+                                                             1.4) : Qt.darker(
+                                                             config.buttonColor,
+                                                             1.4)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -403,8 +409,8 @@ Item {
                     Text {
                         height: parent.height
                         text: root.settings.showChannel ? "D" + downButton.channel : ""
-                        color: buttonTextColor
-                        font.pixelSize: height * 0.3
+                        color: config.buttonTextColor
+                        font.pixelSize: channelSize
                         font.family: alibabaPuHuiTi.font.family
                     }
                 }
@@ -413,7 +419,7 @@ Item {
                 layer.samples: 16
                 layer.effect: MultiEffect {
                     shadowEnabled: true
-                    shadowColor: buttonShadowColor
+                    shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
                     shadowVerticalOffset: downButton.checked ? 0 : height / 60
                     Behavior on shadowHorizontalOffset {
@@ -433,9 +439,10 @@ Item {
                         GradientStop {
                             position: 1
                             color: downButton.checked ? Qt.lighter(
-                                                            buttonCheckedColor,
-                                                            1.3) : Qt.lighter(
-                                                            buttonColor, 1.4)
+                                                            config.buttonCheckedColor,
+                                                            1.2) : Qt.lighter(
+                                                            config.buttonColor,
+                                                            1.2)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -445,9 +452,10 @@ Item {
                         GradientStop {
                             position: 0
                             color: downButton.checked ? Qt.darker(
-                                                            buttonCheckedColor,
-                                                            1.2) : Qt.darker(
-                                                            buttonColor, 1.2)
+                                                            config.buttonCheckedColor,
+                                                            1.4) : Qt.darker(
+                                                            config.buttonColor,
+                                                            1.4)
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 100
@@ -502,8 +510,8 @@ Item {
                 height: parent.height
                 width: height
                 icon.source: "qrc:/content/icons/fangda.png"
-                icon.color: buttonTextColor
-                //radius: height / 2
+                icon.color: config.buttonTextColor
+                radius: height / 2
                 channel: control.channel + 4
             }
             MyButton {
@@ -511,8 +519,8 @@ Item {
                 width: height
                 anchors.right: parent.right
                 icon.source: "qrc:/content/icons/suoxiao.png"
-                icon.color: buttonTextColor
-                //radius: height / 2
+                icon.color: config.buttonTextColor
+                radius: height / 2
                 channel: control.channel + 5
             }
         }

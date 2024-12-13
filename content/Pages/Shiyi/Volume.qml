@@ -66,13 +66,13 @@ Item {
                 required property int maxVol
                 required property bool inputType
                 lable: name
-                Column {
+                Rectangle {
                     anchors.fill: parent
                     anchors.topMargin: parent.height * 0.15
                     anchors.bottomMargin: parent.height * 0.04
                     anchors.leftMargin: parent.height * 0.04
                     anchors.rightMargin: anchors.leftMargin
-                    spacing: height * 0.04
+                    color: "transparent"
                     VolumeBar {
                         height: parent.height
                         width: parent.width

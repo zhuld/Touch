@@ -46,4 +46,5 @@ qt6_add_qml_module(content
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
         Js/crestroncip.js
+        QML_FILES Custom/VButton.qml
 )

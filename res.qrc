@@ -56,5 +56,6 @@
         <file>content/icons/shouxie.png</file>
         <file>content/icons/led.png</file>
         <file>content/icons/danhuamian.png</file>
+        <file>content/images/haishi.jpg</file>
     </qresource>
 </RCC>

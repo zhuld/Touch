@@ -52,7 +52,7 @@ Dialog {
             height: parent.height * 0.12
             font.pixelSize: height
             horizontalAlignment: Text.AlignLeft
-            color: textColor
+            color: config.textColor
             text: qsTr("标题")
             font.family: alibabaPuHuiTi.font.family
         }
@@ -68,11 +68,11 @@ Dialog {
                     color: "transparent"
                 }
                 enabled: false
-                icon.color: textColor
+                icon.color: config.textColor
             }
             Text {
                 id: info
-                color: textColor
+                color: config.textColor
                 height: parent.height
                 font.pixelSize: height * 0.4
                 anchors.top: parent.top

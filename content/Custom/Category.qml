@@ -8,6 +8,7 @@ Item {
 
     height: parent.height - parent.width * 0.02
     width: (parent.width * 0.98 + parent.spacing) * widthRatio - parent.spacing
+
     Rectangle {
         id: rectangle
         height: parent.height
@@ -15,7 +16,7 @@ Item {
         gradient: Gradient {
             GradientStop {
                 position: 1.0
-                color: Qt.alpha(catagoryColor, 0.5)
+                color: Qt.alpha(config.catagoryColor, 0.5)
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -24,7 +25,7 @@ Item {
             }
             GradientStop {
                 position: 0.112
-                color: Qt.alpha(catagoryColor, 0.7)
+                color: Qt.alpha(config.catagoryColor, 0.7)
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -33,7 +34,7 @@ Item {
             }
             GradientStop {
                 position: 0.11
-                color: catagoryColor
+                color: config.catagoryColor
                 Behavior on color {
                     ColorAnimation {
                         duration: 100
@@ -45,7 +46,7 @@ Item {
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: buttonShadowColor
+            shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
             shadowVerticalOffset: height / 100
         }
@@ -58,8 +59,8 @@ Item {
         font.pixelSize: height * 0.5
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        color: buttonTextColor
-        styleColor: buttonTextColor
+        color: config.buttonTextColor
+        styleColor: config.buttonTextColor
         font.family: alibabaPuHuiTi.font.family
     }
 }

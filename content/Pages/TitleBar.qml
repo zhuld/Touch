@@ -31,7 +31,7 @@ Rectangle {
         anchors.left: parent.left
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: height * 0.5
-        color: textColor
+        color: config.textColor
         font.family: alibabaPuHuiTi.font.family
     }
 
@@ -42,7 +42,7 @@ Rectangle {
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: height * 0.5
-        color: textColor
+        color: config.textColor
         font.family: alibabaPuHuiTi.font.family
     }
     Row {
@@ -54,7 +54,7 @@ Rectangle {
             height: parent.height
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: height * 0.5
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
             Timer {
                 id: timer
@@ -82,7 +82,7 @@ Rectangle {
                 }
             }
             checked: settings.darkTheme
-            Material.accent: buttonCheckedColor
+            Material.accent: config.buttonCheckedColor
             visible: Qt.platform.os === "windows" ? true : false
         }
 
@@ -102,7 +102,7 @@ Rectangle {
             width: height
             anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/close.png"
-            backColor: buttonRedColor
+            backColor: config.buttonRedColor
             onClicked: {
                 closeDialog.open()
             }

@@ -11,13 +11,13 @@ Item {
         spacing: width * 0.02
         Category {
             lable: qsTr("字体列表")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.05
+                color: "transparent"
                 ScrollView {
                     id: scrollView
                     width: parent.width
@@ -31,7 +31,7 @@ Item {
                         delegate: Text {
                             height: fonts.height / 20
                             width: fonts.width
-                            color: textColor
+                            color: config.textColor
                             font.pixelSize: height * 0.8
                             font.family: modelData
                             text: index + ": " + modelData

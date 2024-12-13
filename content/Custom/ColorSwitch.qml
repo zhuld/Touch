@@ -14,8 +14,8 @@ Switch {
             width: parent.width * 0.7
             height: parent.height / 2
             radius: height / 2
-            color: checked ? buttonCheckedColor : buttonColor
-            border.color: buttonTextColor
+            color: checked ? config.buttonCheckedColor : config.buttonColor
+            border.color: config.buttonTextColor
             anchors.centerIn: parent
             Behavior on color {
                 ColorAnimation {
@@ -30,8 +30,8 @@ Switch {
             height: parent.height * 0.8
             y: parent.height * 0.1
             radius: height / 2
-            color: buttonTextColor
-            border.color: buttonColor
+            color: config.buttonTextColor
+            border.color: config.buttonColor
             Behavior on color {
                 ColorAnimation {
                     duration: 300
@@ -41,7 +41,7 @@ Switch {
             Text {
                 anchors.centerIn: parent
                 text: checked ? "✓" : ""
-                color: buttonCheckedColor
+                color: config.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 font.family: alibabaPuHuiTi.font.family
             }

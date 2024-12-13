@@ -4,17 +4,31 @@ Item {
     readonly property string logoName: qsTr("海事大学")
     readonly property string titleName: qsTr("沉浸式教室")
     readonly property string version: qsTr("202412")
-    readonly property string background: "qrc:/content/images/haishi.png"
+    readonly property string background: "qrc:/content/images/haishi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
     readonly property string cipServerIP: "192.168.1.10"
     readonly property int cipPort: 41794
     readonly property int ipId: 8
     readonly property int processDialogChannel: 1
 
+    property color buttonColor: settings.darkTheme ? "#16417C" : "skyblue"
+    property color buttonCheckedColor: settings.darkTheme ? "darkorange" : "darkorange"
+    property color catagoryColor: settings.darkTheme ? "#1A5A94" : "silver"
+    property color backgroundColor: settings.darkTheme ? "#02112C" : "lightblue"
+    property color buttonTextColor: settings.darkTheme ? "gainsboro" : "#252525"
+    property color textColor: settings.darkTheme ? "lightskyblue" : "#252525" //文字颜色
+    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
+
+    property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
+    property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
+    property color buttonTextRedColor: "red"
+
+    property color volumeBlueColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
+    property color volumeRedColor: "red"
     //页面List
     readonly property var pageList: ListModel {
         ListElement {
-            name: qsTr("远程视频")
+            name: qsTr("远程")
             pageUrl: "qrc:/qt/qml/content/Pages/Haishi/Remote.qml"
             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
             test: false
@@ -55,13 +69,13 @@ Item {
             test: true
             pageChannel: 17
         }
-        // ListElement {
-        //     name: qsTr("测试")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
-        //     iconUrl: "qrc:/content/icons/test.png"
-        //     test: true
-        //     pageChannel: 18
-        // }
+        ListElement {
+            name: qsTr("测试")
+            pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
+            iconUrl: "qrc:/content/icons/test.png"
+            test: true
+            pageChannel: 18
+        }
         // ListElement {
         //     name: qsTr("字体")
         //     pageUrl: "qrc:/qt/qml/content/Pages/FontList.qml"

@@ -11,19 +11,26 @@ Item {
     id: test
     implicitWidth: parent.width
     implicitHeight: parent.height
-
     Row {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
             lable: qsTr("测试")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.05
+                color: "transparent"
+                VButton {
+                    width: 300
+                    height: 300
+                    text: "测试"
+                    source: "qrc:/content/icons/huiyizanzhuyantao.png"
+                    channel: 33
+                    //confirm: true
+                }
             }
         }
     }

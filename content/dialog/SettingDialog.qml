@@ -101,7 +101,7 @@ Dialog {
                 font.pixelSize: height * 0.5
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignLeft
-                color: buttonTextColor
+                color: config.buttonTextColor
                 font.family: alibabaPuHuiTi.font.family
             }
         }
@@ -128,7 +128,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
 
@@ -142,7 +142,7 @@ Dialog {
                     validator: RegularExpressionValidator {
                         regularExpression: /(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}/
                     }
-                    color: acceptableInput ? buttonTextColor : buttonTextRedColor
+                    color: acceptableInput ? config.buttonTextColor : config.buttonTextRedColor
                     onFocusChanged: {
                         if (focus) {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
@@ -156,7 +156,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
 
@@ -171,7 +171,7 @@ Dialog {
                         bottom: 1024
                         top: 49151
                     }
-                    color: acceptableInput ? buttonTextColor : buttonTextRedColor
+                    color: acceptableInput ? config.buttonTextColor : config.buttonTextRedColor
                     onFocusChanged: {
                         if (focus) {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
@@ -186,7 +186,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
 
@@ -201,7 +201,7 @@ Dialog {
                         bottom: 1
                         top: 255
                     }
-                    color: acceptableInput ? buttonTextColor : buttonTextRedColor
+                    color: acceptableInput ? config.buttonTextColor : config.buttonTextRedColor
                     onFocusChanged: {
                         if (focus) {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
@@ -214,7 +214,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
@@ -229,7 +229,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                     visible: Qt.platform.os === "windows"
                 }
@@ -246,7 +246,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
 
@@ -261,7 +261,7 @@ Dialog {
                         bottom: 0
                         top: 999999
                     }
-                    color: acceptableInput ? buttonTextColor : buttonTextRedColor
+                    color: acceptableInput ? config.buttonTextColor : config.buttonTextRedColor
                     onFocusChanged: {
                         if (focus) {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
@@ -274,7 +274,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
@@ -288,7 +288,7 @@ Dialog {
                     width: parent.width * 0.5
                     height: settingDialog.height / 12
                     font.pixelSize: height * 0.7
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {

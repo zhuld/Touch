@@ -6,78 +6,82 @@ import "../../Custom"
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
-
     Row {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.35
+            widthRatio: 0.3
             lable: qsTr("输出")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.05
-                Repeater {
-                    model: ListModel {
-                        id: outputList
-                        ListElement {
-                            name: qsTr("大屏左")
-                            btnchannel: 163
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                color: "transparent"
+                Grid {
+                    width: parent.width
+                    height: parent.height
+                    columns: Math.ceil(outputList.count / 3)
+                    spacing: height * 0.1
+                    Repeater {
+                        model: ListModel {
+                            id: outputList
+                            ListElement {
+                                name: qsTr("大屏左")
+                                btnchannel: 163
+                                disBtnChannel: 0
+                                sizeRatio: 1
+                                iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            }
+                            ListElement {
+                                name: qsTr("大屏右")
+                                btnchannel: 164
+                                disBtnChannel: 0
+                                sizeRatio: 1
+                                iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            }
+                            ListElement {
+                                name: qsTr("地插输出")
+                                btnchannel: 161
+                                disBtnChannel: 0
+                                sizeRatio: 1
+                                iconUrl: "qrc:/content/icons/HDMIjiekou.png"
+                            }
                         }
-                        ListElement {
-                            name: qsTr("大屏右")
-                            btnchannel: 164
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
-                        }
-                        ListElement {
-                            name: qsTr("地插输出")
-                            btnchannel: 161
-                            disBtnChannel: 0
-                            sizeRatio: 1
-                            iconUrl: "qrc:/content/icons/HDMIjiekou.png"
-                        }
-                    }
 
-                    delegate: MyButton {
-                        required property string name
-                        required property int btnchannel
-                        required property int disBtnChannel
-                        required property string iconUrl
-                        width: parent.width
-                        height: (parent.height * 0.75 + parent.spacing)
-                                / outputList.count - parent.spacing
-                        text: name
-                        channel: btnchannel
-                        disEnableChannel: disBtnChannel
-                        icon.source: iconUrl
+                        delegate: VButton {
+                            required property string name
+                            required property int btnchannel
+                            required property int disBtnChannel
+                            required property string iconUrl
+                            width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                            height: (parent.height + parent.spacing) / 3 - parent.spacing
+                            text: name
+                            channel: btnchannel
+                            disEnableChannel: disBtnChannel
+                            source: iconUrl
+                        }
                     }
                 }
             }
         }
 
         Category {
-            widthRatio: 0.65
+            widthRatio: 0.7
             lable: qsTr("输入信号")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                color: "transparent"
                 Grid {
                     width: parent.width
-                    height: parent.height * 0.9
-                    columns: 2
-                    spacing: height * 0.05
+                    height: parent.height
+                    columns: Math.ceil(inputList.count / 3)
+                    spacing: height * 0.1
                     Repeater {
                         model: ListModel {
                             id: inputList
@@ -122,16 +126,15 @@ Item {
                                 iconUrl: "qrc:/content/icons/zhuji.png"
                             }
                         }
-                        delegate: MyButton {
+                        delegate: VButton {
                             required property string name
                             required property int btnchannel
                             required property string iconUrl
                             width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                            height: (parent.height + parent.spacing) / inputList.count
-                                    * parent.columns - parent.spacing
+                            height: (parent.height + parent.spacing) / 3 - parent.spacing
                             text: name
                             channel: btnchannel
-                            icon.source: iconUrl
+                            source: iconUrl
                         }
                     }
                 }

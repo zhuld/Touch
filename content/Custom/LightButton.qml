@@ -23,7 +23,7 @@ Item {
         gradient: Gradient {
             GradientStop {
                 position: 0
-                color: control.checked ? buttonCheckedColor : buttonColor
+                color: control.checked ? config.buttonCheckedColor : config.buttonColor
                 Behavior on color {
                     ColorAnimation {
                         duration: 300
@@ -32,7 +32,7 @@ Item {
             }
             GradientStop {
                 position: 0.265
-                color: control.checked ? buttonCheckedColor : buttonColor
+                color: control.checked ? config.buttonCheckedColor : config.buttonColor
                 Behavior on color {
                     ColorAnimation {
                         duration: 300
@@ -41,8 +41,8 @@ Item {
             }
             GradientStop {
                 position: 0.27
-                color: control.checked ? lightColor : Qt.darker(buttonColor,
-                                                                1.1)
+                color: control.checked ? lightColor : Qt.darker(
+                                             config.buttonColor, 1.1)
                 Behavior on color {
                     ColorAnimation {
                         duration: 300
@@ -51,9 +51,8 @@ Item {
             }
             GradientStop {
                 position: 1
-                color: control.checked ? Qt.alpha(lightColor,
-                                                  0.2) : Qt.darker(buttonColor,
-                                                                   1.4)
+                color: control.checked ? Qt.alpha(lightColor, 0.2) : Qt.darker(
+                                             config.buttonColor, 1.4)
                 Behavior on color {
                     ColorAnimation {
                         duration: 300
@@ -61,7 +60,7 @@ Item {
                 }
             }
         }
-        radius: height/10
+        radius: height / 10
         Text {
             id: label
             width: parent.width
@@ -69,14 +68,14 @@ Item {
             font.pixelSize: height * 0.4
             anchors.top: parent.top
             anchors.topMargin: height * 0.2
-            color: buttonTextColor
+            color: config.buttonTextColor
             horizontalAlignment: Text.AlignHCenter
             font.family: alibabaPuHuiTi.font.family
         }
         layer.enabled: true
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: buttonShadowColor
+            shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
             shadowVerticalOffset: control.checked ? height / 80 : height / 40
             Behavior on shadowHorizontalOffset {
@@ -90,20 +89,13 @@ Item {
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "D" + control.channel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.1
+        text: root.settings.showChannel ? "D" + control.channel + "E"
+                                          + control.disEnableChannel : ""
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
-    Text {
-        id: disEnableChannel
-        height: parent.height
-        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.1
-        anchors.right: parent.right
-        font.family: alibabaPuHuiTi.font.family
-    }
+
     MouseArea {
         anchors.fill: parent
         onPressedChanged: {

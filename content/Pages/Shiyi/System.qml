@@ -13,13 +13,13 @@ Item {
         Category {
             widthRatio: 0.2
             lable: qsTr("总音量")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                color: "transparent"
                 VolumeBar {
                     height: parent.height
                     width: parent.width
@@ -34,7 +34,7 @@ Item {
         }
 
         Category {
-            widthRatio: 0.45
+            widthRatio: 0.4
             lable: qsTr("会议模式")
             Column {
                 anchors.fill: parent
@@ -42,7 +42,7 @@ Item {
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.05
+                spacing: parent.height * 0.05
                 Repeater {
                     model: ListModel {
                         id: systemList
@@ -83,7 +83,8 @@ Item {
                         required property bool showDialog
                         required property color bColor
                         width: parent.width
-                        height: (parent.height - parent.spacing) / systemList.count - parent.spacing
+                        height: (parent.height * 0.8 + parent.spacing)
+                                / systemList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -96,54 +97,60 @@ Item {
         }
 
         Category {
-            widthRatio: 0.35
+            widthRatio: 0.4
             lable: qsTr("信号选择")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
-                Repeater {
-                    model: ListModel {
-                        id: modeList
-                        ListElement {
-                            name: qsTr("院内视频会议")
-                            btnchannel: 41
-                            iconUrl: "qrc:/content/icons/shipinhuiyi.png"
+                color: "transparent"
+                Grid {
+                    width: parent.width
+                    height: parent.height
+                    columns: Math.ceil(modeList.count / 3)
+                    spacing: height * 0.1
+                    Repeater {
+                        model: ListModel {
+                            id: modeList
+                            ListElement {
+                                name: qsTr("院内视频会议")
+                                btnchannel: 41
+                                iconUrl: "qrc:/content/icons/shipinhuiyi.png"
+                            }
+                            ListElement {
+                                name: qsTr("远程视频会议")
+                                btnchannel: 42
+                                iconUrl: "qrc:/content/icons/shipinhuiyi.png"
+                            }
+                            ListElement {
+                                name: qsTr("内网电脑")
+                                btnchannel: 43
+                                iconUrl: "qrc:/content/icons/zhuji.png"
+                            }
+                            ListElement {
+                                name: qsTr("外网电脑")
+                                btnchannel: 44
+                                iconUrl: "qrc:/content/icons/zhuji.png"
+                            }
+                            ListElement {
+                                name: qsTr("无线投屏")
+                                btnchannel: 45
+                                iconUrl: "qrc:/content/icons/wuxiantouping.png"
+                            }
                         }
-                        ListElement {
-                            name: qsTr("远程视频会议")
-                            btnchannel: 42
-                            iconUrl: "qrc:/content/icons/shipinhuiyi.png"
+                        delegate: VButton {
+                            id: myButton
+                            required property string name
+                            required property int btnchannel
+                            required property string iconUrl
+                            width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                            height: (parent.height + parent.spacing) / 3 - parent.spacing
+                            text: name
+                            channel: btnchannel
+                            source: iconUrl
                         }
-                        ListElement {
-                            name: qsTr("内网电脑")
-                            btnchannel: 43
-                            iconUrl: "qrc:/content/icons/zhuji.png"
-                        }
-                        ListElement {
-                            name: qsTr("外网电脑")
-                            btnchannel: 44
-                            iconUrl: "qrc:/content/icons/zhuji.png"
-                        }
-                        ListElement {
-                            name: qsTr("无线投屏")
-                            btnchannel: 45
-                            iconUrl: "qrc:/content/icons/wuxiantouping.png"
-                        }
-                    }
-                    delegate: MyButton {
-                        id: myButton
-                        required property string name
-                        required property int btnchannel
-                        required property string iconUrl
-                        width: parent.width
-                        height: (parent.height + parent.spacing) / modeList.count - parent.spacing
-                        text: name
-                        channel: btnchannel
-                        icon.source: iconUrl
                     }
                 }
             }

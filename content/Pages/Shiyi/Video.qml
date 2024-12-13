@@ -19,7 +19,7 @@ Item {
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                spacing: parent.height * 0.05
                 Repeater {
                     id: outputRepeater
                     model: ListModel {
@@ -61,13 +61,13 @@ Item {
         Category {
             widthRatio: 0.65
             lable: qsTr("输入信号")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                color: "transparent"
                 Grid {
                     width: parent.width
                     height: parent.height * 0.9
@@ -79,7 +79,7 @@ Item {
                             ListElement {
                                 name: qsTr("外网电脑")
                                 inputChannel: 1
-                                bgColor: "deepskyblue"
+                                bgColor: "royalblue"
                                 source: "qrc:/content/icons/zhuji.png"
                             }
                             ListElement {
@@ -121,7 +121,7 @@ Item {
                             ListElement {
                                 name: qsTr("预留输入3")
                                 inputChannel: 8
-                                bgColor: "royalblue"
+                                bgColor: "lightslategrey"
                                 source: "qrc:/content/icons/HDMIjiekou.png"
                             }
                         }
@@ -133,8 +133,7 @@ Item {
                             required property int index
 
                             width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                            height: (parent.height + parent.spacing) / inputList.count
-                                    * parent.columns - parent.spacing
+                            height: (parent.height + parent.spacing) / 4 - parent.spacing
                             btnColor: bgColor
                             textInput: name
                             input: inputChannel
@@ -155,8 +154,9 @@ Item {
                     width: parent.width
                     height: parent.height * 0.05
                     font.pixelSize: height
-                    color: catagoryColor
+                    color: config.catagoryColor
                     horizontalAlignment: Text.AlignRight
+                    anchors.bottom: parent.bottom
                     text: qsTr("拖拽输入信号到输出")
                     font.family: alibabaPuHuiTi.font.family
                 }

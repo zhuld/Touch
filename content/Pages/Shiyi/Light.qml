@@ -15,13 +15,13 @@ Item {
         Category {
             widthRatio: 0.7
             lable: qsTr("单独控制")
-            Column {
+            Rectangle {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                color: "transparent"
                 Grid {
                     id: grid
                     width: parent.width
@@ -79,7 +79,7 @@ Item {
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.04
+                spacing: parent.height * 0.05
                 Repeater {
                     model: ListModel {
                         id: lightModeList

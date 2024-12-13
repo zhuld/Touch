@@ -20,7 +20,7 @@ Item {
             height: parent.height * 0.4
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.8
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
         Text {
@@ -29,7 +29,7 @@ Item {
             height: parent.height * 0.1
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.5
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
         Timer {
@@ -51,7 +51,7 @@ Item {
             height: parent.height * 0.15
             horizontalAlignment: Text.AlignRight
             font.pixelSize: height * 0.6
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
         Text {
@@ -60,7 +60,7 @@ Item {
             height: parent.height * 0.05
             horizontalAlignment: Text.AlignRight
             font.pixelSize: height * 0.6
-            color: textColor
+            color: config.textColor
             font.family: alibabaPuHuiTi.font.family
         }
     }

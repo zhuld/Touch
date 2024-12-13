@@ -21,7 +21,9 @@ qt_add_executable(TouchApp
     src/TcpClient.cpp
     src/TcpServer.h
     src/TcpServer.cpp
+    src/icon.rc
 )
+qt_policy(SET QTP0004 NEW)
 
 qt_add_resources(TouchApp "configuration"
     PREFIX "/"
@@ -63,6 +65,8 @@ install(TARGETS TouchApp
 set_property(TARGET TouchApp
     APPEND PROPERTY  QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
+
+#add_executable(${PROJECT_NAME} ${PROJECT_FILES} "icon.rc")
 # make IDEs aware of the QML import path
 # set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
 #     "Path to the custom QML components defined by the project")

@@ -8,7 +8,7 @@ Item {
     id: control
     property int channel
     property color btnColor: buttonCheckedColor
-    property color textColor: buttonTextColor
+    property color btnTextColor: buttonTextColor
     property bool checked
     property alias text: label.text
     property color lightColor: control.checked ? "khaki" : "transparent"
@@ -84,7 +84,7 @@ Item {
         width: parent.width
         height: parent.height * 0.2
         font.pixelSize: height * 0.6
-        color: textColor
+        color: btnTextColor
         anchors.bottom: switchbtn.top
         horizontalAlignment: Text.AlignHCenter
     }
@@ -136,7 +136,7 @@ Item {
         height: parent.height
         text: root.settings.showChannel ? "D" + control.channel : ""
         color: buttonTextColor
-        font.pixelSize: height * 0.1
+        font.pixelSize: channelSize
         anchors.left: parent.left
         font.family: alibabaPuHuiTi.font.family
     }

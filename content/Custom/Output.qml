@@ -23,7 +23,7 @@ Rectangle {
     layer.effect: MultiEffect {
         id: effect
         shadowEnabled: true
-        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : buttonShadowColor
+        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : config.buttonShadowColor
         shadowHorizontalOffset: height / 60
         shadowVerticalOffset: dropContainer.containsDrag ? height / 15 : height / 60
         Behavior on shadowColor {
@@ -65,7 +65,7 @@ Rectangle {
                                                         inputListMode.get(
                                                             input - 1).bgColor,
                                                         1.1) : Qt.lighter(
-                                                        buttonColor, 1.2)
+                                                        config.buttonColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -79,7 +79,7 @@ Rectangle {
                                                         inputListMode.get(
                                                             input - 1).bgColor,
                                                         1.3) : Qt.darker(
-                                                        buttonColor, 1.2)
+                                                        config.buttonColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -97,7 +97,7 @@ Rectangle {
         x: outputText.width
         verticalAlignment: Text.AlignVCenter
         text: "Output"
-        color: buttonTextColor
+        color: config.buttonTextColor
         font.family: alibabaPuHuiTi.font.family
     }
 
@@ -108,7 +108,7 @@ Rectangle {
         anchors.margins: height * 0.1
         anchors.left: parent.left
         text: output
-        color: buttonTextColor
+        color: config.buttonTextColor
         font.bold: true
         opacity: 0.1
         font.family: alibabaPuHuiTi.font.family
@@ -120,7 +120,7 @@ Rectangle {
         IconButton {
             id: icon
             height: parent.height
-            icon.color: buttonTextColor
+            icon.color: config.buttonTextColor
             anchors.verticalCenter: textInput.verticalCenter
             backColor: "transparent"
             icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
@@ -130,7 +130,7 @@ Rectangle {
             id: label
             height: parent.height
             font.pixelSize: height * 0.5
-            color: buttonTextColor
+            color: config.buttonTextColor
             verticalAlignment: Text.AlignVCenter
             font.family: alibabaPuHuiTi.font.family
             Behavior on text {
@@ -157,7 +157,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         text: input ? input : ""
-        color: buttonTextColor
+        color: config.buttonTextColor
         font.bold: true
         opacity: 0.1
         font.family: alibabaPuHuiTi.font.family
@@ -165,20 +165,12 @@ Rectangle {
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "A" + control.output : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
+        text: root.settings.showChannel ? "A" + control.output + "E" + control.disEnableChannel : ""
+        color: config.buttonTextColor
+        font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
-    Text {
-        id: disEnableChannel
-        height: parent.height
-        text: root.settings.showChannel ? "E" + control.disEnableChannel : ""
-        color: buttonTextColor
-        font.pixelSize: height * 0.3
-        anchors.right: parent.right
-        font.family: alibabaPuHuiTi.font.family
-    }
+
     DropArea {
         id: dropContainer
         anchors.fill: parent

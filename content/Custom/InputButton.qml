@@ -7,8 +7,8 @@ Item {
     id: control
 
     property int input
-    property color btnColor: buttonCheckedColor
-    property color textColor: buttonTextColor
+    property color btnColor: config.buttonCheckedColor
+    property color btnTextColor: config.buttonTextColor
     property alias textInput: label.text
     property alias iconSource: icon.icon.source
 
@@ -107,14 +107,14 @@ Item {
                 IconButton {
                     id: icon
                     height: parent.height * 0.8
-                    icon.color: buttonTextColor
+                    icon.color: config.buttonTextColor
                     anchors.verticalCenter: iconLabel.verticalCenter
                 }
                 Text {
                     id: label
                     font.pixelSize: parent.height * 0.35
                     anchors.verticalCenter: iconLabel.verticalCenter
-                    color: buttonTextColor
+                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
                 }
                 spacing: 0
@@ -126,7 +126,7 @@ Item {
             layer.effect: MultiEffect {
                 id: effect
                 shadowEnabled: true
-                shadowColor: buttonShadowColor
+                shadowColor: config.buttonShadowColor
                 shadowHorizontalOffset: shadowVerticalOffset / 2
                 shadowVerticalOffset: mouseArea.pressed ? 0 : height / 30
                 Behavior on shadowHorizontalOffset {
@@ -141,7 +141,7 @@ Item {
                 height: parent.height
                 text: input
                 font.pixelSize: height
-                color: textColor
+                color: btnTextColor
                 horizontalAlignment: Text.AlignRight
                 font.bold: true
                 opacity: 0.1
