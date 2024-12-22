@@ -59,13 +59,13 @@ Dialog {
             id: busy
             height: parent.height / 2
             width: height
-            Material.accent: config.catagoryColor
+            Material.accent: config.buttonColor
             anchors.centerIn: parent
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: config.buttonShadowColor
-                shadowHorizontalOffset: height / 40
+                shadowHorizontalOffset: shadowHeight
                 shadowVerticalOffset: shadowHorizontalOffset
             }
         }
@@ -81,7 +81,6 @@ Dialog {
                 }
             }
         }
-
         Text {
             id: info
             height: parent.height * 0.12
@@ -93,11 +92,10 @@ Dialog {
         }
         Text {
             id: channel
-            height: parent.height * 0.12
             anchors.right: parent.right
             text: root.settings.showChannel ? "D" + processDialog.channel : ""
             color: config.buttonTextColor
-            font.pixelSize: height
+            font.pixelSize: channelSize
             font.family: alibabaPuHuiTi.font.family
         }
     }

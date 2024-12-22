@@ -1,9 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 
 import "./Custom"
 import "./Pages"
+import "./Dialog"
 
 Item {
     id: main
@@ -13,7 +15,13 @@ Item {
     ListModel {
         id: filteredModel
     }
-
+    ProcessDialog {
+        id: processDialog
+        dialogInfomation: "正在执行指令，请稍后..."
+        dialogTitle: "提示"
+        channel: config.processDialogChannel
+        autoClose: 50
+    }
     Column {
         id: tabBar
         //property int currentPage: 10
@@ -35,7 +43,7 @@ Item {
                 height: (parent.height + parent.spacing) / (filteredModel.count) - parent.spacing
                         < width ? (parent.height + parent.spacing)
                                   / (filteredModel.count) - parent.spacing : width
-                icon.source: iconUrl
+                source: iconUrl
                 channel: pageChannel
                 onCheckedChanged: {
                     if (checked) {
@@ -56,6 +64,7 @@ Item {
             model: filteredModel
             delegate: Loader {
                 required property string pageUrl
+                id: pageLoader
                 source: pageUrl
             }
         }

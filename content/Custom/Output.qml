@@ -5,7 +5,7 @@ import QtQuick.Effects
 
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-Rectangle {
+Item {
     id: control
 
     property int output
@@ -18,14 +18,13 @@ Rectangle {
 
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.2
-    radius: height / 4
     layer.enabled: true
     layer.effect: MultiEffect {
         id: effect
         shadowEnabled: true
         shadowColor: dropContainer.containsDrag ? control.dragShadowColor : config.buttonShadowColor
         shadowHorizontalOffset: height / 60
-        shadowVerticalOffset: dropContainer.containsDrag ? height / 15 : height / 60
+        shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight*2 : shadowHeight/2
         Behavior on shadowColor {
             ColorAnimation {
                 duration: 300
@@ -48,9 +47,9 @@ Rectangle {
             PathRectangle {
                 x: 0
                 y: 0
-                radius: control.radius
                 width: back.width
                 height: back.height
+                radius: height / 5
             }
             fillGradient: RadialGradient {
                 centerX: back.width * 0.5
@@ -113,41 +112,25 @@ Rectangle {
         opacity: 0.1
         font.family: alibabaPuHuiTi.font.family
     }
-    Row {
+    IconButton {
         id: textInput
-        anchors.top: textOutput.bottom
-        height: parent.height * 0.5
-        IconButton {
-            id: icon
-            height: parent.height
-            icon.color: config.buttonTextColor
-            anchors.verticalCenter: textInput.verticalCenter
-            backColor: "transparent"
-            icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
-                                                                        input - 1).source : ""
-        }
-        Text {
-            id: label
-            height: parent.height
-            font.pixelSize: height * 0.5
-            color: config.buttonTextColor
-            verticalAlignment: Text.AlignVCenter
-            font.family: alibabaPuHuiTi.font.family
-            Behavior on text {
-                PropertyAnimation {
-                    target: textInput
-                    easing.type: Easing.OutCubic
-                    properties: "x"
-                    from: 0
-                    to: control.width * 0.2
-                    duration: 500
-                }
+        anchors.bottom: parent.bottom
+        height: parent.height * 0.65
+        icon.color: config.buttonTextColor
+        icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
+                                                                    input - 1).source : ""
+        Behavior on text {
+            PropertyAnimation {
+                target: textInput
+                easing.type: Easing.OutCubic
+                properties: "x"
+                from: 0
+                to: control.width * 0.3
+                duration: 500
             }
-            text: input > 0 & input <= inputListMode.count ? inputListMode.get(
-                                                                 input - 1).name : null
         }
-        x: control.width * 0.2
-        spacing: 0
+        text: input > 0 & input <= inputListMode.count ? inputListMode.get(
+                                                             input - 1).name : null
     }
     Text {
         id: inputText

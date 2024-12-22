@@ -21,14 +21,17 @@ Window {
     }
 
     property real channelSize: height * 0.02
+    property real shadowHeight: height * 0.005
+
     property alias settings: settingDialog.settings
     property var digital: []
     property var analog: []
 
     //property var text: [] // not support yet
     property ListModel listModel: ListModel {}
-
     property string logoImage: config.logoImage
+
+    property alias running: ping.running
 
     FontLoader {
         id: lcdFont
@@ -45,16 +48,15 @@ Window {
 
     width: settings.windowWidth
     height: settings.windowHeight
-    minimumWidth: 1280
-    minimumHeight: 720
+    minimumWidth: 1200
+    minimumHeight: 800
 
     title: config.logoName + config.titleName
 
     visibility: settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
-
-    //visible: true
     color: "transparent"
+
     Rectangle {
         id: background
         anchors.fill: parent
@@ -171,68 +173,40 @@ Window {
             root.close()
         }
     }
-    ProcessDialog {
-        id: processDialog
-        dialogInfomation: "正在执行指令，请稍后..."
-        dialogTitle: "提示"
-        channel: config.processDialogChannel
-        autoClose: 50
-    }
     Timer {
         id: ping
         interval: 15000
         repeat: true
         onTriggered: CrestronCIP.ping()
+        onRunningChanged: {
+            if (running) {
+                pageLoader.setSource("qrc:/qt/qml/content/Content.qml")
+            } else {
+                pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
+            }
+        }
     }
 
     Connections {
         target: tcpClient
         onStateChanged: state => {
-                            //console.log("state", state)
-                            switch (state) {
-                                case 0:
-                                //case 2:
-                                //case 1:
-                                //disconneted
-                                if (ping.running) {
-                                    pageLoader.setSource(
-                                        "qrc:/qt/qml/content/Connect.qml")
-                                    ping.running = false
-                                } else {
-                                    pageLoader.item.socketAnimation.start()
-                                }
-                                break
-                                case 3:
-                                //connected
-                                pageLoader.setSource(
-                                    "qrc:/qt/qml/content/Content.qml")
-                                ping.running = true
-                                break
+                            if (state === 0) {
+                                running = false
                             }
                         }
-        onDataReceived: data => {
-                            CrestronCIP.clientMessageCheck(new Uint8Array(data))
-                        }
+        onDataReceived: data => CrestronCIP.clientMessageCheck(
+                            new Uint8Array(data))
     }
 
     Connections {
         target: tcpServer // 监听 TCPServer 的信号
-        onDataReceived: data => {
-                            CrestronCIP.serverMessageCheck(new Uint8Array(data))
-                        }
-        onClientConnected: {
-            CrestronCIP.accept()
-        }
+        onDataReceived: data => CrestronCIP.serverMessageCheck(
+                            new Uint8Array(data))
+        onClientConnected: CrestronCIP.serverAccept()
     }
     Component.onCompleted: {
         pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
-        if (settings.demoMode) {
-            tcpServer.startServer(41793, "127.0.0.1")
-            tcpClient.connectToServer("127.0.0.1", 41793)
-        } else {
-            tcpServer.stopServer()
-            tcpClient.connectToServer(settings.ipAddress, settings.ipPort)
-        }
+        tcpServer.startServer(41793, "127.0.0.1")
         if (settings.darkTheme) {
             root.Material.theme = Material.Dark
         } else {
@@ -243,6 +217,6 @@ Window {
             digital[i] = false
             analog[i] = 0
         }
-        //digital[11] = true
+        //digital[1] = true
     }
 }

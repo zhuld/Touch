@@ -114,7 +114,7 @@ Item {
                                 / lightModeList.count - parent.spacing
                         text: name
                         channel: btnchannel
-                        icon.source: iconUrl
+                        source: iconUrl
                     }
                 }
             }

@@ -28,6 +28,7 @@ Item {
 
     //页面List
     readonly property var pageList: ListModel {
+
         ListElement {
             name: qsTr("系统")
             pageUrl: "qrc:/qt/qml/content/Pages/Shiyi/System.qml"
@@ -60,7 +61,7 @@ Item {
             name: qsTr("灯光")
             pageUrl: "qrc:/qt/qml/content/Pages/Shiyi/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
-            test: true
+            test: false
             pageChannel: 15
         }
         ListElement {
@@ -70,17 +71,19 @@ Item {
             test: true
             pageChannel: 16
         }
-        // ListElement {
-        //     name: qsTr("测试")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
-        //     iconUrl: "qrc:/content/icons/test.png"
-        //     test: true
-        // }
-        // ListElement {
-        //     name: qsTr("字体")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/FontList.qml"
-        //     iconUrl: "qrc:/content/icons/test.png"
-        //     test: true
-        // }
+        ListElement {
+            name: qsTr("测试")
+            pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
+            iconUrl: "qrc:/content/icons/test.png"
+            test: true
+            pageChannel: 17
+        }
+        ListElement {
+            name: qsTr("字体")
+            pageUrl: "qrc:/qt/qml/content/Pages/FontList.qml"
+            iconUrl: "qrc:/content/icons/test.png"
+            test: true
+            pageChannel: 18
+        }
     }
 }

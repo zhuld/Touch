@@ -19,10 +19,13 @@ Item {
                 anchors.top: parent.top
                 anchors.topMargin: height * 0.4
                 anchors.right: parent.right
+                anchors.rightMargin: parent.height * 0.04
                 width: parent.width * 0.1
                 height: parent.height * 0.06
-                onClicked: {
-                    root.listModel.clear()
+                onPressedChanged: {
+                    if (!pressed) {
+                        root.listModel.clear()
+                    }
                 }
             }
             Rectangle {

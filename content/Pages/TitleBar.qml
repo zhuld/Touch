@@ -95,6 +95,7 @@ Rectangle {
             onClicked: {
                 passwordDialog.open()
             }
+            hoverEnabled: true
         }
         IconButton {
             id: close
@@ -107,6 +108,7 @@ Rectangle {
                 closeDialog.open()
             }
             visible: Qt.platform.os === "windows" ? true : false
+            hoverEnabled: true
         }
     }
 }

@@ -47,8 +47,8 @@ Item {
         layer.effect: MultiEffect {
             shadowEnabled: true
             shadowColor: config.buttonShadowColor
-            shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: height / 100
+            shadowHorizontalOffset: shadowVerticalOffset
+            shadowVerticalOffset: shadowHeight
         }
     }
     Text {
@@ -59,8 +59,7 @@ Item {
         font.pixelSize: height * 0.5
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        color: config.buttonTextColor
-        styleColor: config.buttonTextColor
+        color: config.textColor
         font.family: alibabaPuHuiTi.font.family
     }
 }

@@ -23,4 +23,7 @@ Button {
             }
         }
     }
+    font.pixelSize: height * 0.35
+    font.family: alibabaPuHuiTi.font.family
+    hoverEnabled: false
 }

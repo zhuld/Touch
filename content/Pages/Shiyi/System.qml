@@ -88,7 +88,7 @@ Item {
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
-                        icon.source: iconUrl
+                        source: iconUrl
                         confirm: showDialog
                         btnColor: bColor
                     }

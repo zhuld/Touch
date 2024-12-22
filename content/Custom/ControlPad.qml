@@ -49,8 +49,6 @@ Item {
                     anchors.top: parent.top
                     icon.height: height
                     icon.width: width
-                    hoverEnabled: false
-                    backColor: "transparent"
                     icon.source: "qrc:/content/icons/up.png"
                     Text {
                         height: parent.height
@@ -67,7 +65,7 @@ Item {
                     shadowEnabled: true
                     shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: upButton.checked ? 0 : height / 60
+                    shadowVerticalOffset: upButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: 100
@@ -166,8 +164,6 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     icon.height: height
                     icon.width: width
-                    hoverEnabled: false
-                    backColor: "transparent"
                     icon.source: "qrc:/content/icons/left.png"
                     anchors.left: parent.left
                     Text {
@@ -185,7 +181,7 @@ Item {
                     shadowEnabled: true
                     shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: leftButton.checked ? 0 : height / 60
+                    shadowVerticalOffset: leftButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: 100
@@ -284,9 +280,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     icon.height: height
                     icon.width: width
-                    hoverEnabled: false
                     anchors.right: parent.right
-                    backColor: "transparent"
                     icon.source: "qrc:/content/icons/right.png"
                     Text {
                         height: parent.height
@@ -303,7 +297,7 @@ Item {
                     shadowEnabled: true
                     shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: rightButton.checked ? 0 : height / 60
+                    shadowVerticalOffset: rightButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: 100
@@ -402,9 +396,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     icon.height: height
                     icon.width: width
-                    hoverEnabled: false
                     anchors.bottom: parent.bottom
-                    backColor: "transparent"
                     icon.source: "qrc:/content/icons/down.png"
                     Text {
                         height: parent.height
@@ -421,7 +413,7 @@ Item {
                     shadowEnabled: true
                     shadowColor: config.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: downButton.checked ? 0 : height / 60
+                    shadowVerticalOffset: downButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: 100
@@ -509,8 +501,8 @@ Item {
             MyButton {
                 height: parent.height
                 width: height
-                icon.source: "qrc:/content/icons/fangda.png"
-                icon.color: config.buttonTextColor
+                source: "qrc:/content/icons/fangda.png"
+                iconColor: config.buttonTextColor
                 radius: height / 2
                 channel: control.channel + 4
             }
@@ -518,8 +510,8 @@ Item {
                 height: parent.height
                 width: height
                 anchors.right: parent.right
-                icon.source: "qrc:/content/icons/suoxiao.png"
-                icon.color: config.buttonTextColor
+                source: "qrc:/content/icons/suoxiao.png"
+                iconColor: config.buttonTextColor
                 radius: height / 2
                 channel: control.channel + 5
             }

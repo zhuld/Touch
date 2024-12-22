@@ -6,7 +6,7 @@ import "../Custom/"
 Dialog {
     id: confirmDialog
     property alias dialogTitle: title.text
-    property alias dialogInfomation: info.text
+    property alias dialogInfomation: icon.text
     property alias dialogIcon: icon.icon.source
     signal okPress
 
@@ -14,7 +14,7 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.5
+    width: root.width * 0.6
     height: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
@@ -24,7 +24,6 @@ Dialog {
     }
 
     background: Background {}
-
     enter: Transition {
         NumberAnimation {
             from: 0
@@ -56,29 +55,12 @@ Dialog {
             text: qsTr("标题")
             font.family: alibabaPuHuiTi.font.family
         }
-        Row {
-            width: parent.width
+        IconButton {
+            id: icon
             height: parent.height * 0.4
-            IconButton {
-                id: icon
-                height: parent.height
-                width: height
-                background: Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                }
-                enabled: false
-                icon.color: config.textColor
-            }
-            Text {
-                id: info
-                color: config.textColor
-                height: parent.height
-                font.pixelSize: height * 0.4
-                anchors.top: parent.top
-                verticalAlignment: Text.AlignVCenter
-                font.family: alibabaPuHuiTi.font.family
-            }
+            icon.color: config.textColor
+            font.pixelSize: height * 0.4
+            font.family: alibabaPuHuiTi.font.family
         }
         Row {
             width: parent.width
@@ -89,18 +71,22 @@ Dialog {
                 width: parent.width * 0.47
                 height: parent.height
                 text: "确定"
-                font.pixelSize: height * 0.6
-                onClicked: okPress()
-                //radius: height * 0.1
+                onPressedChanged: {
+                    if (!pressed) {
+                        okPress()
+                    }
+                }
             }
             ColorButton {
                 id: settingCancel
                 width: parent.width * 0.47
                 height: parent.height
                 text: "取消"
-                font.pixelSize: height * 0.6
-                onClicked: confirmDialog.close()
-                //radius: height * 0.1
+                onPressedChanged: {
+                    if (!pressed) {
+                        confirmDialog.close()
+                    }
+                }
             }
         }
     }

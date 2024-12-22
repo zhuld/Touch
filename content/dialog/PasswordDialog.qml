@@ -75,7 +75,7 @@ Dialog {
             id: passwordTitle
             width: parent.width
             height: parent.height * 0.08
-            text: "请输入密码"
+            text: "设置页面需输入密码"
             font.pixelSize: height * 0.7
             wrapMode: Text.Wrap
             horizontalAlignment: Text.AlignLeft
@@ -152,33 +152,34 @@ Dialog {
                     width: (numberPad.width + numberPad.spacing)
                            / numberPad.columns - numberPad.spacing
                     height: width
-                    //radius: width / 2
-                    font.pixelSize: width * 0.5
+                    radius: height / 2
                     text: name
-                    onClicked: {
-                        switch (name) {
-                        case "1":
-                        case "2":
-                        case "3":
-                        case "4":
-                        case "5":
-                        case "6":
-                        case "7":
-                        case "8":
-                        case "9":
-                        case "0":
-                            if (password.text.length < 6) {
-                                password.text += name
+                    onPressedChanged: {
+                        if (!pressed) {
+                            switch (name) {
+                            case "1":
+                            case "2":
+                            case "3":
+                            case "4":
+                            case "5":
+                            case "6":
+                            case "7":
+                            case "8":
+                            case "9":
+                            case "0":
+                                if (password.text.length < 6) {
+                                    password.text += name
+                                }
+                                break
+                            case "\u21E6":
+                                password.text = password.text.slice(
+                                            0, password.text.length - 1)
+                                break
+                            case "\u23CE":
+                                okPressed(password.text)
+                                password.text = ""
+                                break
                             }
-                            break
-                        case "\u21E6":
-                            password.text = password.text.slice(
-                                        0, password.text.length - 1)
-                            break
-                        case "\u23CE":
-                            okPressed(password.text)
-                            password.text = ""
-                            break
                         }
                     }
                 }

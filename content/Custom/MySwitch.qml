@@ -61,7 +61,7 @@ Item {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: config.buttonShadowColor
-                shadowHorizontalOffset: height / 40
+                shadowHorizontalOffset: shadowHeight / 2
                 shadowVerticalOffset: shadowHorizontalOffset
             }
         }

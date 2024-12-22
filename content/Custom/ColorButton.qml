@@ -3,102 +3,97 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 
-Button {
+Item {
     id: control
-    //property alias radius: back.radius
-    property color backColor: config.buttonColor
-    property real initY
-    property bool inited: false
+    property color btnColor: config.buttonColor
+    property alias source: _icon.icon.source
+    property alias iconColor: _icon.icon.color
+    property alias text: _icon.text
+    property alias radius: pathRect.radius
+    property alias pressed: mouseArea.pressed
 
-    implicitHeight: parent.height * 0.9
+    implicitHeight: parent.height
     implicitWidth: parent.width
-    background: Rectangle {
+    Shape {
         id: back
-        anchors.fill: parent
-        Shape {
-            anchors.fill: parent
-            ShapePath {
-                strokeWidth: 0
-                strokeColor: "transparent"
-                PathRectangle {
-                    x: 0
-                    y: 0
-                    radius: back.radius
-                    width: back.width
-                    height: back.height
-                }
-                fillGradient: RadialGradient {
-                    centerX: back.width * 0.5
-                    centerY: back.height * 0.5
-                    centerRadius: back.width
-                    focalX: back.width * 0.25
-                    focalY: back.height * 0.25
-                    GradientStop {
-                        position: 1
-                        color: down | checked ? Qt.lighter(
-                                                    config.buttonCheckedColor,
-                                                    1.3) : Qt.lighter(
-                                                    backColor, 1.4)
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 100
-                            }
-                        }
-                    }
-                    GradientStop {
-                        position: 0
-                        color: down | checked ? Qt.darker(
-                                                    config.buttonCheckedColor,
-                                                    1.2) : Qt.darker(backColor,
-                                                                     1.1)
-                        Behavior on color {
-                            ColorAnimation {
-                                duration: 100
-                            }
-                        }
-                    }
-                }
+        height: parent.height
+        width: parent.width
+        y: mouseArea.pressed ? height / 40 : 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        Behavior on y {
+            NumberAnimation {
+                duration: 100
             }
         }
-
-        radius: height / 4
+        IconButton {
+            id: _icon
+            height: parent.height
+            width: parent.width
+            icon.height: height / 2
+            icon.width: width / 2
+            font.pixelSize: height * 0.4
+        }
+        containsMode: Shape.FillContains
         layer.enabled: true
+        layer.samples: 16
         layer.effect: MultiEffect {
             shadowEnabled: true
             shadowColor: config.buttonShadowColor
-            shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: checked || pressed ? height / 60 : height / 30
+            shadowHorizontalOffset: shadowVerticalOffset
+            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
                 }
             }
         }
-    }
-
-    contentItem: Text {
-        anchors.fill: parent
-        text: control.text
-        font.pixelSize: control.height * 0.4
-        color: config.buttonTextColor
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.family: alibabaPuHuiTi.font.family
-    }
-    onPressedChanged: {
-        if (!inited) {
-            initY = y
-            inited = true
+        ShapePath {
+            strokeWidth: 0
+            strokeColor: "transparent"
+            PathRectangle {
+                id: pathRect
+                x: 0
+                y: 0
+                radius: back.height / 5
+                width: back.width
+                height: back.height
+            }
+            fillGradient: RadialGradient {
+                centerX: back.width * 0.5
+                centerY: back.height * 0.5
+                centerRadius: back.width
+                focalX: back.width * 0.25
+                focalY: back.height * 0.25
+                GradientStop {
+                    position: 0
+                    color: mouseArea.pressed ? Qt.darker(
+                                                   config.buttonCheckedColor,
+                                                   1.4) : Qt.darker(btnColor,
+                                                                    1.4)
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 1
+                    color: mouseArea.pressed ? Qt.lighter(
+                                                   config.buttonCheckedColor,
+                                                   1.2) : Qt.lighter(btnColor,
+                                                                     1.2)
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+            }
         }
-        if (pressed) {
-            y = initY + height / 40
-        } else {
-            y = initY
-        }
-    }
-    Behavior on y {
-        NumberAnimation {
-            duration: 100
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
         }
     }
 }

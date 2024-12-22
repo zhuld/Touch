@@ -19,7 +19,6 @@ Item {
         width: parent.width
         height: parent.height
         anchors.centerIn: parent
-
         drag.target: dragButton
         onPressedChanged: {
             control.pressedChanged(mouseArea.pressed)
@@ -54,7 +53,8 @@ Item {
             id: dragButton
             width: parent.width
             height: parent.height
-            radius: height / 4
+            radius: height / 5
+            y: mouseArea.pressed ? height / 40 : 0
             Shape {
                 anchors.fill: parent
                 ShapePath {
@@ -103,19 +103,20 @@ Item {
             Row {
                 id: iconLabel
                 height: parent.height
-                anchors.horizontalCenter: dragButton.horizontalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 IconButton {
                     id: icon
                     height: parent.height * 0.8
                     icon.color: config.buttonTextColor
-                    anchors.verticalCenter: iconLabel.verticalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    enabled: false
                 }
                 Text {
                     id: label
                     font.pixelSize: parent.height * 0.35
-                    anchors.verticalCenter: iconLabel.verticalCenter
-                    color: config.buttonTextColor
                     font.family: alibabaPuHuiTi.font.family
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: config.buttonTextColor
                 }
                 spacing: 0
             }
@@ -128,7 +129,7 @@ Item {
                 shadowEnabled: true
                 shadowColor: config.buttonShadowColor
                 shadowHorizontalOffset: shadowVerticalOffset / 2
-                shadowVerticalOffset: mouseArea.pressed ? 0 : height / 30
+                shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
                 Behavior on shadowHorizontalOffset {
                     NumberAnimation {
                         duration: 100

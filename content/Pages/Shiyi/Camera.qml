@@ -74,8 +74,6 @@ Item {
                     anchors.horizontalCenter: tv.horizontalCenter
                     icon.source: "qrc:/content/icons/camera.png"
                     icon.color: config.catagoryColor
-                    backColor: "transparent"
-                    hoverEnabled: false
                     rotation: 90
                     Behavior on rotation {
                         NumberAnimation {
@@ -184,7 +182,6 @@ Item {
                                 height: (grid.height + grid.spacing) / positionList.count
                                         * grid.columns - grid.spacing
                                 channel: btnchannel
-                                font.pixelSize: height * 0.6
                                 text: label
                                 opacity: used ? 1 : 0
                                 onCheckedChanged: {

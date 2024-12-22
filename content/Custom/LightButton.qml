@@ -9,7 +9,8 @@ Item {
     property int channel
     property alias text: label.text
     property color lightColor: "khaki"
-    property bool checked
+    property bool checked: root.digital[control.channel] ? true : false
+
     property real initY
     property bool inited: false
 
@@ -77,7 +78,7 @@ Item {
             shadowEnabled: true
             shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: control.checked ? height / 80 : height / 40
+            shadowVerticalOffset: control.checked ? shadowHeight / 2 : shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -106,7 +107,6 @@ Item {
             }
         }
     }
-    checked: root.digital[control.channel] ? root.digital[control.channel] : 0
     onCheckedChanged: {
         if (!inited) {
             initY = y

@@ -4,8 +4,8 @@ Item {
     id: connectPage
     anchors.fill: parent
     anchors.margins: width * 0.02
-    property alias socketAnimation: socketAnimation
 
+    //property alias socketAnimation: socketAnimation
     Column {
         width: parent.width
         height: parent.height
@@ -67,31 +67,30 @@ Item {
     Rectangle {
         id: socketStatusProgress
         property real socketValue: 1
-        y: parent.height - 3
+        y: parent.height - height
         width: parent.width * socketValue
-        height: 3
-        color: "red"
+        height: 2
+        color: config.buttonCheckedColor
         NumberAnimation {
             id: socketAnimation
             target: socketStatusProgress
             property: "socketValue"
-            from: 1
-            to: 0
-            duration: 3 * 1000
-        }
-        Connections {
-            target: socketAnimation
-            onFinished: {
+            from: 0
+            to: 1
+            duration: 8000
+            running: true
+            onStarted: {
+                tcpClient.disconnectFromServer()
                 if (settings.demoMode) {
                     tcpClient.connectToServer("127.0.0.1", 41793)
                 } else {
                     tcpClient.connectToServer(settings.ipAddress,
                                               settings.ipPort)
                 }
-                socketStatusProgress.socketValue = 1
+            }
+            onFinished: {
+                socketAnimation.start()
             }
         }
     }
-
-    Component.onCompleted: socketAnimation.start()
 }

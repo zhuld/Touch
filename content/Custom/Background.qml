@@ -6,7 +6,7 @@ Rectangle {
     gradient: Gradient {
         GradientStop {
             position: 0.0
-            color: Qt.lighter(config.backgroundColor, 1.1)
+            color: Qt.lighter(config.backgroundColor, 1.3)
         }
         GradientStop {
             position: 0.8
@@ -14,18 +14,4 @@ Rectangle {
         }
     }
     radius: height / 20
-    layer.enabled: true
-    // layer.effect: MultiEffect {
-    //     brightness: 0.2
-    //     saturation: 0.1
-    //     blurEnabled: true
-    //     blurMax: height / 40
-    //     blur: 1.0
-    // }
-    // layer.effect: MultiEffect {
-    //     shadowEnabled: true
-    //     shadowColor: buttonShadowColor
-    //     shadowHorizontalOffset: height / 60
-    //     shadowVerticalOffset: shadowHorizontalOffset
-    // }
 }

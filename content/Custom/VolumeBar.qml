@@ -91,7 +91,7 @@ Item {
                 layer.effect: MultiEffect {
                     shadowEnabled: true
                     shadowColor: config.buttonShadowColor
-                    shadowHorizontalOffset: parent.pressed ? height / 30 : height / 15
+                    shadowHorizontalOffset: parent.pressed ? shadowHeight / 2 : shadowHeight
                     shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
@@ -240,12 +240,12 @@ Item {
                 height: parent.height
                 width: parent.width * 0.9
                 anchors.horizontalCenter: parent.horizontalCenter
-                icon.source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
-                icon.color: root.digital[control.muteChannel] ? config.volumeRedColor : config.buttonTextColor
+                source: root.digital[control.muteChannel] ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
+                iconColor: root.digital[control.muteChannel] ? config.volumeRedColor : config.buttonTextColor
                 channel: muteChannel
                 disEnableChannel: control.disEnableChannel
                 text: slider.value
-                font.pixelSize: height * 0.35
+                //font.pixelSize: height * 0.35
                 Material.accent: config.volumeRedColor
                 visible: control.muteBtn
             }

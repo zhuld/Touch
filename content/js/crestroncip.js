@@ -14,7 +14,7 @@ const op_Server_Pong = 0x0E // 回复 0E 00 02 00 00
 
 function clientMessageCheck(message) {
     let index = 0
-    //console.log("client: ", toHexString(message," "))
+    //console.log("client: ", toHexString(message, " "))
     while (index < message.length) {
         let payloadType = message[index]
         let payloadLength = message[index + 2]
@@ -35,7 +35,8 @@ function clientMessageCheck(message) {
             }
             break
         case op_Server_IPID:
-            if (toHexString(payload, "") === "0000001F") {
+            if (toHexString(payload, "") === "0000001F" || toHexString(
+                        payload, "") === "00000003") {
                 recivedAppendList(message, index, payloadLength,
                                   "服务器确认IPID：" + settings.ipId + "，注册成功")
                 tcpClient.sendData(
@@ -47,6 +48,7 @@ function clientMessageCheck(message) {
                                 op_Join,
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])),
                             "发送查询指令")
+                root.running = true
             } else if (toHexString(payload, "") === "FFFF02") {
                 recivedAppendList(message, index, payloadLength, "服务器注册失败")
                 //console.log("registration failed")
@@ -236,7 +238,7 @@ function pong() {
     tcpServer.sendData(cipmessage(op_Server_Pong, new Uint8Array([0x00, 0x00])))
 }
 
-function accept() {
+function serverAccept() {
     tcpServer.sendData(cipmessage(op_Server_Accept, new Uint8Array([0x02])))
 }
 

@@ -30,21 +30,19 @@ qt6_add_qml_module(content
         Custom/InputButton.qml
         Custom/Output.qml
         Custom/ColorButton.qml
-        Custom/DPad.qml
         Custom/VolumeBar.qml
         Custom/MyTabButton.qml
         Custom/MySwitch.qml
-        Custom/LightSwitch.qml
         Custom/Category.qml
         Custom/Background.qml
         Custom/ColorSwitch.qml
         Custom/LightButton.qml
         Custom/IconButton.qml
         Custom/ControlPad.qml
+        Custom/VButton.qml
         Dialog/PasswordDialog.qml
         Dialog/SettingDialog.qml
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
         Js/crestroncip.js
-        QML_FILES Custom/VButton.qml
 )

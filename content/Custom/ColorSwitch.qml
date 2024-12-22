@@ -37,7 +37,6 @@ Switch {
                     duration: 300
                 }
             }
-
             Text {
                 anchors.centerIn: parent
                 text: checked ? "✓" : ""
