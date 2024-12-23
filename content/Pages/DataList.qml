@@ -28,64 +28,59 @@ Item {
                     }
                 }
             }
-            Rectangle {
+            ScrollView {
+                id: scrollView
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-                ScrollView {
-                    id: scrollView
-                    width: parent.width
-                    height: parent.height
-                    clip: true
-                    ListView {
+                clip: true
+                ListView {
+                    width: scrollView.width
+                    model: root.listModel
+                    delegate: Rectangle {
+                        id: dataRect
                         width: scrollView.width
-                        model: root.listModel
-                        delegate: Rectangle {
-                            id: dataRect
+                        height: scrollView.height * 0.05
+                        color: model.direction
+                               === "发" ? config.buttonColor : config.buttonCheckedColor
+                        Row {
                             width: scrollView.width
-                            height: scrollView.height * 0.05
-                            color: model.direction
-                                   === "发" ? config.buttonColor : config.buttonCheckedColor
-                            Row {
-                                width: scrollView.width
-                                spacing: width * 0.01
-                                Text {
-                                    text: model.time
-                                    width: parent.width * 0.09
-                                    height: dataRect.height * 0.8
-                                    color: config.buttonTextColor
-                                    font.pixelSize: height
-                                    font.family: alibabaPuHuiTi.font.family
-                                }
+                            spacing: width * 0.01
+                            Text {
+                                text: model.time
+                                width: parent.width * 0.09
+                                height: dataRect.height * 0.8
+                                color: config.buttonTextColor
+                                font.pixelSize: height
+                                font.family: alibabaPuHuiTi.font.family
+                            }
 
-                                Text {
-                                    text: model.direction
-                                    width: parent.width * 0.02
-                                    height: dataRect.height * 0.8
-                                    color: config.buttonTextColor
-                                    font.pixelSize: height
-                                    font.family: alibabaPuHuiTi.font.family
-                                }
+                            Text {
+                                text: model.direction
+                                width: parent.width * 0.02
+                                height: dataRect.height * 0.8
+                                color: config.buttonTextColor
+                                font.pixelSize: height
+                                font.family: alibabaPuHuiTi.font.family
+                            }
 
-                                Text {
-                                    text: model.data
-                                    width: parent.width * 0.56
-                                    height: dataRect.height * 0.8
-                                    color: config.buttonTextColor
-                                    font.pixelSize: height
-                                    font.family: sourceCodePro.font.family
-                                }
-                                Text {
-                                    text: model.detail
-                                    width: parent.width * 0.30
-                                    height: dataRect.height * 0.8
-                                    color: config.buttonTextColor
-                                    font.pixelSize: height
-                                    font.family: alibabaPuHuiTi.font.family
-                                }
+                            Text {
+                                text: model.data
+                                width: parent.width * 0.56
+                                height: dataRect.height * 0.8
+                                color: config.buttonTextColor
+                                font.pixelSize: height
+                                font.family: sourceCodePro.font.family
+                            }
+                            Text {
+                                text: model.detail
+                                width: parent.width * 0.30
+                                height: dataRect.height * 0.8
+                                color: config.buttonTextColor
+                                font.pixelSize: height
+                                font.family: alibabaPuHuiTi.font.family
                             }
                         }
                     }

@@ -13,13 +13,12 @@ Item {
         Category {
             widthRatio: 0.6
             lable: qsTr("摄像机控制")
-            Rectangle {
+            Item {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
                 ControlPad {
                     id: dpadControl
                     width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
@@ -32,62 +31,57 @@ Item {
         Category {
             widthRatio: 0.4
             lable: qsTr("预置位")
-            Rectangle {
+            Grid {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-                Grid {
-                    width: parent.width
-                    height: parent.height
-                    columns: Math.ceil(cameraList.count / 3)
-                    spacing: height * 0.1
-                    Repeater {
-                        model: ListModel {
-                            id: cameraList
-                            ListElement {
-                                btnchannel: 58
-                                name: "正常"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
-                            ListElement {
-                                btnchannel: 59
-                                name: "全景"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
-                            ListElement {
-                                btnchannel: 60
-                                name: "特写"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
-                            ListElement {
-                                btnchannel: 61
-                                name: "白板"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
-                            ListElement {
-                                btnchannel: 62
-                                name: "预置位5"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
-                            ListElement {
-                                btnchannel: 63
-                                name: "预置位6"
-                                iconUrl: "qrc:/content/icons/shexiangtou.png"
-                            }
+                columns: Math.ceil(cameraList.count / 3)
+                spacing: height * 0.1
+                Repeater {
+                    model: ListModel {
+                        id: cameraList
+                        ListElement {
+                            btnchannel: 58
+                            name: "正常"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
                         }
-                        delegate: VButton {
-                            required property string name
-                            required property int btnchannel
-                            required property string iconUrl
-                            width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                            height: (parent.height + parent.spacing) / 3 - parent.spacing
-                            text: name
-                            channel: btnchannel
-                            source: iconUrl
+                        ListElement {
+                            btnchannel: 59
+                            name: "全景"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
                         }
+                        ListElement {
+                            btnchannel: 60
+                            name: "特写"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
+                        }
+                        ListElement {
+                            btnchannel: 61
+                            name: "白板"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
+                        }
+                        ListElement {
+                            btnchannel: 62
+                            name: "预置位5"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
+                        }
+                        ListElement {
+                            btnchannel: 63
+                            name: "预置位6"
+                            iconUrl: "qrc:/content/icons/shexiangtou.png"
+                        }
+                    }
+                    delegate: VButton {
+                        required property string name
+                        required property int btnchannel
+                        required property string iconUrl
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        text: name
+                        channel: btnchannel
+                        source: iconUrl
                     }
                 }
             }

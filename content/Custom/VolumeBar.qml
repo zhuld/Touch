@@ -24,9 +24,8 @@ Item {
     enabled: root.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
-    Rectangle {
+    Item {
         anchors.fill: parent
-        color: "transparent"
         Slider {
             id: slider
             height: parent.height * 0.92
@@ -230,12 +229,10 @@ Item {
                 }
             }
         }
-
-        Rectangle {
+        Item {
             height: parent.height * 0.11
             width: parent.width
             anchors.bottom: parent.bottom
-            color: "transparent"
             MyButton {
                 height: parent.height
                 width: parent.width * 0.9

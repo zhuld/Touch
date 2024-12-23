@@ -8,8 +8,9 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        Content.qml
+        ContentV.qml
         Connect.qml
+        ContentH.qml
         Config/ShiyiMZ.qml
         Config/Haishi410.qml
         Pages/Shiyi/System.qml
@@ -22,7 +23,6 @@ qt6_add_qml_module(content
         Pages/Haishi/Camera.qml
         Pages/Haishi/Remote.qml
         Pages/Haishi/LED.qml
-        Pages/FontList.qml
         Pages/TitleBar.qml
         Pages/DataList.qml
         Pages/Test.qml
@@ -40,6 +40,7 @@ qt6_add_qml_module(content
         Custom/IconButton.qml
         Custom/ControlPad.qml
         Custom/VButton.qml
+        Custom/IconLabel.qml
         Dialog/PasswordDialog.qml
         Dialog/SettingDialog.qml
         Dialog/ConfirmDialog.qml

@@ -69,7 +69,7 @@ Item {
         property real socketValue: 1
         y: parent.height - height
         width: parent.width * socketValue
-        height: 2
+        height: 4
         color: config.buttonCheckedColor
         NumberAnimation {
             id: socketAnimation

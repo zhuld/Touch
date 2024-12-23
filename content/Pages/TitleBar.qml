@@ -6,9 +6,8 @@ import QtQuick.Shapes
 import "../Custom"
 import "../Dialog"
 
-Rectangle {
+Item {
     id: control
-    color: "transparent"
 
     MouseArea {
         property var clickPosition: Qt.point(0, 0)
@@ -85,30 +84,27 @@ Rectangle {
             Material.accent: config.buttonCheckedColor
             visible: Qt.platform.os === "windows" ? true : false
         }
-
         IconButton {
             id: setup
             height: parent.height
             width: height
-            anchors.verticalCenter: parent.verticalCenter
+            //anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/config.png"
             onClicked: {
                 passwordDialog.open()
             }
-            hoverEnabled: true
         }
         IconButton {
             id: close
             height: parent.height
             width: height
-            anchors.verticalCenter: parent.verticalCenter
+            //anchors.verticalCenter: parent.verticalCenter
             icon.source: "qrc:/content/icons/close.png"
             backColor: config.buttonRedColor
             onClicked: {
                 closeDialog.open()
             }
             visible: Qt.platform.os === "windows" ? true : false
-            hoverEnabled: true
         }
     }
 }

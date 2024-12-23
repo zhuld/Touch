@@ -19,7 +19,7 @@ Item {
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: parent.height * 0.05
+                spacing: height * 0.05
                 Repeater {
                     id: outputRepeater
                     model: ListModel {
@@ -57,106 +57,96 @@ Item {
                 }
             }
         }
-
         Category {
             widthRatio: 0.65
             lable: qsTr("输入信号")
-            Rectangle {
+            Grid {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-                Grid {
-                    width: parent.width
-                    height: parent.height * 0.9
-                    columns: 2
-                    spacing: height * 0.05
-                    Repeater {
-                        model: ListModel {
-                            id: inputList
-                            ListElement {
-                                name: qsTr("外网电脑")
-                                inputChannel: 1
-                                bgColor: "royalblue"
-                                source: "qrc:/content/icons/zhuji.png"
-                            }
-                            ListElement {
-                                name: qsTr("内网电脑")
-                                inputChannel: 2
-                                bgColor: "darkorange"
-                                source: "qrc:/content/icons/zhuji.png"
-                            }
-                            ListElement {
-                                name: qsTr("视频会议")
-                                inputChannel: 3
-                                bgColor: "forestgreen"
-                                source: "qrc:/content/icons/shipinhuiyi.png"
-                            }
-                            ListElement {
-                                name: qsTr("无线投屏")
-                                inputChannel: 4
-                                bgColor: "violet"
-                                source: "qrc:/content/icons/wuxiantouping.png"
-                            }
-                            ListElement {
-                                name: qsTr("摄像机")
-                                inputChannel: 5
-                                bgColor: "indianred"
-                                source: "qrc:/content/icons/shexiangji.png"
-                            }
-                            ListElement {
-                                name: qsTr("预留输入1")
-                                inputChannel: 6
-                                bgColor: "cadetblue"
-                                source: "qrc:/content/icons/HDMIjiekou.png"
-                            }
-                            ListElement {
-                                name: qsTr("预留输入2")
-                                inputChannel: 7
-                                bgColor: "slateblue"
-                                source: "qrc:/content/icons/HDMIjiekou.png"
-                            }
-                            ListElement {
-                                name: qsTr("预留输入3")
-                                inputChannel: 8
-                                bgColor: "lightslategrey"
-                                source: "qrc:/content/icons/HDMIjiekou.png"
-                            }
+                columns: Math.ceil(inputList.count / 4)
+                spacing: height * 0.05
+                Repeater {
+                    model: ListModel {
+                        id: inputList
+                        ListElement {
+                            name: qsTr("外网电脑")
+                            inputChannel: 1
+                            bgColor: "royalblue"
+                            source: "qrc:/content/icons/zhuji.png"
                         }
-                        delegate: InputButton {
-                            required property string name
-                            required property int inputChannel
-                            required property color bgColor
-                            required property string source
-                            required property int index
-
-                            width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                            height: (parent.height + parent.spacing) / 4 - parent.spacing
-                            btnColor: bgColor
-                            textInput: name
-                            input: inputChannel
-                            iconSource: source
-                            onPressedChanged: pressed => {
-                                                  for (var i = 0; i < outputList.count; ++i) {
-                                                      if (outputRepeater.itemAt(
-                                                              i).disable === inputChannel) {
-                                                          outputRepeater.itemAt(
-                                                              i).enabled = !pressed
-                                                      }
+                        ListElement {
+                            name: qsTr("内网电脑")
+                            inputChannel: 2
+                            bgColor: "darkorange"
+                            source: "qrc:/content/icons/zhuji.png"
+                        }
+                        ListElement {
+                            name: qsTr("视频会议")
+                            inputChannel: 3
+                            bgColor: "forestgreen"
+                            source: "qrc:/content/icons/shipinhuiyi.png"
+                        }
+                        ListElement {
+                            name: qsTr("无线投屏")
+                            inputChannel: 4
+                            bgColor: "violet"
+                            source: "qrc:/content/icons/wuxiantouping.png"
+                        }
+                        ListElement {
+                            name: qsTr("摄像机")
+                            inputChannel: 5
+                            bgColor: "indianred"
+                            source: "qrc:/content/icons/shexiangji.png"
+                        }
+                        ListElement {
+                            name: qsTr("预留输入1")
+                            inputChannel: 6
+                            bgColor: "cadetblue"
+                            source: "qrc:/content/icons/HDMIjiekou.png"
+                        }
+                        ListElement {
+                            name: qsTr("预留输入2")
+                            inputChannel: 7
+                            bgColor: "slateblue"
+                            source: "qrc:/content/icons/HDMIjiekou.png"
+                        }
+                        ListElement {
+                            name: qsTr("预留输入3")
+                            inputChannel: 8
+                            bgColor: "lightslategrey"
+                            source: "qrc:/content/icons/HDMIjiekou.png"
+                        }
+                    }
+                    delegate: InputButton {
+                        required property string name
+                        required property int inputChannel
+                        required property color bgColor
+                        required property string source
+                        required property int index
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height * 0.9 + parent.spacing) / 4 - parent.spacing
+                        btnColor: bgColor
+                        textInput: name
+                        input: inputChannel
+                        iconSource: source
+                        onPressedChanged: pressed => {
+                                              for (var i = 0; i < outputList.count; ++i) {
+                                                  if (outputRepeater.itemAt(
+                                                          i).disable === inputChannel) {
+                                                      outputRepeater.itemAt(
+                                                          i).enabled = !pressed
                                                   }
                                               }
-                        }
+                                          }
                     }
                 }
                 Text {
-                    width: parent.width
-                    height: parent.height * 0.05
-                    font.pixelSize: height
+                    font.pixelSize: parent.height * 0.05
                     color: config.catagoryColor
                     horizontalAlignment: Text.AlignRight
-                    anchors.bottom: parent.bottom
                     text: qsTr("拖拽输入信号到输出")
                     font.family: alibabaPuHuiTi.font.family
                 }

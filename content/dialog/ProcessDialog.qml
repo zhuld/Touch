@@ -42,10 +42,9 @@ Dialog {
         }
     }
 
-    Rectangle {
+    Item {
         anchors.fill: parent
         anchors.margins: height * 0.05
-        color: "transparent"
         Text {
             id: title
             width: parent.width

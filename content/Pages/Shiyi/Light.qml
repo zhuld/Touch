@@ -15,56 +15,50 @@ Item {
         Category {
             widthRatio: 0.7
             lable: qsTr("单独控制")
-            Rectangle {
+            Grid {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-                Grid {
-                    id: grid
-                    width: parent.width
-                    height: parent.height
-                    columns: 3
-                    spacing: height * 0.05
-                    Repeater {
-                        model: ListModel {
-                            id: lightList
-                            ListElement {
-                                name: qsTr("左吸顶灯")
-                                btnChannel: 61
-                            }
-                            ListElement {
-                                name: qsTr("右吸顶灯")
-                                btnChannel: 62
-                            }
-                            ListElement {
-                                name: qsTr("前筒灯")
-                                btnChannel: 63
-                            }
-                            ListElement {
-                                name: qsTr("四周筒灯")
-                                btnChannel: 64
-                            }
-                            ListElement {
-                                name: qsTr("灯带")
-                                btnChannel: 65
-                            }
-                            ListElement {
-                                name: qsTr("其他")
-                                btnChannel: 66
-                            }
+                columns: Math.ceil(lightList.count / 2)
+                spacing: height * 0.05
+                Repeater {
+                    model: ListModel {
+                        id: lightList
+                        ListElement {
+                            name: qsTr("左吸顶灯")
+                            btnChannel: 61
                         }
-                        delegate: LightButton {
-                            required property int btnChannel
-                            required property string name
-                            text: name
-                            channel: btnChannel
-                            width: (grid.width + grid.spacing) / grid.columns - grid.spacing
-                            height: (grid.height + grid.spacing) / lightList.count
-                                    * grid.columns - grid.spacing
+                        ListElement {
+                            name: qsTr("右吸顶灯")
+                            btnChannel: 62
                         }
+                        ListElement {
+                            name: qsTr("前筒灯")
+                            btnChannel: 63
+                        }
+                        ListElement {
+                            name: qsTr("四周筒灯")
+                            btnChannel: 64
+                        }
+                        ListElement {
+                            name: qsTr("灯带")
+                            btnChannel: 65
+                        }
+                        ListElement {
+                            name: qsTr("其他")
+                            btnChannel: 66
+                        }
+                    }
+                    delegate: LightButton {
+                        required property int btnChannel
+                        required property string name
+                        text: name
+                        channel: btnChannel
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / lightList.count
+                                * parent.columns - parent.spacing
                     }
                 }
             }
@@ -79,7 +73,7 @@ Item {
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                spacing: parent.height * 0.05
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: lightModeList

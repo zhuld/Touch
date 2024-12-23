@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
+import QtMultimedia
 
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
@@ -38,13 +39,10 @@ Item {
                 duration: 100
             }
         }
-        IconButton {
+        IconLabel {
             id: _icon
-            height: parent.height * 0.9
-            width: parent.width
-            anchors.verticalCenter: parent.verticalCenter
-            icon.height: height / 2
-            icon.width: width / 2
+            height: parent.height * 0.8
+            anchors.centerIn: parent
         }
 
         containsMode: Shape.FillContains
@@ -109,6 +107,7 @@ Item {
             hoverEnabled: true
             onPressedChanged: {
                 if (pressed) {
+                    playSound.play()
                     if (!confirm) {
                         CrestronCIP.push(control.channel)
                     } else {
@@ -150,5 +149,9 @@ Item {
         color: config.buttonTextColor
         font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
+    }
+    SoundEffect {
+        id: playSound
+        source: "qrc:/content/sound/click.wav"
     }
 }

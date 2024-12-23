@@ -16,40 +16,25 @@ Item {
         spacing: width * 0.02
         Category {
             lable: qsTr("测试")
-            Rectangle {
+            widthRatio: 0.5
+            Column {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-                VButton {
-                    width: 600
-                    height: 600
-                    text: "测试"
-                    source: "qrc:/content/icons/huiyizanzhuyantao.png"
-                    channel: 33
-                    //confirm: true
-                }
-                VButton {
-                    x: 601
-                    width: 600
-                    height: 600
-                    text: "测试2"
-                    source: "qrc:/content/icons/huiyizanzhuyantao.png"
-                    channel: 34
-                    //confirm: true
-                }
-                MyButton {
-                    y: 650
-                    width: 600
-                    height: 300
-                    text: "测试3"
-                    source: "qrc:/content/icons/huiyizanzhuyantao.png"
-                    channel: 35
-                    //confirm: true
+                spacing: height * 0.05
+                IconLabel {
+                    height: 100
+                    icon.source: "qrc:/content/icons/quankai.png"
+                    text: "IconLabel1"
+                    display: AbstractButton.TextUnderIcon
                 }
             }
+        }
+        Category {
+            lable: qsTr("测试")
+            widthRatio: 0.5
         }
     }
 }

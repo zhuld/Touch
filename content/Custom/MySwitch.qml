@@ -12,10 +12,10 @@ Item {
     implicitWidth: height * 2
     implicitHeight: parent.height
 
-    Rectangle {
+    Item {
         id: backRect
         anchors.fill: parent
-        color: "transparent"
+
         Rectangle {
             width: parent.width * 0.7
             height: parent.height / 2

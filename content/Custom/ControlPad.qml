@@ -25,11 +25,10 @@ Item {
     Column {
         anchors.fill: parent
         spacing: width * 0.05
-        Rectangle {
+        Item {
             width: parent.width
             height: width
-            color: "transparent"
-
+            //color: "transparent"
             Shape {
                 id: upButton
                 property int channel: control.channel
@@ -42,13 +41,10 @@ Item {
                         duration: 100
                     }
                 }
-                IconButton {
-                    height: parent.height * 0.2
+                IconLabel {
+                    height: parent.height * 0.3
                     width: height
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.top
-                    icon.height: height
-                    icon.width: width
                     icon.source: "qrc:/content/icons/up.png"
                     Text {
                         height: parent.height
@@ -158,14 +154,11 @@ Item {
                         duration: 100
                     }
                 }
-                IconButton {
-                    height: parent.height * 0.2
+                IconLabel {
+                    height: parent.height * 0.3
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
-                    icon.height: height
-                    icon.width: width
                     icon.source: "qrc:/content/icons/left.png"
-                    anchors.left: parent.left
                     Text {
                         height: parent.height
                         text: root.settings.showChannel ? "D" + leftButton.channel : ""
@@ -274,12 +267,10 @@ Item {
                         duration: 100
                     }
                 }
-                IconButton {
-                    height: parent.height * 0.2
+                IconLabel {
+                    height: parent.height * 0.3
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
-                    icon.height: height
-                    icon.width: width
                     anchors.right: parent.right
                     icon.source: "qrc:/content/icons/right.png"
                     Text {
@@ -390,12 +381,10 @@ Item {
                         duration: 100
                     }
                 }
-                IconButton {
-                    height: parent.height * 0.2
+                IconLabel {
+                    height: parent.height * 0.3
                     width: height
                     anchors.horizontalCenter: parent.horizontalCenter
-                    icon.height: height
-                    icon.width: width
                     anchors.bottom: parent.bottom
                     icon.source: "qrc:/content/icons/down.png"
                     Text {
@@ -494,10 +483,10 @@ Item {
                 }
             }
         }
-        Rectangle {
+        Row {
             height: parent.width * 0.25
             width: parent.width
-            color: "transparent"
+            spacing: width - 2 * height
             MyButton {
                 height: parent.height
                 width: height
@@ -509,7 +498,6 @@ Item {
             MyButton {
                 height: parent.height
                 width: height
-                anchors.right: parent.right
                 source: "qrc:/content/icons/suoxiao.png"
                 iconColor: config.buttonTextColor
                 radius: height / 2

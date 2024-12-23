@@ -24,7 +24,7 @@ Item {
         shadowEnabled: true
         shadowColor: dropContainer.containsDrag ? control.dragShadowColor : config.buttonShadowColor
         shadowHorizontalOffset: height / 60
-        shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight*2 : shadowHeight/2
+        shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight * 2 : shadowHeight / 2
         Behavior on shadowColor {
             ColorAnimation {
                 duration: 300
@@ -112,25 +112,16 @@ Item {
         opacity: 0.1
         font.family: alibabaPuHuiTi.font.family
     }
-    IconButton {
+    IconLabel {
         id: textInput
         anchors.bottom: parent.bottom
-        height: parent.height * 0.65
-        icon.color: config.buttonTextColor
+        height: parent.height * 0.6
         icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
                                                                     input - 1).source : ""
-        Behavior on text {
-            PropertyAnimation {
-                target: textInput
-                easing.type: Easing.OutCubic
-                properties: "x"
-                from: 0
-                to: control.width * 0.3
-                duration: 500
-            }
-        }
         text: input > 0 & input <= inputListMode.count ? inputListMode.get(
                                                              input - 1).name : null
+        anchors.right: parent.right
+        anchors.rightMargin: inputText.width
     }
     Text {
         id: inputText
@@ -153,7 +144,6 @@ Item {
         font.pixelSize: channelSize
         font.family: alibabaPuHuiTi.font.family
     }
-
     DropArea {
         id: dropContainer
         anchors.fill: parent

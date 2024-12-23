@@ -39,13 +39,10 @@ Item {
                 duration: 100
             }
         }
-        IconButton {
+        IconLabel {
             id: _icon
             height: parent.height
-            width: height
-            icon.height: height / 2
-            icon.width: width / 2
-            icon.source: "qrc:/content/icons/up.png"
+            width: parent.width
         }
         containsMode: Shape.FillContains
         layer.enabled: true

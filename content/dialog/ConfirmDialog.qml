@@ -55,12 +55,9 @@ Dialog {
             text: qsTr("标题")
             font.family: alibabaPuHuiTi.font.family
         }
-        IconButton {
+        IconLabel {
             id: icon
             height: parent.height * 0.4
-            icon.color: config.textColor
-            font.pixelSize: height * 0.4
-            font.family: alibabaPuHuiTi.font.family
         }
         Row {
             width: parent.width

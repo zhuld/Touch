@@ -25,13 +25,10 @@ Item {
                 duration: 100
             }
         }
-        IconButton {
+        IconLabel {
             id: _icon
             height: parent.height
             width: parent.width
-            icon.height: height / 2
-            icon.width: width / 2
-            font.pixelSize: height * 0.4
         }
         containsMode: Shape.FillContains
         layer.enabled: true

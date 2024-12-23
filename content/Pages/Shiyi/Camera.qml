@@ -13,13 +13,12 @@ Item {
         Category {
             widthRatio: 0.5
             lable: qsTr("摄像机控制")
-            Rectangle {
+            Item {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
                 ControlPad {
                     id: dpadControl
                     width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
@@ -49,14 +48,12 @@ Item {
                     font.family: alibabaPuHuiTi.font.family
                 }
             }
-            Rectangle {
+            Item {
                 anchors.fill: parent
                 anchors.topMargin: parent.height * 0.15
                 anchors.bottomMargin: parent.height * 0.04
                 anchors.leftMargin: parent.height * 0.04
                 anchors.rightMargin: anchors.leftMargin
-                color: "transparent"
-
                 Rectangle {
                     id: tv
                     width: parent.width * 0.6
@@ -66,12 +63,11 @@ Item {
                     border.width: width * 0.01
                     color: "transparent"
                 }
-                IconButton {
+                IconLabel {
                     id: camera
                     height: tv.height * 8
                     width: camera.height
-                    anchors.top: tv.top
-                    anchors.horizontalCenter: tv.horizontalCenter
+                    anchors.centerIn: tv
                     icon.source: "qrc:/content/icons/camera.png"
                     icon.color: config.catagoryColor
                     rotation: 90
@@ -83,7 +79,7 @@ Item {
                 }
                 Rectangle {
                     id: table
-                    width: parent.width * 0.7
+                    width: parent.width * 0.9
                     height: parent.height * 0.9
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
@@ -103,7 +99,7 @@ Item {
                                 ListElement {
                                     cameraRotation: 135
                                     btnchannel: 39
-                                    label: "9"
+                                    label: "8"
                                     used: true
                                 }
                                 ListElement {
@@ -112,13 +108,13 @@ Item {
                                 ListElement {
                                     cameraRotation: 45
                                     btnchannel: 38
-                                    label: "8"
+                                    label: "7"
                                     used: true
                                 }
                                 ListElement {
                                     cameraRotation: 120
                                     btnchannel: 37
-                                    label: "7"
+                                    label: "6"
                                     used: true
                                 }
                                 ListElement {
@@ -127,13 +123,13 @@ Item {
                                 ListElement {
                                     cameraRotation: 60
                                     btnchannel: 36
-                                    label: "6"
+                                    label: "5"
                                     used: true
                                 }
                                 ListElement {
                                     cameraRotation: 111
                                     btnchannel: 35
-                                    label: "5"
+                                    label: "4"
                                     used: true
                                 }
                                 ListElement {
@@ -142,35 +138,26 @@ Item {
                                 ListElement {
                                     cameraRotation: 69
                                     btnchannel: 34
-                                    label: "4"
+                                    label: "3"
                                     used: true
                                 }
                                 ListElement {
                                     cameraRotation: 105
                                     btnchannel: 33
-                                    label: "3"
-                                    used: true
-                                }
-                                ListElement {
-                                    used: false
-                                }
-                                ListElement {
-                                    cameraRotation: 75
-                                    btnchannel: 32
                                     label: "2"
                                     used: true
                                 }
                                 ListElement {
-                                    used: false
-                                }
-                                ListElement {
                                     cameraRotation: 90
                                     btnchannel: 31
-                                    label: "1"
+                                    label: ""
                                     used: true
                                 }
                                 ListElement {
-                                    used: false
+                                    cameraRotation: 75
+                                    btnchannel: 32
+                                    label: "1"
+                                    used: true
                                 }
                             }
                             delegate: MyButton {
@@ -187,6 +174,8 @@ Item {
                                 onCheckedChanged: {
                                     if (checked) {
                                         camera.rotation = cameraRotation
+                                    } else {
+                                        camera.rotation = 90
                                     }
                                 }
                                 Component.onCompleted: {

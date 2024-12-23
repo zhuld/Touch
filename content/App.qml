@@ -16,7 +16,7 @@ import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 Window {
     id: root
 
-    ShiyiMZ {
+    Haishi410 {
         id: config
     }
 
@@ -61,7 +61,6 @@ Window {
         id: background
         anchors.fill: parent
         color: config.backgroundColor
-        //clip: true
         Image {
             anchors.fill: parent
             source: config.background
@@ -71,13 +70,13 @@ Window {
                     duration: 100
                 }
             }
-            layer.enabled: true
-            layer.effect: OpacityMask {
-                maskSource: Rectangle {
-                    width: background.width
-                    height: background.height
-                    radius: background.radius
-                }
+        }
+        layer.enabled: true
+        layer.effect: OpacityMask {
+            maskSource: Rectangle {
+                width: background.width
+                height: background.height
+                radius: background.radius
             }
         }
         radius: settings.fullscreen
@@ -180,7 +179,11 @@ Window {
         onTriggered: CrestronCIP.ping()
         onRunningChanged: {
             if (running) {
-                pageLoader.setSource("qrc:/qt/qml/content/Content.qml")
+                if (config.tabOnBottom) {
+                    pageLoader.setSource("qrc:/qt/qml/content/ContentH.qml")
+                } else {
+                    pageLoader.setSource("qrc:/qt/qml/content/ContentV.qml")
+                }
             } else {
                 pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
             }

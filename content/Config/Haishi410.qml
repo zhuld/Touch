@@ -10,12 +10,13 @@ Item {
     readonly property int cipPort: 41794
     readonly property int ipId: 8
     readonly property int processDialogChannel: 1
+    readonly property bool tabOnBottom: true
 
     property color buttonColor: settings.darkTheme ? "#16417C" : "skyblue"
     property color buttonCheckedColor: settings.darkTheme ? "darkorange" : "darkorange"
     property color catagoryColor: settings.darkTheme ? "#1A5A94" : "silver"
-    property color backgroundColor: settings.darkTheme ? "#02112C" : "lightblue"
-    property color buttonTextColor: settings.darkTheme ? "gainsboro" : "#252525"
+    property color backgroundColor: settings.darkTheme ? "midnightblue" : "lightblue"
+    property color buttonTextColor: settings.darkTheme ? "floralwhite" : "#252525"
     property color textColor: settings.darkTheme ? "lightskyblue" : "#252525" //文字颜色
     property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
 
@@ -76,12 +77,5 @@ Item {
             test: true
             pageChannel: 18
         }
-        // ListElement {
-        //     name: qsTr("字体")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/FontList.qml"
-        //     iconUrl: "qrc:/content/icons/test.png"
-        //     test: true
-        //     pageChannel: 19
-        // }
     }
 }

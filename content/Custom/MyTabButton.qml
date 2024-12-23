@@ -13,7 +13,7 @@ Item {
     property color btnColor: config.buttonColor
 
     property alias source: _icon.icon.source
-    property alias text: textLabel.text
+    property alias text: _icon.text
     property bool checked: root.digital[control.channel] ? true : false
 
     implicitHeight: parent.height
@@ -38,25 +38,12 @@ Item {
                 duration: 100
             }
         }
-        IconButton {
+        IconLabel {
             id: _icon
-            height: parent.height * 0.6
-            width: height
-            anchors.horizontalCenter: parent.horizontalCenter
-            icon.height: height
-            icon.width: width
-            icon.source: "qrc:/content/icons/up.png"
-        }
-        Text {
-            id: textLabel
-            width: parent.width
-            height: parent.height * 0.2
-            font.pixelSize: height * 0.5
-            anchors.top: _icon.bottom
-            horizontalAlignment: Text.AlignHCenter
-            anchors.bottom: parent.bottom
-            color: config.buttonTextColor
-            font.family: alibabaPuHuiTi.font.family
+            height: parent.height * 0.9
+            anchors.centerIn: parent
+            font.pixelSize: height / 4
+            display: AbstractButton.TextUnderIcon
         }
         containsMode: Shape.FillContains
         layer.enabled: true
@@ -65,7 +52,7 @@ Item {
             shadowEnabled: true
             shadowColor: config.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: back.checked ?shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: back.checked ? shadowHeight / 2 : shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
