@@ -2,15 +2,21 @@
 ### Do not change
 
 qt_add_library(content STATIC)
+
+set_source_files_properties(Global.qml
+    PROPERTIES
+        QT_QML_SINGLETON_TYPE true
+)
 qt6_add_qml_module(content
     URI "content"
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        ContentV.qml
         Connect.qml
-        ContentH.qml
+        ContentColumn.qml
+        ContentRow.qml
+        Global.qml
         Config/ShiyiMZ.qml
         Config/Haishi410.qml
         Pages/Shiyi/System.qml
@@ -36,14 +42,12 @@ qt6_add_qml_module(content
         Custom/Category.qml
         Custom/Background.qml
         Custom/ColorSwitch.qml
-        Custom/LightButton.qml
-        Custom/IconButton.qml
         Custom/ControlPad.qml
         Custom/VButton.qml
-        Custom/IconLabel.qml
+        Custom/MyIconLabel.qml
         Dialog/PasswordDialog.qml
         Dialog/SettingDialog.qml
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
         Js/crestroncip.js
-)
+    )

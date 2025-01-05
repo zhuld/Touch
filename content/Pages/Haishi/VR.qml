@@ -12,12 +12,8 @@ Item {
         Category {
             widthRatio: 0.3
             lable: qsTr("输出")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 columns: Math.ceil(outputList.count / 3)
                 spacing: height * 0.1
                 Repeater {
@@ -65,12 +61,8 @@ Item {
         Category {
             widthRatio: 0.7
             lable: qsTr("输入信号")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 columns: Math.ceil(inputList.count / 3)
                 spacing: height * 0.1
                 Repeater {

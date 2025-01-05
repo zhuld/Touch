@@ -5,7 +5,8 @@ import QtQuick.Shapes
 
 Item {
     id: control
-    property color btnColor: config.buttonColor
+    property color btnColor: Global.backgroundColor
+    property color btnCheckColor: Global.buttonCheckedColor
     property alias source: _icon.icon.source
     property alias iconColor: _icon.icon.color
     property alias text: _icon.text
@@ -25,19 +26,20 @@ Item {
                 duration: 100
             }
         }
-        IconLabel {
+        MyIconLabel {
             id: _icon
             height: parent.height
             width: parent.width
+            color: mouseArea.pressed ? Global.backgroundColor : Global.buttonTextColor
         }
         containsMode: Shape.FillContains
         layer.enabled: true
         layer.samples: 16
         layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: config.buttonShadowColor
+            shadowEnabled: !Qt.colorEqual(control.btnColor, "transparent")
+            shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 4 : shadowHeight / 2
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -59,14 +61,13 @@ Item {
                 centerX: back.width * 0.5
                 centerY: back.height * 0.5
                 centerRadius: back.width
-                focalX: back.width * 0.25
-                focalY: back.height * 0.25
+                focalX: 0
+                focalY: 0
                 GradientStop {
                     position: 0
-                    color: mouseArea.pressed ? Qt.darker(
-                                                   config.buttonCheckedColor,
-                                                   1.4) : Qt.darker(btnColor,
-                                                                    1.4)
+                    color: mouseArea.pressed ? Qt.darker(btnCheckColor,
+                                                         1.4) : Qt.darker(
+                                                   btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -75,10 +76,9 @@ Item {
                 }
                 GradientStop {
                     position: 1
-                    color: mouseArea.pressed ? Qt.lighter(
-                                                   config.buttonCheckedColor,
-                                                   1.2) : Qt.lighter(btnColor,
-                                                                     1.2)
+                    color: mouseArea.pressed ? Qt.lighter(btnCheckColor,
+                                                          1.2) : Qt.lighter(
+                                                   btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100

@@ -2,8 +2,11 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
 
+import "../"
+
 Item {
     id: control
+    property alias content: content.data
     property real widthRatio: 1
     property alias lable: _lable.text
     height: parent.height - parent.width * 0.02
@@ -16,9 +19,9 @@ Item {
         layer.samples: 16
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: config.buttonShadowColor
+            shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.checked ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -42,8 +45,8 @@ Item {
                 x1: pathRect.width / 2
                 x2: pathRect.width / 2
                 GradientStop {
-                    position: 1.0
-                    color: Qt.alpha(config.catagoryColor, 0.5)
+                    position: 0.13
+                    color: Global.backgroundColor
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -51,8 +54,8 @@ Item {
                     }
                 }
                 GradientStop {
-                    position: 0.102
-                    color: Qt.alpha(config.catagoryColor, 0.7)
+                    position: 0.101
+                    color: Qt.darker(Global.backgroundColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -61,7 +64,25 @@ Item {
                 }
                 GradientStop {
                     position: 0.1
-                    color: config.catagoryColor
+                    color: Global.backgroundColor
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0.07
+                    color: Global.backgroundColor
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 100
+                        }
+                    }
+                }
+                GradientStop {
+                    position: 0.0
+                    color: Qt.lighter(Global.backgroundColor, 1.3)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -79,7 +100,15 @@ Item {
         font.pixelSize: height * 0.5
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        color: config.textColor
-        font.family: alibabaPuHuiTi.font.family
+        color: Global.buttonTextColor
+        font.family: Global.alibabaPuHuiTi.font.family
+    }
+    Item {
+        id: content
+        anchors.fill: parent
+        anchors.topMargin: parent.height * 0.15
+        anchors.bottomMargin: parent.height * 0.04
+        anchors.leftMargin: parent.height * 0.04
+        anchors.rightMargin: parent.height * 0.04
     }
 }

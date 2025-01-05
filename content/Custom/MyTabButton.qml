@@ -10,49 +10,47 @@ Item {
     id: control
     property int channel
     property int disEnableChannel: 0
-    property color btnColor: config.buttonColor
+    property color btnColor: Global.backgroundColor
 
     property alias source: _icon.icon.source
     property alias text: _icon.text
-    property bool checked: root.digital[control.channel] ? true : false
+    property bool checked: Global.digital[control.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    enabled: root.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
-    Material.accent: config.buttonTextColor
-
-    visible: control.channel === 0 ? false : true
-
     Shape {
         id: back
         property int channel: control.channel
-        property bool checked: root.digital[control.channel] ? true : false
+        property bool checked: Global.digital[control.channel] ? true : false
         height: parent.height
         width: parent.width
-        y: checked ? height / 40 : 0
-        anchors.horizontalCenter: parent.horizontalCenter
+        y: control.checked ? height / 40 : 0
         Behavior on y {
             NumberAnimation {
                 duration: 100
             }
         }
-        IconLabel {
+        MyIconLabel {
             id: _icon
-            height: parent.height * 0.9
+            height: parent.height * 0.8
+            width: parent.width * 0.8
             anchors.centerIn: parent
             font.pixelSize: height / 4
             display: AbstractButton.TextUnderIcon
+            color: control.checked ? Global.backgroundColor : Global.buttonTextColor
+            icon.color: control.checked ? Global.backgroundColor : Global.buttonTextColor
         }
         containsMode: Shape.FillContains
         layer.enabled: true
         layer.samples: 16
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: config.buttonShadowColor
+            shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: back.checked ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: control.enabled ? (back.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -73,11 +71,11 @@ Item {
                 centerX: back.width * 0.5
                 centerY: back.height * 0.5
                 centerRadius: back.width
-                focalX: back.width * 0.25
-                focalY: back.height * 0.25
+                focalX: 0
+                focalY: 0
                 GradientStop {
                     position: 0
-                    color: back.checked ? Qt.darker(config.buttonCheckedColor,
+                    color: back.checked ? Qt.darker(Global.buttonCheckedColor,
                                                     1.4) : Qt.darker(btnColor,
                                                                      1.4)
                     Behavior on color {
@@ -88,7 +86,7 @@ Item {
                 }
                 GradientStop {
                     position: 1
-                    color: back.checked ? Qt.lighter(config.buttonCheckedColor,
+                    color: back.checked ? Qt.lighter(Global.buttonCheckedColor,
                                                      1.2) : Qt.lighter(
                                               btnColor, 1.2)
                     Behavior on color {
@@ -114,10 +112,10 @@ Item {
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "D" + control.channel + "E"
-                                          + control.disEnableChannel : ""
-        color: config.buttonTextColor
+        text: Global.settings.showChannel ? "D" + control.channel + "E"
+                                            + control.disEnableChannel : ""
+        color: Global.buttonTextColor
         font.pixelSize: channelSize
-        font.family: alibabaPuHuiTi.font.family
+        font.family: Global.alibabaPuHuiTi.font.family
     }
 }

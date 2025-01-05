@@ -6,16 +6,14 @@ Switch {
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    indicator: Rectangle {
+    indicator: Item {
         anchors.fill: parent
-        radius: height / 2
-        color: "transparent"
         Rectangle {
             width: parent.width * 0.7
             height: parent.height / 2
             radius: height / 2
-            color: checked ? config.buttonCheckedColor : config.buttonColor
-            border.color: config.buttonTextColor
+            color: checked ? Global.buttonCheckedColor : Global.backgroundColor
+            border.color: Global.buttonTextColor
             anchors.centerIn: parent
             Behavior on color {
                 ColorAnimation {
@@ -25,13 +23,13 @@ Switch {
         }
 
         Rectangle {
-            x: parent.parent.checked ? parent.width - parent.height * 0.9 : parent.height * 0.1
-            width: height
+            x: checked ? parent.width - parent.height * 0.9 : parent.height * 0.1
             height: parent.height * 0.8
-            y: parent.height * 0.1
+            width: height
+            anchors.verticalCenter: parent.verticalCenter
             radius: height / 2
-            color: config.buttonTextColor
-            border.color: config.buttonColor
+            color: Global.buttonColor
+            border.color: Global.buttonTextColor
             Behavior on color {
                 ColorAnimation {
                     duration: 300
@@ -40,9 +38,9 @@ Switch {
             Text {
                 anchors.centerIn: parent
                 text: checked ? "✓" : ""
-                color: config.buttonCheckedColor
+                color: Global.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
-                font.family: alibabaPuHuiTi.font.family
+                font.family: Global.alibabaPuHuiTi.font.family
             }
             Behavior on x {
                 NumberAnimation {

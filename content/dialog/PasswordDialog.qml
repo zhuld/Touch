@@ -15,7 +15,7 @@ Dialog {
                    < ratio ? parent.width * 0.9 : parent.height * 0.9 * ratio
     implicitHeight: implicitWidth / ratio
 
-    signal okPressed(var password)
+    signal passwordEnter(var password)
 
     anchors.centerIn: parent
 
@@ -70,34 +70,30 @@ Dialog {
         id: base
         anchors.fill: parent
         anchors.margins: width * 0.02
-
-        Text {
+        spacing: height * 0.02
+        MyIconLabel {
             id: passwordTitle
-            width: parent.width
-            height: parent.height * 0.08
-            text: "设置页面需输入密码"
-            font.pixelSize: height * 0.7
-            wrapMode: Text.Wrap
-            horizontalAlignment: Text.AlignLeft
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
+            height: parent.height * 0.06
+            color: Global.buttonTextColor
+            text: qsTr("进入设置需输入密码")
+            font.pixelSize: height
         }
 
         TextInput {
             id: password
             x: parent.width * 0.03
             width: parent.width
-            height: parent.height * 0.18
+            height: parent.height * 0.16
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height * 0.5
+            font.pixelSize: height * 0.4
             font.letterSpacing: parent.width * 0.06
-            color: config.textColor
+            color: Global.buttonTextColor
             enabled: false
             focus: true
             echoMode: TextInput.Password
             passwordMaskDelay: 500
-            font.family: alibabaPuHuiTi.font.family
+            font.family: Global.alibabaPuHuiTi.font.family
         }
 
         Grid {
@@ -176,7 +172,7 @@ Dialog {
                                             0, password.text.length - 1)
                                 break
                             case "\u23CE":
-                                okPressed(password.text)
+                                passwordEnter(password.text)
                                 password.text = ""
                                 break
                             }

@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+QtObject {
     readonly property string logoName: qsTr("上海市第一人民医院")
     readonly property string titleName: qsTr("门诊大楼指挥中心")
     readonly property string version: qsTr("202411")
@@ -10,22 +10,6 @@ Item {
     readonly property int cipPort: 41794
     readonly property int ipId: 8
     readonly property int processDialogChannel: 1
-    readonly property bool tabOnBottom: false
-
-    property color buttonColor: settings.darkTheme ? "#16417C" : "skyblue"
-    property color buttonCheckedColor: settings.darkTheme ? "darkorange" : "darkorange"
-    property color catagoryColor: settings.darkTheme ? "#1A5A94" : "silver"
-    property color backgroundColor: settings.darkTheme ? "midnightblue" : "lightblue"
-    property color buttonTextColor: settings.darkTheme ? "floralwhite" : "#252525"
-    property color textColor: settings.darkTheme ? "lightskyblue" : "#252525" //文字颜色
-    property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
-
-    property color buttonRedColor: settings.darkTheme ? "darkred" : "lightpink"
-    property color buttonGreenColor: settings.darkTheme ? "darkgreen" : "lightgreen"
-    property color buttonTextRedColor: "red"
-
-    property color volumeBlueColor: settings.darkTheme ? "whitesmoke" : "#0B1A38"
-    property color volumeRedColor: "red"
 
     //页面List
     readonly property var pageList: ListModel {
@@ -62,7 +46,7 @@ Item {
             name: qsTr("灯光")
             pageUrl: "qrc:/qt/qml/content/Pages/Shiyi/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
-            test: true
+            test: false
             pageChannel: 15
         }
         ListElement {
@@ -76,7 +60,7 @@ Item {
             name: qsTr("测试")
             pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
             iconUrl: "qrc:/content/icons/test.png"
-            test: false
+            test: true
             pageChannel: 17
         }
     }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
+import QtQuick.Effects
 
 import "../../Custom"
 
@@ -13,164 +14,182 @@ Item {
         Category {
             widthRatio: 0.5
             lable: qsTr("摄像机控制")
-            Item {
-                anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
-                ControlPad {
-                    id: dpadControl
-                    width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
-                    height: width * 1.3
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 20
-                }
+            content: ControlPad {
+                id: dpadControl
+                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
+                height: width * 1.3
+                anchors.horizontalCenter: parent.horizontalCenter
+                channel: 20
+                disEnableChannel: cameraAuto.channel
             }
         }
         Category {
             widthRatio: 0.5
             lable: qsTr("摄像跟踪")
             MySwitch {
+                id: cameraAuto
                 height: parent.height * 0.06
                 channel: 40
-                anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.topMargin: height * 0.4
+                anchors.right: parent.right
+                anchors.rightMargin: height * 0.4
                 Text {
-                    width: parent.width
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    height: parent.height
                     text: parent.checked ? "自动" : "手动"
                     font.pixelSize: parent.height * 0.7
-                    color: config.buttonTextColor
+                    color: Global.buttonTextColor
                     anchors.right: parent.left
-                    font.family: alibabaPuHuiTi.font.family
+                    font.family: Global.alibabaPuHuiTi.font.family
                 }
             }
-            Item {
+            content: Item {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
-                Rectangle {
-                    id: tv
-                    width: parent.width * 0.6
-                    height: width * 0.05
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    border.color: config.catagoryColor
-                    border.width: width * 0.01
-                    color: "transparent"
-                }
-                IconLabel {
+                MyIconLabel {
                     id: camera
-                    height: tv.height * 8
-                    width: camera.height
-                    anchors.centerIn: tv
+                    height: parent.height / 12
+                    width: height
+                    anchors.horizontalCenter: parent.horizontalCenter
                     icon.source: "qrc:/content/icons/camera.png"
-                    icon.color: config.catagoryColor
+                    icon.color: Global.buttonTextColor
                     rotation: 90
                     Behavior on rotation {
                         NumberAnimation {
                             duration: 300
                         }
                     }
+                    icon.width: width
+                    icon.height: height
                 }
-                Rectangle {
-                    id: table
-                    width: parent.width * 0.9
+                MyButton {
+                    height: parent.height / 10
+                    width: height * 2
+                    text: "复位"
+                    channel: 31
+                    disEnableChannel: cameraAuto.channel
+                    anchors.right: parent.right
+                    anchors.bottom: camera.bottom
+                }
+                Shape {
+                    id: back
+                    width: parent.width * (Global.settings.tabOnBottom ? 0.6 : 0.8)
                     height: parent.height * 0.9
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
-                    border.color: config.catagoryColor
-                    border.width: width * 0.01
-                    color: "transparent"
-                    radius: width * 0.08
+                    containsMode: Shape.FillContains
+                    layer.enabled: true
+                    layer.samples: 16
+                    layer.effect: MultiEffect {
+                        shadowEnabled: true
+                        shadowColor: Global.buttonShadowColor
+                        shadowHorizontalOffset: shadowVerticalOffset
+                        shadowVerticalOffset: shadowHeight
+                        Behavior on shadowHorizontalOffset {
+                            NumberAnimation {
+                                duration: 100
+                            }
+                        }
+                    }
+                    opacity: 0.8
+                    ShapePath {
+                        strokeWidth: 0
+                        strokeColor: "transparent"
+                        PathRectangle {
+                            id: pathRect
+                            x: 0
+                            y: 0
+                            width: back.width
+                            height: back.height
+                            radius: height / 20
+                        }
+                        fillGradient: RadialGradient {
+                            centerX: back.width * 0.5
+                            centerY: back.height * 0.5
+                            centerRadius: back.width
+                            focalX: 0
+                            focalY: 0
+                            GradientStop {
+                                position: 0
+                                color: Qt.darker(Global.backgroundColor, 1.2)
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
+                                    }
+                                }
+                            }
+                            GradientStop {
+                                position: 1
+                                color: Qt.lighter(Global.backgroundColor, 1.2)
+                                Behavior on color {
+                                    ColorAnimation {
+                                        duration: 100
+                                    }
+                                }
+                            }
+                        }
+                    }
                     Grid {
                         id: grid
                         anchors.fill: parent
-                        columns: 3
-                        spacing: parent.height * 0.05
+                        columns: 2
+                        columnSpacing: parent.width * 0.3
+                        rowSpacing: parent.height * 0.05
                         anchors.margins: parent.width * 0.1
                         Repeater {
                             model: ListModel {
                                 id: positionList
                                 ListElement {
                                     cameraRotation: 135
-                                    btnchannel: 39
-                                    label: "8"
-                                    used: true
-                                }
-                                ListElement {
-                                    used: false
+                                    btnchannel: 32
+                                    label: "1"
                                 }
                                 ListElement {
                                     cameraRotation: 45
-                                    btnchannel: 38
-                                    label: "7"
-                                    used: true
+                                    btnchannel: 33
+                                    label: "2"
                                 }
                                 ListElement {
                                     cameraRotation: 120
-                                    btnchannel: 37
-                                    label: "6"
-                                    used: true
-                                }
-                                ListElement {
-                                    used: false
+                                    btnchannel: 34
+                                    label: "3"
                                 }
                                 ListElement {
                                     cameraRotation: 60
-                                    btnchannel: 36
-                                    label: "5"
-                                    used: true
+                                    btnchannel: 35
+                                    label: "4"
                                 }
                                 ListElement {
                                     cameraRotation: 111
-                                    btnchannel: 35
-                                    label: "4"
-                                    used: true
-                                }
-                                ListElement {
-                                    used: false
+                                    btnchannel: 36
+                                    label: "5"
                                 }
                                 ListElement {
                                     cameraRotation: 69
-                                    btnchannel: 34
-                                    label: "3"
-                                    used: true
+                                    btnchannel: 37
+                                    label: "6"
                                 }
                                 ListElement {
                                     cameraRotation: 105
-                                    btnchannel: 33
-                                    label: "2"
-                                    used: true
-                                }
-                                ListElement {
-                                    cameraRotation: 90
-                                    btnchannel: 31
-                                    label: ""
-                                    used: true
+                                    btnchannel: 38
+                                    label: "7"
                                 }
                                 ListElement {
                                     cameraRotation: 75
-                                    btnchannel: 32
-                                    label: "1"
-                                    used: true
+                                    btnchannel: 39
+                                    label: "8"
                                 }
                             }
                             delegate: MyButton {
                                 required property int btnchannel
                                 required property int cameraRotation
                                 required property string label
-                                required property bool used
-                                width: (grid.width + grid.spacing) / grid.columns - grid.spacing
-                                height: (grid.height + grid.spacing) / positionList.count
-                                        * grid.columns - grid.spacing
+                                width: (grid.width + grid.columnSpacing)
+                                       / grid.columns - grid.columnSpacing
+                                height: (grid.height + grid.rowSpacing) / positionList.count
+                                        * grid.columns - grid.rowSpacing
                                 channel: btnchannel
                                 text: label
-                                opacity: used ? 1 : 0
+                                disEnableChannel: cameraAuto.channel
                                 onCheckedChanged: {
                                     if (checked) {
                                         camera.rotation = cameraRotation
@@ -181,6 +200,11 @@ Item {
                                 Component.onCompleted: {
                                     if (checked) {
                                         camera.rotation = cameraRotation
+                                    }
+                                }
+                                Behavior on opacity {
+                                    OpacityAnimator {
+                                        duration: 300
                                     }
                                 }
                             }

@@ -51,3 +51,4 @@ install(TARGETS TouchApp
 set_property(TARGET TouchApp
     APPEND PROPERTY  QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
+

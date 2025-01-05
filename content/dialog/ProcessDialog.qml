@@ -41,29 +41,26 @@ Dialog {
             duration: 100
         }
     }
-
-    Item {
+    Column {
         anchors.fill: parent
         anchors.margins: height * 0.05
-        Text {
+        spacing: height * 0.1
+        MyIconLabel {
             id: title
-            width: parent.width
             height: parent.height * 0.12
+            color: Global.buttonTextColor
+            text: qsTr("标题")
             font.pixelSize: height
-            horizontalAlignment: Text.AlignLeft
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
         }
         BusyIndicator {
             id: busy
-            height: parent.height / 2
-            width: height
-            Material.accent: config.buttonColor
-            anchors.centerIn: parent
+            height: parent.height * 0.56
+            width: parent.width
+            Material.accent: Global.buttonColor
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
-                shadowColor: config.buttonShadowColor
+                shadowColor: Global.buttonShadowColor
                 shadowHorizontalOffset: shadowHeight
                 shadowVerticalOffset: shadowHorizontalOffset
             }
@@ -80,22 +77,21 @@ Dialog {
                 }
             }
         }
-        Text {
+        MyIconLabel {
             id: info
             height: parent.height * 0.12
+            width: parent.width
+            color: Global.buttonTextColor
+            text: qsTr("信息")
             font.pixelSize: height
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
         }
         Text {
             id: channel
             anchors.right: parent.right
-            text: root.settings.showChannel ? "D" + processDialog.channel : ""
-            color: config.buttonTextColor
+            text: Global.settings.showChannel ? "D" + processDialog.channel : ""
+            color: Global.buttonTextColor
             font.pixelSize: channelSize
-            font.family: alibabaPuHuiTi.font.family
+            font.family: Global.alibabaPuHuiTi.font.family
         }
     }
     onOpened: {
@@ -104,12 +100,10 @@ Dialog {
     }
 
     onClosed: {
-        let tmpD = root.digital
+        let tmpD = Global.digital
         tmpD[processDialog.channel] = false
-        root.digital = tmpD
+        Global.digital = tmpD
         countDownTimer.stop()
     }
-    // Component.onCompleted: {
-    visible: root.digital[processDialog.channel] ? true : false
-    // }
+    visible: Global.digital[processDialog.channel] ? true : false
 }

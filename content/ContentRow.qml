@@ -28,7 +28,6 @@ Item {
         width: parent.width * 0.98
         height: parent.height * 0.15
         x: (width - height * filteredModel.count) / (filteredModel.count + 1)
-        //anchors.rightMargin: (width - height * filteredModel.count) / (filteredModel.count + 1)
         anchors.bottom: parent.bottom
         Repeater {
             id: repeater
@@ -45,17 +44,15 @@ Item {
                 source: iconUrl
                 channel: pageChannel
                 onCheckedChanged: {
-                    if (checked) {
-                        if (stackLayout.currentIndex !== index) {
-                            stackLayout.currentIndex = index
-                        }
+                    if (checked & stackLayout.currentIndex !== index) {
+                        stackLayout.currentIndex = index
                     }
                 }
             }
         }
         spacing: (width - height * filteredModel.count) / (filteredModel.count + 1)
     }
-    StackLayout {
+    SwipeView {
         id: stackLayout
         anchors.top: parent.top
         width: parent.width
@@ -68,6 +65,11 @@ Item {
                 source: pageUrl
             }
         }
+        orientation: Qt.Horizontal
+        spacing: parent.width / 10
+        interactive: false
+        clip: true
+        Component.onCompleted: contentItem.highlightMoveDuration = 0
     }
     Component.onCompleted: {
         // Clear the filtered model
@@ -75,7 +77,7 @@ Item {
         // Loop through original model and add filtered items to filteredModel
         for (var i = 0; i < config.pageList.count; i++) {
             var item = config.pageList.get(i)
-            if (!item.test || root.settings.showChannel) {
+            if (!item.test || Global.settings.showChannel) {
                 filteredModel.append(item)
             }
         }
@@ -86,7 +88,7 @@ Item {
             filteredModel.clear()
             for (var i = 0; i < config.pageList.count; i++) {
                 var item = config.pageList.get(i)
-                if (!item.test || root.settings.showChannel) {
+                if (!item.test || Global.settings.showChannel) {
                     filteredModel.append(item)
                 }
             }

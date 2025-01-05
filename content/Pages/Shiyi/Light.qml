@@ -13,15 +13,11 @@ Item {
         spacing: width * 0.02
 
         Category {
-            widthRatio: 0.7
+            widthRatio: 0.6
             lable: qsTr("单独控制")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
-                columns: Math.ceil(lightList.count / 2)
+                columns: Math.ceil(lightList.count / 3)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -51,7 +47,7 @@ Item {
                             btnChannel: 66
                         }
                     }
-                    delegate: LightButton {
+                    delegate: VButton {
                         required property int btnChannel
                         required property string name
                         text: name
@@ -59,20 +55,16 @@ Item {
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
                         height: (parent.height + parent.spacing) / lightList.count
                                 * parent.columns - parent.spacing
+                        source: checked ? "qrc:/content/icons/deng.png" : "qrc:/content/icons/dengju.png"
                     }
                 }
             }
         }
-
         Category {
-            widthRatio: 0.3
+            widthRatio: 0.4
             lable: qsTr("灯光模式")
-            Column {
+            content: Column {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {

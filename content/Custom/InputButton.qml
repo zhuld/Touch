@@ -6,8 +6,8 @@ import QtQuick.Shapes
 Item {
     id: dragButton
     property int input
-    property color btnColor: config.buttonCheckedColor
-    property color btnTextColor: config.buttonTextColor
+    property color btnColor: Global.buttonCheckedColor
+    property color btnTextColor: Global.buttonTextColor
     property alias textInput: icon.text
     property alias iconSource: icon.icon.source
 
@@ -72,12 +72,12 @@ Item {
                 centerX: back.width * 0.5
                 centerY: back.height * 0.5
                 centerRadius: back.width
-                focalX: back.width * 0.25
-                focalY: back.height * 0.25
+                focalX: 0
+                focalY: 0
                 GradientStop {
                     position: 1
                     color: mouseArea.pressed ? Qt.lighter(btnColor,
-                                                          1.2) : Qt.lighter(
+                                                          1.0) : Qt.lighter(
                                                    btnColor, 1.3)
                     Behavior on color {
                         ColorAnimation {
@@ -88,8 +88,8 @@ Item {
                 GradientStop {
                     position: 0
                     color: mouseArea.pressed ? Qt.darker(btnColor,
-                                                         1.5) : Qt.darker(
-                                                   btnColor, 1.3)
+                                                         1.7) : Qt.darker(
+                                                   btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -98,40 +98,40 @@ Item {
                 }
             }
         }
-    }
-    IconLabel {
-        id: icon
-        height: parent.height * 0.8
-        anchors.centerIn: parent
+        MyIconLabel {
+            id: icon
+            height: parent.height
+            width: parent.width
+        }
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            id: effect
+            shadowEnabled: true
+            shadowColor: Global.buttonShadowColor
+            shadowHorizontalOffset: shadowVerticalOffset / 2
+            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            Behavior on shadowHorizontalOffset {
+                NumberAnimation {
+                    duration: 100
+                }
+            }
+        }
+        Text {
+            id: inputText
+            width: parent.width
+            height: parent.height
+            text: input
+            font.pixelSize: height
+            color: btnTextColor
+            horizontalAlignment: Text.AlignRight
+            font.bold: true
+            opacity: 0.1
+            font.family: Global.alibabaPuHuiTi.font.family
+        }
+        clip: true
     }
     Drag.keys: [input, btnColor]
     Drag.active: mouseArea.drag.active
-    layer.enabled: true
-    layer.effect: MultiEffect {
-        id: effect
-        shadowEnabled: true
-        shadowColor: config.buttonShadowColor
-        shadowHorizontalOffset: shadowVerticalOffset / 2
-        shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
-        Behavior on shadowHorizontalOffset {
-            NumberAnimation {
-                duration: 100
-            }
-        }
-    }
-    Text {
-        id: inputText
-        width: parent.width
-        height: parent.height
-        text: input
-        font.pixelSize: height
-        color: btnTextColor
-        horizontalAlignment: Text.AlignRight
-        font.bold: true
-        opacity: 0.1
-        font.family: alibabaPuHuiTi.font.family
-    }
-
     Rectangle {
         id: back
         anchors.fill: parent

@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 
+import "../"
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
@@ -12,18 +13,18 @@ Item {
     property int disEnableChannel: 0
     //property alias radius: back.radius
     property bool confirm: false
-    property color btnColor: config.buttonColor
+    property color btnColor: Global.buttonColor
 
     property alias source: _icon.icon.source
     property alias text: textLabel.text
-    property bool checked: root.digital[control.channel] ? true : false
+    property bool checked: Global.digital[control.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    enabled: root.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
-    Material.accent: config.buttonTextColor
+    Material.accent: Global.buttonTextColor
 
     visible: control.channel === 0 ? false : true
 
@@ -39,19 +40,20 @@ Item {
                 duration: 100
             }
         }
-        IconLabel {
+        MyIconLabel {
             id: _icon
             height: parent.height
             width: parent.width
+            icon.color: control.checked ? Global.backgroundColor : Global.buttonTextColor
         }
         containsMode: Shape.FillContains
         layer.enabled: true
         layer.samples: 16
         layer.effect: MultiEffect {
             shadowEnabled: true
-            shadowColor: config.buttonShadowColor
+            shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.checked ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -72,12 +74,12 @@ Item {
                 centerX: back.width * 0.5
                 centerY: back.height * 0.5
                 centerRadius: back.width
-                focalX: back.width * 0.25
-                focalY: back.height * 0.25
+                focalX: 0
+                focalY: 0
                 GradientStop {
                     position: 0
                     color: control.checked ? Qt.darker(
-                                                 config.buttonCheckedColor,
+                                                 Global.buttonCheckedColor,
                                                  1.4) : Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
@@ -88,7 +90,7 @@ Item {
                 GradientStop {
                     position: 1
                     color: control.checked ? Qt.lighter(
-                                                 config.buttonCheckedColor,
+                                                 Global.buttonCheckedColor,
                                                  1.2) : Qt.lighter(btnColor,
                                                                    1.2)
                     Behavior on color {
@@ -118,25 +120,21 @@ Item {
             }
         }
     }
-    Text {
+    MyIconLabel {
         id: textLabel
         width: parent.width
-        height: parent.height * 0.2
+        height: parent.height * 0.18
         font.pixelSize: height
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
         anchors.bottom: parent.bottom
-        color: config.buttonTextColor
-        font.family: alibabaPuHuiTi.font.family
     }
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "D" + control.channel + "E"
-                                          + control.disEnableChannel : ""
-        color: config.buttonTextColor
+        text: Global.settings.showChannel ? "D" + control.channel + "E"
+                                            + control.disEnableChannel : ""
+        color: Global.buttonTextColor
         font.pixelSize: channelSize
-        font.family: alibabaPuHuiTi.font.family
+        font.family: Global.alibabaPuHuiTi.font.family
     }
     ConfirmDialog {
         id: confirmDialog
@@ -153,7 +151,7 @@ Item {
                 CrestronCIP.release(control.channel)
             }
         }
-        onOkPress: {
+        onConfirm: {
             CrestronCIP.push(control.channel)
             releaseTimer.start()
         }

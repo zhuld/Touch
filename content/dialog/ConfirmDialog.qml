@@ -6,15 +6,15 @@ import "../Custom/"
 Dialog {
     id: confirmDialog
     property alias dialogTitle: title.text
-    property alias dialogInfomation: icon.text
-    property alias dialogIcon: icon.icon.source
-    signal okPress
+    property alias dialogInfomation: info.text
+    property alias dialogIcon: info.icon.source
+    signal confirm
 
     property int autoClose: 30
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.6
+    width: root.width * 0.5
     height: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
@@ -42,26 +42,25 @@ Dialog {
     }
     Column {
         anchors.fill: parent
-        anchors.centerIn: parent
         anchors.margins: height * 0.05
         spacing: height * 0.1
-        Text {
+        MyIconLabel {
             id: title
-            width: parent.width
             height: parent.height * 0.12
-            font.pixelSize: height
-            horizontalAlignment: Text.AlignLeft
-            color: config.textColor
+            color: Global.buttonTextColor
             text: qsTr("标题")
-            font.family: alibabaPuHuiTi.font.family
+            font.pixelSize: height
         }
-        IconLabel {
-            id: icon
-            height: parent.height * 0.4
+        MyIconLabel {
+            id: info
+            height: parent.height * 0.38
+            width: parent.width
+            color: Global.buttonTextColor
+            icon.color: Global.buttonTextColor
         }
         Row {
             width: parent.width
-            height: parent.height * 0.27
+            height: parent.height * 0.3
             spacing: width * 0.06
             ColorButton {
                 id: settingOK
@@ -70,7 +69,7 @@ Dialog {
                 text: "确定"
                 onPressedChanged: {
                     if (!pressed) {
-                        okPress()
+                        confirm()
                     }
                 }
             }

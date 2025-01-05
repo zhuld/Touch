@@ -12,17 +12,17 @@ Item {
     property alias textOutput: textOutput.text
     property string disableInput
     property color dragShadowColor
-    readonly property var input: root.analog[output]
+    readonly property var input: Global.analog[output]
     property int disEnableChannel: 0
     property var inputListMode
 
-    enabled: root.digital[control.disEnableChannel] ? false : true
-    opacity: enabled ? 1 : 0.2
+    enabled: Global.digital[control.disEnableChannel] ? false : true
+    opacity: enabled ? 1 : 0.4
     layer.enabled: true
     layer.effect: MultiEffect {
         id: effect
         shadowEnabled: true
-        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : config.buttonShadowColor
+        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : Global.buttonShadowColor
         shadowHorizontalOffset: height / 60
         shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight * 2 : shadowHeight / 2
         Behavior on shadowColor {
@@ -49,22 +49,23 @@ Item {
                 y: 0
                 width: back.width
                 height: back.height
-                radius: height / 5
+                radius: height / 20
             }
             fillGradient: RadialGradient {
                 centerX: back.width * 0.5
                 centerY: back.height * 0.5
                 centerRadius: back.width
-                focalX: back.width * 0.25
-                focalY: back.height * 0.25
+                focalX: 0
+                focalY: 0
                 GradientStop {
-                    position: 1
-                    color: input > 0 & input
-                           <= inputListMode.count ? Qt.lighter(
-                                                        inputListMode.get(
-                                                            input - 1).bgColor,
-                                                        1.1) : Qt.lighter(
-                                                        config.buttonColor, 1.2)
+                    position: 0
+                    color: Qt.alpha(
+                               input > 0 & input
+                               <= inputListMode.count ? Qt.darker(
+                                                            inputListMode.get(
+                                                                input - 1).bgColor,
+                                                            1.4) : Global.backgroundColor,
+                               0.5)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -72,13 +73,15 @@ Item {
                     }
                 }
                 GradientStop {
-                    position: 0
+                    position: 1
                     color: input > 0 & input
-                           <= inputListMode.count ? Qt.darker(
+                           <= inputListMode.count ? Qt.lighter(
                                                         inputListMode.get(
                                                             input - 1).bgColor,
-                                                        1.3) : Qt.darker(
-                                                        config.buttonColor, 1.2)
+                                                        1.2) : Qt.lighter(
+                                                        Global.backgroundColor,
+                                                        1.3)
+
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -96,8 +99,8 @@ Item {
         x: outputText.width
         verticalAlignment: Text.AlignVCenter
         text: "Output"
-        color: config.buttonTextColor
-        font.family: alibabaPuHuiTi.font.family
+        color: Global.buttonTextColor
+        font.family: Global.alibabaPuHuiTi.font.family
     }
 
     Text {
@@ -107,15 +110,17 @@ Item {
         anchors.margins: height * 0.1
         anchors.left: parent.left
         text: output
-        color: config.buttonTextColor
+        color: Global.buttonTextColor
         font.bold: true
         opacity: 0.1
-        font.family: alibabaPuHuiTi.font.family
+        font.family: Global.alibabaPuHuiTi.font.family
     }
-    IconLabel {
+    MyIconLabel {
         id: textInput
         anchors.bottom: parent.bottom
-        height: parent.height * 0.6
+        height: parent.height * 0.7
+        width: parent.width - inputText.width
+        alignment: Text.AlignRight
         icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
                                                                     input - 1).source : ""
         text: input > 0 & input <= inputListMode.count ? inputListMode.get(
@@ -131,18 +136,19 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         text: input ? input : ""
-        color: config.buttonTextColor
+        color: Global.buttonTextColor
         font.bold: true
         opacity: 0.1
-        font.family: alibabaPuHuiTi.font.family
+        font.family: Global.alibabaPuHuiTi.font.family
     }
     Text {
         id: channel
         height: parent.height
-        text: root.settings.showChannel ? "A" + control.output + "E" + control.disEnableChannel : ""
-        color: config.buttonTextColor
+        text: Global.settings.showChannel ? "A" + control.output + "E"
+                                            + control.disEnableChannel : ""
+        color: Global.buttonTextColor
         font.pixelSize: channelSize
-        font.family: alibabaPuHuiTi.font.family
+        font.family: Global.alibabaPuHuiTi.font.family
     }
     DropArea {
         id: dropContainer

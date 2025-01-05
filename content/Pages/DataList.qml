@@ -28,13 +28,9 @@ Item {
                     }
                 }
             }
-            ScrollView {
+            content: ScrollView {
                 id: scrollView
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 clip: true
                 ListView {
                     width: scrollView.width
@@ -44,7 +40,7 @@ Item {
                         width: scrollView.width
                         height: scrollView.height * 0.05
                         color: model.direction
-                               === "发" ? config.buttonColor : config.buttonCheckedColor
+                               === "发" ? Global.buttonColor : Global.buttonCheckedColor
                         Row {
                             width: scrollView.width
                             spacing: width * 0.01
@@ -52,35 +48,35 @@ Item {
                                 text: model.time
                                 width: parent.width * 0.09
                                 height: dataRect.height * 0.8
-                                color: config.buttonTextColor
+                                color: Global.buttonTextColor
                                 font.pixelSize: height
-                                font.family: alibabaPuHuiTi.font.family
+                                font.family: Global.alibabaPuHuiTi.font.family
                             }
 
                             Text {
                                 text: model.direction
                                 width: parent.width * 0.02
                                 height: dataRect.height * 0.8
-                                color: config.buttonTextColor
+                                color: Global.buttonTextColor
                                 font.pixelSize: height
-                                font.family: alibabaPuHuiTi.font.family
+                                font.family: Global.alibabaPuHuiTi.font.family
                             }
 
                             Text {
                                 text: model.data
                                 width: parent.width * 0.56
                                 height: dataRect.height * 0.8
-                                color: config.buttonTextColor
+                                color: Global.buttonTextColor
                                 font.pixelSize: height
-                                font.family: sourceCodePro.font.family
+                                font.family: Global.sourceCodePro.font.family
                             }
                             Text {
                                 text: model.detail
                                 width: parent.width * 0.30
                                 height: dataRect.height * 0.8
-                                color: config.buttonTextColor
+                                color: Global.buttonTextColor
                                 font.pixelSize: height
-                                font.family: alibabaPuHuiTi.font.family
+                                font.family: Global.alibabaPuHuiTi.font.family
                             }
                         }
                     }

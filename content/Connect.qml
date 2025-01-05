@@ -1,95 +1,105 @@
 import QtQuick
 
+import "./Custom"
+
 Item {
     id: connectPage
     anchors.fill: parent
     anchors.margins: width * 0.02
 
-    //property alias socketAnimation: socketAnimation
     Column {
         width: parent.width
         height: parent.height
-        spacing: parent.height * 0.05
-        Item {
-            height: parent.height * 0.1
-            width: parent.width
-        }
-        Text {
-            id: timeText
-            width: parent.width
-            height: parent.height * 0.4
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height * 0.8
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
-        }
-        Text {
-            id: dateText
+        spacing: height * 0.08
+        Row {
             width: parent.width
             height: parent.height * 0.1
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: height * 0.5
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
         }
-        Timer {
-            id: timer
-            interval: 1000
-            repeat: true
-            running: true
-            triggeredOnStart: true
-            onTriggered: {
-                dateText.text = new Date().toLocaleDateString(
-                            Qt.locale("zh_CN"), "yyyy年MM月dd日 dddd")
-                timeText.text = new Date().toLocaleTimeString(
-                            Qt.locale("zh_CN"), "hh:mm")
+        Row {
+            width: parent.width
+            height: parent.height * 0.3
+            spacing: width * 0.02
+            Text {
+                id: timeText
+                width: parent.width * 0.65
+                height: parent.height
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: height * 0.8
+                color: Global.buttonTextColor
+                font.family: Global.alibabaPuHuiTi.font.family
             }
-        }
-        Text {
-            text: qsTr("正在连接中控...  ")
-            width: parent.width
-            height: parent.height * 0.15
-            horizontalAlignment: Text.AlignRight
-            font.pixelSize: height * 0.6
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
-        }
-        Text {
-            text: settings.ipAddress + ":" + settings.ipPort + "@" + settings.ipId
-            width: parent.width
-            height: parent.height * 0.05
-            horizontalAlignment: Text.AlignRight
-            font.pixelSize: height * 0.6
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
-        }
-    }
-    Rectangle {
-        id: socketStatusProgress
-        property real socketValue: 1
-        y: parent.height - height
-        width: parent.width * socketValue
-        height: 4
-        color: config.buttonCheckedColor
-        NumberAnimation {
-            id: socketAnimation
-            target: socketStatusProgress
-            property: "socketValue"
-            from: 0
-            to: 1
-            duration: 8000
-            running: true
-            onStarted: {
-                tcpClient.disconnectFromServer()
-                if (settings.demoMode) {
-                    tcpClient.connectToServer("127.0.0.1", 41793)
-                } else {
-                    tcpClient.connectToServer(settings.ipAddress,
-                                              settings.ipPort)
+            Rectangle {
+                height: parent.height
+                width: 2
+                color: Global.buttonTextColor
+            }
+            Text {
+                id: dateText
+                width: parent.width * 0.35
+                height: parent.height
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: height * 0.2
+                color: Global.buttonTextColor
+                font.family: Global.alibabaPuHuiTi.font.family
+            }
+            Timer {
+                id: timer
+                interval: 1000
+                repeat: true
+                running: true
+                triggeredOnStart: true
+                onTriggered: {
+                    dateText.text = new Date().toLocaleDateString(
+                                Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
+                    timeText.text = new Date().toLocaleTimeString(
+                                Qt.locale("zh_CN"), "hh:mm:ss")
                 }
             }
-            onFinished: {
-                socketAnimation.start()
+        }
+
+        MyIconLabel {
+            text: qsTr("正在连接中控...  ")
+            height: parent.height * 0.2
+            color: Global.buttonTextColor
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        MyIconLabel {
+            text: Global.settings.ipAddress + ":" + Global.settings.ipPort + "@"
+                  + Global.settings.ipId
+            height: parent.height * 0.08
+            color: Global.buttonTextColor
+            anchors.right: parent.right
+        }
+
+        Rectangle {
+            id: socketStatusProgress
+            property real socketValue: 1
+            width: parent.width * socketValue
+            height: 6
+            radius: height / 2
+            color: Global.buttonCheckedColor
+            NumberAnimation {
+                id: socketAnimation
+                target: socketStatusProgress
+                property: "socketValue"
+                from: 0
+                to: 1
+                duration: 5000
+                running: true
+                onStarted: {
+                    tcpClient.disconnectFromServer()
+                    if (Global.settings.demoMode) {
+                        tcpClient.connectToServer("127.0.0.1", 41793)
+                    } else {
+                        tcpClient.connectToServer(Global.settings.ipAddress,
+                                                  Global.settings.ipPort)
+                    }
+                }
+                onFinished: {
+                    socketAnimation.start()
+                }
             }
         }
     }

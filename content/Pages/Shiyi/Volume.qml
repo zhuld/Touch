@@ -66,13 +66,8 @@ Item {
                 required property int maxVol
                 required property bool inputType
                 lable: name
-                VolumeBar {
+                content: VolumeBar {
                     anchors.fill: parent
-                    anchors.topMargin: parent.height * 0.15
-                    anchors.bottomMargin: parent.height * 0.04
-                    anchors.leftMargin: parent.height * 0.04
-                    anchors.rightMargin: anchors.leftMargin
-                    anchors.horizontalCenter: parent.horizontalCenter
                     channel: vChannel
                     muteChannel: mChannel
                     miniVolume: minVol

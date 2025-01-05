@@ -13,30 +13,19 @@ Item {
         Category {
             widthRatio: 0.6
             lable: qsTr("摄像机控制")
-            Item {
-                anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
-                ControlPad {
-                    id: dpadControl
-                    width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
-                    height: width * 1.3
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    channel: 52
-                }
+            content: ControlPad {
+                id: dpadControl
+                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
+                height: width * 1.3
+                anchors.horizontalCenter: parent.horizontalCenter
+                channel: 52
             }
         }
         Category {
             widthRatio: 0.4
             lable: qsTr("预置位")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 columns: Math.ceil(cameraList.count / 3)
                 spacing: height * 0.1
                 Repeater {

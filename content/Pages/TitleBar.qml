@@ -12,9 +12,9 @@ Item {
     MouseArea {
         property var clickPosition: Qt.point(0, 0)
         anchors.fill: parent
-        cursorShape: settings.fullscreen ? Qt.ArrowCursor : Qt.SizeAllCursor
+        cursorShape: Global.settings.fullscreen ? Qt.ArrowCursor : Qt.SizeAllCursor
         onPositionChanged: {
-            if (!pressed || settings.fullscreen)
+            if (!pressed || Global.settings.fullscreen)
                 return
             root.x += mouseX - clickPosition.x
             root.y += mouseY - clickPosition.y
@@ -30,19 +30,19 @@ Item {
         anchors.left: parent.left
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: height * 0.5
-        color: config.textColor
-        font.family: alibabaPuHuiTi.font.family
+        color: Global.buttonTextColor
+        font.family: Global.alibabaPuHuiTi.font.family
     }
 
     Text {
         id: titleName
-        text: config.titleName + (settings.demoMode ? "-演示" : "")
+        text: config.titleName + (Global.settings.demoMode ? "-演示" : "")
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: height * 0.5
-        color: config.textColor
-        font.family: alibabaPuHuiTi.font.family
+        color: Global.buttonTextColor
+        font.family: Global.alibabaPuHuiTi.font.family
     }
     Row {
         height: parent.height
@@ -53,8 +53,8 @@ Item {
             height: parent.height
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: height * 0.5
-            color: config.textColor
-            font.family: alibabaPuHuiTi.font.family
+            color: Global.buttonTextColor
+            font.family: Global.alibabaPuHuiTi.font.family
             Timer {
                 id: timer
                 interval: 1000
@@ -69,40 +69,39 @@ Item {
                 }
             }
         }
-        Switch {
+        ColorSwitch {
             id: themeSwtich
+            height: parent.height * 0.6
+            width: height * 1.5
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
-                settings.darkTheme = !settings.darkTheme
-                if (settings.darkTheme) {
-                    root.Material.theme = Material.Dark
-                } else {
-                    root.Material.theme = Material.Light
-                }
+                Global.settings.darkTheme = !Global.settings.darkTheme
             }
-            checked: settings.darkTheme
-            Material.accent: config.buttonCheckedColor
+            checked: Global.settings.darkTheme
             visible: Qt.platform.os === "windows" ? true : false
         }
-        IconButton {
+        ColorButton {
             id: setup
             height: parent.height
             width: height
-            //anchors.verticalCenter: parent.verticalCenter
-            icon.source: "qrc:/content/icons/config.png"
-            onClicked: {
-                passwordDialog.open()
+            source: "qrc:/content/icons/config.png"
+            onPressedChanged: {
+                if (pressed) {
+                    passwordDialog.open()
+                }
             }
+            btnColor: "transparent"
         }
-        IconButton {
+        ColorButton {
             id: close
             height: parent.height
             width: height
-            //anchors.verticalCenter: parent.verticalCenter
-            icon.source: "qrc:/content/icons/close.png"
-            backColor: config.buttonRedColor
-            onClicked: {
-                closeDialog.open()
+            source: "qrc:/content/icons/close.png"
+            btnColor: "transparent"
+            onPressedChanged: {
+                if (pressed) {
+                    closeDialog.open()
+                }
             }
             visible: Qt.platform.os === "windows" ? true : false
         }

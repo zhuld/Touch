@@ -24,7 +24,6 @@ Item {
     }
     Column {
         id: tabBar
-        //property int currentPage: 10
         width: parent.width * 0.1
         height: parent.height - parent.width * 0.02
         anchors.margins: 0
@@ -46,16 +45,14 @@ Item {
                 source: iconUrl
                 channel: pageChannel
                 onCheckedChanged: {
-                    if (checked) {
-                        if (stackLayout.currentIndex !== index) {
-                            stackLayout.currentIndex = index
-                        }
+                    if (checked & stackLayout.currentIndex !== index) {
+                        stackLayout.currentIndex = index
                     }
                 }
             }
         }
     }
-    StackLayout {
+    SwipeView {
         id: stackLayout
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
@@ -68,6 +65,11 @@ Item {
                 source: pageUrl
             }
         }
+        spacing: parent.height / 10
+        orientation: Qt.Vertical
+        interactive: false
+        clip: true
+        Component.onCompleted: contentItem.highlightMoveDuration = 0
     }
     Component.onCompleted: {
         // Clear the filtered model
@@ -75,7 +77,7 @@ Item {
         // Loop through original model and add filtered items to filteredModel
         for (var i = 0; i < config.pageList.count; i++) {
             var item = config.pageList.get(i)
-            if (!item.test || root.settings.showChannel) {
+            if (!item.test || Global.settings.showChannel) {
                 filteredModel.append(item)
             }
         }
@@ -86,7 +88,7 @@ Item {
             filteredModel.clear()
             for (var i = 0; i < config.pageList.count; i++) {
                 var item = config.pageList.get(i)
-                if (!item.test || root.settings.showChannel) {
+                if (!item.test || Global.settings.showChannel) {
                     filteredModel.append(item)
                 }
             }

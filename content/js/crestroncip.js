@@ -26,19 +26,19 @@ function clientMessageCheck(message) {
                 tcpClient.sendData(
                             cipmessage(
                                 op_Client_IPID,
-                                new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])))
+                                new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, Global.settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])))
                 sendAppendList(
                             cipmessage2(
                                 op_Client_IPID,
-                                new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])),
-                            "发送IPID：" + settings.ipId + "，注册到服务器")
+                                new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, Global.settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])),
+                            "发送IPID：" + Global.settings.ipId + "，注册到服务器")
             }
             break
         case op_Server_IPID:
             if (toHexString(payload, "") === "0000001F" || toHexString(
                         payload, "") === "00000003") {
                 recivedAppendList(message, index, payloadLength,
-                                  "服务器确认IPID：" + settings.ipId + "，注册成功")
+                                  "服务器确认IPID：" + Global.settings.ipId + "，注册成功")
                 tcpClient.sendData(
                             cipmessage(
                                 op_Join,
@@ -61,35 +61,35 @@ function clientMessageCheck(message) {
                 //digital
                 let channelD = payload[4] + (payload[5] & 0x7F) * 0x100 + 1
                 if (isNaN(channelD) === false) {
-                    let tmpD = root.digital
+                    let tmpD = Global.digital
                     tmpD[channelD] = !(payload[5] & 0x80)
-                    root.digital = tmpD
+                    Global.digital = tmpD
                 }
                 recivedAppendList(message, index, payloadLength,
                                   "Digital:" + channelD + " -> "
-                                  + (root.digital[channelD] ? "High" : "Low"))
+                                  + (Global.digital[channelD] ? "High" : "Low"))
                 break
             case op_Join_Analog1:
             case op_Join_Analog2:
                 //analog
                 let channelA
-                let tmpA = root.analog
+                let tmpA = Global.analog
                 if (payloadLength === 8) {
                     channelA = payload[4] * 0x100 + payload[5] + 1
                     if (isNaN(channelA) === false) {
                         tmpA[channelA] = payload[6] * 0x100 + payload[7]
-                        root.analog = tmpA
+                        Global.analog = tmpA
                     }
                 } else if (payloadLength === 7) {
                     channelA = payload[4] + 1
                     if (isNaN(channelA) === false) {
                         tmpA[channelA] = payload[5] * 0x100 + payload[6]
-                        root.analog = tmpA
+                        Global.analog = tmpA
                     }
                 }
                 recivedAppendList(
                             message, index, payloadLength,
-                            "Analog:" + channelA + " -> " + root.analog[channelA])
+                            "Analog:" + channelA + " -> " + Global.analog[channelA])
                 break
             default:
                 recivedAppendList(message, index, payloadLength, "其他Join事件")
@@ -117,7 +117,7 @@ function serverMessageCheck(message) {
         switch (payloadType) {
         case op_Client_IPID:
             // 收到IPID信息
-            if (payloadLength === 11 & payload[5] === settings.ipId) {
+            if (payloadLength === 11 & payload[5] === Global.settings.ipId) {
                 tcpServer.sendData(
                             cipmessage(
                                 op_Server_IPID,

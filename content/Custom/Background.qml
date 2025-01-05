@@ -2,15 +2,15 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
 
+import "../"
+
 Rectangle {
     id: control
-    height: parent.height
-    width: parent.width
+    anchors.fill: parent
     color: "transparent"
     Shape {
         id: back
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
         containsMode: Shape.FillContains
         ShapePath {
             strokeWidth: 0
@@ -30,11 +30,19 @@ Rectangle {
                 x2: pathRect.width / 2
                 GradientStop {
                     position: 0.0
-                    color: Qt.lighter(config.backgroundColor, 1.3)
+                    color: Qt.lighter(Global.backgroundColor, 1.3)
                 }
                 GradientStop {
-                    position: 0.8
-                    color: Qt.darker(config.backgroundColor, 1.3)
+                    position: 0.22
+                    color: Global.backgroundColor
+                }
+                GradientStop {
+                    position: 0.221
+                    color: Qt.darker(Global.backgroundColor, 1.3)
+                }
+                GradientStop {
+                    position: 0.28
+                    color: Global.backgroundColor
                 }
             }
         }

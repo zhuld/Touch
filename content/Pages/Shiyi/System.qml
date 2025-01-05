@@ -11,33 +11,12 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
 
-        // Category {
-        //     widthRatio: 0.2
-        //     lable: qsTr("总音量")
-        //     VolumeBar {
-        //         anchors.fill: parent
-        //         anchors.topMargin: parent.height * 0.15
-        //         anchors.bottomMargin: parent.height * 0.04
-        //         anchors.leftMargin: parent.height * 0.04
-        //         anchors.rightMargin: anchors.leftMargin
-        //         anchors.horizontalCenter: parent.horizontalCenter
-        //         channel: 9
-        //         muteChannel: 55
-        //         miniVolume: -40
-        //         maxVolume: 5
-        //         input: false
-        //     }
-        // }
         Category {
-            widthRatio: 0.55
+            widthRatio: 0.5
             lable: qsTr("会议模式")
-            Column {
+            content: Column {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
-                spacing: height * 0.1
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: systemList
@@ -46,7 +25,7 @@ Item {
                             btnchannel: 2
                             disBtnChannel: 0
                             sizeRatio: 1
-                            bColor: "forestgreen"
+                            bColor: "mediumseagreen"
                             iconUrl: "qrc:/content/icons/pingmugongxiang.png"
                             showDialog: true
                         }
@@ -55,7 +34,7 @@ Item {
                             btnchannel: 3
                             disBtnChannel: 0
                             sizeRatio: 1
-                            bColor: "forestgreen"
+                            bColor: "mediumseagreen"
                             iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
                             showDialog: true
                         }
@@ -64,7 +43,7 @@ Item {
                             btnchannel: 4
                             disBtnChannel: 0
                             sizeRatio: 1
-                            bColor: "tomato"
+                            bColor: "salmon"
                             iconUrl: "qrc:/content/icons/guanji.png"
                             showDialog: true
                         }
@@ -78,7 +57,8 @@ Item {
                         required property bool showDialog
                         required property color bColor
                         width: parent.width
-                        height: (parent.height + parent.spacing) / systemList.count - parent.spacing
+                        height: (parent.height * (Global.settings.tabOnBottom ? 1 : 0.8)
+                                 + parent.spacing) / systemList.count - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -91,16 +71,12 @@ Item {
         }
 
         Category {
-            widthRatio: 0.45
+            widthRatio: 0.5
             lable: qsTr("信号选择")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 columns: Math.ceil(modeList.count / 3)
-                spacing: height * 0.1
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: modeList

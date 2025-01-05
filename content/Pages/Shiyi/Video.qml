@@ -13,12 +13,8 @@ Item {
         Category {
             widthRatio: 0.35
             lable: qsTr("输出")
-            Column {
+            content: Column {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 spacing: height * 0.05
                 Repeater {
                     id: outputRepeater
@@ -60,12 +56,8 @@ Item {
         Category {
             widthRatio: 0.65
             lable: qsTr("输入信号")
-            Grid {
+            content: Grid {
                 anchors.fill: parent
-                anchors.topMargin: parent.height * 0.15
-                anchors.bottomMargin: parent.height * 0.04
-                anchors.leftMargin: parent.height * 0.04
-                anchors.rightMargin: anchors.leftMargin
                 columns: Math.ceil(inputList.count / 4)
                 spacing: height * 0.05
                 Repeater {
@@ -110,7 +102,7 @@ Item {
                         ListElement {
                             name: qsTr("预留输入2")
                             inputChannel: 7
-                            bgColor: "slateblue"
+                            bgColor: "gold"
                             source: "qrc:/content/icons/HDMIjiekou.png"
                         }
                         ListElement {
@@ -127,7 +119,7 @@ Item {
                         required property string source
                         required property int index
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height * 0.9 + parent.spacing) / 4 - parent.spacing
+                        height: (parent.height * 0.8 + parent.spacing) / 4 - parent.spacing
                         btnColor: bgColor
                         textInput: name
                         input: inputChannel
@@ -143,12 +135,10 @@ Item {
                                           }
                     }
                 }
-                Text {
-                    font.pixelSize: parent.height * 0.05
-                    color: config.catagoryColor
-                    horizontalAlignment: Text.AlignRight
+                MyIconLabel {
+                    icon.source: "qrc:/content/icons/tishi.png"
+                    height: parent.height * 0.12
                     text: qsTr("拖拽输入信号到输出")
-                    font.family: alibabaPuHuiTi.font.family
                 }
             }
         }
