@@ -22,11 +22,7 @@ Item {
                 anchors.rightMargin: parent.height * 0.04
                 width: parent.width * 0.1
                 height: parent.height * 0.06
-                onPressedChanged: {
-                    if (!pressed) {
-                        Global.dataList.clear()
-                    }
-                }
+                onClicked: Global.dataList.clear()
             }
             content: ScrollView {
                 id: scrollView

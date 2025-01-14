@@ -2,7 +2,7 @@ import QtQuick
 
 QtObject {
     readonly property string logoName: qsTr("海事大学")
-    readonly property string titleName: qsTr("沉浸式教室")
+    readonly property string titleName: qsTr("410沉浸式教室")
     readonly property string version: qsTr("202411")
     readonly property string background: "qrc:/content/images/haishi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"

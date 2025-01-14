@@ -150,33 +150,32 @@ Dialog {
                     height: width
                     radius: height / 2
                     text: name
-                    btnColor: name === "\u23CE" ? Global.buttonColor : Global.backgroundColor
-                    onPressedChanged: {
-                        if (!pressed) {
-                            switch (name) {
-                            case "1":
-                            case "2":
-                            case "3":
-                            case "4":
-                            case "5":
-                            case "6":
-                            case "7":
-                            case "8":
-                            case "9":
-                            case "0":
-                                if (password.text.length < 6) {
-                                    password.text += name
-                                }
-                                break
-                            case "\u21E6":
-                                password.text = password.text.slice(
-                                            0, password.text.length - 1)
-                                break
-                            case "\u23CE":
-                                passwordEnter(password.text)
-                                password.text = ""
-                                break
+                    opacity: (text === "\u21E6" & password.text === "") ? 0 : 1
+                    btnColor: Global.backgroundColor
+                    onClicked: {
+                        switch (name) {
+                        case "1":
+                        case "2":
+                        case "3":
+                        case "4":
+                        case "5":
+                        case "6":
+                        case "7":
+                        case "8":
+                        case "9":
+                        case "0":
+                            if (password.text.length < 6) {
+                                password.text += name
                             }
+                            break
+                        case "\u21E6":
+                            password.text = password.text.slice(
+                                        0, password.text.length - 1)
+                            break
+                        case "\u23CE":
+                            passwordEnter(password.text)
+                            password.text = ""
+                            break
                         }
                     }
                 }

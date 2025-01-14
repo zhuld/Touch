@@ -33,6 +33,7 @@ T.TabButton {
     }
     contentItem: MyIconLabel {
         font.pixelSize: height * 0.2
+        spacing: 0
         display: AbstractButton.TextUnderIcon
         color: control.textColor
         icon.color: control.iconColor

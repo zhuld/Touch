@@ -55,11 +55,7 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "确定"
-                onPressedChanged: {
-                    if (!pressed) {
-                        rootSetting.accept()
-                    }
-                }
+                onClicked: rootSetting.accept()
                 btnColor: Global.buttonColor
             }
             ColorButton {
@@ -67,22 +63,14 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "应用"
-                onPressedChanged: {
-                    if (!pressed) {
-                        apply()
-                    }
-                }
+                onClicked: apply()
             }
             ColorButton {
                 id: settingCancel
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "取消"
-                onPressedChanged: {
-                    if (!pressed) {
-                        rootSetting.reject()
-                    }
-                }
+                onClicked: rootSetting.reject()
             }
             Text {
                 width: parent.width * 0.34
@@ -124,10 +112,9 @@ Dialog {
                     width: parent.width * 0.6
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
-                    textRole: "key"
-                    model: Global.configList
+                    //textRole: "key"
+                    model: Global.configListModel
                     currentIndex: Global.settings.configSetting
-
                     delegate: ItemDelegate {
                         contentItem: Text {
                             text: modelData
@@ -364,6 +351,7 @@ Dialog {
     function apply() {
         if (Global.settings.configSetting !== configSetting.currentIndex) {
             Global.settings.configSetting = configSetting.currentIndex
+            Global.config = Global.configList[Global.settings.configSetting]
             root.running = false
         }
         Global.settings.ipAddress = ipAddress.text
@@ -371,8 +359,8 @@ Dialog {
         Global.settings.ipId = ipId.text
         Global.settings.fullscreen = fullscreen.checked
         if (Global.settings.demoMode !== demoMode.checked) {
-            Global.settings.demoMode = demoMode.checked
             tcpClient.disconnectFromServer()
+            Global.settings.demoMode = demoMode.checked
         }
         Global.settings.settingPassword = settingPassword.text
         if (Global.settings.showChannel !== showChannel.checked) {

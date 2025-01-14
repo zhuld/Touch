@@ -7,6 +7,7 @@ import QtQuick.Templates as T
 T.Button {
     id: control
     property color btnColor: Global.backgroundColor
+    property color btnCheckColor: Global.buttonCheckedColor
     property color textColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
     property color iconColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
     property string source
@@ -15,6 +16,8 @@ T.Button {
 
     implicitHeight: parent.height
     implicitWidth: parent.width
+
+    opacity: enabled ? 1 : 0.6
 
     contentItem: MyIconLabel {
         anchors.fill: back
@@ -67,9 +70,9 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.pressed ? Qt.darker(
-                                                 Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                    color: control.pressed ? Qt.darker(btnCheckColor,
+                                                       1.4) : Qt.darker(
+                                                 btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -78,10 +81,9 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.pressed ? Qt.lighter(
-                                                 Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
-                                                                   1.2)
+                    color: control.pressed ? Qt.lighter(btnCheckColor,
+                                                        1.2) : Qt.lighter(
+                                                 btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100

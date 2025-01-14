@@ -18,9 +18,7 @@ Item {
             root.x += mouseX - clickPosition.x
             root.y += mouseY - clickPosition.y
         }
-        onPressedChanged: {
-            clickPosition = Qt.point(mouseX, mouseY)
-        }
+        onPressed: clickPosition = Qt.point(mouseX, mouseY)
     }
     Text {
         id: titleLogo
@@ -84,10 +82,9 @@ Item {
             height: parent.height
             width: height
             source: "qrc:/content/icons/config.png"
-            onClicked: {
-                passwordDialog.open()
-            }
+            onClicked: passwordDialog.open()
             btnColor: "transparent"
+            btnCheckColor: "transparent"
         }
         ColorButton {
             id: close
@@ -95,9 +92,8 @@ Item {
             width: height
             source: "qrc:/content/icons/close.png"
             btnColor: "transparent"
-            onClicked: {
-                closeDialog.open()
-            }
+            btnCheckColor: "transparent"
+            onClicked: closeDialog.open()
             visible: Qt.platform.os === "windows" ? true : false
         }
     }

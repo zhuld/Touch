@@ -96,8 +96,9 @@ Window {
                 root.height = root.minimumHeight
             }
         }
-        onPressedChanged: {
+        onReleased: {
             Global.settings.windowWidth = root.width
+            Global.settings.windowHeight = root.height
         }
     }
     MouseArea {
@@ -123,7 +124,8 @@ Window {
                 root.width = root.minimumWidth
             }
         }
-        onPressedChanged: {
+        onReleased: {
+            Global.settings.windowWidth = root.width
             Global.settings.windowHeight = root.height
         }
     }
@@ -132,7 +134,7 @@ Window {
         y: titleBar.height
         width: parent.width
         height: parent.height - titleBar.height
-        source: ping.running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : "qrc:/qt/qml/content/Connect.qml"
+        source: running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/ConfigSelect.qml" : "qrc:/qt/qml/content/Connect.qml")
     }
 
     Connections {
@@ -153,13 +155,8 @@ Window {
         onClientConnected: CrestronCIP.serverAccept()
     }
     Component.onCompleted: {
-        pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
+        Global.config = Global.configList[Global.settings.configSetting]
+        //pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
         tcpServer.startServer(41793, "127.0.0.1")
-        //初始化
-        for (var i = 0; i <= 300; i++) {
-            Global.digital[i] = false
-            Global.analog[i] = 0
-        }
-        //Global.digital[1] = true
     }
 }

@@ -52,4 +52,6 @@ qt6_add_qml_module(content
         Js/crestroncip.js
         QML_FILES
         QML_FILES
+        QML_FILES Config/ConfigSet.qml
+        QML_FILES ConfigSelect.qml
     )

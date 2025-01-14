@@ -16,8 +16,8 @@ Item {
             label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
-                width: parent.width * 1.5 > parent.height ? parent.height / 1.5 : parent.width
-                height: width * 1.5
+                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
+                height: width * 1.3
                 anchors.horizontalCenter: parent.horizontalCenter
                 channel: 20
                 disEnableChannel: cameraAuto.channel
@@ -121,7 +121,7 @@ Item {
                         id: grid
                         anchors.fill: parent
                         columns: 2
-                        columnSpacing: parent.width * 0.3
+                        columnSpacing: parent.width * 0.35
                         rowSpacing: parent.height * 0.05
                         anchors.margins: parent.width * 0.1
                         Repeater {

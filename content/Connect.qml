@@ -13,15 +13,11 @@ Item {
         spacing: height * 0.08
         Row {
             width: parent.width
-            height: parent.height * 0.1
-        }
-        Row {
-            width: parent.width
             height: parent.height * 0.3
-            spacing: width * 0.02
+            spacing: width * 0.05
             Text {
                 id: timeText
-                width: parent.width * 0.65
+                width: parent.width * 0.6
                 height: parent.height
                 horizontalAlignment: Text.AlignRight
                 verticalAlignment: Text.AlignVCenter
@@ -30,13 +26,14 @@ Item {
                 font.family: Global.alibabaPuHuiTi.font.family
             }
             Rectangle {
-                height: parent.height
+                height: parent.height * 0.6
+                y: parent.height * 0.2
                 width: 2
                 color: Global.buttonTextColor
             }
             Text {
                 id: dateText
-                width: parent.width * 0.35
+                width: parent.width * 0.4
                 height: parent.height
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
@@ -58,12 +55,21 @@ Item {
                 }
             }
         }
-
         MyIconLabel {
             text: qsTr("正在连接中控...  ")
             height: parent.height * 0.2
             color: Global.buttonTextColor
             anchors.horizontalCenter: parent.horizontalCenter
+        }
+        ColorButton {
+            height: parent.height * 0.1
+            width: height * 4
+            text: "返回配置选择"
+            source: "qrc:/content/icons/back.png"
+            onClicked: {
+                Global.settings.configSetting = 0
+                Global.config = Global.configList[0]
+            }
         }
         MyIconLabel {
             text: Global.settings.ipAddress + ":" + Global.settings.ipPort + "@"
@@ -72,7 +78,6 @@ Item {
             color: Global.buttonTextColor
             anchors.right: parent.right
         }
-
         Rectangle {
             id: socketStatusProgress
             property real socketValue: 1
@@ -90,15 +95,12 @@ Item {
                 running: true
                 onStarted: {
                     tcpClient.disconnectFromServer()
-                    switch (Global.settings.configSetting) {
-                    case 0:
-                        Global.config = Global.haishi
-                        break
-                    case 1:
-                        Global.config = Global.shiyi
-                        break
+                    //初始化
+                    for (var i = 0; i <= 300; i++) {
+                        Global.digital[i] = false
+                        Global.analog[i] = 0
                     }
-
+                    //Global.digital[1] = true
                     if (Global.settings.demoMode) {
                         tcpClient.connectToServer("127.0.0.1", 41793)
                     } else {
