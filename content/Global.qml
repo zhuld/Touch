@@ -3,12 +3,31 @@ pragma Singleton
 import QtQuick
 import QtCore
 
+import "./Config"
+import "./Dialog"
+
 QtObject {
 
     property var digital: []
     property var analog: []
 
     //property var text: [] // not support yet
+    property var config
+
+    readonly property var haishi: Haishi410 {}
+    readonly property var shiyi: ShiyiMZ {}
+    readonly property ListModel configList: ListModel {
+        ListElement {
+            key: "海事大学沉浸教室410"
+        }
+        ListElement {
+            key: "市一门诊大楼指挥中心"
+        }
+    }
+
+    property ListModel dataList: ListModel {} //记录收发数据
+    property ListModel tabList: ListModel {} //tab页面
+
     readonly property color buttonColor: settings.darkTheme ? "dodgerblue" : "skyblue"
     readonly property color buttonCheckedColor: "darkorange"
     readonly property color backgroundColor: settings.darkTheme ? "#16417C" : "lavender"
@@ -27,16 +46,17 @@ QtObject {
     }
 
     property var settings: Settings {
-        property string ipAddress
-        property int ipPort
-        property int ipId
+        property int configSetting: 0
+        property string ipAddress: "192.168.1.10"
+        property int ipPort: 41794
+        property int ipId: 3
         property bool fullscreen: Qt.platform.os === "windows" ? false : true
         property string settingPassword: "123"
         property bool demoMode: false
         property bool showChannel: false
         property bool darkTheme: false
-        property int windowWidth: 1200
-        property int windowHeight: 800
+        property int windowWidth: 1600
+        property int windowHeight: 1000
         property bool tabOnBottom: false
     }
 }

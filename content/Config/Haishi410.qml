@@ -3,12 +3,9 @@ import QtQuick
 QtObject {
     readonly property string logoName: qsTr("海事大学")
     readonly property string titleName: qsTr("沉浸式教室")
-    readonly property string version: qsTr("202412")
+    readonly property string version: qsTr("202411")
     readonly property string background: "qrc:/content/images/haishi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
-    readonly property string cipServerIP: "192.168.1.10"
-    readonly property int cipPort: 41794
-    readonly property int ipId: 8
     readonly property int processDialogChannel: 1
 
     //页面List
@@ -35,7 +32,7 @@ QtObject {
             pageChannel: 13
         }
         ListElement {
-            name: qsTr("LED大屏")
+            name: qsTr("LED屏")
             pageUrl: "qrc:/qt/qml/content/Pages/Haishi/LED.qml"
             iconUrl: "qrc:/content/icons/led.png"
             test: false

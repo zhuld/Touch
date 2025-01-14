@@ -7,8 +7,9 @@ import "../"
 Item {
     id: control
     property alias content: content.data
+    property alias info: info.data
     property real widthRatio: 1
-    property alias lable: _lable.text
+    property string label
     height: parent.height - parent.width * 0.02
     width: (parent.width * 0.98 + parent.spacing) * widthRatio - parent.spacing
     Shape {
@@ -92,16 +93,10 @@ Item {
             }
         }
     }
-    Text {
-        id: _lable
-        text: qsTr("Label")
+    MyIconLabel {
+        text: control.label
         height: parent.height * 0.1
         width: parent.width
-        font.pixelSize: height * 0.5
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        color: Global.buttonTextColor
-        font.family: Global.alibabaPuHuiTi.font.family
     }
     Item {
         id: content
@@ -110,5 +105,14 @@ Item {
         anchors.bottomMargin: parent.height * 0.04
         anchors.leftMargin: parent.height * 0.04
         anchors.rightMargin: parent.height * 0.04
+    }
+    Item {
+        id: info
+        height: parent.height * 0.08
+        width: parent.width
+        anchors.top: parent.top
+        anchors.topMargin: parent.height * 0.01
+        anchors.left: parent.left
+        anchors.leftMargin: parent.height * 0.04
     }
 }

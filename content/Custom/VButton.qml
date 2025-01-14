@@ -2,22 +2,24 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
+import QtQuick.Templates as T
 
 import "../"
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-Item {
+T.Button {
     id: control
     property int channel
     property int disEnableChannel: 0
-    //property alias radius: back.radius
     property bool confirm: false
     property color btnColor: Global.buttonColor
 
-    property alias source: _icon.icon.source
-    property alias text: textLabel.text
-    property bool checked: Global.digital[control.channel] ? true : false
+    property string source
+    property color textColor: Global.buttonTextColor
+    property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
+
+    checked: Global.digital[control.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
@@ -26,12 +28,22 @@ Item {
     opacity: enabled ? 1 : 0.6
     Material.accent: Global.buttonTextColor
 
-    visible: control.channel === 0 ? false : true
-
-    Shape {
+    onPressedChanged: {
+        if (pressed) {
+            if (!confirm) {
+                CrestronCIP.push(control.channel)
+            } else {
+                confirmDialog.open()
+            }
+        } else {
+            if (!confirm) {
+                CrestronCIP.release(control.channel)
+            }
+        }
+    }
+    background: Shape {
         id: back
-        property int channel: control.channel
-        height: parent.height * 0.7
+        height: control.height * 0.7
         width: height
         y: control.checked ? height / 40 : 0
         anchors.horizontalCenter: parent.horizontalCenter
@@ -39,12 +51,6 @@ Item {
             NumberAnimation {
                 duration: 100
             }
-        }
-        MyIconLabel {
-            id: _icon
-            height: parent.height
-            width: parent.width
-            icon.color: control.checked ? Global.backgroundColor : Global.buttonTextColor
         }
         containsMode: Shape.FillContains
         layer.enabled: true
@@ -101,24 +107,11 @@ Item {
                 }
             }
         }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onPressedChanged: {
-                if (pressed) {
-                    if (!confirm) {
-                        CrestronCIP.push(control.channel)
-                    } else {
-                        confirmDialog.open()
-                    }
-                } else {
-                    if (!confirm) {
-                        CrestronCIP.release(control.channel)
-                    }
-                }
-            }
-        }
+    }
+    contentItem: MyIconLabel {
+        anchors.fill: back
+        icon.color: control.iconColor
+        icon.source: control.source
     }
     MyIconLabel {
         id: textLabel
@@ -126,6 +119,8 @@ Item {
         height: parent.height * 0.18
         font.pixelSize: height
         anchors.bottom: parent.bottom
+        color: control.textColor
+        text: control.text
     }
     Text {
         id: channel

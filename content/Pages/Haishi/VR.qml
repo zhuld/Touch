@@ -11,11 +11,13 @@ Item {
         spacing: width * 0.02
         Category {
             widthRatio: 0.3
-            lable: qsTr("输出")
+            label: qsTr("输出")
             content: Grid {
+                id: gridOutput
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(outputList.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(outputList.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: outputList
@@ -48,7 +50,7 @@ Item {
                         required property int disBtnChannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -60,11 +62,13 @@ Item {
 
         Category {
             widthRatio: 0.7
-            lable: qsTr("输入信号")
+            label: qsTr("输入信号")
             content: Grid {
+                id: gridInput
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(inputList.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(inputList.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: inputList
@@ -114,7 +118,7 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridInput.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

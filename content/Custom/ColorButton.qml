@@ -2,35 +2,37 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
+import QtQuick.Templates as T
 
-Item {
+T.Button {
     id: control
     property color btnColor: Global.backgroundColor
-    property color btnCheckColor: Global.buttonCheckedColor
-    property alias source: _icon.icon.source
-    property alias iconColor: _icon.icon.color
-    property alias text: _icon.text
-    property alias radius: pathRect.radius
-    property alias pressed: mouseArea.pressed
+    property color textColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
+    property color iconColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
+    property string source
+
+    property real radius: control.height / 5
 
     implicitHeight: parent.height
     implicitWidth: parent.width
-    Shape {
+
+    contentItem: MyIconLabel {
+        anchors.fill: back
+        icon.source: source
+        icon.color: control.iconColor
+        color: control.textColor
+        text: control.text
+    }
+    background: Shape {
         id: back
         height: parent.height
         width: parent.width
-        y: mouseArea.pressed ? height / 40 : 0
+        y: control.pressed ? height / 40 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         Behavior on y {
             NumberAnimation {
                 duration: 100
             }
-        }
-        MyIconLabel {
-            id: _icon
-            height: parent.height
-            width: parent.width
-            color: mouseArea.pressed ? Global.backgroundColor : Global.buttonTextColor
         }
         containsMode: Shape.FillContains
         layer.enabled: true
@@ -39,7 +41,7 @@ Item {
             shadowEnabled: !Qt.colorEqual(control.btnColor, "transparent")
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 4 : shadowHeight / 2
+            shadowVerticalOffset: control.pressed ? shadowHeight / 4 : shadowHeight / 2
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: 100
@@ -53,7 +55,7 @@ Item {
                 id: pathRect
                 x: 0
                 y: 0
-                radius: back.height / 5
+                radius: control.radius
                 width: back.width
                 height: back.height
             }
@@ -65,9 +67,9 @@ Item {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: mouseArea.pressed ? Qt.darker(btnCheckColor,
-                                                         1.4) : Qt.darker(
-                                                   btnColor, 1.4)
+                    color: control.pressed ? Qt.darker(
+                                                 Global.buttonCheckedColor,
+                                                 1.4) : Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -76,9 +78,10 @@ Item {
                 }
                 GradientStop {
                     position: 1
-                    color: mouseArea.pressed ? Qt.lighter(btnCheckColor,
-                                                          1.2) : Qt.lighter(
-                                                   btnColor, 1.2)
+                    color: control.pressed ? Qt.lighter(
+                                                 Global.buttonCheckedColor,
+                                                 1.2) : Qt.lighter(btnColor,
+                                                                   1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -86,11 +89,6 @@ Item {
                     }
                 }
             }
-        }
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
         }
     }
 }

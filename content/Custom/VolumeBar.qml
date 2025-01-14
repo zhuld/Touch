@@ -27,10 +27,10 @@ Item {
 
     Slider {
         id: slider
-        height: parent.height * 0.92
+        height: control.height * 0.92
         width: height * 0.3
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
+        anchors.top: control.top
         anchors.topMargin: -handle.height / 4
         orientation: Qt.Vertical
         live: false
@@ -44,7 +44,7 @@ Item {
 
         background: Shape {
             id: back
-            height: parent.availableHeight - handle.height + width
+            height: parent.height - handle.height + width
             width: parent.width * 0.05
             y: handle.height / 2 - width / 2
             anchors.horizontalCenter: parent.horizontalCenter
@@ -64,19 +64,6 @@ Item {
                     y2: pathRectangle.height / 2
                     x1: 0
                     x2: pathRectangle.width
-                    // GradientStop {
-                    //     position: 1
-                    //     color: Global.buttonCheckedColor
-                    // }
-                    // GradientStop {
-                    //     position: (maxVolume + 5) > 0 ? (maxVolume + 5)
-                    //                                     / (maxVolume - miniVolume) : 0
-                    //     color: Global.buttonCheckedColor
-                    // }
-                    // GradientStop {
-                    //     position: 0
-                    //     color: (maxVolume + 5) > 0 ? "red" : buttonCheckedColor
-                    // }
                     GradientStop {
                         position: 0
                         color: Qt.darker(Global.buttonCheckedColor, 1.4)
@@ -130,13 +117,11 @@ Item {
                                           index / 5) * 5 === index) ? 2 : 1
                         startX: (Math.floor(index / 5) * 5
                                  === index) ? parent.width * 0.25 : parent.width * 0.3
-                        startY: parent.handle.height / 2
-                                + (parent.availableHeight - parent.handle.height)
+                        startY: parent.handle.height / 2 + (parent.height - parent.handle.height)
                                 / (maxVolume - miniVolume) * index
                         PathLine {
                             x: parent.width * 0.4
-                            y: parent.handle.height / 2
-                               + (parent.availableHeight - parent.handle.height)
+                            y: parent.handle.height / 2 + (parent.height - parent.handle.height)
                                / (maxVolume - miniVolume) * index
                         }
                     }
@@ -147,14 +132,12 @@ Item {
                         strokeWidth: (Math.floor(
                                           index / 5) * 5 === index) ? 2 : 1
                         startX: width * 0.6
-                        startY: parent.handle.height / 2
-                                + (parent.availableHeight - parent.handle.height)
+                        startY: parent.handle.height / 2 + (parent.height - parent.handle.height)
                                 / (maxVolume - miniVolume) * index
                         PathLine {
                             x: (Math.floor(
                                     index / 5) * 5 === index) ? width * 0.8 : width * 0.7
-                            y: parent.handle.height / 2
-                               + (parent.availableHeight - parent.handle.height)
+                            y: parent.handle.height / 2 + (parent.height - parent.handle.height)
                                / (maxVolume - miniVolume) * index
                         }
                     }
@@ -167,7 +150,7 @@ Item {
                     height: parent.parent.handle.height
                     horizontalAlignment: Text.AlignRight
                     x: -width * 0.3
-                    y: (parent.parent.availableHeight - height) / (maxVolume - miniVolume) * index
+                    y: (parent.parent.height - height) / (maxVolume - miniVolume) * index
                     color: (-index + maxVolume)
                            <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                     font.pixelSize: height * 0.2
@@ -182,7 +165,7 @@ Item {
             width: parent.width * 0.3
             height: parent.width * 0.6
             anchors.horizontalCenter: parent.horizontalCenter
-            y: parent.visualPosition * (parent.availableHeight - height)
+            y: parent.visualPosition * (parent.height - height)
             z: 1
             gradient: Gradient {
                 GradientStop {

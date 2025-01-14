@@ -1,24 +1,22 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Templates as T
 
-Switch {
+T.Switch {
     id: control
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    indicator: Item {
-        anchors.fill: parent
-        Rectangle {
-            width: parent.width * 0.7
-            height: parent.height / 2
-            radius: height / 2
-            color: checked ? Global.buttonCheckedColor : Global.backgroundColor
-            border.color: Global.buttonTextColor
-            anchors.centerIn: parent
-            Behavior on color {
-                ColorAnimation {
-                    duration: 300
-                }
+    indicator: Rectangle {
+        width: parent.width
+        height: parent.height * 0.8
+        radius: height / 2
+        color: checked ? Global.buttonCheckedColor : Global.backgroundColor
+        border.color: Global.buttonTextColor
+        anchors.centerIn: parent
+        Behavior on color {
+            ColorAnimation {
+                duration: 300
             }
         }
 
@@ -37,10 +35,17 @@ Switch {
             }
             Text {
                 anchors.centerIn: parent
-                text: checked ? "✓" : ""
+                text: "✓"
+                opacity: checked ? 1 : 0
                 color: Global.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 font.family: Global.alibabaPuHuiTi.font.family
+                Behavior on opacity {
+                    NumberAnimation {
+                        easing.type: Easing.InOutQuad
+                        duration: 300
+                    }
+                }
             }
             Behavior on x {
                 NumberAnimation {

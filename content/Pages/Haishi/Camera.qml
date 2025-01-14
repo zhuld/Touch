@@ -11,8 +11,8 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            widthRatio: 0.6
-            lable: qsTr("摄像机控制")
+            widthRatio: 0.55
+            label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
                 width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
@@ -22,12 +22,14 @@ Item {
             }
         }
         Category {
-            widthRatio: 0.4
-            lable: qsTr("预置位")
+            widthRatio: 0.45
+            label: qsTr("预置位")
             content: Grid {
+                id: gridCamera
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(cameraList.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(cameraList.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: cameraList
@@ -67,7 +69,7 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridCamera.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

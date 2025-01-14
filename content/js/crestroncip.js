@@ -258,23 +258,28 @@ function toHexString(data, space) {
 }
 
 function recivedAppendList(message, index, payloadLength, detail) {
-    root.listModel.append({
-                              "time": new Date().toLocaleTimeString(
-                                          Qt.locale("zh_CN"), " hh:mm:ss"),
-                              "direction": "收",
-                              "data": toHexString(
-                                          message.slice(
-                                              index,
-                                              index + 3 + payloadLength), " "),
-                              "detail": detail
-                          })
+    if (Global.settings.showChannel) {
+        Global.dataList.append({
+                                   "time": new Date().toLocaleTimeString(
+                                               Qt.locale("zh_CN"), " hh:mm:ss"),
+                                   "direction": "收",
+                                   "data": toHexString(
+                                               message.slice(
+                                                   index,
+                                                   index + 3 + payloadLength),
+                                               " "),
+                                   "detail": detail
+                               })
+    }
 }
 function sendAppendList(data, detail) {
-    root.listModel.append({
-                              "time": new Date().toLocaleTimeString(
-                                          Qt.locale("zh_CN"), " hh:mm:ss"),
-                              "direction": "发",
-                              "data": toHexString(data, " "),
-                              "detail": detail
-                          })
+    if (Global.settings.showChannel) {
+        Global.dataList.append({
+                                   "time": new Date().toLocaleTimeString(
+                                               Qt.locale("zh_CN"), " hh:mm:ss"),
+                                   "direction": "发",
+                                   "data": toHexString(data, " "),
+                                   "detail": detail
+                               })
+    }
 }

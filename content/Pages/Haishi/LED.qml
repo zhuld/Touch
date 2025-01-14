@@ -12,18 +12,18 @@ Item {
         spacing: width * 0.02
         Category {
             widthRatio: 0.5
-            lable: qsTr("LED控制")
-            MyIconLabel {
+            label: qsTr("LED控制")
+            info: MyIconLabel {
+                height: parent.height
                 icon.source: "qrc:/content/icons/tishi.png"
-                height: parent.height * 0.1
                 text: qsTr("长按1秒")
-                anchors.right: parent.right
-                anchors.rightMargin: height / 4
             }
             content: Grid {
+                id: gridLed
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(ledList.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(ledList.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: ledList
@@ -53,7 +53,7 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridLed.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl
@@ -63,7 +63,7 @@ Item {
         }
         Category {
             widthRatio: 0.2
-            lable: qsTr("亮度")
+            label: qsTr("亮度")
             content: VolumeBar {
                 anchors.fill: parent
                 channel: 1

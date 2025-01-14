@@ -14,11 +14,10 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            lable: qsTr("测试")
+            label: qsTr("测试")
             widthRatio: 0.5
             content: Column {
                 anchors.fill: parent
-
                 Shape {
                     id: back
                     //property int channel: control.channel
@@ -71,7 +70,7 @@ Item {
                             focalY: slider1.position * back.height * 0.25 * 4
                             focalRadius: slider3.position * back.width * 2
                             GradientStop {
-                                position: 0
+                                position: 1
                                 color: mouseArea.pressed ? Qt.darker(
                                                                Global.buttonCheckedColor,
                                                                1.4) : Qt.darker(
@@ -84,7 +83,7 @@ Item {
                                 }
                             }
                             GradientStop {
-                                position: 1
+                                position: 0
                                 color: mouseArea.pressed ? Qt.lighter(
                                                                Global.buttonCheckedColor,
                                                                1.2) : Qt.lighter(
@@ -103,26 +102,17 @@ Item {
                         id: mouseArea
                         anchors.fill: parent
                         hoverEnabled: true
-                        // onPressedChanged: {
-                        //     if (pressed) {
-                        //         //playSound.play()
-                        //         if (!confirm) {
-                        //             CrestronCIP.push(control.channel)
-                        //         } else {
-                        //             confirmDialog.open()
-                        //         }
-                        //     } else {
-                        //         if (!confirm) {
-                        //             CrestronCIP.release(control.channel)
-                        //         }
-                        //     }
-                        // }
                     }
+                }
+
+                DelayButton {
+                    width: 200
+                    height: 100
                 }
             }
         }
         Category {
-            lable: qsTr("测试")
+            label: qsTr("测试")
             widthRatio: 0.5
             content: Column {
                 anchors.fill: parent
@@ -131,6 +121,7 @@ Item {
                     id: slider
                     width: 400
                     height: 100
+                    value: 0.5
                     from: 0
                     to: 1
                     stepSize: 0.01
@@ -145,6 +136,7 @@ Item {
                     id: slider1
                     width: 400
                     height: 100
+                    value: 1
                     from: 0
                     to: 1
                     stepSize: 0.01
@@ -159,6 +151,7 @@ Item {
                     id: slider2
                     width: 400
                     height: 100
+                    value: 1
                     from: 0
                     to: 1
                     stepSize: 0.01

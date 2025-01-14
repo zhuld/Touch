@@ -65,7 +65,7 @@ Item {
                 required property int minVol
                 required property int maxVol
                 required property bool inputType
-                lable: name
+                label: name
                 content: VolumeBar {
                     anchors.fill: parent
                     channel: vChannel

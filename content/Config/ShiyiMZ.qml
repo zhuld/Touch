@@ -3,12 +3,9 @@ import QtQuick
 QtObject {
     readonly property string logoName: qsTr("上海市第一人民医院")
     readonly property string titleName: qsTr("门诊大楼指挥中心")
-    readonly property string version: qsTr("202411")
+    readonly property string version: qsTr("202501")
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
-    readonly property string cipServerIP: "192.168.1.10"
-    readonly property int cipPort: 41794
-    readonly property int ipId: 8
     readonly property int processDialogChannel: 1
 
     //页面List

@@ -8,8 +8,8 @@ Item {
     property int input
     property color btnColor: Global.buttonCheckedColor
     property color btnTextColor: Global.buttonTextColor
-    property alias textInput: icon.text
-    property alias iconSource: icon.icon.source
+    property string textInput
+    property string iconSource
 
     property real dragX
     property real dragY
@@ -39,7 +39,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        drag.target: parent
+        drag.target: dragButton
         onPressedChanged: {
             dragButton.pressedChanged(mouseArea.pressed)
             if (pressed) {
@@ -55,6 +55,7 @@ Item {
     }
 
     Shape {
+        id: back
         width: parent.width
         height: parent.height
         y: mouseArea.pressed ? height / 40 : 0
@@ -75,10 +76,8 @@ Item {
                 focalX: 0
                 focalY: 0
                 GradientStop {
-                    position: 1
-                    color: mouseArea.pressed ? Qt.lighter(btnColor,
-                                                          1.0) : Qt.lighter(
-                                                   btnColor, 1.3)
+                    position: mouseArea.pressed ? 0 : 1
+                    color: Qt.lighter(btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -86,10 +85,8 @@ Item {
                     }
                 }
                 GradientStop {
-                    position: 0
-                    color: mouseArea.pressed ? Qt.darker(btnColor,
-                                                         1.7) : Qt.darker(
-                                                   btnColor, 1.4)
+                    position: mouseArea.pressed ? 1 : 0
+                    color: Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: 100
@@ -99,9 +96,11 @@ Item {
             }
         }
         MyIconLabel {
-            id: icon
+            font.pixelSize: height * 0.35
             height: parent.height
             width: parent.width
+            text: dragButton.textInput
+            icon.source: dragButton.iconSource
         }
         layer.enabled: true
         layer.effect: MultiEffect {
@@ -132,11 +131,4 @@ Item {
     }
     Drag.keys: [input, btnColor]
     Drag.active: mouseArea.drag.active
-    Rectangle {
-        id: back
-        anchors.fill: parent
-        radius: height / 5
-        color: btnColor
-        opacity: 0.2
-    }
 }

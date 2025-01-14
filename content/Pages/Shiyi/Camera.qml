@@ -13,11 +13,11 @@ Item {
         spacing: width * 0.02
         Category {
             widthRatio: 0.5
-            lable: qsTr("摄像机控制")
+            label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
-                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
-                height: width * 1.3
+                width: parent.width * 1.5 > parent.height ? parent.height / 1.5 : parent.width
+                height: width * 1.5
                 anchors.horizontalCenter: parent.horizontalCenter
                 channel: 20
                 disEnableChannel: cameraAuto.channel
@@ -25,23 +25,12 @@ Item {
         }
         Category {
             widthRatio: 0.5
-            lable: qsTr("摄像跟踪")
-            MySwitch {
+            label: qsTr("摄像跟踪")
+            info: MySwitch {
                 id: cameraAuto
-                height: parent.height * 0.06
                 channel: 40
-                anchors.top: parent.top
-                anchors.topMargin: height * 0.4
-                anchors.right: parent.right
-                anchors.rightMargin: height * 0.4
-                Text {
-                    height: parent.height
-                    text: parent.checked ? "自动" : "手动"
-                    font.pixelSize: parent.height * 0.7
-                    color: Global.buttonTextColor
-                    anchors.right: parent.left
-                    font.family: Global.alibabaPuHuiTi.font.family
-                }
+                text: checked ? "自动" : "手动"
+                height: parent.height
             }
             content: Item {
                 anchors.fill: parent
@@ -73,7 +62,7 @@ Item {
                 Shape {
                     id: back
                     width: parent.width * (Global.settings.tabOnBottom ? 0.6 : 0.8)
-                    height: parent.height * 0.9
+                    height: parent.height * 0.86
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
                     containsMode: Shape.FillContains
@@ -185,8 +174,8 @@ Item {
                                 required property string label
                                 width: (grid.width + grid.columnSpacing)
                                        / grid.columns - grid.columnSpacing
-                                height: (grid.height + grid.rowSpacing) / positionList.count
-                                        * grid.columns - grid.rowSpacing
+                                height: width
+                                radius: height / 2
                                 channel: btnchannel
                                 text: label
                                 disEnableChannel: cameraAuto.channel

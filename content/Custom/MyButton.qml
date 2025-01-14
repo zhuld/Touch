@@ -3,22 +3,23 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtMultimedia
-
+import QtQuick.Templates as T
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-Item {
+T.Button {
     id: control
     property int channel
     property int disEnableChannel: 0
-    property alias radius: pathRect.radius
     property bool confirm: false
     property color btnColor: Global.buttonColor
 
-    property alias source: _icon.icon.source
-    property alias iconColor: _icon.icon.color
-    property alias text: _icon.text
-    property bool checked: Global.digital[control.channel] ? true : false
+    property real radius: control.height / 5
+    property string source
+    property color textColor: checked ? Global.backgroundColor : Global.buttonTextColor
+    property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
+
+    checked: Global.digital[control.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
@@ -27,26 +28,37 @@ Item {
     opacity: enabled ? 1 : 0.6
     Material.accent: Global.buttonTextColor
 
-    Shape {
+    onPressedChanged: {
+        if (pressed) {
+            //playSound.play()
+            if (!confirm) {
+                CrestronCIP.push(control.channel)
+            } else {
+                confirmDialog.open()
+            }
+        } else {
+            if (!confirm) {
+                CrestronCIP.release(control.channel)
+            }
+        }
+    }
+    contentItem: MyIconLabel {
+        anchors.fill: back
+        color: control.textColor
+        icon.color: control.iconColor
+        icon.source: control.source
+        text: control.text
+    }
+    background: Shape {
         id: back
-        property int channel: control.channel
         height: parent.height
         width: parent.width
         y: control.checked ? height / 40 : 0
-        anchors.horizontalCenter: parent.horizontalCenter
         Behavior on y {
             NumberAnimation {
                 duration: 100
             }
         }
-        MyIconLabel {
-            id: _icon
-            height: parent.height
-            width: parent.width
-            color: control.checked ? Global.backgroundColor : Global.buttonTextColor
-            icon.color: control.checked ? Global.backgroundColor : Global.buttonTextColor
-        }
-
         containsMode: Shape.FillContains
         layer.enabled: true
         layer.samples: 16
@@ -68,7 +80,7 @@ Item {
                 id: pathRect
                 x: 0
                 y: 0
-                radius: back.height / 5
+                radius: control.radius
                 width: back.width
                 height: back.height
             }
@@ -99,25 +111,6 @@ Item {
                         ColorAnimation {
                             duration: 100
                         }
-                    }
-                }
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onPressedChanged: {
-                if (pressed) {
-                    //playSound.play()
-                    if (!confirm) {
-                        CrestronCIP.push(control.channel)
-                    } else {
-                        confirmDialog.open()
-                    }
-                } else {
-                    if (!confirm) {
-                        CrestronCIP.release(control.channel)
                     }
                 }
             }

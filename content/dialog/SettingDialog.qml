@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import "../Custom/"
+import "../Config"
 
 Dialog {
     id: rootSetting
@@ -50,9 +51,21 @@ Dialog {
             layoutDirection: Qt.RightToLeft
 
             ColorButton {
+                id: settingOK
+                width: parent.width * 0.2
+                height: parent.height * 0.6
+                text: "确定"
+                onPressedChanged: {
+                    if (!pressed) {
+                        rootSetting.accept()
+                    }
+                }
+                btnColor: Global.buttonColor
+            }
+            ColorButton {
                 id: settingApply
-                width: parent.width * 0.16
-                height: parent.height * 0.5
+                width: parent.width * 0.2
+                height: parent.height * 0.6
                 text: "应用"
                 onPressedChanged: {
                     if (!pressed) {
@@ -62,8 +75,8 @@ Dialog {
             }
             ColorButton {
                 id: settingCancel
-                width: parent.width * 0.16
-                height: parent.height * 0.5
+                width: parent.width * 0.2
+                height: parent.height * 0.6
                 text: "取消"
                 onPressedChanged: {
                     if (!pressed) {
@@ -71,22 +84,11 @@ Dialog {
                     }
                 }
             }
-            ColorButton {
-                id: settingOK
-                width: parent.width * 0.16
-                height: parent.height * 0.5
-                text: "确定"
-                onPressedChanged: {
-                    if (!pressed) {
-                        rootSetting.accept()
-                    }
-                }
-            }
             Text {
-                width: parent.width * 0.46
+                width: parent.width * 0.34
                 height: parent.height * 0.6
-                text: "系统设置\n\rV" + config.version
-                font.pixelSize: height * 0.5
+                text: "系统设置\n请勿随意修改\nV" + Global.config.version
+                font.pixelSize: height * 0.35
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignLeft
                 color: Global.buttonTextColor
@@ -110,18 +112,64 @@ Dialog {
                 columns: 2
                 spacing: rootSetting.height * 0.01
                 Text {
+                    text: "配置选择"
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.7
+                    color: Global.buttonTextColor
+                    font.family: Global.alibabaPuHuiTi.font.family
+                }
+                ComboBox {
+                    id: configSetting
+                    width: parent.width * 0.6
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.6
+                    textRole: "key"
+                    model: Global.configList
+                    currentIndex: Global.settings.configSetting
+
+                    delegate: ItemDelegate {
+                        contentItem: Text {
+                            text: modelData
+                            font.pixelSize: configSetting.font.pixelSize
+                            height: configSetting.height
+                            width: configSetting.width
+                            color: Global.buttonTextColor
+                        }
+                    }
+                    popup: Popup {
+                        y: configSetting.height
+                        width: configSetting.width
+                        implicitHeight: contentItem.implicitHeight
+                        padding: 1
+
+                        contentItem: ListView {
+                            clip: true
+                            implicitHeight: contentHeight
+                            model: configSetting.popup.visible ? configSetting.delegateModel : null
+                            currentIndex: configSetting.highlightedIndex
+                        }
+
+                        background: Rectangle {
+                            color: Global.buttonColor
+                            radius: 2
+                        }
+                    }
+                }
+
+                Text {
                     text: "中控IP地址"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: ipAddress
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
-                    font.pixelSize: height * 0.7
+                    width: parent.width * 0.6
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.6
                     text: Global.settings.ipAddress
                     inputMethodHints: Qt.ImhDigitsOnly
                     validator: RegularExpressionValidator {
@@ -133,22 +181,21 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    enabled: !demoMode.checked
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 Text {
                     text: "中控端口"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: ipPort
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
-                    font.pixelSize: height * 0.7
+                    width: parent.width * 0.6
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.6
                     text: Global.settings.ipPort
                     inputMethodHints: Qt.ImhDigitsOnly
                     validator: IntValidator {
@@ -161,22 +208,21 @@ Dialog {
                             scrollView.ScrollBar.vertical.position = y / scrollView.contentHeight
                         }
                     }
-                    enabled: !demoMode.checked
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 Text {
                     text: "程序IPID"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: ipId
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
-                    font.pixelSize: height * 0.7
+                    width: parent.width * 0.6
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.6
                     text: Global.settings.ipId
                     inputMethodHints: Qt.ImhDigitsOnly
                     validator: IntValidator {
@@ -193,47 +239,47 @@ Dialog {
                 }
                 Text {
                     text: demoMode.checked ? "演示模式" : "连接模式"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height /15
-                    width: height * 2
+                    height: rootSetting.height / 15
+                    width: height * 1.6
                     id: demoMode
                     checked: Global.settings.demoMode
                 }
                 Text {
                     text: fullscreen.checked ? "全屏显示" : "窗口模式"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                     visible: Qt.platform.os === "windows"
                 }
                 ColorSwitch {
-                    height: rootSetting.height /15
-                    width: height * 2
+                    height: rootSetting.height / 15
+                    width: height * 1.6
                     id: fullscreen
                     checked: Global.settings.fullscreen
                     visible: Qt.platform.os === "windows"
                 }
                 Text {
                     text: "系统设置密码"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: settingPassword
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
-                    font.pixelSize: height * 0.7
+                    width: parent.width * 0.6
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.6
                     text: Global.settings.settingPassword
                     inputMethodHints: Qt.ImhDigitsOnly
                     validator: IntValidator {
@@ -250,43 +296,43 @@ Dialog {
                 }
                 Text {
                     text: showChannel.checked ? "显示调试信息" : "隐藏调试信息"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height /15
-                    width: height * 2
+                    height: rootSetting.height / 15
+                    width: height * 1.6
                     id: showChannel
                     checked: Global.settings.showChannel
                 }
                 Text {
                     text: darkTheme.checked ? "深色主题" : "浅色主题"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height /15
-                    width: height * 2
+                    height: rootSetting.height / 15
+                    width: height * 1.6
                     id: darkTheme
                     checked: Global.settings.darkTheme
                 }
                 Text {
                     text: tabPosition.checked ? "底部导航栏" : "左侧导航栏"
-                    width: parent.width * 0.5
-                    height: rootSetting.height /15
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height /15
-                    width: height * 2
+                    height: rootSetting.height / 15
+                    width: height * 1.6
                     id: tabPosition
                     checked: Global.settings.tabOnBottom
                 }
@@ -303,6 +349,7 @@ Dialog {
     }
 
     onRejected: {
+        configSetting.currentIndex = Global.settings.configSetting
         ipAddress.text = Global.settings.ipAddress
         ipPort.text = Global.settings.ipPort
         ipId.text = Global.settings.ipId
@@ -315,6 +362,10 @@ Dialog {
         Global.settings.sync()
     }
     function apply() {
+        if (Global.settings.configSetting !== configSetting.currentIndex) {
+            Global.settings.configSetting = configSetting.currentIndex
+            root.running = false
+        }
         Global.settings.ipAddress = ipAddress.text
         Global.settings.ipPort = ipPort.text
         Global.settings.ipId = ipId.text

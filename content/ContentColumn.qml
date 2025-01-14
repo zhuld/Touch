@@ -12,14 +12,11 @@ Item {
     anchors.fill: parent
     anchors.leftMargin: parent.width * 0.02
 
-    ListModel {
-        id: filteredModel
-    }
     ProcessDialog {
         id: processDialog
         dialogInfomation: "正在执行指令，请稍后..."
         dialogTitle: "提示"
-        channel: config.processDialogChannel
+        channel: Global.config.processDialogChannel
         autoClose: 50
     }
     Column {
@@ -30,7 +27,7 @@ Item {
         spacing: height * 0.03
         Repeater {
             id: repeater
-            model: filteredModel
+            model: Global.tabList
             delegate: MyTabButton {
                 id: tabButton
                 required property string name
@@ -39,9 +36,9 @@ Item {
                 required property int pageChannel
                 text: name
                 width: parent.width
-                height: (parent.height + parent.spacing) / (filteredModel.count) - parent.spacing
+                height: (parent.height + parent.spacing) / (Global.tabList.count) - parent.spacing
                         < width ? (parent.height + parent.spacing)
-                                  / (filteredModel.count) - parent.spacing : width
+                                  / (Global.tabList.count) - parent.spacing : width
                 source: iconUrl
                 channel: pageChannel
                 onCheckedChanged: {
@@ -58,7 +55,7 @@ Item {
         width: parent.width * 0.98 - tabBar.width
         height: parent.height
         Repeater {
-            model: filteredModel
+            model: Global.tabList
             delegate: Loader {
                 required property string pageUrl
                 id: pageLoader
@@ -73,23 +70,23 @@ Item {
     }
     Component.onCompleted: {
         // Clear the filtered model
-        filteredModel.clear()
-        // Loop through original model and add filtered items to filteredModel
-        for (var i = 0; i < config.pageList.count; i++) {
-            var item = config.pageList.get(i)
+        Global.tabList.clear()
+        // Loop through original model and add filtered items to Global.tabList
+        for (var i = 0; i < Global.config.pageList.count; i++) {
+            var item = Global.config.pageList.get(i)
             if (!item.test || Global.settings.showChannel) {
-                filteredModel.append(item)
+                Global.tabList.append(item)
             }
         }
     }
     Connections {
         target: settingDialog
         onShowChannelChanged: {
-            filteredModel.clear()
-            for (var i = 0; i < config.pageList.count; i++) {
-                var item = config.pageList.get(i)
+            Global.tabList.clear()
+            for (var i = 0; i < Global.config.pageList.count; i++) {
+                var item = Global.config.pageList.get(i)
                 if (!item.test || Global.settings.showChannel) {
-                    filteredModel.append(item)
+                    Global.tabList.append(item)
                 }
             }
         }

@@ -8,7 +8,6 @@ import "../Dialog"
 
 Item {
     id: control
-
     MouseArea {
         property var clickPosition: Qt.point(0, 0)
         anchors.fill: parent
@@ -25,7 +24,7 @@ Item {
     }
     Text {
         id: titleLogo
-        text: config.logoName
+        text: Global.config.logoName
         height: parent.height
         anchors.left: parent.left
         verticalAlignment: Text.AlignVCenter
@@ -36,7 +35,7 @@ Item {
 
     Text {
         id: titleName
-        text: config.titleName + (Global.settings.demoMode ? "-演示" : "")
+        text: Global.config.titleName + (Global.settings.demoMode ? "-演示" : "")
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
@@ -72,7 +71,7 @@ Item {
         ColorSwitch {
             id: themeSwtich
             height: parent.height * 0.6
-            width: height * 1.5
+            width: height * 1.2
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 Global.settings.darkTheme = !Global.settings.darkTheme
@@ -85,10 +84,8 @@ Item {
             height: parent.height
             width: height
             source: "qrc:/content/icons/config.png"
-            onPressedChanged: {
-                if (pressed) {
-                    passwordDialog.open()
-                }
+            onClicked: {
+                passwordDialog.open()
             }
             btnColor: "transparent"
         }
@@ -98,10 +95,8 @@ Item {
             width: height
             source: "qrc:/content/icons/close.png"
             btnColor: "transparent"
-            onPressedChanged: {
-                if (pressed) {
-                    closeDialog.open()
-                }
+            onClicked: {
+                closeDialog.open()
             }
             visible: Qt.platform.os === "windows" ? true : false
         }

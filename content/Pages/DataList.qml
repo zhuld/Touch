@@ -13,7 +13,7 @@ Item {
         anchors.fill: parent
         spacing: width * 0.02
         Category {
-            lable: qsTr("收发数据")
+            label: qsTr("收发数据")
             ColorButton {
                 text: "清除"
                 anchors.top: parent.top
@@ -24,7 +24,7 @@ Item {
                 height: parent.height * 0.06
                 onPressedChanged: {
                     if (!pressed) {
-                        root.listModel.clear()
+                        Global.dataList.clear()
                     }
                 }
             }
@@ -34,11 +34,11 @@ Item {
                 clip: true
                 ListView {
                     width: scrollView.width
-                    model: root.listModel
+                    model: Global.dataList
                     delegate: Rectangle {
                         id: dataRect
                         width: scrollView.width
-                        height: scrollView.height * 0.05
+                        height: scrollView.height * 0.04
                         color: model.direction
                                === "发" ? Global.buttonColor : Global.buttonCheckedColor
                         Row {

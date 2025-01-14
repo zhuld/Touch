@@ -54,7 +54,7 @@ Dialog {
         MyIconLabel {
             id: info
             height: parent.height * 0.38
-            width: parent.width
+            //width: parent.width
             color: Global.buttonTextColor
             icon.color: Global.buttonTextColor
         }
@@ -62,9 +62,10 @@ Dialog {
             width: parent.width
             height: parent.height * 0.3
             spacing: width * 0.06
+            layoutDirection: Qt.RightToLeft
             ColorButton {
                 id: settingOK
-                width: parent.width * 0.47
+                width: parent.width * 0.4
                 height: parent.height
                 text: "确定"
                 onPressedChanged: {
@@ -72,10 +73,11 @@ Dialog {
                         confirm()
                     }
                 }
+                btnColor: Global.buttonColor
             }
             ColorButton {
                 id: settingCancel
-                width: parent.width * 0.47
+                width: parent.width * 0.4
                 height: parent.height
                 text: "取消"
                 onPressedChanged: {

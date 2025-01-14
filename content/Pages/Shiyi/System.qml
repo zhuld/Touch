@@ -10,12 +10,14 @@ Item {
     Row {
         anchors.fill: parent
         spacing: width * 0.02
-
         Category {
             widthRatio: 0.5
-            lable: qsTr("会议模式")
-            content: Column {
+            label: qsTr("会议模式")
+            content: Grid {
+                id: gridSystem
+                rows: Global.settings.tabOnBottom ? 3 : 4
                 anchors.fill: parent
+                columns: Math.ceil(systemList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -56,9 +58,8 @@ Item {
                         required property string iconUrl
                         required property bool showDialog
                         required property color bColor
-                        width: parent.width
-                        height: (parent.height * (Global.settings.tabOnBottom ? 1 : 0.8)
-                                 + parent.spacing) / systemList.count - parent.spacing
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / gridSystem.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -72,10 +73,12 @@ Item {
 
         Category {
             widthRatio: 0.5
-            lable: qsTr("信号选择")
+            label: qsTr("信号选择")
             content: Grid {
+                id: gridMode
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(modeList.count / 3)
+                columns: Math.ceil(modeList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -107,12 +110,11 @@ Item {
                         }
                     }
                     delegate: VButton {
-                        id: myButton
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridMode.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

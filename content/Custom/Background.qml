@@ -6,7 +6,9 @@ import "../"
 
 Rectangle {
     id: control
-    anchors.fill: parent
+    implicitHeight: parent.height
+    implicitWidth: parent.width
+    //anchors.fill: parent
     color: "transparent"
     Shape {
         id: back

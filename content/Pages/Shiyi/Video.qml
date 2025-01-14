@@ -12,16 +12,19 @@ Item {
         spacing: width * 0.02
         Category {
             widthRatio: 0.35
-            lable: qsTr("输出")
-            content: Column {
+            label: qsTr("输出")
+            content: Grid {
+                id: gridOutput
+                rows: 5
                 anchors.fill: parent
+                columns: Math.ceil(outputList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     id: outputRepeater
                     model: ListModel {
                         id: outputList
                         ListElement {
-                            name: qsTr("显示屏")
+                            name: qsTr("大屏")
                             outputChannel: 1
                         }
                         ListElement {
@@ -30,21 +33,27 @@ Item {
                             disable: "3"
                         }
                         ListElement {
-                            name: qsTr("远程会议辅流")
+                            name: qsTr("远程会议内容")
                             outputChannel: 3
                             disable: "1"
                         }
                         ListElement {
-                            name: qsTr("预留输出")
+                            name: qsTr("预留输出1")
                             outputChannel: 4
+                            disable: "6"
+                        }
+                        ListElement {
+                            name: qsTr("预留输出2")
+                            outputChannel: 5
+                            disable: "7"
                         }
                     }
                     delegate: Output {
                         required property string name
                         required property int outputChannel
                         required property int disable
-                        width: parent.width
-                        height: (parent.height + parent.spacing) / outputList.count - parent.spacing
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
                         output: outputChannel
                         textOutput: name
                         disableInput: disable
@@ -55,10 +64,17 @@ Item {
         }
         Category {
             widthRatio: 0.65
-            lable: qsTr("输入信号")
+            label: qsTr("输入信号")
+            info: MyIconLabel {
+                height: parent.height
+                icon.source: "qrc:/content/icons/tishi.png"
+                text: qsTr("拖拽输入信号到输出")
+            }
             content: Grid {
+                id: gridInput
+                rows: 5
                 anchors.fill: parent
-                columns: Math.ceil(inputList.count / 4)
+                columns: Math.ceil(inputList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -76,7 +92,7 @@ Item {
                             source: "qrc:/content/icons/zhuji.png"
                         }
                         ListElement {
-                            name: qsTr("视频会议")
+                            name: qsTr("院内视频会议")
                             inputChannel: 3
                             bgColor: "forestgreen"
                             source: "qrc:/content/icons/shipinhuiyi.png"
@@ -105,12 +121,12 @@ Item {
                             bgColor: "gold"
                             source: "qrc:/content/icons/HDMIjiekou.png"
                         }
-                        ListElement {
-                            name: qsTr("预留输入3")
-                            inputChannel: 8
-                            bgColor: "lightslategrey"
-                            source: "qrc:/content/icons/HDMIjiekou.png"
-                        }
+                        // ListElement {
+                        //     name: qsTr("预留输入3")
+                        //     inputChannel: 8
+                        //     bgColor: "lightslategrey"
+                        //     source: "qrc:/content/icons/HDMIjiekou.png"
+                        // }
                     }
                     delegate: InputButton {
                         required property string name
@@ -119,7 +135,7 @@ Item {
                         required property string source
                         required property int index
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height * 0.8 + parent.spacing) / 4 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridInput.rows - parent.spacing
                         btnColor: bgColor
                         textInput: name
                         input: inputChannel
@@ -134,11 +150,6 @@ Item {
                                               }
                                           }
                     }
-                }
-                MyIconLabel {
-                    icon.source: "qrc:/content/icons/tishi.png"
-                    height: parent.height * 0.12
-                    text: qsTr("拖拽输入信号到输出")
                 }
             }
         }

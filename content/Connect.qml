@@ -90,6 +90,15 @@ Item {
                 running: true
                 onStarted: {
                     tcpClient.disconnectFromServer()
+                    switch (Global.settings.configSetting) {
+                    case 0:
+                        Global.config = Global.haishi
+                        break
+                    case 1:
+                        Global.config = Global.shiyi
+                        break
+                    }
+
                     if (Global.settings.demoMode) {
                         tcpClient.connectToServer("127.0.0.1", 41793)
                     } else {

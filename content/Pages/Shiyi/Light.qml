@@ -13,11 +13,13 @@ Item {
         spacing: width * 0.02
 
         Category {
-            widthRatio: 0.6
-            lable: qsTr("单独控制")
+            widthRatio: 0.5
+            label: qsTr("单独控制")
             content: Grid {
+                id: gridLight
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(lightList.count / 3)
+                columns: Math.ceil(lightList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -53,18 +55,20 @@ Item {
                         text: name
                         channel: btnChannel
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / lightList.count
-                                * parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / gridLight.rows - parent.spacing
                         source: checked ? "qrc:/content/icons/deng.png" : "qrc:/content/icons/dengju.png"
                     }
                 }
             }
         }
         Category {
-            widthRatio: 0.4
-            lable: qsTr("灯光模式")
-            content: Column {
+            widthRatio: 0.5
+            label: qsTr("灯光模式")
+            content: Grid {
+                id: gridMode
+                rows: lightModeList.count
                 anchors.fill: parent
+                columns: Math.ceil(lightModeList.count / rows)
                 spacing: height * 0.05
                 Repeater {
                     model: ListModel {
@@ -91,13 +95,11 @@ Item {
                         }
                     }
                     delegate: MyButton {
-                        id: myButton
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: parent.width
-                        height: (parent.height + parent.spacing)
-                                / lightModeList.count - parent.spacing
+                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
+                        height: (parent.height + parent.spacing) / gridMode.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

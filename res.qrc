@@ -42,7 +42,6 @@
         <file>content/icons/Maximized.png</file>
         <file>content/icons/MinimizedWindow.png</file>
         <file>content/icons/windowed.png</file>
-        <file>content/icons/config.png</file>
         <file>content/icons/warn.png</file>
         <file>content/fonts/AlibabaPuHuiTi-3-55-Regular.ttf</file>
         <file>content/icons/table.png</file>
@@ -58,5 +57,6 @@
         <file>content/icons/danhuamian.png</file>
         <file>content/images/haishi.jpg</file>
         <file>content/icons/tishi.png</file>
+        <file>content/icons/config.png</file>
     </qresource>
 </RCC>

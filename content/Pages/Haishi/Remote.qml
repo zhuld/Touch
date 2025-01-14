@@ -12,11 +12,13 @@ Item {
         spacing: width * 0.02
         Category {
             widthRatio: 0.3
-            lable: qsTr("输出")
-           content: Grid {
+            label: qsTr("输出")
+            content: Grid {
+                id: gridOutput
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(listOutput.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(listOutput.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: listOutput
@@ -45,7 +47,7 @@ Item {
                         required property int disBtnChannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -57,11 +59,13 @@ Item {
 
         Category {
             widthRatio: 0.4
-            lable: qsTr("输入信号")
-            content:Grid {
+            label: qsTr("输入信号")
+            content: Grid {
+                id: gridInput
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(listInput.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(listInput.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: listInput
@@ -101,7 +105,7 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridInput.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl
@@ -112,11 +116,13 @@ Item {
 
         Category {
             widthRatio: 0.3
-            lable: qsTr("智能模式")
-            content:Grid {
+            label: qsTr("智能模式")
+            content: Grid {
+                id: gridRemote
+                rows: 3
                 anchors.fill: parent
-                columns: Math.ceil(remoteMode.count / 3)
-                spacing: height * 0.1
+                columns: Math.ceil(remoteMode.count / rows)
+                spacing: height * 0.05
                 Repeater {
                     model: ListModel {
                         id: remoteMode
@@ -141,7 +147,7 @@ Item {
                         required property int btnchannel
                         required property string iconUrl
                         width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / 3 - parent.spacing
+                        height: (parent.height + parent.spacing) / gridRemote.rows - parent.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

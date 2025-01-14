@@ -11,41 +11,59 @@ import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
-    //Haishi410 {
-    ShiyiMZ {
-        id: config
-    }
+
     property real channelSize: height * 0.02
     property real shadowHeight: height * 0.006
 
-    property ListModel listModel: ListModel {}
+    //property string logoImage: Global.config.logoImage
+    readonly property PasswordDialog passwordDialog: PasswordDialog {
+        onPasswordEnter: password => {
+                             if ((password === "314159")
+                                 | (password === Global.settings.settingPassword)) {
+                                 settingDialog.open()
+                                 passwordDialog.close()
+                             } else {
+                                 passwordDialog.error = true
+                             }
+                         }
+    }
+    readonly property SettingDialog settingDialog: SettingDialog {}
+    readonly property ConfirmDialog closeDialog: ConfirmDialog {
+        dialogIcon: "qrc:/content/icons/warn.png"
+        dialogInfomation: "确定关闭程序？"
+        dialogTitle: "提示"
+        onConfirm: {
+            closeDialog.close()
+            root.close()
+        }
+    }
 
-    //property string logoImage: config.logoImage
     property alias running: ping.running
+    Timer {
+        id: ping
+        interval: 15000
+        repeat: true
+        onTriggered: CrestronCIP.ping()
+    }
+
     width: Global.settings.windowWidth
     height: Global.settings.windowHeight
-    minimumWidth: 1200
-    minimumHeight: 800
+    minimumWidth: 1600
+    minimumHeight: 1000
 
-    title: config.logoName + config.titleName
+    title: Global.config.logoName + Global.config.titleName
 
     visibility: Global.settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
     color: "transparent"
     Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
     Rectangle {
-        id: background
         anchors.fill: parent
         color: Global.backgroundColor
         Image {
             anchors.fill: parent
-            source: config.background
+            source: Global.config.background
             opacity: ping.running ? 0.3 : 0.6
-            Behavior on opacity {
-                OpacityAnimator {
-                    duration: 100
-                }
-            }
         }
     }
     TitleBar {
@@ -53,7 +71,6 @@ Window {
         width: parent.width * 0.96
         height: parent.height * 0.07
         x: parent.width * 0.02
-        z: 1
     }
 
     MouseArea {
@@ -116,35 +133,6 @@ Window {
         width: parent.width
         height: parent.height - titleBar.height
         source: ping.running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : "qrc:/qt/qml/content/Connect.qml"
-    }
-    PasswordDialog {
-        id: passwordDialog
-        onPasswordEnter: password => {
-                             if ((password === "314159")
-                                 | (password === Global.settings.settingPassword)) {
-                                 settingDialog.open()
-                                 passwordDialog.close()
-                             }
-                         }
-    }
-    SettingDialog {
-        id: settingDialog
-    }
-    ConfirmDialog {
-        id: closeDialog
-        dialogIcon: "qrc:/content/icons/warn.png"
-        dialogInfomation: "确定关闭程序？"
-        dialogTitle: "提示"
-        onConfirm: {
-            closeDialog.close()
-            root.close()
-        }
-    }
-    Timer {
-        id: ping
-        interval: 15000
-        repeat: true
-        onTriggered: CrestronCIP.ping()
     }
 
     Connections {

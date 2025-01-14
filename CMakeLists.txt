@@ -22,7 +22,7 @@ qt_add_executable(TouchApp
 )
 qt_policy(SET QTP0004 NEW)
 
-qt_add_resources(TouchApp "configuration"
+qt_add_resources(TouchApp "Global.configuration"
     PREFIX "/"
     FILES
         qtquickcontrols2.conf

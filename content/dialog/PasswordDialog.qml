@@ -8,8 +8,8 @@ Dialog {
 
     readonly property real ratio: 0.9
     property int autoClose: 30
-
     property int during
+    property bool error: false
 
     implicitWidth: parent.width / parent.height
                    < ratio ? parent.width * 0.9 : parent.height * 0.9 * ratio
@@ -62,6 +62,7 @@ Dialog {
 
     onClosed: {
         password.text = ""
+        rootPassword.error = false
         countDownTimer.stop()
     }
     background: Background {}
@@ -75,7 +76,7 @@ Dialog {
             id: passwordTitle
             height: parent.height * 0.06
             color: Global.buttonTextColor
-            text: qsTr("进入设置需输入密码")
+            text: "请输入密码：" + (rootPassword.error ? " 密码错误" : "")
             font.pixelSize: height
         }
 
@@ -83,8 +84,7 @@ Dialog {
             id: password
             x: parent.width * 0.03
             width: parent.width
-            height: parent.height * 0.16
-            verticalAlignment: Text.AlignVCenter
+            height: parent.height * 0.17
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: height * 0.4
             font.letterSpacing: parent.width * 0.06
@@ -150,6 +150,7 @@ Dialog {
                     height: width
                     radius: height / 2
                     text: name
+                    btnColor: name === "\u23CE" ? Global.buttonColor : Global.backgroundColor
                     onPressedChanged: {
                         if (!pressed) {
                             switch (name) {

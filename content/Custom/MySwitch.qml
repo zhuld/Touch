@@ -1,21 +1,21 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
+import QtQuick.Templates as T
 
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-Item {
+T.Switch {
     id: control
     property int channel
-    property bool checked
 
-    implicitWidth: height * 2
+    implicitWidth: height * 1.2
     implicitHeight: parent.height
 
-    Rectangle {
-        width: parent.width * 0.7
-        height: parent.height / 2
-        radius: height / 2
+    indicator: Rectangle {
+        width: parent.width * 0.6
+        height: parent.height * 0.4
+        radius: height * 0.5
         color: control.checked ? Global.buttonCheckedColor : Global.buttonColor
         border.color: Global.buttonTextColor
         anchors.centerIn: parent
@@ -24,42 +24,50 @@ Item {
                 duration: 300
             }
         }
-    }
-    Rectangle {
-        x: control.checked ? parent.width - parent.height : parent.height - height
-        width: parent.height * 0.8
-        height: width
-        radius: height * 0.5
-        color: Global.backgroundColor
-        border.color: Global.buttonTextColor
-        anchors.verticalCenter: parent.verticalCenter
-        Text {
-            anchors.centerIn: parent
-            text: checked ? "✓" : ""
-            color: Global.buttonCheckedColor
-            font.pixelSize: parent.height * 0.8
-            font.family: Global.alibabaPuHuiTi.font.family
-            Behavior on opacity {
+        Rectangle {
+            x: control.checked ? parent.width - parent.height : parent.height - height
+            width: parent.height * 1.6
+            height: width
+            radius: height * 0.5
+            color: Global.backgroundColor
+            border.color: Global.buttonTextColor
+            anchors.verticalCenter: parent.verticalCenter
+            Text {
+                anchors.centerIn: parent
+                text: "✓"
+                opacity: checked ? 1 : 0
+                color: Global.buttonCheckedColor
+                font.pixelSize: parent.height * 0.8
+                font.family: Global.alibabaPuHuiTi.font.family
+                Behavior on opacity {
+                    NumberAnimation {
+                        easing.type: Easing.InOutQuad
+                        duration: 300
+                    }
+                }
+            }
+            Behavior on x {
                 NumberAnimation {
+                    easing.type: Easing.InOutCubic
                     duration: 300
                 }
             }
-        }
-        Behavior on x {
-            NumberAnimation {
-                easing.type: Easing.InOutCubic
-                duration: 300
+            layer.enabled: true
+            layer.samples: 16
+            layer.effect: MultiEffect {
+                shadowEnabled: true
+                shadowColor: Global.buttonShadowColor
+                shadowHorizontalOffset: shadowHeight / 2
+                shadowVerticalOffset: shadowHorizontalOffset
             }
         }
-
-        layer.enabled: true
-        layer.effect: MultiEffect {
-            shadowEnabled: true
-            shadowColor: Global.buttonShadowColor
-            shadowHorizontalOffset: shadowHeight / 2
-            shadowVerticalOffset: shadowHorizontalOffset
-        }
     }
+    contentItem: MyIconLabel {
+        height: control.height
+        text: control.text
+        anchors.left: control.right
+    }
+
     checked: Global.digital[control.channel] ? Global.digital[control.channel] : 0
     Text {
         id: channel
@@ -70,14 +78,11 @@ Item {
         anchors.right: parent.right
         font.family: Global.alibabaPuHuiTi.font.family
     }
-    MouseArea {
-        anchors.fill: parent
-        onPressedChanged: {
-            if (pressed) {
-                CrestronCIP.push(control.channel)
-            } else {
-                CrestronCIP.release(control.channel)
-            }
+    onPressedChanged: {
+        if (pressed) {
+            CrestronCIP.push(control.channel)
+        } else {
+            CrestronCIP.release(control.channel)
         }
     }
 }
