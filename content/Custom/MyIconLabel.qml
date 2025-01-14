@@ -11,12 +11,12 @@ IconLabel {
     spacing: height / 10
     Behavior on color {
         ColorAnimation {
-            duration: 50
+            duration: Global.durationDelay
         }
     }
     Behavior on icon.color {
         ColorAnimation {
-            duration: 50
+            duration: Global.durationDelay
         }
     }
 }

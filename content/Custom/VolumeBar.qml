@@ -210,7 +210,7 @@ Item {
                 shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                 Behavior on shadowHorizontalOffset {
                     NumberAnimation {
-                        duration: 100
+                        duration: Global.durationDelay
                     }
                 }
             }

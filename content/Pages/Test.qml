@@ -25,11 +25,6 @@ Item {
                     width: 400
                     y: mouseArea.pressed ? height / 40 : 0
                     anchors.horizontalCenter: parent.horizontalCenter
-                    Behavior on y {
-                        NumberAnimation {
-                            duration: 100
-                        }
-                    }
                     MyIconLabel {
                         id: _icon
                         height: parent.height
@@ -45,11 +40,6 @@ Item {
                         shadowColor: Global.buttonShadowColor
                         shadowHorizontalOffset: shadowVerticalOffset
                         shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
-                        Behavior on shadowHorizontalOffset {
-                            NumberAnimation {
-                                duration: 100
-                            }
-                        }
                     }
                     ShapePath {
                         strokeWidth: 0
@@ -76,11 +66,6 @@ Item {
                                                                1.4) : Qt.darker(
                                                                Global.buttonColor,
                                                                1.4)
-                                Behavior on color {
-                                    ColorAnimation {
-                                        duration: 100
-                                    }
-                                }
                             }
                             GradientStop {
                                 position: 0
@@ -89,11 +74,6 @@ Item {
                                                                1.2) : Qt.lighter(
                                                                Global.buttonColor,
                                                                1.2)
-                                Behavior on color {
-                                    ColorAnimation {
-                                        duration: 100
-                                    }
-                                }
                             }
                         }
                     }

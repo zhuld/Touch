@@ -16,10 +16,10 @@ Item {
             label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
-                width: parent.width * 1.5 > parent.height ? parent.height / 1.5 : parent.width
-                height: width * 1.5
+                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
+                height: width * 1.3
                 anchors.horizontalCenter: parent.horizontalCenter
-                channel: 20
+                channel: 21
                 disEnableChannel: cameraAuto.channel
             }
         }
@@ -28,9 +28,11 @@ Item {
             label: qsTr("摄像跟踪")
             info: MySwitch {
                 id: cameraAuto
-                channel: 40
+                channel: 46
                 text: checked ? "自动" : "手动"
-                height: parent.height
+                height: parent.height * 0.8
+                width: height * 2
+                anchors.verticalCenter: parent.verticalCenter
             }
             content: Item {
                 anchors.fill: parent
@@ -44,7 +46,7 @@ Item {
                     rotation: 90
                     Behavior on rotation {
                         NumberAnimation {
-                            duration: 300
+                            duration: Global.durationDelay * 2
                         }
                     }
                     icon.width: width
@@ -73,11 +75,6 @@ Item {
                         shadowColor: Global.buttonShadowColor
                         shadowHorizontalOffset: shadowVerticalOffset
                         shadowVerticalOffset: shadowHeight
-                        Behavior on shadowHorizontalOffset {
-                            NumberAnimation {
-                                duration: 100
-                            }
-                        }
                     }
                     opacity: 0.8
                     ShapePath {
@@ -100,20 +97,10 @@ Item {
                             GradientStop {
                                 position: 0
                                 color: Qt.darker(Global.backgroundColor, 1.2)
-                                Behavior on color {
-                                    ColorAnimation {
-                                        duration: 100
-                                    }
-                                }
                             }
                             GradientStop {
                                 position: 1
                                 color: Qt.lighter(Global.backgroundColor, 1.2)
-                                Behavior on color {
-                                    ColorAnimation {
-                                        duration: 100
-                                    }
-                                }
                             }
                         }
                     }
@@ -121,7 +108,7 @@ Item {
                         id: grid
                         anchors.fill: parent
                         columns: 2
-                        columnSpacing: parent.width * 0.3
+                        columnSpacing: parent.width * 0.35
                         rowSpacing: parent.height * 0.05
                         anchors.margins: parent.width * 0.1
                         Repeater {
@@ -189,11 +176,6 @@ Item {
                                 Component.onCompleted: {
                                     if (checked) {
                                         camera.rotation = cameraRotation
-                                    }
-                                }
-                                Behavior on opacity {
-                                    OpacityAnimator {
-                                        duration: 300
                                     }
                                 }
                             }

@@ -58,5 +58,7 @@
         <file>content/images/haishi.jpg</file>
         <file>content/icons/tishi.png</file>
         <file>content/icons/config.png</file>
+        <file>content/icons/back.png</file>
+        <file>content/images/background.jpg</file>
     </qresource>
 </RCC>

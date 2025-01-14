@@ -24,14 +24,14 @@ Item {
         NumberAnimation {
             target: dragButton
             property: "x"
-            duration: 400
+            duration: Global.durationDelay*3
             to: dragX
             easing.type: Easing.OutBack
         }
         NumberAnimation {
             target: dragButton
             property: "y"
-            duration: 400
+            duration: Global.durationDelay*3
             to: dragY
             easing.type: Easing.OutBack
         }
@@ -59,6 +59,11 @@ Item {
         width: parent.width
         height: parent.height
         y: mouseArea.pressed ? height / 40 : 0
+        Behavior on y {
+            NumberAnimation {
+                duration: Global.durationDelay
+            }
+        }
         ShapePath {
             strokeWidth: 0
             strokeColor: "transparent"
@@ -80,7 +85,7 @@ Item {
                     color: Qt.lighter(btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -89,7 +94,7 @@ Item {
                     color: Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -111,7 +116,7 @@ Item {
             shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
-                    duration: 100
+                    duration: Global.durationDelay
                 }
             }
         }

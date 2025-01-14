@@ -82,37 +82,37 @@ Item {
                         ListElement {
                             name: qsTr("外网电脑")
                             inputChannel: 1
-                            bgColor: "royalblue"
+                            bgColor: "#4286f4" //"royalblue"
                             source: "qrc:/content/icons/zhuji.png"
                         }
                         ListElement {
                             name: qsTr("内网电脑")
                             inputChannel: 2
-                            bgColor: "darkorange"
+                            bgColor: "#f5af19" //"darkorange"
                             source: "qrc:/content/icons/zhuji.png"
                         }
                         ListElement {
                             name: qsTr("院内视频会议")
                             inputChannel: 3
-                            bgColor: "forestgreen"
+                            bgColor: "#96c93d" //"forestgreen"
                             source: "qrc:/content/icons/shipinhuiyi.png"
                         }
                         ListElement {
                             name: qsTr("无线投屏")
                             inputChannel: 4
-                            bgColor: "violet"
+                            bgColor: "#f953c6" //"violet"
                             source: "qrc:/content/icons/wuxiantouping.png"
                         }
                         ListElement {
                             name: qsTr("摄像机")
                             inputChannel: 5
-                            bgColor: "indianred"
+                            bgColor: "#ff4b2b" //"indianred"
                             source: "qrc:/content/icons/shexiangji.png"
                         }
                         ListElement {
                             name: qsTr("预留输入1")
                             inputChannel: 6
-                            bgColor: "cadetblue"
+                            bgColor: "#6dd5ed" //"cadetblue"
                             source: "qrc:/content/icons/HDMIjiekou.png"
                         }
                         ListElement {
@@ -121,12 +121,12 @@ Item {
                             bgColor: "gold"
                             source: "qrc:/content/icons/HDMIjiekou.png"
                         }
-                        // ListElement {
-                        //     name: qsTr("预留输入3")
-                        //     inputChannel: 8
-                        //     bgColor: "lightslategrey"
-                        //     source: "qrc:/content/icons/HDMIjiekou.png"
-                        // }
+                        ListElement {
+                            name: qsTr("预留输入3")
+                            inputChannel: 8
+                            bgColor: "#8e9eab" //"lightslategrey"
+                            source: "qrc:/content/icons/HDMIjiekou.png"
+                        }
                     }
                     delegate: InputButton {
                         required property string name

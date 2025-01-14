@@ -5,27 +5,30 @@ import QtQuick.Templates as T
 
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
-T.Switch {
+T.Button {
     id: control
     property int channel
 
-    implicitWidth: height * 1.2
     implicitHeight: parent.height
+    implicitWidth: parent.width * 2
+
+    checked: Global.digital[control.channel] ? true : false
 
     indicator: Rectangle {
-        width: parent.width * 0.6
-        height: parent.height * 0.4
+        width: height * 2
+        height: parent.height * 0.5
         radius: height * 0.5
-        color: control.checked ? Global.buttonCheckedColor : Global.buttonColor
+        color: checked ? Global.buttonCheckedColor : Global.buttonColor
         border.color: Global.buttonTextColor
-        anchors.centerIn: parent
+        x: height / 2
+        anchors.verticalCenter: parent.verticalCenter
         Behavior on color {
             ColorAnimation {
-                duration: 300
+                duration: Global.durationDelay
             }
         }
         Rectangle {
-            x: control.checked ? parent.width - parent.height : parent.height - height
+            x: checked ? parent.width - parent.height : parent.height - height
             width: parent.height * 1.6
             height: width
             radius: height * 0.5
@@ -42,14 +45,14 @@ T.Switch {
                 Behavior on opacity {
                     NumberAnimation {
                         easing.type: Easing.InOutQuad
-                        duration: 300
+                        duration: Global.durationDelay
                     }
                 }
             }
             Behavior on x {
                 NumberAnimation {
                     easing.type: Easing.InOutCubic
-                    duration: 300
+                    duration: Global.durationDelay
                 }
             }
             layer.enabled: true
@@ -62,13 +65,18 @@ T.Switch {
             }
         }
     }
-    contentItem: MyIconLabel {
-        height: control.height
+    contentItem: Text {
+        height: parent.height
         text: control.text
-        anchors.left: control.right
+        font.pixelSize: height * 0.7
+        anchors.left: indicator.right
+        leftPadding: height * 0.5
+        color: Global.buttonTextColor
+        font.family: Global.alibabaPuHuiTi.font.family
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment: Text.AlignVCenter
     }
 
-    checked: Global.digital[control.channel] ? Global.digital[control.channel] : 0
     Text {
         id: channel
         height: parent.height
@@ -78,6 +86,7 @@ T.Switch {
         anchors.right: parent.right
         font.family: Global.alibabaPuHuiTi.font.family
     }
+
     onPressedChanged: {
         if (pressed) {
             CrestronCIP.push(control.channel)

@@ -26,27 +26,27 @@ Item {
                         id: lightList
                         ListElement {
                             name: qsTr("左吸顶灯")
-                            btnChannel: 61
+                            btnChannel: 71
                         }
                         ListElement {
                             name: qsTr("右吸顶灯")
-                            btnChannel: 62
+                            btnChannel: 72
                         }
                         ListElement {
                             name: qsTr("前筒灯")
-                            btnChannel: 63
+                            btnChannel: 73
                         }
                         ListElement {
                             name: qsTr("四周筒灯")
-                            btnChannel: 64
+                            btnChannel: 74
                         }
                         ListElement {
                             name: qsTr("灯带")
-                            btnChannel: 65
+                            btnChannel: 75
                         }
                         ListElement {
                             name: qsTr("其他")
-                            btnChannel: 66
+                            btnChannel: 76
                         }
                     }
                     delegate: VButton {
@@ -75,22 +75,22 @@ Item {
                         id: lightModeList
                         ListElement {
                             name: qsTr("全开")
-                            btnchannel: 67
+                            btnchannel: 81
                             iconUrl: "qrc:/content/icons/quankai.png"
                         }
                         ListElement {
                             name: qsTr("全关")
-                            btnchannel: 68
+                            btnchannel: 82
                             iconUrl: "qrc:/content/icons/quanguan.png"
                         }
                         ListElement {
                             name: qsTr("会议")
-                            btnchannel: 69
+                            btnchannel: 83
                             iconUrl: "qrc:/content/icons/huiyizanzhuyantao.png"
                         }
                         ListElement {
                             name: qsTr("节电")
-                            btnchannel: 70
+                            btnchannel: 84
                             iconUrl: "qrc:/content/icons/jieneng.png"
                         }
                     }

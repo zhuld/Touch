@@ -34,6 +34,7 @@ Item {
                 required property string iconUrl
                 required property int index
                 required property int pageChannel
+                required property string pageUrl
                 text: name
                 width: parent.width
                 height: (parent.height + parent.spacing) / (Global.tabList.count) - parent.spacing

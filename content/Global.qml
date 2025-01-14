@@ -12,16 +12,21 @@ QtObject {
     property var analog: []
 
     //property var text: [] // not support yet
-    property var config
+    property QtObject config
 
-    readonly property var haishi: Haishi410 {}
-    readonly property var shiyi: ShiyiMZ {}
-    readonly property ListModel configList: ListModel {
-        ListElement {
-            key: "海事大学沉浸教室410"
-        }
-        ListElement {
-            key: "市一门诊大楼指挥中心"
+    readonly property list<QtObject> configList: [
+        ConfigSet {},
+        ShiyiMZ {},
+        Haishi410 {}
+    ]
+
+    readonly property ListModel configListModel: ListModel {}
+
+    Component.onCompleted: {
+        for (var i = 0; i < configList.length; i++) {
+            configListModel.append({
+                                       "key": configList[i].logoName + "-" + configList[i].titleName
+                                   })
         }
     }
 
@@ -34,6 +39,8 @@ QtObject {
     readonly property color buttonTextColor: settings.darkTheme ? "lavender" : "#252525"
     readonly property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
     readonly property color buttonTextRedColor: "red"
+
+    readonly property int durationDelay: 150
 
     readonly property var lcdFont: FontLoader {
         source: "qrc:/content/fonts/TP-LCD.TTF"

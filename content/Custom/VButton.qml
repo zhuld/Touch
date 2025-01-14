@@ -26,6 +26,11 @@ T.Button {
 
     enabled: Global.digital[control.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
+    Behavior on opacity {
+        OpacityAnimator {
+            duration: Global.durationDelay
+        }
+    }
     Material.accent: Global.buttonTextColor
 
     onPressedChanged: {
@@ -46,12 +51,12 @@ T.Button {
         height: control.height * 0.7
         width: height
         y: control.checked ? height / 40 : 0
-        anchors.horizontalCenter: parent.horizontalCenter
         Behavior on y {
             NumberAnimation {
-                duration: 100
+                duration: Global.durationDelay
             }
         }
+        anchors.horizontalCenter: parent.horizontalCenter
         containsMode: Shape.FillContains
         layer.enabled: true
         layer.samples: 16
@@ -62,7 +67,7 @@ T.Button {
             shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
-                    duration: 100
+                    duration: Global.durationDelay
                 }
             }
         }
@@ -89,7 +94,7 @@ T.Button {
                                                  1.4) : Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -101,7 +106,7 @@ T.Button {
                                                                    1.2)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }

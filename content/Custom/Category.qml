@@ -25,7 +25,7 @@ Item {
             shadowVerticalOffset: shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
-                    duration: 100
+                    duration: Global.durationDelay
                 }
             }
         }
@@ -50,7 +50,7 @@ Item {
                     color: Global.backgroundColor
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -59,7 +59,7 @@ Item {
                     color: Qt.darker(Global.backgroundColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -68,7 +68,7 @@ Item {
                     color: Global.backgroundColor
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -77,7 +77,7 @@ Item {
                     color: Global.backgroundColor
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -86,7 +86,7 @@ Item {
                     color: Qt.lighter(Global.backgroundColor, 1.3)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }

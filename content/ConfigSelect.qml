@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 
 import "./Custom"
 
@@ -72,60 +73,29 @@ Item {
                 }
             }
         }
-        MyIconLabel {
-            text: qsTr("正在连接中控...  ")
-            height: parent.height * 0.2
-            color: Global.buttonTextColor
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
-        ColorButton {
-            height: parent.height * 0.1
-            width: height * 4
-            text: "返回配置选择"
-            source: "qrc:/content/icons/back.png"
-            onClicked: {
-                Global.settings.configSetting = 0
-                Global.config = Global.configList[0]
-            }
-        }
-        MyIconLabel {
-            text: Global.settings.ipAddress + ":" + Global.settings.ipPort + "@"
-                  + Global.settings.ipId
-            height: parent.height * 0.08
-            color: Global.buttonTextColor
-            anchors.right: parent.right
-        }
-        Rectangle {
-            id: socketStatusProgress
-            property real socketValue: 1
-            width: parent.width * socketValue
-            height: 6
-            radius: height / 2
-            color: Global.buttonCheckedColor
-            NumberAnimation {
-                id: socketAnimation
-                target: socketStatusProgress
-                property: "socketValue"
-                from: 0
-                to: 1
-                duration: 5000
-                running: true
-                onStarted: {
-                    if (Global.settings.demoMode) {
-                        tcpClient.connectToServer("127.0.0.1", 41793)
-                    } else {
-                        tcpClient.connectToServer(Global.settings.ipAddress,
-                                                  Global.settings.ipPort)
+        ScrollView {
+            id: scrollView
+            width: parent.width
+            height: parent.height * 0.6
+            clip: true
+            Column {
+                width: scrollView.width
+                spacing: scrollView.height * 0.05
+                Repeater {
+                    model: Global.configListModel
+                    delegate: ColorButton {
+                        text: modelData
+                        x: scrollView.width * 0.05
+                        width: scrollView.width * 0.9
+                        height: scrollView.height * 0.25
+                        visible: index === 0 ? false : true
+                        onClicked: {
+                            Global.settings.configSetting = index
+                            Global.config = Global.configList[Global.settings.configSetting]
+                        }
                     }
-                    socketAnimation.start()
                 }
             }
-        }
-    }
-    Component.onCompleted: {
-        for (var i = 0; i <= 300; i++) {
-            Global.digital[i] = false
-            Global.analog[i] = 0
         }
     }
 }

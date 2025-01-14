@@ -30,7 +30,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
     exit: Transition {
@@ -38,7 +38,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
     Column {
@@ -54,8 +54,9 @@ Dialog {
         }
         BusyIndicator {
             id: busy
-            height: parent.height * 0.56
+            height: parent.height * 0.55
             width: parent.width
+            topPadding: parent.height * 0.1
             Material.accent: Global.buttonColor
             layer.enabled: true
             layer.effect: MultiEffect {

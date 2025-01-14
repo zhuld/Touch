@@ -29,7 +29,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
     exit: Transition {
@@ -37,7 +37,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
     Column {
@@ -68,11 +68,7 @@ Dialog {
                 width: parent.width * 0.4
                 height: parent.height
                 text: "确定"
-                onPressedChanged: {
-                    if (!pressed) {
-                        confirm()
-                    }
-                }
+                onClicked: confirm()
                 btnColor: Global.buttonColor
             }
             ColorButton {
@@ -80,11 +76,7 @@ Dialog {
                 width: parent.width * 0.4
                 height: parent.height
                 text: "取消"
-                onPressedChanged: {
-                    if (!pressed) {
-                        confirmDialog.close()
-                    }
-                }
+                onClicked: confirmDialog.close()
             }
         }
     }

@@ -11,7 +11,7 @@ Item {
     property int channel
     property int disEnableChannel: 0
     enabled: Global.digital[control.disEnableChannel] ? false : true
-    opacity: enabled ? 1 : 0.6
+    opacity: enabled ? 1 : 0.5
 
     implicitWidth: 100
     implicitHeight: 130
@@ -37,7 +37,7 @@ Item {
                 y: checked ? -control.width / 50 : -control.width / 60
                 Behavior on y {
                     NumberAnimation {
-                        duration: 100
+                        duration: Global.durationDelay
                     }
                 }
                 MyIconLabel {
@@ -64,7 +64,7 @@ Item {
                     shadowVerticalOffset: upButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -85,7 +85,7 @@ Item {
                                                           1.2)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -98,7 +98,7 @@ Item {
                                                           1.4)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -151,7 +151,7 @@ Item {
                 x: checked ? -control.width / 50 : -control.width / 60
                 Behavior on x {
                     NumberAnimation {
-                        duration: 100
+                        duration: Global.durationDelay
                     }
                 }
                 MyIconLabel {
@@ -178,7 +178,7 @@ Item {
                     shadowVerticalOffset: leftButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -199,7 +199,7 @@ Item {
                                                             1.2)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -212,7 +212,7 @@ Item {
                                                             1.4)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -265,7 +265,7 @@ Item {
                 x: checked ? control.width / 50 : control.width / 60
                 Behavior on x {
                     NumberAnimation {
-                        duration: 100
+                        duration: Global.durationDelay
                     }
                 }
                 MyIconLabel {
@@ -293,7 +293,7 @@ Item {
                     shadowVerticalOffset: rightButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -314,7 +314,7 @@ Item {
                                                              1.2)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -327,7 +327,7 @@ Item {
                                                              1.4)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -380,7 +380,7 @@ Item {
                 y: checked ? control.width / 50 : control.width / 60
                 Behavior on y {
                     NumberAnimation {
-                        duration: 100
+                        duration: Global.durationDelay
                     }
                 }
                 MyIconLabel {
@@ -408,7 +408,7 @@ Item {
                     shadowVerticalOffset: downButton.checked ? shadowHeight / 2 : shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -429,7 +429,7 @@ Item {
                                                             1.2)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }
@@ -442,7 +442,7 @@ Item {
                                                             1.4)
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 100
+                                    duration: Global.durationDelay
                                 }
                             }
                         }

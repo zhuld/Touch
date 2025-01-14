@@ -85,27 +85,27 @@ Item {
                         id: modeList
                         ListElement {
                             name: qsTr("院内视频会议")
-                            btnchannel: 41
+                            btnchannel: 61
                             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
                         }
                         ListElement {
                             name: qsTr("远程视频会议")
-                            btnchannel: 42
+                            btnchannel: 62
                             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
                         }
                         ListElement {
                             name: qsTr("内网电脑")
-                            btnchannel: 43
+                            btnchannel: 63
                             iconUrl: "qrc:/content/icons/zhuji.png"
                         }
                         ListElement {
                             name: qsTr("外网电脑")
-                            btnchannel: 44
+                            btnchannel: 64
                             iconUrl: "qrc:/content/icons/zhuji.png"
                         }
                         ListElement {
                             name: qsTr("无线投屏")
-                            btnchannel: 45
+                            btnchannel: 65
                             iconUrl: "qrc:/content/icons/wuxiantouping.png"
                         }
                     }

@@ -27,13 +27,13 @@ Item {
         shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight * 2 : shadowHeight / 2
         Behavior on shadowColor {
             ColorAnimation {
-                duration: 300
+                duration: Global.durationDelay
                 easing.type: Easing.OutCubic
             }
         }
         Behavior on shadowVerticalOffset {
             PropertyAnimation {
-                duration: 300
+                duration: Global.durationDelay
                 easing.type: Easing.OutCubic
             }
         }
@@ -68,7 +68,7 @@ Item {
                                0.5)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -81,10 +81,9 @@ Item {
                                                         1.2) : Qt.lighter(
                                                         Global.backgroundColor,
                                                         1.3)
-
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }

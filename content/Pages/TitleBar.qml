@@ -18,9 +18,7 @@ Item {
             root.x += mouseX - clickPosition.x
             root.y += mouseY - clickPosition.y
         }
-        onPressedChanged: {
-            clickPosition = Qt.point(mouseX, mouseY)
-        }
+        onPressed: clickPosition = Qt.point(mouseX, mouseY)
     }
     Text {
         id: titleLogo
@@ -39,6 +37,7 @@ Item {
         height: parent.height
         anchors.centerIn: parent
         verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.pixelSize: height * 0.5
         color: Global.buttonTextColor
         font.family: Global.alibabaPuHuiTi.font.family
@@ -61,9 +60,7 @@ Item {
                 running: true
                 triggeredOnStart: true
                 onTriggered: {
-                    titleTime.text = new Date().toLocaleDateString(
-                                Qt.locale("zh_CN"),
-                                "MM月dd日 dddd") + new Date().toLocaleTimeString(
+                    titleTime.text = new Date().toLocaleTimeString(
                                 Qt.locale("zh_CN"), " hh:mm")
                 }
             }
@@ -71,7 +68,7 @@ Item {
         ColorSwitch {
             id: themeSwtich
             height: parent.height * 0.6
-            width: height * 1.2
+            width: height
             anchors.verticalCenter: parent.verticalCenter
             onClicked: {
                 Global.settings.darkTheme = !Global.settings.darkTheme
@@ -84,10 +81,9 @@ Item {
             height: parent.height
             width: height
             source: "qrc:/content/icons/config.png"
-            onClicked: {
-                passwordDialog.open()
-            }
+            onClicked: passwordDialog.open()
             btnColor: "transparent"
+            btnCheckColor: "transparent"
         }
         ColorButton {
             id: close
@@ -95,9 +91,8 @@ Item {
             width: height
             source: "qrc:/content/icons/close.png"
             btnColor: "transparent"
-            onClicked: {
-                closeDialog.open()
-            }
+            btnCheckColor: "transparent"
+            onClicked: closeDialog.open()
             visible: Qt.platform.os === "windows" ? true : false
         }
     }

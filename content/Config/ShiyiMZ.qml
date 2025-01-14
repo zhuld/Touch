@@ -43,7 +43,7 @@ QtObject {
             name: qsTr("灯光")
             pageUrl: "qrc:/qt/qml/content/Pages/Shiyi/Light.qml"
             iconUrl: "qrc:/content/icons/deng.png"
-            test: false
+            test: true
             pageChannel: 15
         }
         ListElement {

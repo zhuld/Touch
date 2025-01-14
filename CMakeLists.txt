@@ -19,6 +19,7 @@ qt_add_executable(TouchApp
     src/TcpServer.h
     src/TcpServer.cpp
     src/icon.rc
+
 )
 qt_policy(SET QTP0004 NEW)
 
@@ -52,3 +53,6 @@ set_property(TARGET TouchApp
     APPEND PROPERTY  QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
+if (ANDROID)
+    include(C:/Users/ld_zh/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
+endif()

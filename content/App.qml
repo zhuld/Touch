@@ -50,21 +50,17 @@ Window {
     height: Global.settings.windowHeight
     minimumWidth: 1600
     minimumHeight: 1000
+    color: Global.backgroundColor
 
     title: Global.config.logoName + Global.config.titleName
 
     visibility: Global.settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
-    color: "transparent"
     Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
-    Rectangle {
+    Image {
         anchors.fill: parent
-        color: Global.backgroundColor
-        Image {
-            anchors.fill: parent
-            source: Global.config.background
-            opacity: ping.running ? 0.3 : 0.6
-        }
+        source: Global.config.background
+        opacity: ping.running ? 0.3 : 0.6
     }
     TitleBar {
         id: titleBar
@@ -72,7 +68,6 @@ Window {
         height: parent.height * 0.07
         x: parent.width * 0.02
     }
-
     MouseArea {
         id: rightSide
         height: parent.height * 0.96
@@ -96,8 +91,9 @@ Window {
                 root.height = root.minimumHeight
             }
         }
-        onPressedChanged: {
+        onReleased: {
             Global.settings.windowWidth = root.width
+            Global.settings.windowHeight = root.height
         }
     }
     MouseArea {
@@ -123,7 +119,8 @@ Window {
                 root.width = root.minimumWidth
             }
         }
-        onPressedChanged: {
+        onReleased: {
+            Global.settings.windowWidth = root.width
             Global.settings.windowHeight = root.height
         }
     }
@@ -132,7 +129,7 @@ Window {
         y: titleBar.height
         width: parent.width
         height: parent.height - titleBar.height
-        source: ping.running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : "qrc:/qt/qml/content/Connect.qml"
+        source: running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/ConfigSelect.qml" : "qrc:/qt/qml/content/Connect.qml")
     }
 
     Connections {
@@ -153,13 +150,7 @@ Window {
         onClientConnected: CrestronCIP.serverAccept()
     }
     Component.onCompleted: {
-        pageLoader.setSource("qrc:/qt/qml/content/Connect.qml")
+        Global.config = Global.configList[Global.settings.configSetting]
         tcpServer.startServer(41793, "127.0.0.1")
-        //初始化
-        for (var i = 0; i <= 300; i++) {
-            Global.digital[i] = false
-            Global.analog[i] = 0
-        }
-        //Global.digital[1] = true
     }
 }

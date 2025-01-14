@@ -15,7 +15,7 @@ Item {
                 id: volumeList
                 ListElement {
                     name: qsTr("鹅颈话筒")
-                    vChannel: 5
+                    vChannel: 11
                     mChannel: 51
                     minVol: -40
                     maxVol: 0
@@ -23,7 +23,7 @@ Item {
                 }
                 ListElement {
                     name: qsTr("手持话筒")
-                    vChannel: 6
+                    vChannel: 12
                     mChannel: 52
                     minVol: -40
                     maxVol: 0
@@ -31,7 +31,7 @@ Item {
                 }
                 ListElement {
                     name: qsTr("电脑音频")
-                    vChannel: 7
+                    vChannel: 13
                     mChannel: 53
                     minVol: -40
                     maxVol: 5
@@ -40,7 +40,7 @@ Item {
 
                 ListElement {
                     name: qsTr("外接音频")
-                    vChannel: 8
+                    vChannel: 14
                     mChannel: 54
                     minVol: -40
                     maxVol: 5
@@ -49,7 +49,7 @@ Item {
 
                 ListElement {
                     name: qsTr("总音量")
-                    vChannel: 9
+                    vChannel: 15
                     mChannel: 55
                     minVol: -40
                     maxVol: 5

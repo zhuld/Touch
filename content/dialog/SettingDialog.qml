@@ -25,7 +25,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
     exit: Transition {
@@ -33,7 +33,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: 100
+            duration: Global.durationDelay
         }
     }
 
@@ -55,11 +55,7 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "确定"
-                onPressedChanged: {
-                    if (!pressed) {
-                        rootSetting.accept()
-                    }
-                }
+                onClicked: rootSetting.accept()
                 btnColor: Global.buttonColor
             }
             ColorButton {
@@ -67,22 +63,14 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "应用"
-                onPressedChanged: {
-                    if (!pressed) {
-                        apply()
-                    }
-                }
+                onClicked: apply()
             }
             ColorButton {
                 id: settingCancel
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "取消"
-                onPressedChanged: {
-                    if (!pressed) {
-                        rootSetting.reject()
-                    }
-                }
+                onClicked: rootSetting.reject()
             }
             Text {
                 width: parent.width * 0.34
@@ -104,7 +92,7 @@ Dialog {
             anchors.margins: height / 20
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {
-                    duration: 250
+                    duration: Global.durationDelay
                 }
             }
             Grid {
@@ -124,10 +112,9 @@ Dialog {
                     width: parent.width * 0.6
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
-                    textRole: "key"
-                    model: Global.configList
+                    //textRole: "key"
+                    model: Global.configListModel
                     currentIndex: Global.settings.configSetting
-
                     delegate: ItemDelegate {
                         contentItem: Text {
                             text: modelData
@@ -238,36 +225,6 @@ Dialog {
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 Text {
-                    text: demoMode.checked ? "演示模式" : "连接模式"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
-                    font.pixelSize: height * 0.7
-                    color: Global.buttonTextColor
-                    font.family: Global.alibabaPuHuiTi.font.family
-                }
-                ColorSwitch {
-                    height: rootSetting.height / 15
-                    width: height * 1.6
-                    id: demoMode
-                    checked: Global.settings.demoMode
-                }
-                Text {
-                    text: fullscreen.checked ? "全屏显示" : "窗口模式"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
-                    font.pixelSize: height * 0.7
-                    color: Global.buttonTextColor
-                    font.family: Global.alibabaPuHuiTi.font.family
-                    visible: Qt.platform.os === "windows"
-                }
-                ColorSwitch {
-                    height: rootSetting.height / 15
-                    width: height * 1.6
-                    id: fullscreen
-                    checked: Global.settings.fullscreen
-                    visible: Qt.platform.os === "windows"
-                }
-                Text {
                     text: "系统设置密码"
                     width: parent.width * 0.4
                     height: rootSetting.height / 15
@@ -295,7 +252,39 @@ Dialog {
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 Text {
-                    text: showChannel.checked ? "显示调试信息" : "隐藏调试信息"
+                    text: "模式"
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.7
+                    color: Global.buttonTextColor
+                    font.family: Global.alibabaPuHuiTi.font.family
+                }
+                ColorSwitch {
+                    height: rootSetting.height / 15
+                    width: height * 3
+                    id: demoMode
+                    checked: Global.settings.demoMode
+                    text: checked ? "演示模式" : "连接中控"
+                }
+                Text {
+                    text: "显示"
+                    width: parent.width * 0.4
+                    height: rootSetting.height / 15
+                    font.pixelSize: height * 0.7
+                    color: Global.buttonTextColor
+                    font.family: Global.alibabaPuHuiTi.font.family
+                    visible: Qt.platform.os === "windows"
+                }
+                ColorSwitch {
+                    height: rootSetting.height / 15
+                    width: height * 1.6
+                    id: fullscreen
+                    checked: Global.settings.fullscreen
+                    visible: Qt.platform.os === "windows"
+                    text: checked ? "全屏" : "窗口"
+                }
+                Text {
+                    text: "调试信息"
                     width: parent.width * 0.4
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
@@ -307,9 +296,10 @@ Dialog {
                     width: height * 1.6
                     id: showChannel
                     checked: Global.settings.showChannel
+                    text: checked ? "显示调试信息" : "隐藏调试信息"
                 }
                 Text {
-                    text: darkTheme.checked ? "深色主题" : "浅色主题"
+                    text: "主题"
                     width: parent.width * 0.4
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
@@ -321,9 +311,10 @@ Dialog {
                     width: height * 1.6
                     id: darkTheme
                     checked: Global.settings.darkTheme
+                    text: checked ? "深色主题" : "浅色主题"
                 }
                 Text {
-                    text: tabPosition.checked ? "底部导航栏" : "左侧导航栏"
+                    text: "导航栏位置"
                     width: parent.width * 0.4
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
@@ -332,9 +323,9 @@ Dialog {
                 }
                 ColorSwitch {
                     height: rootSetting.height / 15
-                    width: height * 1.6
                     id: tabPosition
                     checked: Global.settings.tabOnBottom
+                    text: checked ? "底部" : "左侧"
                 }
             }
         }
@@ -364,6 +355,7 @@ Dialog {
     function apply() {
         if (Global.settings.configSetting !== configSetting.currentIndex) {
             Global.settings.configSetting = configSetting.currentIndex
+            Global.config = Global.configList[Global.settings.configSetting]
             root.running = false
         }
         Global.settings.ipAddress = ipAddress.text
@@ -371,8 +363,12 @@ Dialog {
         Global.settings.ipId = ipId.text
         Global.settings.fullscreen = fullscreen.checked
         if (Global.settings.demoMode !== demoMode.checked) {
-            Global.settings.demoMode = demoMode.checked
             tcpClient.disconnectFromServer()
+            for (var i = 0; i <= 300; i++) {
+                Global.digital[i] = false
+                Global.analog[i] = 0
+            }
+            Global.settings.demoMode = demoMode.checked
         }
         Global.settings.settingPassword = settingPassword.text
         if (Global.settings.showChannel !== showChannel.checked) {

@@ -33,6 +33,7 @@ T.TabButton {
     }
     contentItem: MyIconLabel {
         font.pixelSize: height * 0.2
+        spacing: 0
         display: AbstractButton.TextUnderIcon
         color: control.textColor
         icon.color: control.iconColor
@@ -46,7 +47,7 @@ T.TabButton {
         y: control.checked ? height / 40 : 0
         Behavior on y {
             NumberAnimation {
-                duration: 100
+                duration: Global.durationDelay
             }
         }
         containsMode: Shape.FillContains
@@ -59,7 +60,7 @@ T.TabButton {
             shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
-                    duration: 100
+                    duration: Global.durationDelay
                 }
             }
         }
@@ -86,7 +87,7 @@ T.TabButton {
                                                  1.4) : Qt.darker(btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
@@ -98,7 +99,7 @@ T.TabButton {
                                                                    1.2)
                     Behavior on color {
                         ColorAnimation {
-                            duration: 100
+                            duration: Global.durationDelay
                         }
                     }
                 }
