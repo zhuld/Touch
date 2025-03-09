@@ -4,10 +4,16 @@ const op_Server_IPID = 0x02 // 回复 02 00 04 00 00 00 1F ok; 02 00 03 FF FF 02
 
 const op_Join = 0x05 // 发送 Join信息
 const op_Join_Digital = 0x00
-const op_Join_Analog1 = 0x01
-const op_Join_Analog2 = 0x14
+//const op_Join_Analog1 = 0x01
+const op_Join_Analog = 0x14
 const op_Join_Serial = 0x02
+
 const op_Join_Request = 0x03
+const op_Join_Request_Reply_Start = 0x00
+const op_Join_Request_Reply_Ending = 0x16
+const op_Join_Request_Reply_Ended = 0x1C
+
+const op_Join_DateTime = 0x08
 
 const op_Client_Ping = 0x0D // 定时发送 0D 00 02 00 00
 const op_Server_Pong = 0x0E // 回复 0E 00 02 00 00
@@ -28,7 +34,7 @@ function clientMessageCheck(message) {
                                 op_Client_IPID,
                                 new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, Global.settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])))
                 sendAppendList(
-                            cipmessage2(
+                            cipmessageData(
                                 op_Client_IPID,
                                 new Uint8Array([0x00, 0x00, 0x00, 0x00, 0x00, Global.settings.ipId, 0x40, 0xFF, 0xFF, 0xF1, 0x01])),
                             "发送IPID：" + Global.settings.ipId + "，注册到服务器")
@@ -44,14 +50,14 @@ function clientMessageCheck(message) {
                                 op_Join,
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])))
                 sendAppendList(
-                            cipmessage2(
+                            cipmessageData(
                                 op_Join,
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, 0x00])),
                             "发送查询指令")
-                root.running = true
+
+                root.running = true //注册成功，转到控制页面
             } else if (toHexString(payload, "") === "FFFF02") {
                 recivedAppendList(message, index, payloadLength, "服务器注册失败")
-                //console.log("registration failed")
             }
             break
         case op_Join:
@@ -69,8 +75,8 @@ function clientMessageCheck(message) {
                                   "Digital:" + channelD + " -> "
                                   + (Global.digital[channelD] ? "High" : "Low"))
                 break
-            case op_Join_Analog1:
-            case op_Join_Analog2:
+                //case op_Join_Analog1:
+            case op_Join_Analog:
                 //analog
                 let channelA
                 let tmpA = Global.analog
@@ -91,12 +97,40 @@ function clientMessageCheck(message) {
                             message, index, payloadLength,
                             "Analog:" + channelA + " -> " + Global.analog[channelA])
                 break
+            case op_Join_Request:
+                switch (payload[4]) {
+                case op_Join_Request_Reply_Start:
+                    recivedAppendList(message, index, payloadLength, "查询回复开始")
+                    break
+                case op_Join_Request_Reply_Ending:
+                    recivedAppendList(message, index, payloadLength, "查询回复准备结束")
+                    break
+                case op_Join_Request_Reply_Ended:
+                    recivedAppendList(message, index, payloadLength, "查询回复结束")
+                    break
+                default:
+                    recivedAppendList(message, index, payloadLength, "查询回复其他事件")
+                    break
+                }
+                break
+            case op_Join_DateTime:
+                const cipDate = Array.from(payload.slice(4),
+                                           byte => byte.toString(16).padStart(
+                                               2, '0')).join('')
+                recivedAppendList(message, index, payloadLength, '中控时间：20'
+                                  + cipDate.slice(12) + '/' + cipDate.slice(
+                                      8, 10) + '/' + cipDate.slice(
+                                      10, 12) + ' ' + cipDate.slice(
+                                      2, 4) + ':' + cipDate.slice(
+                                      4, 6) + ':' + cipDate.slice(6, 8))
+                break
             default:
                 recivedAppendList(message, index, payloadLength, "其他Join事件")
                 break
             }
             break
         case op_Server_Pong:
+            //console.log('pong')
             //recivedAppendList(message, index, payloadLength, "服务器回复Pong")
             break
         default:
@@ -131,7 +165,7 @@ function serverMessageCheck(message) {
         case op_Client_Ping:
             // 收到ping，回复pong
             if (payloadLength === 2) {
-                return pong()
+                pong()
             }
             break
         case op_Join:
@@ -139,14 +173,14 @@ function serverMessageCheck(message) {
             switch (payload[3]) {
             case op_Join_Request:
                 //Todo:处理查询指令
-                console.log("处理查询指令")
+                //console.log("处理查询指令")
                 break
             case op_Join_Digital:
                 //digital
                 tcpServer.sendData(cipmessage(op_Join, payload))
                 break
-            case op_Join_Analog1:
-            case op_Join_Analog2:
+                //case op_Join_Analog1:
+            case op_Join_Analog:
                 if (payloadLength === 8) {
                     tcpServer.sendData(
                                 cipmessage(
@@ -162,15 +196,10 @@ function serverMessageCheck(message) {
 }
 
 function cipmessage(opCode, message) {
-    let m = new Uint8Array(message.length + 3)
-    m[0] = opCode
-    m[1] = message.length / 0x100
-    m[2] = message.length % 0x100
-    m.set(message, 3)
-    return m.buffer
+    return cipmessageData(opCode, message).buffer
 }
 
-function cipmessage2(opCode, message) {
+function cipmessageData(opCode, message) {
     let m = new Uint8Array(message.length + 3)
     m[0] = opCode
     m[1] = message.length / 0x100
@@ -189,7 +218,7 @@ function push(channel) {
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, channel / 0x100])))
         sendAppendList(
-                    cipmessage2(
+                    cipmessageData(
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, channel / 0x100])),
@@ -205,7 +234,7 @@ function release(channel) {
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, (channel / 0x100) | 0x80])))
         sendAppendList(
-                    cipmessage2(
+                    cipmessageData(
                         op_Join,
                         new Uint8Array([0x00, 0x00, 0x03, op_Join_Digital, channel
                                         % 0x100, channel / 0x100 | 0x80])),
@@ -218,19 +247,20 @@ function level(channel, value) {
         tcpClient.sendData(
                     cipmessage(
                         op_Join,
-                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog2, channel / 0x100, channel
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
                                         % 0x100, value / 0x100, value % 0x100])))
         sendAppendList(
-                    cipmessage2(
+                    cipmessageData(
                         op_Join,
-                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog2, channel / 0x100, channel
+                        new Uint8Array([0x00, 0x00, 0x05, op_Join_Analog, channel / 0x100, channel
                                         % 0x100, value / 0x100, value % 0x100])),
                     "Analog:" + (channel + 1) + " -> " + value)
     }
 }
 function ping() {
     tcpClient.sendData(cipmessage(op_Client_Ping, new Uint8Array([0x00, 0x00])))
-    //sendAppendList(cipmessage2(op_Client_Ping,new Uint8Array([0x00, 0x00])), "发送Ping")
+    //console.log('ping')
+    //sendAppendList(cipmessageData(op_Client_Ping,new Uint8Array([0x00, 0x00])), "发送Ping")
 }
 
 //Server

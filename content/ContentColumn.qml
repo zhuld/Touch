@@ -50,7 +50,7 @@ Item {
             }
         }
     }
-    SwipeView {
+    StackLayout {
         id: stackLayout
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
@@ -61,13 +61,15 @@ Item {
                 required property string pageUrl
                 id: pageLoader
                 source: pageUrl
+                asynchronous: true
             }
         }
-        spacing: parent.height / 10
-        orientation: Qt.Vertical
-        interactive: false
         clip: true
-        Component.onCompleted: contentItem.highlightMoveDuration = 0
+
+        //Component.onCompleted: contentItem.highlightMoveDuration = 0
+        // spacing: parent.height / 10
+        // orientation: Qt.Vertical
+        // interactive: false
     }
     Component.onCompleted: {
         // Clear the filtered model

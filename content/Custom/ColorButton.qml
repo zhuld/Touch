@@ -1,8 +1,9 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
+
+import "../"
 
 T.Button {
     id: control
@@ -21,7 +22,7 @@ T.Button {
 
     contentItem: MyIconLabel {
         anchors.fill: back
-        icon.source: source
+        icon.source: control.source
         icon.color: control.iconColor
         color: control.textColor
         text: control.text

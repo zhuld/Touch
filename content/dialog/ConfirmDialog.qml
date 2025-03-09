@@ -14,15 +14,15 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.5
-    height: root.height * 0.5
+    implicitWidth: root.width * 0.5
+    implicitHeight: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
     modal: true
-    Overlay.modal: Rectangle {
-        color: "#80000000"
-    }
 
+    // Overlay.modal: Rectangle {
+    //     color: "#80000000"
+    // }
     background: Background {}
     enter: Transition {
         NumberAnimation {

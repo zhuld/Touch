@@ -19,9 +19,9 @@ Dialog {
 
     closePolicy: Popup.NoAutoClose
     modal: true
-    Overlay.modal: Rectangle {
-        color: "#80000000"
-    }
+    // Overlay.modal: Rectangle {
+    //     color: "#80000000"
+    // }
 
     background: Background {}
 

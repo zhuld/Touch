@@ -66,6 +66,7 @@ Item {
                         source: iconUrl
                         confirm: showDialog
                         btnColor: bColor
+                        btnCheckColor: Qt.darker(bColor, 1.4)
                     }
                 }
             }

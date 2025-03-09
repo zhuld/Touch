@@ -16,10 +16,9 @@ Dialog {
 
     signal showChannelChanged
 
-    Overlay.modal: Rectangle {
-        color: "#A0000000"
-    }
-
+    // Overlay.modal: Rectangle {
+    //     color: "#A0000000"
+    // }
     enter: Transition {
         NumberAnimation {
             from: 0

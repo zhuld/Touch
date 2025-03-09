@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(TouchApp
+    WIN32
     src/main.cpp
     res.qrc
     src/TcpClient.h

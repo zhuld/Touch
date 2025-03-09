@@ -166,6 +166,12 @@ Item {
             height: parent.width * 0.6
             anchors.horizontalCenter: parent.horizontalCenter
             y: parent.visualPosition * (parent.height - height)
+            Behavior on y {
+                enabled: !slider.pressed
+                NumberAnimation {
+                    duration: Global.durationDelay
+                }
+            }
             z: 1
             gradient: Gradient {
                 GradientStop {

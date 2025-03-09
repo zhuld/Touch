@@ -24,7 +24,7 @@ Item {
                     model: ListModel {
                         id: outputList
                         ListElement {
-                            name: qsTr("大屏")
+                            name: qsTr("显示屏")
                             outputChannel: 1
                         }
                         ListElement {
@@ -72,7 +72,7 @@ Item {
             }
             content: Grid {
                 id: gridInput
-                rows: 5
+                rows: Global.settings.tabOnBottom ? 4 : 5
                 anchors.fill: parent
                 columns: Math.ceil(inputList.count / rows)
                 spacing: height * 0.05
