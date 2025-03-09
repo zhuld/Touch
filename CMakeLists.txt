@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(TouchApp
+    WIN32
     src/main.cpp
     res.qrc
     src/TcpClient.h
@@ -19,6 +20,7 @@ qt_add_executable(TouchApp
     src/TcpServer.h
     src/TcpServer.cpp
     src/icon.rc
+    android/AndroidManifest.xml android/build.gradle android/res/values/libs.xml android/res/xml/qtprovider_paths.xml
 
 )
 qt_policy(SET QTP0004 NEW)
@@ -53,6 +55,3 @@ set_property(TARGET TouchApp
     APPEND PROPERTY  QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
-if (ANDROID)
-    include(C:/Users/ld_zh/AppData/Local/Android/Sdk/android_openssl/CMakeLists.txt)
-endif()

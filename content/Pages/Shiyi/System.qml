@@ -15,10 +15,10 @@ Item {
             label: qsTr("会议模式")
             content: Grid {
                 id: gridSystem
-                rows: Global.settings.tabOnBottom ? 3 : 4
+                rows: 3
                 anchors.fill: parent
                 columns: Math.ceil(systemList.count / rows)
-                spacing: height * 0.05
+                spacing: height * 0.1
                 Repeater {
                     model: ListModel {
                         id: systemList
@@ -65,7 +65,8 @@ Item {
                         disEnableChannel: disBtnChannel
                         source: iconUrl
                         confirm: showDialog
-                        btnColor: bColor
+                        //btnColor: bColor
+                        btnCheckColor: Qt.darker(bColor, 1.4)
                     }
                 }
             }
@@ -73,7 +74,7 @@ Item {
 
         Category {
             widthRatio: 0.5
-            label: qsTr("信号选择")
+            label: qsTr("显示模式")
             content: Grid {
                 id: gridMode
                 rows: 3
@@ -84,7 +85,7 @@ Item {
                     model: ListModel {
                         id: modeList
                         ListElement {
-                            name: qsTr("院内视频会议")
+                            name: qsTr("华为视频会议")
                             btnchannel: 61
                             iconUrl: "qrc:/content/icons/shipinhuiyi.png"
                         }

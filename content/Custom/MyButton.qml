@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
-import QtMultimedia
 import QtQuick.Templates as T
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
@@ -13,6 +12,7 @@ T.Button {
     property int disEnableChannel: 0
     property bool confirm: false
     property color btnColor: Global.buttonColor
+    property color btnCheckColor: Global.buttonCheckedColor
 
     property real radius: control.height / 5
     property string source
@@ -97,9 +97,9 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.checked ? Qt.darker(
-                                                 Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                    color: control.checked ? Qt.darker(control.btnCheckColor,
+                                                       1.4) : Qt.darker(
+                                                 control.btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -108,10 +108,9 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.checked ? Qt.lighter(
-                                                 Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
-                                                                   1.2)
+                    color: control.checked ? Qt.lighter(control.btnCheckColor,
+                                                        1.2) : Qt.lighter(
+                                                 control.btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -150,8 +149,8 @@ T.Button {
         font.pixelSize: channelSize
         font.family: Global.alibabaPuHuiTi.font.family
     }
-    SoundEffect {
-        id: playSound
-        source: "qrc:/content/sound/click.wav"
-    }
+    // SoundEffect {
+    //     id: playSound
+    //     source: "qrc:/content/sound/click.wav"
+    // }
 }

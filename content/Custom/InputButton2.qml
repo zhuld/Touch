@@ -1,15 +1,16 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
     id: dragButton
     property int input
+    property int channel
     property color btnColor: Global.buttonCheckedColor
     property color btnTextColor: Global.buttonTextColor
     property string textInput
     property string iconSource
-    property int disableOutput
 
     property real dragX
     property real dragY
@@ -24,14 +25,14 @@ Item {
         NumberAnimation {
             target: back
             property: "x"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 3
             to: dragButton.dragX
             easing.type: Easing.OutBack
         }
         NumberAnimation {
             target: back
             property: "y"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 3
             to: dragButton.dragY
             easing.type: Easing.OutBack
         }
@@ -41,19 +42,19 @@ Item {
         anchors.fill: parent
         drag.target: back
         onPressedChanged: {
+            dragButton.pressedChanged(mouseArea.pressed)
             if (pressed) {
-                dragButton.pressedChanged(true)
                 back.Drag.hotSpot.x = back.height / 2
                 back.Drag.hotSpot.y = mouseY
                 dragButton.dragX = back.x
                 dragButton.dragY = back.y
                 back.x = mouseX - back.height / 2
+                CrestronCIP.push(dragButton.channel)
             } else {
                 back.Drag.drop()
-                back.y = dragButton.dragY
-                back.x = dragButton.dragX
-                dragButton.pressedChanged(false)
-                //dragButtonAnimation.start()
+                //back.x = 0
+                dragButtonAnimation.start()
+                CrestronCIP.release(dragButton.channel)
             }
         }
     }
@@ -123,6 +124,14 @@ Item {
         id: back
         width: mouseArea.pressed ? height : parent.width
         height: parent.height
+        Text {
+            id: channel
+            height: parent.height
+            text: Global.settings.showChannel ? "D" + dragButton.channel : ""
+            color: Global.buttonTextColor
+            font.pixelSize: channelSize
+            font.family: Global.alibabaPuHuiTi.font.family
+        }
         ShapePath {
             strokeWidth: 0
             strokeColor: "transparent"

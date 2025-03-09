@@ -1,8 +1,9 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
+
+import "../"
 
 T.Button {
     id: control
@@ -21,7 +22,7 @@ T.Button {
 
     contentItem: MyIconLabel {
         anchors.fill: back
-        icon.source: source
+        icon.source: control.source
         icon.color: control.iconColor
         color: control.textColor
         text: control.text
@@ -70,9 +71,9 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.pressed ? Qt.darker(btnCheckColor,
+                    color: control.pressed ? Qt.darker(control.btnCheckColor,
                                                        1.4) : Qt.darker(
-                                                 btnColor, 1.4)
+                                                 control.btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -81,9 +82,9 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.pressed ? Qt.lighter(btnCheckColor,
+                    color: control.pressed ? Qt.lighter(control.btnCheckColor,
                                                         1.2) : Qt.lighter(
-                                                 btnColor, 1.2)
+                                                 control.btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay

@@ -16,10 +16,9 @@ Dialog {
 
     signal showChannelChanged
 
-    Overlay.modal: Rectangle {
-        color: "#A0000000"
-    }
-
+    // Overlay.modal: Rectangle {
+    //     color: "#A0000000"
+    // }
     enter: Transition {
         NumberAnimation {
             from: 0
@@ -63,7 +62,7 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "应用"
-                onClicked: apply()
+                onClicked: rootSetting.apply()
             }
             ColorButton {
                 id: settingCancel
@@ -88,7 +87,7 @@ Dialog {
             width: parent.width
             height: parent.height * 0.74
             contentWidth: parent.width * 0.9
-            contentHeight: Grid.height
+            //contentHeight: Grid.height
             anchors.margins: height / 20
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {

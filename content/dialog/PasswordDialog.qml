@@ -22,9 +22,9 @@ Dialog {
     modal: true
     closePolicy: Popup.CloseOnPressOutside
 
-    Overlay.modal: Rectangle {
-        color: "#80000000"
-    }
+    // Overlay.modal: Rectangle {
+    //     color: "#80000000"
+    // }
 
     enter: Transition {
         NumberAnimation {

@@ -33,6 +33,7 @@ T.TabButton {
     }
     contentItem: MyIconLabel {
         font.pixelSize: height * 0.2
+        anchors.fill: back
         spacing: 0
         display: AbstractButton.TextUnderIcon
         color: control.textColor
@@ -84,7 +85,7 @@ T.TabButton {
                     position: 0
                     color: control.checked ? Qt.darker(
                                                  Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                                                 1.4) : Qt.darker(control.btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -95,7 +96,7 @@ T.TabButton {
                     position: 1
                     color: control.checked ? Qt.lighter(
                                                  Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
+                                                 1.2) : Qt.lighter(control.btnColor,
                                                                    1.2)
                     Behavior on color {
                         ColorAnimation {

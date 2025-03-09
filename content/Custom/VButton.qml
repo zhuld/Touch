@@ -91,7 +91,7 @@ T.Button {
                     position: 0
                     color: control.checked ? Qt.darker(
                                                  Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                                                 1.4) : Qt.darker(control.btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -102,7 +102,7 @@ T.Button {
                     position: 1
                     color: control.checked ? Qt.lighter(
                                                  Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
+                                                 1.2) : Qt.lighter(control.btnColor,
                                                                    1.2)
                     Behavior on color {
                         ColorAnimation {

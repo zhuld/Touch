@@ -14,15 +14,15 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.5
-    height: root.height * 0.5
+    implicitWidth: root.width * 0.5
+    implicitHeight: root.height * 0.5
 
     closePolicy: Popup.NoAutoClose
     modal: true
-    Overlay.modal: Rectangle {
-        color: "#80000000"
-    }
 
+    // Overlay.modal: Rectangle {
+    //     color: "#80000000"
+    // }
     background: Background {}
     enter: Transition {
         NumberAnimation {
@@ -43,7 +43,7 @@ Dialog {
     Column {
         anchors.fill: parent
         anchors.margins: height * 0.05
-        spacing: height * 0.1
+        spacing: height * 0.15
         MyIconLabel {
             id: title
             height: parent.height * 0.12
@@ -53,14 +53,14 @@ Dialog {
         }
         MyIconLabel {
             id: info
-            height: parent.height * 0.38
+            height: parent.height * 0.35
             //width: parent.width
             color: Global.buttonTextColor
             icon.color: Global.buttonTextColor
         }
         Row {
             width: parent.width
-            height: parent.height * 0.3
+            height: parent.height * 0.24
             spacing: width * 0.06
             layoutDirection: Qt.RightToLeft
             ColorButton {
@@ -68,7 +68,7 @@ Dialog {
                 width: parent.width * 0.4
                 height: parent.height
                 text: "确定"
-                onClicked: confirm()
+                onClicked: confirmDialog.confirm()
                 btnColor: Global.buttonColor
             }
             ColorButton {
@@ -86,8 +86,8 @@ Dialog {
         repeat: true
         triggeredOnStart: false
         onTriggered: {
-            during--
-            if (during === 0) {
+            confirmDialog.during--
+            if (confirmDialog.during === 0) {
                 confirmDialog.close()
             }
         }

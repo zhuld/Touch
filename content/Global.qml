@@ -4,7 +4,6 @@ import QtQuick
 import QtCore
 
 import "./Config"
-import "./Dialog"
 
 QtObject {
 

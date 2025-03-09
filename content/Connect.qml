@@ -51,24 +51,37 @@ Item {
                 color: Global.buttonTextColor
                 font.family: Global.alibabaPuHuiTi.font.family
             }
-            Timer {
-                id: timer
-                property bool space: true
-                interval: 500
-                repeat: true
-                running: true
-                triggeredOnStart: true
-                onTriggered: {
-                    dateText.text = new Date().toLocaleDateString(
-                                Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
-                    if (space) {
-                        timeText.text = new Date().toLocaleTimeString(
-                                    Qt.locale("zh_CN"), "hh mm ss")
+        }
+        Timer {
+            id: timer
+            property bool space: true
+            property int count: 0
+            interval: 500
+            repeat: true
+            running: true
+            triggeredOnStart: true
+            onTriggered: {
+                dateText.text = new Date().toLocaleDateString(
+                            Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
+                if (space) {
+                    timeText.text = new Date().toLocaleTimeString(
+                                Qt.locale("zh_CN"), "hh mm ss")
+                } else {
+                    timeText.text = new Date().toLocaleTimeString(
+                                Qt.locale("zh_CN"), "hh:mm:ss")
+                }
+                space = !space
+                count++
+                if (count == 3) {
+                    if (Global.settings.demoMode) {
+                        tcpClient.connectToServer("127.0.0.1", 41793)
                     } else {
-                        timeText.text = new Date().toLocaleTimeString(
-                                    Qt.locale("zh_CN"), "hh:mm:ss")
+                        tcpClient.connectToServer(Global.settings.ipAddress,
+                                                  Global.settings.ipPort)
                     }
-                    space = !space
+                } else if (count > 10) {
+                    count = 0
+                    socketAnimation.start()
                 }
             }
         }
@@ -89,11 +102,19 @@ Item {
             }
         }
         MyIconLabel {
+            id: connetLabel
+            property string errorString: ''
             text: Global.settings.ipAddress + ":" + Global.settings.ipPort + "@"
-                  + Global.settings.ipId
+                  + Global.settings.ipId + ' ' + errorString
             height: parent.height * 0.08
             color: Global.buttonTextColor
             anchors.right: parent.right
+        }
+        Connections {
+            target: tcpClient
+            onErrorOccurred: error => {
+                                 connetLabel.errorString = error
+                             }
         }
         Rectangle {
             id: socketStatusProgress
@@ -110,15 +131,6 @@ Item {
                 to: 1
                 duration: 5000
                 running: true
-                onStarted: {
-                    if (Global.settings.demoMode) {
-                        tcpClient.connectToServer("127.0.0.1", 41793)
-                    } else {
-                        tcpClient.connectToServer(Global.settings.ipAddress,
-                                                  Global.settings.ipPort)
-                    }
-                    socketAnimation.start()
-                }
             }
         }
     }
@@ -127,5 +139,6 @@ Item {
             Global.digital[i] = false
             Global.analog[i] = 0
         }
+        //Global.digital[46] = true
     }
 }

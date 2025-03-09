@@ -16,9 +16,10 @@ Item {
             label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
-                width: parent.width * 1.3 > parent.height ? parent.height / 1.3 : parent.width
+                width: parent.width * 1.3 > parent.height
+                       * 0.8 ? parent.height * 0.8 / 1.3 : parent.width * 0.8
                 height: width * 1.3
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: parent
                 channel: 21
                 disEnableChannel: cameraAuto.channel
             }
@@ -55,7 +56,7 @@ Item {
                 MyButton {
                     height: parent.height / 10
                     width: height * 2
-                    text: "复位"
+                    text: "全景"
                     channel: 31
                     disEnableChannel: cameraAuto.channel
                     anchors.right: parent.right

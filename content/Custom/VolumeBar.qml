@@ -16,6 +16,7 @@ Item {
 
     property int muteChannel
     property int channel
+    property int level
     property int disEnableChannel: 0
 
     property bool input: true
@@ -35,9 +36,10 @@ Item {
         orientation: Qt.Vertical
         live: false
         value: Math.round(
-                   Global.analog[control.channel] * (maxVolume - miniVolume) / 65535 + miniVolume)
-        from: miniVolume
-        to: maxVolume
+                   Global.analog[control.channel]
+                   * (control.maxVolume - control.miniVolume) / 65535 + control.miniVolume)
+        from: control.miniVolume
+        to: control.maxVolume
         stepSize: 1
 
         snapMode: Slider.SnapAlways
@@ -45,7 +47,7 @@ Item {
         background: Shape {
             id: back
             height: parent.height - handle.height + width
-            width: parent.width * 0.05
+            width: parent.width * 0.1
             y: handle.height / 2 - width / 2
             anchors.horizontalCenter: parent.horizontalCenter
             ShapePath {
@@ -54,23 +56,27 @@ Item {
                 PathRectangle {
                     id: pathRect
                     x: 0
-                    y: 0
-                    radius: back.width / 2
+                    y: back.height - height
+                    radius: width / 3
                     width: back.width
                     height: back.height
                 }
                 fillGradient: LinearGradient {
-                    y1: pathRectangle.height / 2
-                    y2: pathRectangle.height / 2
-                    x1: 0
-                    x2: pathRectangle.width
+                    y1: pathRect.height
+                    y2: 0
+                    x1: pathRect.width / 2
+                    x2: pathRect.width / 2
                     GradientStop {
-                        position: 0
-                        color: Qt.darker(Global.buttonCheckedColor, 1.4)
+                        position: 0.6
+                        color: "green"
+                    }
+                    GradientStop {
+                        position: 0.8
+                        color: "orange"
                     }
                     GradientStop {
                         position: 1
-                        color: Global.buttonCheckedColor
+                        color: "red"
                     }
                 }
             }
@@ -81,8 +87,15 @@ Item {
                     id: pathRectangle
                     x: 0
                     y: 0
-                    radius: back.width / 2
+                    radius: width / 3
                     width: back.width
+
+                    //height: back.height - Math.round( Global.analog[control.level] / 65535 * back.height)
+                    // Behavior on height {
+                    //     NumberAnimation {
+                    //         duration: Global.durationDelay
+                    //     }
+                    // }
                     height: slider.visualPosition * back.height
                 }
                 fillGradient: LinearGradient {
@@ -103,8 +116,8 @@ Item {
         }
 
         Repeater {
-            model: (maxVolume - miniVolume) + 1
-            Item {
+            model: (control.maxVolume - control.miniVolume) / 5 + 1
+            delegate: Item {
                 anchors.fill: parent
                 Shape {
                     //刻度线左
@@ -114,15 +127,15 @@ Item {
                         strokeColor: (-index + maxVolume)
                                      <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                         strokeWidth: (Math.floor(
-                                          index / 5) * 5 === index) ? 2 : 1
-                        startX: (Math.floor(index / 5) * 5
-                                 === index) ? parent.width * 0.25 : parent.width * 0.3
-                        startY: parent.handle.height / 2 + (parent.height - parent.handle.height)
-                                / (maxVolume - miniVolume) * index
+                                          index / 2) * 2 === index) ? 2 : 1
+                        startX: (Math.floor(index / 2) * 2
+                                 === index) ? slider.width * 0.25 : slider.width * 0.3
+                        startY: slider.handle.height / 2 + (slider.height - slider.handle.height)
+                                / (maxVolume - miniVolume) * 5 * index
                         PathLine {
-                            x: parent.width * 0.4
-                            y: parent.handle.height / 2 + (parent.height - parent.handle.height)
-                               / (maxVolume - miniVolume) * index
+                            x: slider.width * 0.4
+                            y: slider.handle.height / 2 + (parent.height - parent.handle.height)
+                               / (maxVolume - miniVolume) * 5 * index
                         }
                     }
                     //刻度线右
@@ -130,30 +143,30 @@ Item {
                         strokeColor: (-index + maxVolume)
                                      <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                         strokeWidth: (Math.floor(
-                                          index / 5) * 5 === index) ? 2 : 1
-                        startX: width * 0.6
-                        startY: parent.handle.height / 2 + (parent.height - parent.handle.height)
-                                / (maxVolume - miniVolume) * index
+                                          index / 2) * 2 === index) ? 2 : 1
+                        startX: slider.width * 0.6
+                        startY: slider.handle.height / 2 + (slider.height - slider.handle.height)
+                                / (maxVolume - miniVolume) * 5 * index
                         PathLine {
                             x: (Math.floor(
-                                    index / 5) * 5 === index) ? width * 0.8 : width * 0.7
-                            y: parent.handle.height / 2 + (parent.height - parent.handle.height)
-                               / (maxVolume - miniVolume) * index
+                                    index / 2) * 2 === index) ? width * 0.8 : width * 0.7
+                            y: slider.handle.height / 2 + (slider.height - slider.handle.height)
+                               / (maxVolume - miniVolume) * 5 * index
                         }
                     }
                 }
 
                 Text {
                     text: (Math.floor(
-                               index / 5) * 5 === index) ? -index + maxVolume : ""
+                               index / 2) * 2 === index) ? -index * 5 + maxVolume : ""
                     width: parent.width * 0.3
-                    height: parent.parent.handle.height
+                    height: slider.handle.height
                     horizontalAlignment: Text.AlignRight
-                    x: -width * 0.3
-                    y: (parent.parent.height - height) / (maxVolume - miniVolume) * index
+                    x: -width * 0.2
+                    y: (slider.height - height) / (maxVolume - miniVolume) * 5 * index
                     color: (-index + maxVolume)
                            <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
-                    font.pixelSize: height * 0.2
+                    font.pixelSize: height * 0.25
                     verticalAlignment: Text.AlignVCenter
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
@@ -163,42 +176,49 @@ Item {
         handle: Rectangle {
             id: handle
             width: parent.width * 0.3
-            height: parent.width * 0.6
+            height: width * 2
             anchors.horizontalCenter: parent.horizontalCenter
-            y: parent.visualPosition * (parent.height - height)
+            y: slider.visualPosition * (parent.height - height)
+            Behavior on y {
+                enabled: !slider.pressed
+                NumberAnimation {
+                    duration: Global.durationDelay
+                }
+            }
+            //opacity: 0.8
             z: 1
             gradient: Gradient {
                 GradientStop {
                     position: 0.0
-                    color: input ? "#07111B" : "#57111B"
+                    color: control.input ? "#07111B" : "#57111B"
                 }
                 GradientStop {
                     position: 0.1
-                    color: input ? "#5598CF" : "#A598CF"
+                    color: control.input ? "#5598CF" : "#A598CF"
                 }
                 GradientStop {
                     position: 0.2
-                    color: input ? "#182632" : "#682632"
+                    color: control.input ? "#182632" : "#682632"
                 }
                 GradientStop {
                     position: 0.48
-                    color: input ? "#2F4E69" : "#8F4E69"
+                    color: control.input ? "#2F4E69" : "#8F4E69"
                 }
                 GradientStop {
                     position: 0.50
-                    color: input ? "#A8C8E8" : "#A8C8E8"
+                    color: control.input ? "#A8C8E8" : "#A8C8E8"
                 }
                 GradientStop {
                     position: 0.52
-                    color: input ? "#385E7E" : "#885E7E"
+                    color: control.input ? "#385E7E" : "#885E7E"
                 }
                 GradientStop {
                     position: 0.9
-                    color: input ? "#3F6C94" : "#8F6C94"
+                    color: control.input ? "#3F6C94" : "#8F6C94"
                 }
                 GradientStop {
                     position: 1.0
-                    color: input ? "#07111B" : "#57111B"
+                    color: control.input ? "#07111B" : "#57111B"
                 }
             }
             radius: width * 0.1
@@ -206,7 +226,7 @@ Item {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Global.buttonShadowColor
-                shadowHorizontalOffset: parent.pressed ? shadowHeight / 2 : shadowHeight
+                shadowHorizontalOffset: slider.pressed ? shadowHeight / 2 : shadowHeight
                 shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                 Behavior on shadowHorizontalOffset {
                     NumberAnimation {
@@ -237,7 +257,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         source: checked ? "qrc:/content/icons/mute.png" : "qrc:/content/icons/unmute.png"
         iconColor: checked ? Global.buttonTextRedColor : Global.buttonTextColor
-        channel: muteChannel
+        channel: control.muteChannel
         disEnableChannel: control.disEnableChannel
         text: slider.value
         visible: control.muteBtn
