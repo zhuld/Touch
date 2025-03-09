@@ -5,7 +5,6 @@ import QtQuick.Shapes
 import "../"
 
 Item {
-    id: control
     property alias content: content.data
     property alias info: info.data
     property real widthRatio: 1
@@ -36,7 +35,7 @@ Item {
                 id: pathRect
                 x: 0
                 y: 0
-                radius: back.height / 20
+                radius: back.height / 25
                 width: back.width
                 height: back.height
             }
@@ -94,7 +93,7 @@ Item {
         }
     }
     MyIconLabel {
-        text: control.label
+        text: parent.label
         height: parent.height * 0.1
         width: parent.width
     }

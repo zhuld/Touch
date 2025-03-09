@@ -1,18 +1,19 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
 
+import "../"
+
 T.Button {
-    id: control
+    id: controlColorButton
     property color btnColor: Global.backgroundColor
     property color btnCheckColor: Global.buttonCheckedColor
-    property color textColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
-    property color iconColor: control.pressed ? Global.backgroundColor : Global.buttonTextColor
+    property color textColor: pressed ? Global.backgroundColor : Global.buttonTextColor
+    property color iconColor: pressed ? Global.backgroundColor : Global.buttonTextColor
     property string source
 
-    property real radius: control.height / 5
+    property real radius: height / 5
 
     implicitHeight: parent.height
     implicitWidth: parent.width
@@ -21,16 +22,16 @@ T.Button {
 
     contentItem: MyIconLabel {
         anchors.fill: back
-        icon.source: source
-        icon.color: control.iconColor
-        color: control.textColor
-        text: control.text
+        icon.source: controlColorButton.source
+        icon.color: controlColorButton.iconColor
+        color: controlColorButton.textColor
+        text: controlColorButton.text
     }
     background: Shape {
         id: back
         height: parent.height
         width: parent.width
-        y: control.pressed ? height / 40 : 0
+        y: controlColorButton.pressed ? height / 40 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         Behavior on y {
             NumberAnimation {
@@ -41,10 +42,11 @@ T.Button {
         layer.enabled: true
         layer.samples: 16
         layer.effect: MultiEffect {
-            shadowEnabled: !Qt.colorEqual(control.btnColor, "transparent")
+            shadowEnabled: !Qt.colorEqual(controlColorButton.btnColor,
+                                          "transparent")
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.pressed ? shadowHeight / 4 : shadowHeight / 2
+            shadowVerticalOffset: controlColorButton.pressed ? shadowHeight / 4 : shadowHeight / 2
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -58,7 +60,7 @@ T.Button {
                 id: pathRect
                 x: 0
                 y: 0
-                radius: control.radius
+                radius: controlColorButton.radius
                 width: back.width
                 height: back.height
             }
@@ -70,9 +72,11 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.pressed ? Qt.darker(btnCheckColor,
-                                                       1.4) : Qt.darker(
-                                                 btnColor, 1.4)
+                    color: controlColorButton.pressed ? Qt.darker(
+                                                            controlColorButton.btnCheckColor,
+                                                            1.4) : Qt.darker(
+                                                            controlColorButton.btnColor,
+                                                            1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -81,9 +85,11 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.pressed ? Qt.lighter(btnCheckColor,
-                                                        1.2) : Qt.lighter(
-                                                 btnColor, 1.2)
+                    color: controlColorButton.pressed ? Qt.lighter(
+                                                            controlColorButton.btnCheckColor,
+                                                            1.2) : Qt.lighter(
+                                                            controlColorButton.btnColor,
+                                                            1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay

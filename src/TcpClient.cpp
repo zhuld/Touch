@@ -39,6 +39,10 @@ void TcpClient::disconnectFromServer()
     tcpSocket->disconnectFromHost();
 }
 
+void TcpClient::checkState(){
+    tcpSocket->state();
+}
+
 void TcpClient::onReadyRead()
 {
     QByteArray data = tcpSocket->readAll();

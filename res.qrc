@@ -60,5 +60,6 @@
         <file>content/icons/config.png</file>
         <file>content/icons/back.png</file>
         <file>content/images/background.jpg</file>
+        <file>content/icons/jigui.png</file>
     </qresource>
 </RCC>

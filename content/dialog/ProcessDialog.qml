@@ -14,14 +14,11 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    width: root.width * 0.5
-    height: root.height * 0.5
+    width: parent.width * 0.5
+    height: parent.height * 0.5
 
     closePolicy: Popup.NoAutoClose
     modal: true
-    Overlay.modal: Rectangle {
-        color: "#80000000"
-    }
 
     background: Background {}
 
@@ -72,8 +69,8 @@ Dialog {
             repeat: true
             triggeredOnStart: false
             onTriggered: {
-                during--
-                if (during === 0) {
+                processDialog.during--
+                if (processDialog.during === 0) {
                     processDialog.close()
                 }
             }

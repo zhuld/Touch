@@ -16,10 +16,6 @@ Dialog {
 
     signal showChannelChanged
 
-    Overlay.modal: Rectangle {
-        color: "#A0000000"
-    }
-
     enter: Transition {
         NumberAnimation {
             from: 0
@@ -63,7 +59,7 @@ Dialog {
                 width: parent.width * 0.2
                 height: parent.height * 0.6
                 text: "应用"
-                onClicked: apply()
+                onClicked: rootSetting.apply()
             }
             ColorButton {
                 id: settingCancel
@@ -88,7 +84,7 @@ Dialog {
             width: parent.width
             height: parent.height * 0.74
             contentWidth: parent.width * 0.9
-            contentHeight: Grid.height
+            //contentHeight: Grid.height
             anchors.margins: height / 20
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {
@@ -313,20 +309,6 @@ Dialog {
                     checked: Global.settings.darkTheme
                     text: checked ? "深色主题" : "浅色主题"
                 }
-                Text {
-                    text: "导航栏位置"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
-                    font.pixelSize: height * 0.7
-                    color: Global.buttonTextColor
-                    font.family: Global.alibabaPuHuiTi.font.family
-                }
-                ColorSwitch {
-                    height: rootSetting.height / 15
-                    id: tabPosition
-                    checked: Global.settings.tabOnBottom
-                    text: checked ? "底部" : "左侧"
-                }
             }
         }
     }
@@ -349,7 +331,6 @@ Dialog {
         settingPassword.text = Global.settings.settingPassword
         showChannel.checked = Global.settings.showChannel
         darkTheme.checked = Global.settings.darkTheme
-        tabPosition.checked = Global.settings.tabOnBottom
         Global.settings.sync()
     }
     function apply() {
@@ -376,7 +357,6 @@ Dialog {
             showChannelChanged()
         }
         Global.settings.darkTheme = darkTheme.checked
-        Global.settings.tabOnBottom = tabPosition.checked
         Global.settings.sync()
     }
 }

@@ -1,7 +1,4 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Dialogs
-import QtQuick.Shapes
 
 import "../Custom"
 import "../Dialog"

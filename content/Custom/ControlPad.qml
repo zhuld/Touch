@@ -6,11 +6,11 @@ import QtQuick.Effects
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
-    id: control
+    id: controlPad
 
     property int channel
     property int disEnableChannel: 0
-    enabled: Global.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.5
 
     implicitWidth: 100
@@ -30,11 +30,11 @@ Item {
             height: width
             Shape {
                 id: upButton
-                property int channel: control.channel
+                property int channel: controlPad.channel
                 property bool checked: Global.digital[upButton.channel] ? true : false
                 width: parent.width
                 height: width
-                y: checked ? -control.width / 50 : -control.width / 60
+                y: checked ? -controlPad.width / 50 : -controlPad.width / 60
                 Behavior on y {
                     NumberAnimation {
                         duration: Global.durationDelay
@@ -112,8 +112,8 @@ Item {
                         sweepAngle: 90
                     }
                     PathLine {
-                        x: control.point3
-                        y: control.point2
+                        x: controlPad.point3
+                        y: controlPad.point2
                     }
                     PathAngleArc {
                         radiusX: upButton.width / 4
@@ -124,8 +124,8 @@ Item {
                         sweepAngle: -90
                     }
                     PathLine {
-                        x: control.point1
-                        y: control.point1
+                        x: controlPad.point1
+                        y: controlPad.point1
                     }
                 }
                 MouseArea {
@@ -144,11 +144,11 @@ Item {
 
             Shape {
                 id: leftButton
-                property int channel: control.channel + 2
+                property int channel: controlPad.channel + 2
                 property bool checked: Global.digital[leftButton.channel] ? true : false
                 width: parent.width
                 height: width
-                x: checked ? -control.width / 50 : -control.width / 60
+                x: checked ? -controlPad.width / 50 : -controlPad.width / 60
                 Behavior on x {
                     NumberAnimation {
                         duration: Global.durationDelay
@@ -226,8 +226,8 @@ Item {
                         sweepAngle: 90
                     }
                     PathLine {
-                        x: control.point2
-                        y: control.point2
+                        x: controlPad.point2
+                        y: controlPad.point2
                     }
                     PathAngleArc {
                         radiusX: leftButton.width / 4
@@ -238,8 +238,8 @@ Item {
                         sweepAngle: -90
                     }
                     PathLine {
-                        x: control.point1
-                        y: control.point4
+                        x: controlPad.point1
+                        y: controlPad.point4
                     }
                 }
                 MouseArea {
@@ -258,11 +258,11 @@ Item {
 
             Shape {
                 id: rightButton
-                property int channel: control.channel + 3
+                property int channel: controlPad.channel + 3
                 property bool checked: Global.digital[rightButton.channel] ? true : false
                 width: parent.width
                 height: width
-                x: checked ? control.width / 50 : control.width / 60
+                x: checked ? controlPad.width / 50 : controlPad.width / 60
                 Behavior on x {
                     NumberAnimation {
                         duration: Global.durationDelay
@@ -341,8 +341,8 @@ Item {
                         sweepAngle: 90
                     }
                     PathLine {
-                        x: control.point3
-                        y: control.point3
+                        x: controlPad.point3
+                        y: controlPad.point3
                     }
                     PathAngleArc {
                         radiusX: rightButton.width / 4
@@ -353,8 +353,8 @@ Item {
                         sweepAngle: -90
                     }
                     PathLine {
-                        x: control.point4
-                        y: control.point1
+                        x: controlPad.point4
+                        y: controlPad.point1
                     }
                 }
                 MouseArea {
@@ -373,11 +373,11 @@ Item {
 
             Shape {
                 id: downButton
-                property int channel: control.channel + 1
+                property int channel: controlPad.channel + 1
                 property bool checked: Global.digital[downButton.channel] ? true : false
                 width: parent.width
                 height: width
-                y: checked ? control.width / 50 : control.width / 60
+                y: checked ? controlPad.width / 50 : controlPad.width / 60
                 Behavior on y {
                     NumberAnimation {
                         duration: Global.durationDelay
@@ -456,8 +456,8 @@ Item {
                         sweepAngle: 90
                     }
                     PathLine {
-                        x: control.point2
-                        y: control.point3
+                        x: controlPad.point2
+                        y: controlPad.point3
                     }
                     PathAngleArc {
                         radiusX: downButton.width / 4
@@ -468,8 +468,8 @@ Item {
                         sweepAngle: -90
                     }
                     PathLine {
-                        x: control.point4
-                        y: control.point4
+                        x: controlPad.point4
+                        y: controlPad.point4
                     }
                 }
                 MouseArea {
@@ -495,14 +495,14 @@ Item {
                 width: height
                 source: "qrc:/content/icons/fangda.png"
                 radius: height / 2
-                channel: control.channel + 4
+                channel: controlPad.channel + 4
             }
             MyButton {
                 height: parent.height
                 width: height
                 source: "qrc:/content/icons/suoxiao.png"
                 radius: height / 2
-                channel: control.channel + 5
+                channel: controlPad.channel + 5
             }
         }
     }

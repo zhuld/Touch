@@ -35,6 +35,8 @@ Item {
                 required property string iconUrl
                 required property int index
                 required property int pageChannel
+                required property int disableChannel
+                disEnableChannel: disableChannel
                 text: name
                 width: parent.height
                 height: parent.height
@@ -49,7 +51,7 @@ Item {
         }
         spacing: (width - height * Global.tabList.count) / (Global.tabList.count + 1)
     }
-    SwipeView {
+    StackLayout {
         id: stackLayout
         anchors.top: parent.top
         width: parent.width
@@ -62,11 +64,11 @@ Item {
                 source: pageUrl
             }
         }
-        orientation: Qt.Horizontal
-        spacing: parent.width / 10
-        interactive: false
         clip: true
-        Component.onCompleted: contentItem.highlightMoveDuration = 0
+        // orientation: Qt.Horizontal
+        // spacing: parent.width / 10
+        // interactive: false
+        // Component.onCompleted: contentItem.highlightMoveDuration = 0
     }
     Component.onCompleted: {
         // Clear the filtered model

@@ -1,64 +1,63 @@
 import QtQuick
-import QtQuick.Controls
+//import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
-import QtMultimedia
 import QtQuick.Templates as T
 import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 T.Button {
-    id: control
+    id: controlMyButton
     property int channel
     property int disEnableChannel: 0
     property bool confirm: false
     property color btnColor: Global.buttonColor
+    property color btnCheckColor: Global.buttonCheckedColor
 
-    property real radius: control.height / 5
+    property real radius: controlMyButton.height / 5
     property string source
     property color textColor: checked ? Global.backgroundColor : Global.buttonTextColor
     property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
 
-    checked: Global.digital[control.channel] ? true : false
+    checked: Global.digital[controlMyButton.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    enabled: Global.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[controlMyButton.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
     Behavior on opacity {
         OpacityAnimator {
             duration: Global.durationDelay
         }
     }
-    Material.accent: Global.buttonTextColor
 
+    //Material.accent: Global.buttonTextColor
     onPressedChanged: {
         if (pressed) {
-            //playSound.play()
             if (!confirm) {
-                CrestronCIP.push(control.channel)
+                CrestronCIP.push(controlMyButton.channel)
             } else {
                 confirmDialog.open()
             }
         } else {
             if (!confirm) {
-                CrestronCIP.release(control.channel)
+                CrestronCIP.release(controlMyButton.channel)
             }
         }
     }
     contentItem: MyIconLabel {
         anchors.fill: back
-        color: control.textColor
-        icon.color: control.iconColor
-        icon.source: control.source
-        text: control.text
+        color: controlMyButton.textColor
+        icon.color: controlMyButton.iconColor
+        icon.source: controlMyButton.source
+        text: controlMyButton.text
     }
     background: Shape {
         id: back
         height: parent.height
         width: parent.width
-        y: control.checked ? height / 40 : 0
+        y: controlMyButton.checked ? height / 40 : 0
         Behavior on y {
             NumberAnimation {
                 duration: Global.durationDelay
@@ -71,7 +70,7 @@ T.Button {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
+            shadowVerticalOffset: controlMyButton.enabled ? (controlMyButton.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -85,7 +84,7 @@ T.Button {
                 id: pathRect
                 x: 0
                 y: 0
-                radius: control.radius
+                radius: controlMyButton.radius
                 width: back.width
                 height: back.height
             }
@@ -97,9 +96,11 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.checked ? Qt.darker(
-                                                 Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                    color: controlMyButton.checked ? Qt.darker(
+                                                         controlMyButton.btnCheckColor,
+                                                         1.4) : Qt.darker(
+                                                         controlMyButton.btnColor,
+                                                         1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -108,10 +109,11 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.checked ? Qt.lighter(
-                                                 Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
-                                                                   1.2)
+                    color: controlMyButton.checked ? Qt.lighter(
+                                                         controlMyButton.btnCheckColor,
+                                                         1.2) : Qt.lighter(
+                                                         controlMyButton.btnColor,
+                                                         1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -123,8 +125,8 @@ T.Button {
     }
     ConfirmDialog {
         id: confirmDialog
-        dialogIcon: control.source
-        dialogInfomation: "确定" + control.text + "？"
+        dialogIcon: controlMyButton.source
+        dialogInfomation: "确定" + controlMyButton.text + "？"
         dialogTitle: "提示"
         Timer {
             id: releaseTimer
@@ -133,25 +135,21 @@ T.Button {
             triggeredOnStart: false
             onTriggered: {
                 confirmDialog.close()
-                CrestronCIP.release(control.channel)
+                CrestronCIP.release(controlMyButton.channel)
             }
         }
         onConfirm: {
-            CrestronCIP.push(control.channel)
+            CrestronCIP.push(controlMyButton.channel)
             releaseTimer.start()
         }
     }
     Text {
         id: channel
         height: parent.height
-        text: Global.settings.showChannel ? "D" + control.channel + "E"
-                                            + control.disEnableChannel : ""
+        text: Global.settings.showChannel ? "D" + controlMyButton.channel + "E"
+                                            + controlMyButton.disEnableChannel : ""
         color: Global.buttonTextColor
         font.pixelSize: channelSize
         font.family: Global.alibabaPuHuiTi.font.family
-    }
-    SoundEffect {
-        id: playSound
-        source: "qrc:/content/sound/click.wav"
     }
 }

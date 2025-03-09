@@ -6,23 +6,22 @@ import QtQuick.Effects
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
-    id: control
+    id: controlOutput
 
     property int output
     property alias textOutput: textOutput.text
-    property string disableInput
     property color dragShadowColor
     readonly property var input: Global.analog[output]
     property int disEnableChannel: 0
     property var inputListMode
 
-    enabled: Global.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[controlOutput.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.4
     layer.enabled: true
     layer.effect: MultiEffect {
         id: effect
         shadowEnabled: true
-        shadowColor: dropContainer.containsDrag ? control.dragShadowColor : Global.buttonShadowColor
+        shadowColor: dropContainer.containsDrag ? controlOutput.dragShadowColor : Global.buttonShadowColor
         shadowHorizontalOffset: height / 60
         shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight * 2 : shadowHeight / 2
         Behavior on shadowColor {
@@ -60,7 +59,7 @@ Item {
                 GradientStop {
                     position: 0
                     color: Qt.alpha(
-                               input > 0 & input
+                               controlOutput.input > 0 & controlOutput.input
                                <= inputListMode.count ? Qt.darker(
                                                             inputListMode.get(
                                                                 input - 1).bgColor,
@@ -74,7 +73,7 @@ Item {
                 }
                 GradientStop {
                     position: 1
-                    color: input > 0 & input
+                    color: controlOutput.input > 0 & controlOutput.input
                            <= inputListMode.count ? Qt.lighter(
                                                         inputListMode.get(
                                                             input - 1).bgColor,
@@ -108,7 +107,7 @@ Item {
         font.pixelSize: height * 0.6
         anchors.margins: height * 0.1
         anchors.left: parent.left
-        text: output
+        text: controlOutput.output
         color: Global.buttonTextColor
         font.bold: true
         opacity: 0.1
@@ -117,19 +116,21 @@ Item {
     MyIconLabel {
         id: textInput
         anchors.bottom: parent.bottom
-        height: parent.height * 0.7
+        height: parent.height * 0.6
         width: parent.width - inputText.width
         alignment: Text.AlignRight
-        icon.source: input > 0 & input <= inputListMode.count ? inputListMode.get(
-                                                                    input - 1).source : ""
-        text: input > 0 & input <= inputListMode.count ? inputListMode.get(
-                                                             input - 1).name : null
+        icon.source: controlOutput.input > 0 & controlOutput.input
+                     <= controlOutput.inputListMode.count ? inputListMode.get(
+                                                                input - 1).source : ""
+        text: controlOutput.input > 0 & controlOutput.input
+              <= controlOutput.inputListMode.count ? inputListMode.get(
+                                                         input - 1).name : null
         anchors.right: parent.right
         anchors.rightMargin: inputText.width
     }
     Text {
         id: inputText
-        height: parent.height * 0.5
+        height: parent.height * 0.4
         font.pixelSize: height
         anchors.margins: height * 0.1
         anchors.right: parent.right
@@ -143,8 +144,8 @@ Item {
     Text {
         id: channel
         height: parent.height
-        text: Global.settings.showChannel ? "A" + control.output + "E"
-                                            + control.disEnableChannel : ""
+        text: Global.settings.showChannel ? "A" + controlOutput.output + "E"
+                                            + controlOutput.disEnableChannel : ""
         color: Global.buttonTextColor
         font.pixelSize: channelSize
         font.family: Global.alibabaPuHuiTi.font.family
@@ -152,11 +153,7 @@ Item {
     DropArea {
         id: dropContainer
         anchors.fill: parent
-        onDropped: drop => {
-                       if (disableInput !== drop.keys[0]) {
-                           CrestronCIP.level(output, drop.keys[0])
-                       }
-                   }
-        onEntered: drop => control.dragShadowColor = drop.keys[1]
+        onDropped: drop => CrestronCIP.level(controlOutput.output, drop.keys[0])
+        onEntered: drop => controlOutput.dragShadowColor = drop.keys[1]
     }
 }

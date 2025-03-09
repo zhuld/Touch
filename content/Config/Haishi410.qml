@@ -45,13 +45,13 @@ QtObject {
             test: false
             pageChannel: 15
         }
-        ListElement {
-            name: qsTr("数据")
-            pageUrl: "qrc:/qt/qml/content/Pages/DataList.qml"
-            iconUrl: "qrc:/content/icons/table.png"
-            test: true
-            pageChannel: 17
-        }
+        // ListElement {
+        //     name: qsTr("数据")
+        //     pageUrl: "qrc:/qt/qml/content/Pages/DataList.qml"
+        //     iconUrl: "qrc:/content/icons/table.png"
+        //     test: true
+        //     pageChannel: 17
+        // }
         ListElement {
             name: qsTr("测试")
             pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"
@@ -60,4 +60,12 @@ QtObject {
             pageChannel: 18
         }
     }
+    readonly property var initValue: ListModel {
+        ListElement {
+            name: "analog"
+            channel: 1
+            value: 19661
+        }
+    }
+    readonly property bool tabOnBottom: false
 }

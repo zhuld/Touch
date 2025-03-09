@@ -33,7 +33,7 @@ Window {
         dialogInfomation: "确定关闭程序？"
         dialogTitle: "提示"
         onConfirm: {
-            closeDialog.close()
+            root.closeDialog.close()
             root.close()
         }
     }
@@ -41,9 +41,11 @@ Window {
     property alias running: ping.running
     Timer {
         id: ping
-        interval: 15000
+        interval: 10000
         repeat: true
-        onTriggered: CrestronCIP.ping()
+        onTriggered: {
+            CrestronCIP.ping()
+        }
     }
 
     width: Global.settings.windowWidth
@@ -127,14 +129,16 @@ Window {
     Loader {
         id: pageLoader
         y: titleBar.height
+        //asynchronous: true
         width: parent.width
         height: parent.height - titleBar.height
-        source: running ? (Global.settings.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/ConfigSelect.qml" : "qrc:/qt/qml/content/Connect.qml")
+        source: ping.running ? (Global.config.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/ConfigSelect.qml" : "qrc:/qt/qml/content/Connect.qml")
     }
 
     Connections {
         target: tcpClient
         onStateChanged: state => {
+                            //console.log('state', state)
                             if (state === 0) {
                                 ping.running = false
                             }

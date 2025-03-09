@@ -14,6 +14,7 @@ public:
     Q_INVOKABLE void connectToServer(const QString &host, quint16 port);
     Q_INVOKABLE void sendData(const QByteArray &data);
     Q_INVOKABLE void disconnectFromServer();
+    Q_INVOKABLE void checkState();
 
 signals:
     void dataReceived(const QByteArray &data);

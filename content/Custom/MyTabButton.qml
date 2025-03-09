@@ -8,7 +8,7 @@ import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 T.TabButton {
-    id: control
+    id: controlMyTabButton
     property int channel
     property int disEnableChannel: 0
     property color btnColor: Global.backgroundColor
@@ -16,35 +16,36 @@ T.TabButton {
     property string source
     property color textColor: checked ? Global.backgroundColor : Global.buttonTextColor
     property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
-    checked: Global.digital[control.channel] ? true : false
+    checked: Global.digital[controlMyTabButton.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    enabled: Global.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[controlMyTabButton.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
     onPressedChanged: {
         if (pressed) {
-            CrestronCIP.push(control.channel)
+            CrestronCIP.push(controlMyTabButton.channel)
         } else {
-            CrestronCIP.release(control.channel)
+            CrestronCIP.release(controlMyTabButton.channel)
         }
     }
     contentItem: MyIconLabel {
         font.pixelSize: height * 0.2
+        anchors.fill: back
         spacing: 0
         display: AbstractButton.TextUnderIcon
-        color: control.textColor
-        icon.color: control.iconColor
-        icon.source: control.source
-        text: control.text
+        color: controlMyTabButton.textColor
+        icon.color: controlMyTabButton.iconColor
+        icon.source: controlMyTabButton.source
+        text: controlMyTabButton.text
     }
     background: Shape {
         id: back
-        height: control.height
-        width: control.width
-        y: control.checked ? height / 40 : 0
+        height: controlMyTabButton.height
+        width: controlMyTabButton.width
+        y: controlMyTabButton.checked ? height / 40 : 0
         Behavior on y {
             NumberAnimation {
                 duration: Global.durationDelay
@@ -57,7 +58,7 @@ T.TabButton {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
+            shadowVerticalOffset: controlMyTabButton.enabled ? (controlMyTabButton.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -82,9 +83,11 @@ T.TabButton {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.checked ? Qt.darker(
-                                                 Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                    color: controlMyTabButton.checked ? Qt.darker(
+                                                            Global.buttonCheckedColor,
+                                                            1.4) : Qt.darker(
+                                                            controlMyTabButton.btnColor,
+                                                            1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -93,10 +96,11 @@ T.TabButton {
                 }
                 GradientStop {
                     position: 1
-                    color: control.checked ? Qt.lighter(
-                                                 Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
-                                                                   1.2)
+                    color: controlMyTabButton.checked ? Qt.lighter(
+                                                            Global.buttonCheckedColor,
+                                                            1.2) : Qt.lighter(
+                                                            controlMyTabButton.btnColor,
+                                                            1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -108,9 +112,9 @@ T.TabButton {
     }
     Text {
         id: channel
-        height: control.height
-        text: Global.settings.showChannel ? "D" + control.channel + "E"
-                                            + control.disEnableChannel : ""
+        height: controlMyTabButton.height
+        text: Global.settings.showChannel ? "D" + controlMyTabButton.channel + "E"
+                                            + controlMyTabButton.disEnableChannel : ""
         color: Global.buttonTextColor
         font.pixelSize: channelSize
         font.family: Global.alibabaPuHuiTi.font.family

@@ -1,24 +1,24 @@
 import QtQuick
-import QtQuick.Controls
+//import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Templates as T
 
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 T.Button {
-    id: control
+    id: controlMySwitch
     property int channel
 
     implicitHeight: parent.height
     implicitWidth: parent.width * 2
 
-    checked: Global.digital[control.channel] ? true : false
+    checked: Global.digital[controlMySwitch.channel] ? true : false
 
     indicator: Rectangle {
         width: height * 2
         height: parent.height * 0.5
         radius: height * 0.5
-        color: checked ? Global.buttonCheckedColor : Global.buttonColor
+        color: controlMySwitch.checked ? Global.buttonCheckedColor : Global.buttonColor
         border.color: Global.buttonTextColor
         x: height / 2
         anchors.verticalCenter: parent.verticalCenter
@@ -28,7 +28,7 @@ T.Button {
             }
         }
         Rectangle {
-            x: checked ? parent.width - parent.height : parent.height - height
+            x: controlMySwitch.checked ? parent.width - parent.height : parent.height - height
             width: parent.height * 1.6
             height: width
             radius: height * 0.5
@@ -38,7 +38,7 @@ T.Button {
             Text {
                 anchors.centerIn: parent
                 text: "✓"
-                opacity: checked ? 1 : 0
+                opacity: controlMySwitch.checked ? 1 : 0
                 color: Global.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 font.family: Global.alibabaPuHuiTi.font.family
@@ -67,9 +67,9 @@ T.Button {
     }
     contentItem: Text {
         height: parent.height
-        text: control.text
+        text: controlMySwitch.text
         font.pixelSize: height * 0.7
-        anchors.left: indicator.right
+        anchors.left: controlMySwitch.indicator.right
         leftPadding: height * 0.5
         color: Global.buttonTextColor
         font.family: Global.alibabaPuHuiTi.font.family
@@ -80,7 +80,7 @@ T.Button {
     Text {
         id: channel
         height: parent.height
-        text: Global.settings.showChannel ? "D" + control.channel : ""
+        text: Global.settings.showChannel ? "D" + controlMySwitch.channel : ""
         color: Global.buttonTextColor
         font.pixelSize: channelSize
         anchors.right: parent.right
@@ -89,9 +89,11 @@ T.Button {
 
     onPressedChanged: {
         if (pressed) {
-            CrestronCIP.push(control.channel)
+            //if (!checked) {
+            CrestronCIP.push(controlMySwitch.channel)
         } else {
-            CrestronCIP.release(control.channel)
+            CrestronCIP.release(controlMySwitch.channel)
+            //}
         }
     }
 }

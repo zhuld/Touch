@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+//import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
@@ -9,7 +9,7 @@ import "../Dialog"
 import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 T.Button {
-    id: control
+    id: controlVButton
     property int channel
     property int disEnableChannel: 0
     property bool confirm: false
@@ -19,38 +19,38 @@ T.Button {
     property color textColor: Global.buttonTextColor
     property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
 
-    checked: Global.digital[control.channel] ? true : false
+    checked: Global.digital[controlVButton.channel] ? true : false
 
     implicitHeight: parent.height
     implicitWidth: parent.width
 
-    enabled: Global.digital[control.disEnableChannel] ? false : true
+    enabled: Global.digital[controlVButton.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
     Behavior on opacity {
         OpacityAnimator {
             duration: Global.durationDelay
         }
     }
-    Material.accent: Global.buttonTextColor
 
+    //Material.accent: Global.buttonTextColor
     onPressedChanged: {
         if (pressed) {
             if (!confirm) {
-                CrestronCIP.push(control.channel)
+                CrestronCIP.push(controlVButton.channel)
             } else {
                 confirmDialog.open()
             }
         } else {
             if (!confirm) {
-                CrestronCIP.release(control.channel)
+                CrestronCIP.release(controlVButton.channel)
             }
         }
     }
     background: Shape {
         id: back
-        height: control.height * 0.7
+        height: controlVButton.height * 0.7
         width: height
-        y: control.checked ? height / 40 : 0
+        y: controlVButton.checked ? height / 40 : 0
         Behavior on y {
             NumberAnimation {
                 duration: Global.durationDelay
@@ -64,7 +64,7 @@ T.Button {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: control.enabled ? (control.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
+            shadowVerticalOffset: controlVButton.enabled ? (controlVButton.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -89,9 +89,11 @@ T.Button {
                 focalY: 0
                 GradientStop {
                     position: 0
-                    color: control.checked ? Qt.darker(
-                                                 Global.buttonCheckedColor,
-                                                 1.4) : Qt.darker(btnColor, 1.4)
+                    color: controlVButton.checked ? Qt.darker(
+                                                        Global.buttonCheckedColor,
+                                                        1.4) : Qt.darker(
+                                                        controlVButton.btnColor,
+                                                        1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -100,10 +102,11 @@ T.Button {
                 }
                 GradientStop {
                     position: 1
-                    color: control.checked ? Qt.lighter(
-                                                 Global.buttonCheckedColor,
-                                                 1.2) : Qt.lighter(btnColor,
-                                                                   1.2)
+                    color: controlVButton.checked ? Qt.lighter(
+                                                        Global.buttonCheckedColor,
+                                                        1.2) : Qt.lighter(
+                                                        controlVButton.btnColor,
+                                                        1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -115,8 +118,8 @@ T.Button {
     }
     contentItem: MyIconLabel {
         anchors.fill: back
-        icon.color: control.iconColor
-        icon.source: control.source
+        icon.color: controlVButton.iconColor
+        icon.source: controlVButton.source
     }
     MyIconLabel {
         id: textLabel
@@ -124,22 +127,22 @@ T.Button {
         height: parent.height * 0.18
         font.pixelSize: height
         anchors.bottom: parent.bottom
-        color: control.textColor
-        text: control.text
+        color: controlVButton.textColor
+        text: controlVButton.text
     }
     Text {
         id: channel
         height: parent.height
-        text: Global.settings.showChannel ? "D" + control.channel + "E"
-                                            + control.disEnableChannel : ""
+        text: Global.settings.showChannel ? "D" + controlVButton.channel + "E"
+                                            + controlVButton.disEnableChannel : ""
         color: Global.buttonTextColor
         font.pixelSize: channelSize
         font.family: Global.alibabaPuHuiTi.font.family
     }
     ConfirmDialog {
         id: confirmDialog
-        dialogIcon: control.source
-        dialogInfomation: "确定" + control.text + "？"
+        dialogIcon: controlVButton.source
+        dialogInfomation: "确定" + controlVButton.text + "？"
         dialogTitle: "提示"
         Timer {
             id: releaseTimer
@@ -148,11 +151,11 @@ T.Button {
             triggeredOnStart: false
             onTriggered: {
                 confirmDialog.close()
-                CrestronCIP.release(control.channel)
+                CrestronCIP.release(controlVButton.channel)
             }
         }
         onConfirm: {
-            CrestronCIP.push(control.channel)
+            CrestronCIP.push(controlVButton.channel)
             releaseTimer.start()
         }
     }

@@ -1,10 +1,9 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Templates as T
 
 T.Switch {
-    id: control
+    id: controlColorSwitch
     implicitHeight: parent.height
     implicitWidth: parent.width
 
@@ -13,7 +12,7 @@ T.Switch {
         width: height * 2
         height: parent.height * 0.5
         radius: height * 0.5
-        color: checked ? Global.buttonCheckedColor : Global.backgroundColor
+        color: controlColorSwitch.checked ? Global.buttonCheckedColor : Global.backgroundColor
         border.color: Global.buttonTextColor
         x: height / 2
         anchors.verticalCenter: parent.verticalCenter
@@ -23,7 +22,7 @@ T.Switch {
             }
         }
         Rectangle {
-            x: checked ? parent.width - parent.height : parent.height - height
+            x: controlColorSwitch.checked ? parent.width - parent.height : parent.height - height
             width: parent.height * 1.6
             height: width
             radius: height * 0.5
@@ -38,7 +37,7 @@ T.Switch {
             Text {
                 anchors.centerIn: parent
                 text: "✓"
-                opacity: checked ? 1 : 0
+                opacity: controlColorSwitch.checked ? 1 : 0
                 color: Global.buttonCheckedColor
                 font.pixelSize: parent.height * 0.8
                 font.family: Global.alibabaPuHuiTi.font.family
@@ -66,7 +65,7 @@ T.Switch {
     }
     contentItem: Text {
         height: parent.height
-        text: control.text
+        text: controlColorSwitch.text
         font.pixelSize: height * 0.7
         anchors.left: indicator.right
         leftPadding: height

@@ -4,10 +4,8 @@
 qt_add_library(content STATIC)
 
 set_source_files_properties(Global.qml
-    PROPERTIES
-        QT_QML_SINGLETON_TYPE true
-)
-qt6_add_qml_module(content
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+qt_add_qml_module(content
     URI "content"
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
@@ -17,13 +15,16 @@ qt6_add_qml_module(content
         ContentColumn.qml
         ContentRow.qml
         Global.qml
+        ConfigSelect.qml
         Config/ShiyiMZ.qml
         Config/Haishi410.qml
+        Config/ConfigSet.qml
         Pages/Shiyi/System.qml
         Pages/Shiyi/Video.qml
-        Pages/Shiyi/Camera.qml
+        Pages/Shiyi/CameraControl.qml
         Pages/Shiyi/Volume.qml
         Pages/Shiyi/Light.qml
+        Pages/Shiyi/Power.qml
         Pages/Haishi/SingleScreen.qml
         Pages/Haishi/VR.qml
         Pages/Haishi/Camera.qml
@@ -50,8 +51,6 @@ qt6_add_qml_module(content
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
         Js/crestroncip.js
+        QML_FILES Custom/InputButton2.qml
         QML_FILES
-        QML_FILES
-        QML_FILES Config/ConfigSet.qml
-        QML_FILES ConfigSelect.qml
     )

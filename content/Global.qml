@@ -4,11 +4,11 @@ import QtQuick
 import QtCore
 
 import "./Config"
-import "./Dialog"
 
 QtObject {
 
     property var digital: []
+    property var digitalToggle: []
     property var analog: []
 
     //property var text: [] // not support yet
@@ -64,6 +64,5 @@ QtObject {
         property bool darkTheme: false
         property int windowWidth: 1600
         property int windowHeight: 1000
-        property bool tabOnBottom: false
     }
 }

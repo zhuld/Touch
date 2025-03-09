@@ -1,14 +1,11 @@
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Shapes
 
 import "../"
 
 Rectangle {
-    id: control
     implicitHeight: parent.height
     implicitWidth: parent.width
-    //anchors.fill: parent
     color: "transparent"
     Shape {
         id: back

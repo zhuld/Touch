@@ -1,15 +1,16 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
+import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
 
 Item {
-    id: controlInputButton
+    id: controlInputButton2
     property int input
+    property int channel
     property color btnColor: Global.buttonCheckedColor
     property color btnTextColor: Global.buttonTextColor
     property string textInput
     property string iconSource
-    property int disableOutput
 
     property real dragX
     property real dragY
@@ -24,15 +25,15 @@ Item {
         NumberAnimation {
             target: back
             property: "x"
-            duration: Global.durationDelay
-            to: controlInputButton.dragX
+            duration: Global.durationDelay * 3
+            to: controlInputButton2.dragX
             easing.type: Easing.OutBack
         }
         NumberAnimation {
             target: back
             property: "y"
-            duration: Global.durationDelay
-            to: controlInputButton.dragY
+            duration: Global.durationDelay * 3
+            to: controlInputButton2.dragY
             easing.type: Easing.OutBack
         }
     }
@@ -41,19 +42,19 @@ Item {
         anchors.fill: parent
         drag.target: back
         onPressedChanged: {
+            controlInputButton2.pressedChanged(mouseArea.pressed)
             if (pressed) {
-                controlInputButton.pressedChanged(true)
                 back.Drag.hotSpot.x = back.height / 2
                 back.Drag.hotSpot.y = mouseY
-                controlInputButton.dragX = back.x
-                controlInputButton.dragY = back.y
+                controlInputButton2.dragX = back.x
+                controlInputButton2.dragY = back.y
                 back.x = mouseX - back.height / 2
+                CrestronCIP.push(controlInputButton2.channel)
             } else {
                 back.Drag.drop()
-                back.y = controlInputButton.dragY
-                back.x = controlInputButton.dragX
-                controlInputButton.pressedChanged(false)
-                //dragButtonAnimation.start()
+                //back.x = 0
+                dragButtonAnimation.start()
+                CrestronCIP.release(controlInputButton2.channel)
             }
         }
     }
@@ -81,7 +82,7 @@ Item {
                 focalY: 0
                 GradientStop {
                     position: 1
-                    color: controlInputButton.btnColor
+                    color: controlInputButton2.btnColor
                 }
             }
         }
@@ -89,8 +90,8 @@ Item {
             font.pixelSize: height * 0.25
             height: parent.height
             width: parent.width
-            text: controlInputButton.textInput
-            icon.source: controlInputButton.iconSource
+            text: controlInputButton2.textInput
+            icon.source: controlInputButton2.iconSource
         }
         layer.enabled: true
         layer.effect: MultiEffect {
@@ -108,9 +109,9 @@ Item {
         Text {
             width: parent.width
             height: parent.height
-            text: controlInputButton.input
+            text: controlInputButton2.input
             font.pixelSize: height
-            color: controlInputButton.btnTextColor
+            color: controlInputButton2.btnTextColor
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignTop
             font.bold: true
@@ -123,6 +124,14 @@ Item {
         id: back
         width: mouseArea.pressed ? height : parent.width
         height: parent.height
+        Text {
+            id: channel
+            height: parent.height
+            text: Global.settings.showChannel ? "D" + controlInputButton2.channel : ""
+            color: Global.buttonTextColor
+            font.pixelSize: channelSize
+            font.family: Global.alibabaPuHuiTi.font.family
+        }
         ShapePath {
             strokeWidth: 0
             strokeColor: "transparent"
@@ -141,7 +150,7 @@ Item {
                 focalY: 0
                 GradientStop {
                     position: mouseArea.pressed ? 0 : 1
-                    color: Qt.lighter(controlInputButton.btnColor, 1.2)
+                    color: Qt.lighter(controlInputButton2.btnColor, 1.2)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -150,7 +159,7 @@ Item {
                 }
                 GradientStop {
                     position: mouseArea.pressed ? 1 : 0
-                    color: Qt.darker(controlInputButton.btnColor, 1.4)
+                    color: Qt.darker(controlInputButton2.btnColor, 1.4)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -163,8 +172,8 @@ Item {
             font.pixelSize: height * 0.25
             height: parent.height
             width: parent.width
-            text: mouseArea.pressed ? "" : controlInputButton.textInput
-            icon.source: controlInputButton.iconSource
+            text: mouseArea.pressed ? "" : controlInputButton2.textInput
+            icon.source: controlInputButton2.iconSource
         }
         layer.enabled: true
         layer.effect: MultiEffect {
@@ -182,9 +191,9 @@ Item {
         Text {
             width: parent.width
             height: parent.height
-            text: controlInputButton.input
+            text: controlInputButton2.input
             font.pixelSize: height
-            color: controlInputButton.btnTextColor
+            color: controlInputButton2.btnTextColor
             horizontalAlignment: mouseArea.pressed ? Text.AlignHCenter : Text.AlignRight
             verticalAlignment: mouseArea.pressed ? Text.AlignVCenter : Text.AlignTop
             font.bold: true
@@ -192,7 +201,7 @@ Item {
             font.family: Global.alibabaPuHuiTi.font.family
         }
         clip: true
-        Drag.keys: [controlInputButton.input, controlInputButton.btnColor]
+        Drag.keys: [controlInputButton2.input, controlInputButton2.btnColor]
         Drag.active: mouseArea.drag.active
     }
 }

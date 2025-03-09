@@ -28,6 +28,7 @@ Item {
         Repeater {
             id: repeater
             model: Global.tabList
+
             delegate: MyTabButton {
                 id: tabButton
                 required property string name
@@ -35,6 +36,8 @@ Item {
                 required property int index
                 required property int pageChannel
                 required property string pageUrl
+                required property int disableChannel
+                disEnableChannel: disableChannel
                 text: name
                 width: parent.width
                 height: (parent.height + parent.spacing) / (Global.tabList.count) - parent.spacing
@@ -50,7 +53,7 @@ Item {
             }
         }
     }
-    SwipeView {
+    StackLayout {
         id: stackLayout
         anchors.right: parent.right
         width: parent.width * 0.98 - tabBar.width
@@ -61,13 +64,15 @@ Item {
                 required property string pageUrl
                 id: pageLoader
                 source: pageUrl
+                asynchronous: true
             }
         }
-        spacing: parent.height / 10
-        orientation: Qt.Vertical
-        interactive: false
         clip: true
-        Component.onCompleted: contentItem.highlightMoveDuration = 0
+
+        //Component.onCompleted: contentItem.highlightMoveDuration = 0
+        // spacing: parent.height / 10
+        // orientation: Qt.Vertical
+        // interactive: false
     }
     Component.onCompleted: {
         // Clear the filtered model
