@@ -12,7 +12,6 @@ TcpClient::TcpClient(QObject *parent) : QObject(parent)
     connect(tcpSocket, &QTcpSocket::stateChanged, this, &TcpClient::onStateChanged);
 
 }
-
 void TcpClient::connectToServer(const QString &host, quint16 port)
 {
     currentHost = host;

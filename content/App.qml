@@ -7,7 +7,8 @@ import "./Dialog"
 import "./Pages"
 import "./Custom"
 import "./Config"
-import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+
+import "./Js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
@@ -15,7 +16,6 @@ Window {
     property real channelSize: height * 0.02
     property real shadowHeight: height * 0.006
 
-    //property string logoImage: Global.config.logoImage
     readonly property PasswordDialog passwordDialog: PasswordDialog {
         onPasswordEnter: password => {
                              if ((password === "314159")
@@ -58,6 +58,7 @@ Window {
 
     visibility: Global.settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
+
     Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
     Image {
         anchors.fill: parent

@@ -3,8 +3,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
 
-import "../"
-import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+import "../Js/crestroncip.js" as CrestronCIP
 
 Item {
     id: controlVolumeBar

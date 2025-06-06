@@ -4,9 +4,8 @@ import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
 
-import "../"
 import "../Dialog"
-import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+import "../Js/crestroncip.js" as CrestronCIP
 
 T.Button {
     id: controlVButton

@@ -7,6 +7,7 @@ QtObject {
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property string logoImage: "qrc:/content/images/shiyilogo.png"
     readonly property int processDialogChannel: 1
+    readonly property string protocol: "CrestronCIP"
 
     //页面List
     readonly property var pageList: ListModel {
@@ -58,14 +59,6 @@ QtObject {
             pageChannel: 16
             disableChannel: 4
         }
-        // ListElement {
-        //     name: qsTr("数据")
-        //     pageUrl: "qrc:/qt/qml/content/Pages/DataList.qml"
-        //     iconUrl: "qrc:/content/icons/table.png"
-        //     test: true
-        //     pageChannel: 17
-        //      enableChannel:5
-        // }
         ListElement {
             name: qsTr("测试")
             pageUrl: "qrc:/qt/qml/content/Pages/Test.qml"

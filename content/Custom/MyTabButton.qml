@@ -5,7 +5,7 @@ import QtQuick.Shapes
 import QtQuick.Templates as T
 
 import "../Dialog"
-import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+import "../Js/crestroncip.js" as CrestronCIP
 
 T.TabButton {
     id: controlMyTabButton

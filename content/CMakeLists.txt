@@ -31,10 +31,11 @@ qt_add_qml_module(content
         Pages/Haishi/Remote.qml
         Pages/Haishi/LED.qml
         Pages/TitleBar.qml
-        Pages/DataList.qml
         Pages/Test.qml
+
         Custom/MyButton.qml
         Custom/InputButton.qml
+        Custom/InputButton2.qml
         Custom/Output.qml
         Custom/ColorButton.qml
         Custom/VolumeBar.qml
@@ -50,7 +51,6 @@ qt_add_qml_module(content
         Dialog/SettingDialog.qml
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
+
         Js/crestroncip.js
-        QML_FILES Custom/InputButton2.qml
-        QML_FILES
     )

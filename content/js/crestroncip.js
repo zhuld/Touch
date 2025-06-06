@@ -338,17 +338,6 @@ function toHexString(data, space) {
 
 function recivedAppendList(message, index, payloadLength, detail) {
     if (Global.settings.showChannel) {
-        // Global.dataList.append({
-        //                            "time": new Date().toLocaleTimeString(
-        //                                        Qt.locale("zh_CN"), " hh:mm:ss"),
-        //                            "direction": "收",
-        //                            "data": toHexString(
-        //                                        message.slice(
-        //                                            index,
-        //                                            index + 3 + payloadLength),
-        //                                        " "),
-        //                            "detail": detail
-        //                        })
         console.log("[RX]", new Date().toLocaleTimeString(
                         Qt.locale("zh_CN"), " hh:mm:ss"), toHexString(
                         message.slice(index,
@@ -357,13 +346,6 @@ function recivedAppendList(message, index, payloadLength, detail) {
 }
 function sendAppendList(data, detail) {
     if (Global.settings.showChannel) {
-        // Global.dataList.append({
-        //                            "time": new Date().toLocaleTimeString(
-        //                                        Qt.locale("zh_CN"), " hh:mm:ss"),
-        //                            "direction": "发",
-        //                            "data": toHexString(data, " "),
-        //                            "detail": detail
-        //                        })
         console.log('[TX]', new Date().toLocaleTimeString(Qt.locale("zh_CN"),
                                                           " hh:mm:ss"),
                     toHexString(data, " "), detail)

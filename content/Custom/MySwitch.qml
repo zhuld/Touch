@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Templates as T
 
-import "qrc:/qt/qml/content/Js/crestroncip.js" as CrestronCIP
+import "../Js/crestroncip.js" as CrestronCIP
 
 T.Button {
     id: controlMySwitch

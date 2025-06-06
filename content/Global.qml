@@ -29,8 +29,6 @@ QtObject {
                                    })
         }
     }
-
-    property ListModel dataList: ListModel {} //记录收发数据
     property ListModel tabList: ListModel {} //tab页面
 
     readonly property color buttonColor: settings.darkTheme ? "dodgerblue" : "skyblue"

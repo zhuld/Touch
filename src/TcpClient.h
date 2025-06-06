@@ -8,6 +8,7 @@
 class TcpClient : public QObject
 {
     Q_OBJECT
+
 public:
     explicit TcpClient(QObject *parent = nullptr);
 

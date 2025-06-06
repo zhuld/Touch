@@ -35,10 +35,10 @@ Item {
                             name: qsTr("远程视频会议内容")
                             outputChannel: 3
                         }
-                        // ListElement {
-                        //     name: qsTr("预留输出")
-                        //     outputChannel: 4
-                        // }
+                        ListElement {
+                            name: qsTr("预留输出")
+                            outputChannel: 4
+                        }
                     }
                     delegate: Output {
                         required property string name
@@ -107,14 +107,14 @@ Item {
                             btnChannel: 95
                             disableOut: 2
                         }
-                        // ListElement {
-                        //     name: qsTr("预留输入")
-                        //     inputChannel: 6
-                        //     bgColor: "#6dd5ed" //"cadetblue"
-                        //     source: "qrc:/content/icons/HDMIjiekou.png"
-                        //     btnChannel: 96
-                        //     disableOut: 4
-                        // }
+                        ListElement {
+                            name: qsTr("预留输入")
+                            inputChannel: 6
+                            bgColor: "#6dd5ed" //"cadetblue"
+                            source: "qrc:/content/icons/HDMIjiekou.png"
+                            btnChannel: 96
+                            //disableOut: 4
+                        }
                         // ListElement {
                         //     name: qsTr("预留输入2")
                         //     inputChannel: 7
