@@ -61,5 +61,6 @@
         <file>content/icons/back.png</file>
         <file>content/images/background.jpg</file>
         <file>content/icons/jigui.png</file>
+        <file>content/images/mediaplayer.jpg</file>
     </qresource>
 </RCC>

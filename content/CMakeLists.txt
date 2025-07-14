@@ -53,4 +53,11 @@ qt_add_qml_module(content
         Dialog/ProcessDialog.qml
 
         Js/crestroncip.js
+        QML_FILES Config/MediaPlayer.qml
+        QML_FILES Pages/Mediaplayer/Movie.qml
+        QML_FILES Pages/Mediaplayer/Sound.qml
+        QML_FILES Pages/Mediaplayer/PPT.qml
+        QML_FILES Pages/Mediaplayer/Flash.qml
+        QML_FILES Pages/Mediaplayer/Picture.qml
+        QML_FILES Pages/Mediaplayer/System.qml
     )

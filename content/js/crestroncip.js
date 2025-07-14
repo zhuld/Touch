@@ -4,6 +4,7 @@ const op_Server_IPID = 0x02 // 回复 02 00 04 00 00 00 1F ok; 02 00 03 FF FF 02
 
 const op_Join = 0x05 // 发送 Join信息
 const op_Join_Digital = 0x00
+const op_Join_Digital1 = 0x27
 //const op_Join_Analog1 = 0x01
 const op_Join_Analog = 0x14
 const op_Join_Serial = 0x02
@@ -64,6 +65,7 @@ function clientMessageCheck(message) {
             //Join事件
             switch (payload[3]) {
             case op_Join_Digital:
+            case op_Join_Digital1:
                 //digital
                 let channelD = payload[4] + (payload[5] & 0x7F) * 0x100 + 1
                 if (isNaN(channelD) === false) {
@@ -214,6 +216,7 @@ function serverMessageCheck(message) {
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, op_Join_Request_Reply_Ended])))
                 break
             case op_Join_Digital:
+            case op_Join_Digital1:
 
                 //digital
                 if (Global.digitalToggle[payload[4] + 1]) {

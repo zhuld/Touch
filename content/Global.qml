@@ -17,7 +17,8 @@ QtObject {
     readonly property list<QtObject> configList: [
         ConfigSet {},
         ShiyiMZ {},
-        Haishi410 {}
+        Haishi410 {},
+        MediaPlayer {}
     ]
 
     readonly property ListModel configListModel: ListModel {}
