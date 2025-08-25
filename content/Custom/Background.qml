@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
 
-import "../"
-
 Rectangle {
     implicitHeight: parent.height
     implicitWidth: parent.width

@@ -1,7 +1,7 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
-
-import "../Custom/"
 
 Dialog {
     id: rootPassword
@@ -15,7 +15,7 @@ Dialog {
                    < ratio ? parent.width * 0.9 : parent.height * 0.9 * ratio
     implicitHeight: implicitWidth / ratio
 
-    signal passwordEnter(var password)
+    signal passwordEnter(string password)
 
     anchors.centerIn: parent
 
@@ -45,8 +45,8 @@ Dialog {
         repeat: true
         triggeredOnStart: false
         onTriggered: {
-            during--
-            if (during === 0) {
+            parent.during--
+            if (parent.during === 0) {
                 rootPassword.close()
             }
         }
@@ -141,6 +141,7 @@ Dialog {
                     }
                 }
                 delegate: ColorButton {
+                    required property string name
                     width: (numberPad.width + numberPad.spacing)
                            / numberPad.columns - numberPad.spacing
                     height: width
@@ -150,26 +151,26 @@ Dialog {
                     btnColor: Global.backgroundColor
                     onClicked: {
                         switch (name) {
-                        case "1":
-                        case "2":
-                        case "3":
-                        case "4":
-                        case "5":
-                        case "6":
-                        case "7":
-                        case "8":
-                        case "9":
-                        case "0":
+                            case "1":
+                            case "2":
+                            case "3":
+                            case "4":
+                            case "5":
+                            case "6":
+                            case "7":
+                            case "8":
+                            case "9":
+                            case "0":
                             if (password.text.length < 6) {
                                 password.text += name
                             }
                             break
-                        case "\u21E6":
+                            case "\u21E6":
                             password.text = password.text.slice(
-                                        0, password.text.length - 1)
+                                0, password.text.length - 1)
                             break
-                        case "\u23CE":
-                            passwordEnter(password.text)
+                            case "\u23CE":
+                            rootPassword.passwordEnter(password.text)
                             password.text = ""
                             break
                         }

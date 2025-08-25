@@ -1,18 +1,21 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
-
-import "../../Custom"
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("摄像机控制")
             content: ControlPad {
                 id: dpadControl
@@ -25,7 +28,11 @@ Item {
             }
         }
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("摄像跟踪")
             info: MySwitch {
                 id: cameraAuto
@@ -64,7 +71,7 @@ Item {
                 }
                 Shape {
                     id: back
-                    width: parent.width * (Global.config.tabOnBottom ? 0.6 : 0.8)
+                    width: parent.width * 0.8
                     height: parent.height * 0.86
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
@@ -75,7 +82,7 @@ Item {
                         shadowEnabled: true
                         shadowColor: Global.buttonShadowColor
                         shadowHorizontalOffset: shadowVerticalOffset
-                        shadowVerticalOffset: shadowHeight
+                        shadowVerticalOffset: Global.shadowHeight
                     }
                     opacity: 0.8
                     ShapePath {

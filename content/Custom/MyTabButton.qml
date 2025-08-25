@@ -1,10 +1,11 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
 
-import "../Dialog"
 import "../Js/crestroncip.js" as CrestronCIP
 
 T.TabButton {
@@ -58,7 +59,7 @@ T.TabButton {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: controlMyTabButton.enabled ? (controlMyTabButton.checked ? shadowHeight / 2 : shadowHeight) : shadowHeight / 4
+            shadowVerticalOffset: controlMyTabButton.enabled ? (controlMyTabButton.checked ? Global.shadowHeight / 2 : Global.shadowHeight) : Global.shadowHeight / 4
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -116,7 +117,7 @@ T.TabButton {
         text: Global.settings.showChannel ? "D" + controlMyTabButton.channel + "E"
                                             + controlMyTabButton.disEnableChannel : ""
         color: Global.buttonTextColor
-        font.pixelSize: channelSize
+        font.pixelSize: Global.channelSize
         font.family: Global.alibabaPuHuiTi.font.family
     }
 }

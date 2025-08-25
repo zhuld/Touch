@@ -1,5 +1,6 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
-//import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Templates as T
 
@@ -60,7 +61,7 @@ T.Button {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Global.buttonShadowColor
-                shadowHorizontalOffset: shadowHeight / 2
+                shadowHorizontalOffset: Global.shadowHeight / 2
                 shadowVerticalOffset: shadowHorizontalOffset
             }
         }
@@ -82,7 +83,7 @@ T.Button {
         height: parent.height
         text: Global.settings.showChannel ? "D" + controlMySwitch.channel : ""
         color: Global.buttonTextColor
-        font.pixelSize: channelSize
+        font.pixelSize: Global.channelSize
         anchors.right: parent.right
         font.family: Global.alibabaPuHuiTi.font.family
     }

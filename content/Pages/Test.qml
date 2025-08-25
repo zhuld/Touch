@@ -1,20 +1,23 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Shapes
-
-import "../Custom"
+import QtQuick.Layouts
 
 Item {
-    id: test
     implicitWidth: parent.width
     implicitHeight: parent.height
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("测试")
-            widthRatio: 0.5
             content: Column {
                 anchors.fill: parent
                 Shape {
@@ -38,7 +41,8 @@ Item {
                         shadowEnabled: true
                         shadowColor: Global.buttonShadowColor
                         shadowHorizontalOffset: shadowVerticalOffset
-                        shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+                        shadowVerticalOffset: mouseArea.pressed ? Global.shadowHeight
+                                                                  / 2 : Global.shadowHeight
                     }
                     ShapePath {
                         strokeWidth: 0
@@ -91,11 +95,14 @@ Item {
             }
         }
         Category {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("测试")
-            widthRatio: 0.5
             content: Column {
                 anchors.fill: parent
-
                 Slider {
                     id: slider
                     width: 400

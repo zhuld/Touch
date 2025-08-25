@@ -13,6 +13,7 @@ public:
     explicit TcpServer(QObject *parent = nullptr);
 
     Q_INVOKABLE void startServer(quint16 port, const QString &ipAddress);  // 启动服务器
+    void extracted();
     Q_INVOKABLE void stopServer();
     Q_INVOKABLE void sendData(const QByteArray &data);  // 向客户端发送数据
 

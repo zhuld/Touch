@@ -53,7 +53,7 @@ T.Switch {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Global.buttonShadowColor
-                shadowHorizontalOffset: shadowHeight / 2
+                shadowHorizontalOffset: Global.shadowHeight / 2
                 shadowVerticalOffset: shadowHorizontalOffset
             }
             Behavior on x {

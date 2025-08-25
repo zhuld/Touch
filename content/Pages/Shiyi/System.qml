@@ -1,21 +1,24 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("会议模式")
             content: Grid {
                 id: gridSystem
-                rows: Global.config.tabOnBottom ? 3 : 4
+                rows: 4
                 anchors.fill: parent
                 columns: Math.ceil(systemList.count / rows)
                 spacing: height * 0.05
@@ -58,8 +61,10 @@ Item {
                         required property string iconUrl
                         required property bool showDialog
                         required property color bColor
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridSystem.rows - parent.spacing
+                        width: (parent.width + gridSystem.spacing)
+                               / gridSystem.columns - gridSystem.spacing
+                        height: (parent.height + gridSystem.spacing)
+                                / gridSystem.rows - gridSystem.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -73,7 +78,11 @@ Item {
         }
 
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("显示模式")
             content: Grid {
                 id: gridMode
@@ -121,8 +130,10 @@ Item {
                         required property string iconUrl
                         required property int disableChannel
                         disEnableChannel: disableChannel
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridMode.rows - parent.spacing
+                        width: (parent.width + gridMode.spacing)
+                               / gridMode.columns - gridMode.spacing
+                        height: (parent.height + gridMode.spacing)
+                                / gridMode.rows - gridMode.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

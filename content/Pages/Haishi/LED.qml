@@ -1,22 +1,41 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.25
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
+            label: qsTr("亮度")
+            content: VolumeBar {
+                anchors.fill: parent
+                channel: 1
+                muteChannel: 0
+                miniVolume: 0
+                maxVolume: 10
+                muteBtn: false
+            }
+        }
+        Category {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("LED控制")
             info: MyIconLabel {
                 height: parent.height
                 icon.source: "qrc:/content/icons/tishi.png"
-                text: qsTr("长按1秒")
+                text: qsTr("长按1秒运行")
             }
             content: Grid {
                 id: gridLed
@@ -52,8 +71,8 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridLed.rows - parent.spacing
+                        width: (parent.width + gridLed.spacing) / gridLed.columns - gridLed.spacing
+                        height: (parent.height + gridLed.spacing) / gridLed.rows - gridLed.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl
@@ -61,17 +80,14 @@ Item {
                 }
             }
         }
-        Category {
-            widthRatio: 0.2
-            label: qsTr("亮度")
-            content: VolumeBar {
-                anchors.fill: parent
-                channel: 1
-                muteChannel: 0
-                miniVolume: 0
-                maxVolume: 10
-                muteBtn: false
-            }
+
+        Rectangle {
+            color: "transparent"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.25
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
         }
     }
 }

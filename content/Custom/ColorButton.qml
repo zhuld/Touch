@@ -1,9 +1,9 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
 import QtQuick.Templates as T
-
-import "../"
 
 T.Button {
     id: controlColorButton
@@ -46,7 +46,8 @@ T.Button {
                                           "transparent")
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: controlColorButton.pressed ? shadowHeight / 4 : shadowHeight / 2
+            shadowVerticalOffset: controlColorButton.pressed ? Global.shadowHeight
+                                                               / 4 : Global.shadowHeight / 2
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay

@@ -14,9 +14,9 @@ Item {
             Layout.maximumWidth: parent.width * 0.5
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
-            label: qsTr("PPT内容")
+            label: qsTr("摄像头模式")
             content: Grid {
-                id: gridPPT
+                id: gridCamera
                 rows: 3
                 anchors.fill: parent
                 columns: Math.ceil(listOutput.count / rows)
@@ -25,34 +25,34 @@ Item {
                     model: ListModel {
                         id: listOutput
                         ListElement {
-                            name: qsTr("PPT 1")
-                            btnchannel: 51
+                            name: qsTr("Camera 1")
+                            btnchannel: 101
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/ppt.png"
+                            iconUrl: "qrc:/content/icons/camera.png"
                         }
                         ListElement {
-                            name: qsTr("PPT 2")
-                            btnchannel: 52
+                            name: qsTr("Camera 2")
+                            btnchannel: 102
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/ppt.png"
+                            iconUrl: "qrc:/content/icons/camera.png"
                         }
                         ListElement {
-                            name: qsTr("PPT 3")
-                            btnchannel: 53
+                            name: qsTr("Camera 3")
+                            btnchannel: 103
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/ppt.png"
+                            iconUrl: "qrc:/content/icons/camera.png"
                         }
                         ListElement {
-                            name: qsTr("PPT 4")
-                            btnchannel: 54
+                            name: qsTr("Camera 4")
+                            btnchannel: 104
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/ppt.png"
+                            iconUrl: "qrc:/content/icons/camera.png"
                         }
                         ListElement {
-                            name: qsTr("PPT 5")
-                            btnchannel: 55
+                            name: qsTr("Camera 5")
+                            btnchannel: 105
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/ppt.png"
+                            iconUrl: "qrc:/content/icons/camera.png"
                         }
                     }
                     delegate: VButton {
@@ -60,8 +60,10 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + gridPPT.spacing) / gridPPT.columns - gridPPT.spacing
-                        height: (parent.height + gridPPT.spacing) / gridPPT.rows - gridPPT.spacing
+                        width: (parent.width + gridCamera.spacing)
+                               / gridCamera.columns - gridCamera.spacing
+                        height: (parent.height + gridCamera.spacing)
+                                / gridCamera.rows - gridCamera.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -74,7 +76,7 @@ Item {
         Category {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.5
+            Layout.maximumWidth: parent.width * 0.2
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
             label: qsTr("控制")
@@ -88,28 +90,8 @@ Item {
                     model: ListModel {
                         id: listInput
                         ListElement {
-                            name: qsTr("前一页")
-                            btnchannel: 56
-                            iconUrl: "qrc:/content/icons/qianyige.png"
-                        }
-                        ListElement {
-                            name: qsTr("后一页")
-                            btnchannel: 57
-                            iconUrl: "qrc:/content/icons/houyige.png"
-                        }
-                        ListElement {
-                            name: qsTr("第一页")
-                            btnchannel: 58
-                            iconUrl: "qrc:/content/icons/zuiqian.png"
-                        }
-                        ListElement {
-                            name: qsTr("最后一页")
-                            btnchannel: 59
-                            iconUrl: "qrc:/content/icons/zuihou.png"
-                        }
-                        ListElement {
                             name: qsTr("停止")
-                            btnchannel: 60
+                            btnchannel: 110
                             iconUrl: "qrc:/content/icons/tingzhibofang.png"
                         }
                     }
@@ -127,6 +109,14 @@ Item {
                     }
                 }
             }
+        }
+        Rectangle {
+            color: "transparent"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.3
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
         }
     }
 }

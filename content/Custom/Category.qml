@@ -2,15 +2,12 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
 
-import "../"
-
 Item {
     property alias content: content.data
     property alias info: info.data
     property real widthRatio: 1
     property string label
     height: parent.height - parent.width * 0.02
-    width: (parent.width * 0.98 + parent.spacing) * widthRatio - parent.spacing
     Shape {
         id: back
         anchors.fill: parent
@@ -21,7 +18,7 @@ Item {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset
-            shadowVerticalOffset: shadowHeight
+            shadowVerticalOffset: Global.shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay

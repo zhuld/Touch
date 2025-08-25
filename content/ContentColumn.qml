@@ -1,11 +1,8 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Effects
-
-import "./Custom"
-import "./Pages"
-import "./Dialog"
 
 Item {
     id: main
@@ -19,35 +16,40 @@ Item {
         channel: Global.config.processDialogChannel
         autoClose: 50
     }
-    Column {
-        id: tabBar
-        width: parent.width * 0.1
+    ScrollView {
+        width: parent.width * 0.12
         height: parent.height - parent.width * 0.02
-        anchors.margins: 0
-        spacing: height * 0.03
-        Repeater {
-            id: repeater
-            model: Global.tabList
-
-            delegate: MyTabButton {
-                id: tabButton
-                required property string name
-                required property string iconUrl
-                required property int index
-                required property int pageChannel
-                required property string pageUrl
-                required property int disableChannel
-                disEnableChannel: disableChannel
-                text: name
-                width: parent.width
-                height: (parent.height + parent.spacing) / (Global.tabList.count) - parent.spacing
-                        < width ? (parent.height + parent.spacing)
-                                  / (Global.tabList.count) - parent.spacing : width
-                source: iconUrl
-                channel: pageChannel
-                onCheckedChanged: {
-                    if (checked & stackLayout.currentIndex !== index) {
-                        stackLayout.currentIndex = index
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.interactive: true
+        Column {
+            id: tabBar
+            width: main.width * 0.12
+            spacing: main.height * 0.02
+            Repeater {
+                id: repeater
+                model: Global.tabList
+                delegate: MyTabButton {
+                    id: tabButton
+                    required property string name
+                    required property string iconUrl
+                    required property int index
+                    required property int pageChannel
+                    required property string pageUrl
+                    required property int disableChannel
+                    disEnableChannel: disableChannel
+                    text: name
+                    width: tabBar.width * 0.8
+                    // height: (parent.height + tabBar.spacing) / (Global.tabList.count) - tabBar.spacing
+                    //         < width ? (parent.height + tabBar.spacing)
+                    //                   / (Global.tabList.count) - tabBar.spacing : width
+                    height: width
+                    source: iconUrl
+                    channel: pageChannel
+                    onCheckedChanged: {
+                        if (checked & stackLayout.currentIndex !== index) {
+                            stackLayout.currentIndex = index
+                        }
                     }
                 }
             }
@@ -56,7 +58,7 @@ Item {
     StackLayout {
         id: stackLayout
         anchors.right: parent.right
-        width: parent.width * 0.98 - tabBar.width
+        width: parent.width - tabBar.width
         height: parent.height
         Repeater {
             model: Global.tabList
@@ -68,11 +70,6 @@ Item {
             }
         }
         clip: true
-
-        //Component.onCompleted: contentItem.highlightMoveDuration = 0
-        // spacing: parent.height / 10
-        // orientation: Qt.Vertical
-        // interactive: false
     }
     Component.onCompleted: {
         // Clear the filtered model
@@ -87,7 +84,7 @@ Item {
     }
     Connections {
         target: settingDialog
-        onShowChannelChanged: {
+        function onShowChannelChanged() {
             Global.tabList.clear()
             for (var i = 0; i < Global.config.pageList.count; i++) {
                 var item = Global.config.pageList.get(i)

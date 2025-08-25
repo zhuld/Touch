@@ -13,7 +13,7 @@ QtObject {
         ListElement {
             name: qsTr("视频")
             pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Movie.qml"
-            iconUrl: "qrc:/content/icons/shipinhuiyi.png"
+            iconUrl: "qrc:/content/icons/shipin.png"
             test: false
             pageChannel: 11
             disableChannel: 0
@@ -21,38 +21,51 @@ QtObject {
         ListElement {
             name: qsTr("背景音乐")
             pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Sound.qml"
-            iconUrl: "qrc:/content/icons/danhuamian.png"
+            iconUrl: "qrc:/content/icons/music.png"
             test: false
             pageChannel: 12
         }
         ListElement {
             name: qsTr("PPT")
             pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/PPT.qml"
-            iconUrl: "qrc:/content/icons/vr.png"
+            iconUrl: "qrc:/content/icons/ppt.png"
             test: false
             pageChannel: 13
         }
         ListElement {
             name: qsTr("Flash")
             pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Flash.qml"
-            iconUrl: "qrc:/content/icons/led.png"
+            iconUrl: "qrc:/content/icons/Flash.png"
             test: false
             pageChannel: 14
         }
         ListElement {
             name: qsTr("图片")
             pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Picture.qml"
-            iconUrl: "qrc:/content/icons/camera.png"
+            iconUrl: "qrc:/content/icons/tupianji.png"
             test: false
             pageChannel: 15
         }
-
         ListElement {
-            name: qsTr("系统")
-            pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/System.qml"
-            iconUrl: "qrc:/content/icons/test.png"
+            name: qsTr("摄像头")
+            pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/MedaiCamera.qml"
+            iconUrl: "qrc:/content/icons/camera.png"
             test: false
             pageChannel: 16
+        }
+        ListElement {
+            name: qsTr("网页")
+            pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Web.qml"
+            iconUrl: "qrc:/content/icons/web.png"
+            test: false
+            pageChannel: 17
+        }
+        ListElement {
+            name: qsTr("系统")
+            pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/MediaSystem.qml"
+            iconUrl: "qrc:/content/icons/xitong.png"
+            test: false
+            pageChannel: 18
         }
     }
     readonly property var initValue: ListModel {
@@ -62,5 +75,5 @@ QtObject {
             value: 19661
         }
     }
-    readonly property bool tabOnBottom: false
+    readonly property bool tabOnBottom: true
 }

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
@@ -99,7 +101,7 @@ Item {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: mouseArea.pressed ? Global.shadowHeight / 2 : Global.shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -129,7 +131,7 @@ Item {
             height: parent.height
             text: Global.settings.showChannel ? "D" + controlInputButton2.channel : ""
             color: Global.buttonTextColor
-            font.pixelSize: channelSize
+            font.pixelSize: Global.channelSize
             font.family: Global.alibabaPuHuiTi.font.family
         }
         ShapePath {
@@ -181,7 +183,7 @@ Item {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: mouseArea.pressed ? Global.shadowHeight / 2 : Global.shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay

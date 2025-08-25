@@ -1,7 +1,7 @@
 import QtQuick
 
-import "../Custom"
-import "../Dialog"
+//import "../Custom"
+//import "../Dialog"
 
 Item {
     id: control

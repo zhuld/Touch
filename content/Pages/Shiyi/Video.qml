@@ -1,17 +1,20 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.35
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.35
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("输出")
             content: Grid {
                 id: gridOutput
@@ -43,8 +46,10 @@ Item {
                     delegate: Output {
                         required property string name
                         required property int outputChannel
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
+                        width: (parent.width + gridOutput.spacing)
+                               / gridOutput.columns - gridOutput.spacing
+                        height: (parent.height + gridOutput.spacing)
+                                / gridOutput.rows - gridOutput.spacing
                         output: outputChannel
                         textOutput: name
                         inputListMode: inputList
@@ -53,7 +58,11 @@ Item {
             }
         }
         Category {
-            widthRatio: 0.65
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.65
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("输入")
             info: MyIconLabel {
                 height: parent.height
@@ -62,7 +71,7 @@ Item {
             }
             content: Grid {
                 id: gridInput
-                rows: Global.config.tabOnBottom ? 3 : 4
+                rows: 4
                 anchors.fill: parent
                 columns: Math.ceil(inputList.count / rows)
                 spacing: height * 0.05
@@ -140,22 +149,23 @@ Item {
                         required property int index
                         required property int btnChannel
                         required property int disableOut
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridInput.rows - parent.spacing
+                        width: (parent.width + gridInput.spacing)
+                               / gridInput.columns - gridInput.spacing
+                        height: (parent.height + gridInput.spacing)
+                                / gridInput.rows - gridInput.spacing
                         btnColor: bgColor
                         textInput: name
                         input: inputChannel
                         iconSource: source
                         disableOutput: disableOut
                         onPressedChanged: pressed => {
-                                              for (var i = 0; i < outputRepeater.count; ++i) {
-                                                  if (outputRepeater.itemAt(
-                                                          i).output === disableOutput) {
-                                                      outputRepeater.itemAt(
-                                                          i).enabled = !pressed
-                                                  }
-                                              }
-                                          }
+                            for (var i = 0; i < outputRepeater.count; ++i) {
+                                if (outputRepeater.itemAt(
+                                        i).output === disableOutput) {
+                                    outputRepeater.itemAt(i).enabled = !pressed
+                                }
+                            }
+                        }
                     }
                 }
             }

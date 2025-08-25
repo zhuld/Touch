@@ -1,7 +1,7 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
-
-import "./Custom"
 
 Item {
     id: connectPage
@@ -61,13 +61,13 @@ Item {
                 triggeredOnStart: true
                 onTriggered: {
                     dateText.text = new Date().toLocaleDateString(
-                                Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
+                        Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
                     if (space) {
                         timeText.text = new Date().toLocaleTimeString(
-                                    Qt.locale("zh_CN"), "hh mm ss")
+                            Qt.locale("zh_CN"), "hh mm ss")
                     } else {
                         timeText.text = new Date().toLocaleTimeString(
-                                    Qt.locale("zh_CN"), "hh:mm:ss")
+                            Qt.locale("zh_CN"), "hh:mm:ss")
                     }
                     space = !space
                 }
@@ -84,8 +84,10 @@ Item {
                 Repeater {
                     model: Global.configListModel
                     delegate: ColorButton {
+                        required property string modelData
+                        required property int index
                         text: modelData
-                        x: scrollView.width * 0.05
+                        anchors.horizontalCenter: parent.horizontalCenter
                         width: scrollView.width * 0.9
                         height: scrollView.height * 0.25
                         visible: index === 0 ? false : true

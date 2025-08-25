@@ -1,8 +1,8 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Effects
-
-import "../Custom/"
 
 Dialog {
     id: processDialog
@@ -54,12 +54,12 @@ Dialog {
             height: parent.height * 0.55
             width: parent.width
             topPadding: parent.height * 0.1
-            Material.accent: Global.buttonColor
+            //Material.accent: Global.buttonColor
             layer.enabled: true
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Global.buttonShadowColor
-                shadowHorizontalOffset: shadowHeight
+                shadowHorizontalOffset: Global.shadowHeight
                 shadowVerticalOffset: shadowHorizontalOffset
             }
         }
@@ -88,7 +88,7 @@ Dialog {
             anchors.right: parent.right
             text: Global.settings.showChannel ? "D" + processDialog.channel : ""
             color: Global.buttonTextColor
-            font.pixelSize: channelSize
+            font.pixelSize: Global.channelSize
             font.family: Global.alibabaPuHuiTi.font.family
         }
     }

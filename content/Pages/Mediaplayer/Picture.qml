@@ -1,20 +1,23 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("图片内容")
             content: Grid {
-                id: gridOutput
+                id: gridPic
                 rows: 3
                 anchors.fill: parent
                 columns: Math.ceil(listOutput.count / rows)
@@ -26,31 +29,31 @@ Item {
                             name: qsTr("Picture 1")
                             btnchannel: 41
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/tupianji.png"
                         }
                         ListElement {
                             name: qsTr("Picture 2")
                             btnchannel: 42
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/tupianji.png"
                         }
                         ListElement {
                             name: qsTr("Picture 3")
                             btnchannel: 43
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pip.png"
+                            iconUrl: "qrc:/content/icons/tupianji.png"
                         }
                         ListElement {
                             name: qsTr("Picture 4")
                             btnchannel: 44
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/tupianji.png"
                         }
                         ListElement {
                             name: qsTr("Picture 5")
                             btnchannel: 45
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pip.png"
+                            iconUrl: "qrc:/content/icons/tupianji.png"
                         }
                     }
                     delegate: VButton {
@@ -58,8 +61,8 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
+                        width: (parent.width + gridPic.spacing) / gridPic.columns - gridPic.spacing
+                        height: (parent.height + gridPic.spacing) / gridPic.rows - gridPic.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -70,10 +73,14 @@ Item {
         }
 
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.2
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("控制")
             content: Grid {
-                id: gridInput
+                id: gridControl
                 rows: 3
                 anchors.fill: parent
                 columns: Math.ceil(listInput.count / rows)
@@ -84,31 +91,42 @@ Item {
                         ListElement {
                             name: qsTr("停止")
                             btnchannel: 46
-                            iconUrl: "qrc:/content/icons/camera.png"
+                            iconUrl: "qrc:/content/icons/tingzhibofang.png"
                         }
                         ListElement {
                             name: qsTr("前一幅")
                             btnchannel: 47
-                            iconUrl: "qrc:/content/icons/wuxiantouping.png"
+                            iconUrl: "qrc:/content/icons/qianyige.png"
                         }
                         ListElement {
                             name: qsTr("后一幅")
                             btnchannel: 48
-                            iconUrl: "qrc:/content/icons/HDMIjiekou.png"
+                            iconUrl: "qrc:/content/icons/houyige.png"
                         }
                     }
                     delegate: VButton {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridInput.rows - parent.spacing
+                        width: (parent.width + gridControl.spacing)
+                               / gridControl.columns - gridControl.spacing
+                        height: (parent.height + gridControl.spacing)
+                                / gridControl.rows - gridControl.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl
                     }
                 }
             }
+        }
+
+        Rectangle {
+            color: "transparent"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.3
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
         }
     }
 }

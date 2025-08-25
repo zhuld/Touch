@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
@@ -89,13 +91,6 @@ Item {
                     y: 0
                     radius: width / 3
                     width: back.width
-
-                    //height: back.height - Math.round( Global.analog[controlVolumeBar.level] / 65535 * back.height)
-                    // Behavior on height {
-                    //     NumberAnimation {
-                    //         duration: Global.durationDelay
-                    //     }
-                    // }
                     height: slider.visualPosition * back.height
                 }
                 fillGradient: LinearGradient {
@@ -118,53 +113,60 @@ Item {
         Repeater {
             model: (controlVolumeBar.maxVolume - controlVolumeBar.miniVolume) / 5 + 1
             delegate: Item {
+                id: item
+                required property int index
                 anchors.fill: parent
                 Shape {
-                    //刻度线左
-                    anchors.fill: parent
 
+                    //刻度线左
+                    //anchors.fill: parent
                     ShapePath {
-                        strokeColor: (-index + maxVolume)
+                        strokeColor: (-item.index + controlVolumeBar.maxVolume)
                                      <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                         strokeWidth: (Math.floor(
-                                          index / 2) * 2 === index) ? 2 : 1
-                        startX: (Math.floor(index / 2) * 2
-                                 === index) ? slider.width * 0.25 : slider.width * 0.3
+                                          item.index / 2) * 2 === item.index) ? 2 : 1
+                        startX: (Math.floor(item.index / 2) * 2
+                                 === item.index) ? slider.width * 0.25 : slider.width * 0.3
                         startY: slider.handle.height / 2 + (slider.height - slider.handle.height)
-                                / (maxVolume - miniVolume) * 5 * index
+                                / (controlVolumeBar.maxVolume
+                                   - controlVolumeBar.miniVolume) * 5 * item.index
                         PathLine {
                             x: slider.width * 0.4
-                            y: slider.handle.height / 2 + (parent.height - parent.handle.height)
-                               / (maxVolume - miniVolume) * 5 * index
+                            y: slider.handle.height / 2 + (slider.height - slider.handle.height)
+                               / (controlVolumeBar.maxVolume
+                                  - controlVolumeBar.miniVolume) * 5 * item.index
                         }
                     }
                     //刻度线右
                     ShapePath {
-                        strokeColor: (-index + maxVolume)
+                        strokeColor: (-item.index + controlVolumeBar.maxVolume)
                                      <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                         strokeWidth: (Math.floor(
-                                          index / 2) * 2 === index) ? 2 : 1
+                                          item.index / 2) * 2 === item.index) ? 2 : 1
                         startX: slider.width * 0.6
                         startY: slider.handle.height / 2 + (slider.height - slider.handle.height)
-                                / (maxVolume - miniVolume) * 5 * index
+                                / (controlVolumeBar.maxVolume
+                                   - controlVolumeBar.miniVolume) * 5 * item.index
                         PathLine {
-                            x: (Math.floor(
-                                    index / 2) * 2 === index) ? width * 0.8 : width * 0.7
+                            x: (Math.floor(item.index / 2) * 2
+                                === item.index) ? slider.width * 0.8 : slider.width * 0.7
                             y: slider.handle.height / 2 + (slider.height - slider.handle.height)
-                               / (maxVolume - miniVolume) * 5 * index
+                               / (controlVolumeBar.maxVolume
+                                  - controlVolumeBar.miniVolume) * 5 * item.index
                         }
                     }
                 }
 
                 Text {
-                    text: (Math.floor(
-                               index / 2) * 2 === index) ? -index * 5 + maxVolume : ""
+                    text: (Math.floor(item.index / 2) * 2
+                           === item.index) ? -item.index * 5 + controlVolumeBar.maxVolume : ""
                     width: parent.width * 0.3
                     height: slider.handle.height
                     horizontalAlignment: Text.AlignRight
                     x: -width * 0.2
-                    y: (slider.height - height) / (maxVolume - miniVolume) * 5 * index
-                    color: (-index + maxVolume)
+                    y: (slider.height - height) / (controlVolumeBar.maxVolume
+                                                   - controlVolumeBar.miniVolume) * 5 * item.index
+                    color: (-item.index + controlVolumeBar.maxVolume)
                            <= 0 ? Global.buttonTextColor : Global.buttonTextRedColor
                     font.pixelSize: height * 0.25
                     verticalAlignment: Text.AlignVCenter
@@ -226,7 +228,8 @@ Item {
             layer.effect: MultiEffect {
                 shadowEnabled: true
                 shadowColor: Global.buttonShadowColor
-                shadowHorizontalOffset: slider.pressed ? shadowHeight / 2 : shadowHeight
+                shadowHorizontalOffset: slider.pressed ? Global.shadowHeight
+                                                         / 2 : Global.shadowHeight
                 shadowVerticalOffset: shadowHorizontalOffset * (1 - slider.position)
                 Behavior on shadowHorizontalOffset {
                     NumberAnimation {
@@ -278,7 +281,7 @@ Item {
         text: Global.settings.showChannel ? "A" + controlVolumeBar.channel + "E"
                                             + controlVolumeBar.disEnableChannel : ""
         color: Global.buttonTextColor
-        font.pixelSize: channelSize
+        font.pixelSize: Global.channelSize
         font.family: Global.alibabaPuHuiTi.font.family
     }
 }

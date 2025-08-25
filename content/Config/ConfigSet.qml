@@ -7,4 +7,10 @@ QtObject {
     readonly property string background: "qrc:/content/images/background.jpg"
     readonly property string logoImage: ""
     readonly property int processDialogChannel: 0
+
+    readonly property var pageList: ListModel {}
+
+    readonly property var initValue: ListModel {}
+
+    readonly property bool tabOnBottom: false
 }

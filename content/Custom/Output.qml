@@ -1,6 +1,7 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Shapes
-import QtQuick.Controls
 import QtQuick.Effects
 
 import "../Js/crestroncip.js" as CrestronCIP
@@ -23,7 +24,8 @@ Item {
         shadowEnabled: true
         shadowColor: dropContainer.containsDrag ? controlOutput.dragShadowColor : Global.buttonShadowColor
         shadowHorizontalOffset: height / 60
-        shadowVerticalOffset: dropContainer.containsDrag ? shadowHeight * 2 : shadowHeight / 2
+        shadowVerticalOffset: dropContainer.containsDrag ? Global.shadowHeight
+                                                           * 2 : Global.shadowHeight / 2
         Behavior on shadowColor {
             ColorAnimation {
                 duration: Global.durationDelay
@@ -147,7 +149,7 @@ Item {
         text: Global.settings.showChannel ? "A" + controlOutput.output + "E"
                                             + controlOutput.disEnableChannel : ""
         color: Global.buttonTextColor
-        font.pixelSize: channelSize
+        font.pixelSize: Global.channelSize
         font.family: Global.alibabaPuHuiTi.font.family
     }
     DropArea {

@@ -59,5 +59,7 @@ qt_add_qml_module(content
         QML_FILES Pages/Mediaplayer/PPT.qml
         QML_FILES Pages/Mediaplayer/Flash.qml
         QML_FILES Pages/Mediaplayer/Picture.qml
-        QML_FILES Pages/Mediaplayer/System.qml
+        QML_FILES Pages/Mediaplayer/MediaSystem.qml
+        QML_FILES Pages/Mediaplayer/MedaiCamera.qml
+        QML_FILES Pages/Mediaplayer/Web.qml
     )

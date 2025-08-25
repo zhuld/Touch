@@ -1,8 +1,7 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
-
-import "../Custom/"
-import "../Config"
 
 Dialog {
     id: rootSetting
@@ -84,8 +83,6 @@ Dialog {
             width: parent.width
             height: parent.height * 0.74
             contentWidth: parent.width * 0.9
-            //contentHeight: Grid.height
-            anchors.margins: height / 20
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -97,60 +94,85 @@ Dialog {
                 spacing: rootSetting.height * 0.01
                 Text {
                     text: "配置选择"
-                    width: parent.width * 0.4
+                    width: parent.width * 0.3
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ComboBox {
-                    id: configSetting
-                    width: parent.width * 0.6
+                    id: configComboBox
+                    width: parent.width * 0.7
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
-                    //textRole: "key"
+                    font.family: Global.alibabaPuHuiTi.font.family
                     model: Global.configListModel
                     currentIndex: Global.settings.configSetting
                     delegate: ItemDelegate {
+                        id: item
+                        required property string modelData
                         contentItem: Text {
-                            text: modelData
-                            font.pixelSize: configSetting.font.pixelSize
-                            height: configSetting.height
-                            width: configSetting.width
+                            text: item.modelData
+                            font: configComboBox.font
+                            height: configComboBox.height
+                            width: configComboBox.width
                             color: Global.buttonTextColor
                         }
                     }
+                    contentItem: Text {
+                        leftPadding: 15
+                        text: configComboBox.displayText
+                        font: configComboBox.font
+                        anchors.fill: parent
+                        color: Global.buttonTextColor
+                    }
+
+                    indicator: MyIconLabel {
+                        icon.source: configComboBox.down ? "qrc:/content/icons/down2.png" : "qrc:/content/icons/down.png"
+                        icon.color: Global.buttonTextColor
+                        width: parent.height
+                        height: parent.height
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                    }
+
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: Global.buttonTextColor
+                        radius: height / 10
+                    }
+
                     popup: Popup {
-                        y: configSetting.height
-                        width: configSetting.width
+                        y: configComboBox.height
+                        width: configComboBox.width
                         implicitHeight: contentItem.implicitHeight
                         padding: 1
 
                         contentItem: ListView {
+                            spacing: configComboBox.height / 5
                             clip: true
                             implicitHeight: contentHeight
-                            model: configSetting.popup.visible ? configSetting.delegateModel : null
-                            currentIndex: configSetting.highlightedIndex
+                            model: configComboBox.popup.visible ? configComboBox.delegateModel : null
+                            currentIndex: configComboBox.highlightedIndex
                         }
 
                         background: Rectangle {
                             color: Global.buttonColor
-                            radius: 2
                         }
                     }
                 }
-
                 Text {
                     text: "中控IP地址"
-                    width: parent.width * 0.4
+                    width: parent.width * 0.3
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
+
                 TextField {
                     id: ipAddress
-                    width: parent.width * 0.6
+                    width: parent.width * 0.7
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipAddress
@@ -165,10 +187,16 @@ Dialog {
                         }
                     }
                     font.family: Global.alibabaPuHuiTi.font.family
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: Global.buttonTextColor
+                        radius: height / 10
+                    }
                 }
+
                 Text {
                     text: "中控端口"
-                    width: parent.width * 0.4
+                    width: parent.width * 0.3
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
@@ -176,7 +204,7 @@ Dialog {
                 }
                 TextField {
                     id: ipPort
-                    width: parent.width * 0.6
+                    width: parent.width * 0.7
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipPort
@@ -192,10 +220,16 @@ Dialog {
                         }
                     }
                     font.family: Global.alibabaPuHuiTi.font.family
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: Global.buttonTextColor
+                        radius: height / 10
+                    }
                 }
+
                 Text {
                     text: "程序IPID"
-                    width: parent.width * 0.4
+                    width: parent.width * 0.3
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
@@ -203,7 +237,7 @@ Dialog {
                 }
                 TextField {
                     id: ipId
-                    width: parent.width * 0.6
+                    width: parent.width * 0.7
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipId
@@ -219,18 +253,25 @@ Dialog {
                         }
                     }
                     font.family: Global.alibabaPuHuiTi.font.family
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: Global.buttonTextColor
+                        radius: height / 10
+                    }
                 }
+
                 Text {
                     text: "系统设置密码"
-                    width: parent.width * 0.4
+                    width: parent.width * 0.3
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
+
                 TextField {
                     id: settingPassword
-                    width: parent.width * 0.6
+                    width: parent.width * 0.7
                     height: rootSetting.height / 15
                     font.pixelSize: height * 0.6
                     text: Global.settings.settingPassword
@@ -246,7 +287,13 @@ Dialog {
                         }
                     }
                     font.family: Global.alibabaPuHuiTi.font.family
+                    background: Rectangle {
+                        color: "transparent"
+                        border.color: Global.buttonTextColor
+                        radius: height / 10
+                    }
                 }
+
                 Text {
                     text: "模式"
                     width: parent.width * 0.4
@@ -322,7 +369,7 @@ Dialog {
     }
 
     onRejected: {
-        configSetting.currentIndex = Global.settings.configSetting
+        configComboBox.currentIndex = Global.settings.configSetting
         ipAddress.text = Global.settings.ipAddress
         ipPort.text = Global.settings.ipPort
         ipId.text = Global.settings.ipId
@@ -333,9 +380,10 @@ Dialog {
         darkTheme.checked = Global.settings.darkTheme
         Global.settings.sync()
     }
+
     function apply() {
-        if (Global.settings.configSetting !== configSetting.currentIndex) {
-            Global.settings.configSetting = configSetting.currentIndex
+        if (Global.settings.configSetting !== configComboBox.currentIndex) {
+            Global.settings.configSetting = configComboBox.currentIndex
             Global.config = Global.configList[Global.settings.configSetting]
             root.running = false
         }

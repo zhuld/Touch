@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
@@ -98,7 +100,7 @@ Item {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: mouseArea.pressed ? Global.shadowHeight / 2 : Global.shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -172,7 +174,7 @@ Item {
             shadowEnabled: true
             shadowColor: Global.buttonShadowColor
             shadowHorizontalOffset: shadowVerticalOffset / 2
-            shadowVerticalOffset: mouseArea.pressed ? shadowHeight / 2 : shadowHeight
+            shadowVerticalOffset: mouseArea.pressed ? Global.shadowHeight / 2 : Global.shadowHeight
             Behavior on shadowHorizontalOffset {
                 NumberAnimation {
                     duration: Global.durationDelay

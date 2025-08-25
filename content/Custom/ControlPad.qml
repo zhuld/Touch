@@ -1,5 +1,6 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Shapes
 import QtQuick.Effects
 
@@ -50,7 +51,7 @@ Item {
                         height: parent.height
                         text: Global.settings.showChannel ? "D" + upButton.channel : ""
                         color: Global.buttonTextColor
-                        font.pixelSize: channelSize
+                        font.pixelSize: Global.channelSize
                         font.family: Global.alibabaPuHuiTi.font.family
                     }
                 }
@@ -61,7 +62,8 @@ Item {
                     shadowEnabled: true
                     shadowColor: Global.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: upButton.checked ? shadowHeight / 2 : shadowHeight
+                    shadowVerticalOffset: upButton.checked ? Global.shadowHeight
+                                                             / 2 : Global.shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: Global.durationDelay
@@ -164,7 +166,7 @@ Item {
                         height: parent.height
                         text: Global.settings.showChannel ? "D" + leftButton.channel : ""
                         color: Global.buttonTextColor
-                        font.pixelSize: channelSize
+                        font.pixelSize: Global.channelSize
                         font.family: Global.alibabaPuHuiTi.font.family
                     }
                 }
@@ -175,7 +177,8 @@ Item {
                     shadowEnabled: true
                     shadowColor: Global.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: leftButton.checked ? shadowHeight / 2 : shadowHeight
+                    shadowVerticalOffset: leftButton.checked ? Global.shadowHeight
+                                                               / 2 : Global.shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: Global.durationDelay
@@ -279,7 +282,7 @@ Item {
                         height: parent.height
                         text: Global.settings.showChannel ? "D" + rightButton.channel : ""
                         color: Global.buttonTextColor
-                        font.pixelSize: channelSize
+                        font.pixelSize: Global.channelSize
                         font.family: Global.alibabaPuHuiTi.font.family
                     }
                 }
@@ -290,7 +293,8 @@ Item {
                     shadowEnabled: true
                     shadowColor: Global.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: rightButton.checked ? shadowHeight / 2 : shadowHeight
+                    shadowVerticalOffset: rightButton.checked ? Global.shadowHeight
+                                                                / 2 : Global.shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: Global.durationDelay
@@ -394,7 +398,7 @@ Item {
                         height: parent.height
                         text: Global.settings.showChannel ? "D" + downButton.channel : ""
                         color: Global.buttonTextColor
-                        font.pixelSize: channelSize
+                        font.pixelSize: Global.channelSize
                         font.family: Global.alibabaPuHuiTi.font.family
                     }
                 }
@@ -405,7 +409,8 @@ Item {
                     shadowEnabled: true
                     shadowColor: Global.buttonShadowColor
                     shadowHorizontalOffset: shadowVerticalOffset / 2
-                    shadowVerticalOffset: downButton.checked ? shadowHeight / 2 : shadowHeight
+                    shadowVerticalOffset: downButton.checked ? Global.shadowHeight
+                                                               / 2 : Global.shadowHeight
                     Behavior on shadowHorizontalOffset {
                         NumberAnimation {
                             duration: Global.durationDelay

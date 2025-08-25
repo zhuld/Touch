@@ -1,7 +1,5 @@
 import QtQuick
 
-import "./Custom"
-
 Item {
     id: connectPage
     anchors.fill: parent
@@ -59,7 +57,7 @@ Item {
             interval: 500
             repeat: true
             running: true
-            triggeredOnStart: true
+            triggeredOnStart: false
             onTriggered: {
                 dateText.text = new Date().toLocaleDateString(
                             Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
@@ -91,16 +89,6 @@ Item {
             color: Global.buttonTextColor
             anchors.horizontalCenter: parent.horizontalCenter
         }
-        // ColorButton {
-        //     height: parent.height * 0.1
-        //     width: height * 4
-        //     text: "返回配置选择"
-        //     source: "qrc:/content/icons/back.png"
-        //     onClicked: {
-        //         Global.settings.configSetting = 0
-        //         Global.config = Global.configList[0]
-        //     }
-        // }
         MyIconLabel {
             id: connetLabel
             property string errorString: ''
@@ -112,9 +100,9 @@ Item {
         }
         Connections {
             target: tcpClient
-            onErrorOccurred: error => {
-                                 connetLabel.errorString = error
-                             }
+            function onErrorOccurred(error) {
+                connetLabel.errorString = error
+            }
         }
         Rectangle {
             id: socketStatusProgress
@@ -140,5 +128,8 @@ Item {
             Global.digitalToggle[i] = false
             Global.analog[i] = 0
         }
+        tcpClient.disconnectFromServer()
+        tcpServer.stopServer()
+        tcpServer.startServer(41793, "127.0.0.1")
     }
 }

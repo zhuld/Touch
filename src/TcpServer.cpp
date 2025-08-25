@@ -22,7 +22,7 @@ void TcpServer::startServer(quint16 port, const QString &ipAddress)
 
 void TcpServer::stopServer()
 {
-    for (QTcpSocket *clientSocket : clients) {
+    for (QTcpSocket *clientSocket : std::as_const(clients)) {
         if (clientSocket->state() == QAbstractSocket::ConnectedState) {
             clientSocket->close();
         }
@@ -90,7 +90,7 @@ void TcpServer::onReadyRead()
 void TcpServer::sendData(const QByteArray &data)
 {
     // 遍历所有已连接的客户端并发送数据
-    for (QTcpSocket *clientSocket : clients) {
+    for (QTcpSocket *clientSocket : std::as_const(clients)) {
         if (clientSocket->state() == QAbstractSocket::ConnectedState) {
             clientSocket->write(data);
             clientSocket->flush();  // 确保数据立即发送

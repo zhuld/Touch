@@ -1,19 +1,20 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Shapes
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
 
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
-
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("单独控制")
             content: Grid {
                 id: gridLight
@@ -54,15 +55,21 @@ Item {
                         required property string name
                         text: name
                         channel: btnChannel
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridLight.rows - parent.spacing
+                        width: (parent.width + gridLight.spacing)
+                               / gridLight.columns - gridLight.spacing
+                        height: (parent.height + gridLight.spacing)
+                                / gridLight.rows - gridLight.spacing
                         source: checked ? "qrc:/content/icons/deng.png" : "qrc:/content/icons/dengju.png"
                     }
                 }
             }
         }
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("灯光模式")
             content: Grid {
                 id: gridMode
@@ -98,8 +105,10 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridMode.rows - parent.spacing
+                        width: (parent.width + gridMode.spacing)
+                               / gridMode.columns - gridMode.spacing
+                        height: (parent.height + gridMode.spacing)
+                                / gridMode.rows - gridMode.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

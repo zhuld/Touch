@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 
-import "../Custom/"
-
 Dialog {
     id: confirmDialog
     property alias dialogTitle: title.text
@@ -14,8 +12,8 @@ Dialog {
     property int during
 
     anchors.centerIn: Overlay.overlay
-    implicitWidth: root.width * 0.5
-    implicitHeight: root.height * 0.5
+    implicitWidth: Global.settings.windowWidth * 0.5
+    implicitHeight: Global.settings.windowHeight * 0.5
 
     closePolicy: Popup.NoAutoClose
     modal: true

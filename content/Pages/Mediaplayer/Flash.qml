@@ -1,20 +1,21 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
-    implicitWidth: parent.width
-    implicitHeight: parent.height
-
-    Row {
+    anchors.fill: parent
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Category {
-            widthRatio: 0.5
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
             label: qsTr("Flash内容")
             content: Grid {
-                id: gridOutput
+                id: gridFlash
                 rows: 3
                 anchors.fill: parent
                 columns: Math.ceil(listOutput.count / rows)
@@ -26,31 +27,31 @@ Item {
                             name: qsTr("Flash 1")
                             btnchannel: 61
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/Flash.png"
                         }
                         ListElement {
                             name: qsTr("Flash 2")
                             btnchannel: 62
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/Flash.png"
                         }
                         ListElement {
                             name: qsTr("Flash 3")
                             btnchannel: 63
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pip.png"
+                            iconUrl: "qrc:/content/icons/Flash.png"
                         }
                         ListElement {
                             name: qsTr("Flash 4")
                             btnchannel: 64
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pingmugongxiang.png"
+                            iconUrl: "qrc:/content/icons/Flash.png"
                         }
                         ListElement {
                             name: qsTr("Flash 5")
                             btnchannel: 65
                             disBtnChannel: 0
-                            iconUrl: "qrc:/content/icons/pip.png"
+                            iconUrl: "qrc:/content/icons/Flash.png"
                         }
                     }
                     delegate: VButton {
@@ -58,8 +59,10 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + parent.spacing) / parent.columns - parent.spacing
-                        height: (parent.height + parent.spacing) / gridOutput.rows - parent.spacing
+                        width: (parent.width + gridFlash.spacing)
+                               / gridFlash.columns - gridFlash.spacing
+                        height: (parent.height + gridFlash.spacing)
+                                / gridFlash.rows - gridFlash.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -67,6 +70,15 @@ Item {
                     }
                 }
             }
+        }
+
+        Rectangle {
+            color: "transparent"
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.maximumWidth: parent.width * 0.5
+            Layout.rightMargin: parent.width * 0.02
+            Layout.bottomMargin: parent.width * 0.02
         }
     }
 }

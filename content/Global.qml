@@ -3,15 +3,13 @@ pragma Singleton
 import QtQuick
 import QtCore
 
-import "./Config"
-
 QtObject {
 
     property var digital: []
     property var digitalToggle: []
     property var analog: []
 
-    //property var text: [] // not support yet
+    //config
     property QtObject config
 
     readonly property list<QtObject> configList: [
@@ -40,6 +38,9 @@ QtObject {
     readonly property color buttonTextRedColor: "red"
 
     readonly property int durationDelay: 150
+
+    readonly property real channelSize: 40
+    readonly property real shadowHeight: 10
 
     readonly property var lcdFont: FontLoader {
         source: "qrc:/content/fonts/TP-LCD.TTF"

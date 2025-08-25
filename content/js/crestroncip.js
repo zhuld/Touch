@@ -347,6 +347,7 @@ function recivedAppendList(message, index, payloadLength, detail) {
                                       index + 3 + payloadLength), " "), detail)
     }
 }
+
 function sendAppendList(data, detail) {
     if (Global.settings.showChannel) {
         console.log('[TX]', new Date().toLocaleTimeString(Qt.locale("zh_CN"),

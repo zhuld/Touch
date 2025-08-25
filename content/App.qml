@@ -1,21 +1,17 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 import QtQuick
-import QtQuick.Controls
 
-import "./Dialog"
-import "./Pages"
-import "./Custom"
-import "./Config"
+//import QtQuick.Controls
 
+// import "./Dialog"
+// import "./Pages"
+// import "./Custom"
+// import "./Config"
 import "./Js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
-
-    property real channelSize: height * 0.02
-    property real shadowHeight: height * 0.006
-
     readonly property PasswordDialog passwordDialog: PasswordDialog {
         onPasswordEnter: password => {
                              if ((password === "314159")
@@ -59,7 +55,7 @@ Window {
     visibility: Global.settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
 
-    Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
+    //Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
     Image {
         anchors.fill: parent
         source: Global.config.background
@@ -138,24 +134,26 @@ Window {
 
     Connections {
         target: tcpClient
-        onStateChanged: state => {
-                            //console.log('state', state)
-                            if (state === 0) {
-                                ping.running = false
-                            }
-                        }
-        onDataReceived: data => CrestronCIP.clientMessageCheck(
-                            new Uint8Array(data))
+        function onStateChanged(state) {
+            if (state === 0) {
+                ping.running = false
+            }
+        }
+        function onDataReceived(data) {
+            CrestronCIP.clientMessageCheck(new Uint8Array(data))
+        }
     }
 
     Connections {
         target: tcpServer // 监听 TCPServer 的信号
-        onDataReceived: data => CrestronCIP.serverMessageCheck(
-                            new Uint8Array(data))
-        onClientConnected: CrestronCIP.serverAccept()
+        function onDataReceived(data) {
+            CrestronCIP.serverMessageCheck(new Uint8Array(data))
+        }
+        function onClientConnected() {
+            CrestronCIP.serverAccept()
+        }
     }
     Component.onCompleted: {
         Global.config = Global.configList[Global.settings.configSetting]
-        tcpServer.startServer(41793, "127.0.0.1")
     }
 }

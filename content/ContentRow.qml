@@ -1,11 +1,8 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Effects
-
-import "./Custom"
-import "./Pages"
-import "./Dialog"
 
 Item {
     id: main
@@ -83,7 +80,7 @@ Item {
     }
     Connections {
         target: settingDialog
-        onShowChannelChanged: {
+        function onShowChannelChanged() {
             Global.tabList.clear()
             for (var i = 0; i < Global.config.pageList.count; i++) {
                 var item = Global.config.pageList.get(i)

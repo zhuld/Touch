@@ -1,14 +1,13 @@
-import QtQuick
-import QtQuick.Controls
+pragma ComponentBehavior: Bound
 
-import "../../Custom"
+import QtQuick
+import QtQuick.Layouts
 
 Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
-    Row {
+    RowLayout {
         anchors.fill: parent
-        spacing: width * 0.02
         Repeater {
             id: repeater
             model: ListModel {
@@ -63,7 +62,12 @@ Item {
             }
 
             delegate: Category {
-                widthRatio: 1 / volumeList.count
+                id: category
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.maximumWidth: parent.width / volumeList.count
+                Layout.rightMargin: parent.width * 0.02
+                Layout.bottomMargin: parent.width * 0.02
                 required property string name
                 required property int vChannel
                 required property int vLevel
@@ -74,12 +78,12 @@ Item {
                 label: name
                 content: VolumeBar {
                     anchors.fill: parent
-                    channel: vChannel
-                    muteChannel: mChannel
-                    miniVolume: minVol
-                    maxVolume: maxVol
-                    input: inputType
-                    level: vLevel
+                    channel: category.vChannel
+                    muteChannel: category.mChannel
+                    miniVolume: category.minVol
+                    maxVolume: category.maxVol
+                    input: category.inputType
+                    level: category.vLevel
                 }
             }
         }
