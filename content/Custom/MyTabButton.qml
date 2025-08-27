@@ -19,9 +19,8 @@ T.TabButton {
     property color iconColor: checked ? Global.backgroundColor : Global.buttonTextColor
     checked: Global.digital[controlMyTabButton.channel] ? true : false
 
-    implicitHeight: parent.height
-    implicitWidth: parent.width
-
+    // implicitHeight: parent.height
+    // implicitWidth: parent.width
     enabled: Global.digital[controlMyTabButton.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
 
@@ -65,6 +64,7 @@ T.TabButton {
                     duration: Global.durationDelay
                 }
             }
+            autoPaddingEnabled: true
         }
         ShapePath {
             strokeWidth: 0

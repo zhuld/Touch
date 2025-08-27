@@ -61,8 +61,8 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + gridPic.spacing) / gridPic.columns - gridPic.spacing
-                        height: (parent.height + gridPic.spacing) / gridPic.rows - gridPic.spacing
+                        width: (gridPic.width + gridPic.spacing) / gridPic.columns - gridPic.spacing
+                        height: (gridPic.height + gridPic.spacing) / gridPic.rows - gridPic.spacing
                         text: name
                         channel: btnchannel
                         disEnableChannel: disBtnChannel
@@ -108,9 +108,9 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridControl.spacing)
+                        width: (gridControl.width + gridControl.spacing)
                                / gridControl.columns - gridControl.spacing
-                        height: (parent.height + gridControl.spacing)
+                        height: (gridControl.height + gridControl.spacing)
                                 / gridControl.rows - gridControl.spacing
                         text: name
                         channel: btnchannel

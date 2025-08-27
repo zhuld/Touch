@@ -16,6 +16,9 @@ QtObject {
         ConfigSet {},
         ShiyiMZ {},
         Haishi410 {},
+        // MediaPlayer {},
+        // ShiyiMZ {},
+        // Haishi410 {},
         MediaPlayer {}
     ]
 
@@ -34,13 +37,13 @@ QtObject {
     readonly property color buttonCheckedColor: "darkorange"
     readonly property color backgroundColor: settings.darkTheme ? "#16417C" : "lavender"
     readonly property color buttonTextColor: settings.darkTheme ? "lavender" : "#252525"
-    readonly property color buttonShadowColor: settings.darkTheme ? "#E0262626" : "#E0262626"
+    readonly property color buttonShadowColor: settings.darkTheme ? "#C0262626" : "#C0262626"
     readonly property color buttonTextRedColor: "red"
 
-    readonly property int durationDelay: 150
+    readonly property int durationDelay: 100
 
     readonly property real channelSize: 40
-    readonly property real shadowHeight: 10
+    readonly property real shadowHeight: 8
 
     readonly property var lcdFont: FontLoader {
         source: "qrc:/content/fonts/TP-LCD.TTF"

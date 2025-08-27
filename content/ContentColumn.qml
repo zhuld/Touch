@@ -1,13 +1,12 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
     id: main
     anchors.fill: parent
-    anchors.leftMargin: parent.width * 0.02
+    anchors.leftMargin: width * 0.02
 
     ProcessDialog {
         id: processDialog
@@ -16,45 +15,41 @@ Item {
         channel: Global.config.processDialogChannel
         autoClose: 50
     }
-    ScrollView {
-        width: parent.width * 0.12
-        height: parent.height - parent.width * 0.02
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.interactive: true
-        Column {
-            id: tabBar
-            width: main.width * 0.12
-            spacing: main.height * 0.02
-            Repeater {
-                id: repeater
-                model: Global.tabList
-                delegate: MyTabButton {
-                    id: tabButton
-                    required property string name
-                    required property string iconUrl
-                    required property int index
-                    required property int pageChannel
-                    required property string pageUrl
-                    required property int disableChannel
-                    disEnableChannel: disableChannel
-                    text: name
-                    width: tabBar.width * 0.8
-                    // height: (parent.height + tabBar.spacing) / (Global.tabList.count) - tabBar.spacing
-                    //         < width ? (parent.height + tabBar.spacing)
-                    //                   / (Global.tabList.count) - tabBar.spacing : width
-                    height: width
-                    source: iconUrl
-                    channel: pageChannel
-                    onCheckedChanged: {
-                        if (checked & stackLayout.currentIndex !== index) {
-                            stackLayout.currentIndex = index
-                        }
-                    }
+
+    ListView {
+        id: tabBar
+        width: parent.width * 0.11
+        height: parent.height * 0.98 > (width * 0.8 + spacing)
+                * Global.tabList.count ? (width * 0.8 + spacing)
+                                         * Global.tabList.count : parent.height * 0.98
+        clip: true
+        spacing: width * 0.2
+        anchors.top: parent.top
+        interactive: parent.height * 0.98 > (width * 0.8 + spacing)
+                     * Global.tabList.count ? false : true
+
+        model: Global.tabList
+        delegate: MyTabButton {
+            required property string name
+            required property string iconUrl
+            required property int index
+            required property int pageChannel
+            required property string pageUrl
+            required property int disableChannel
+            disEnableChannel: disableChannel
+            text: name
+            width: tabBar.width * 0.8
+            height: width
+            source: iconUrl
+            channel: pageChannel
+            onCheckedChanged: {
+                if (checked & stackLayout.currentIndex !== index) {
+                    stackLayout.currentIndex = index
                 }
             }
         }
     }
+    // }
     StackLayout {
         id: stackLayout
         anchors.right: parent.right

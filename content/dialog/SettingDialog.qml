@@ -36,7 +36,7 @@ Dialog {
 
     Column {
         anchors.fill: parent
-        anchors.margins: height * 0.02
+        anchors.margins: height * 0.05
         spacing: height * 0.05
         Row {
             id: settingButtons
@@ -81,8 +81,10 @@ Dialog {
         ScrollView {
             id: scrollView
             width: parent.width
-            height: parent.height * 0.74
-            contentWidth: parent.width * 0.9
+            height: parent.height * 0.73
+            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+            contentWidth: parent.width
+            clip: true
             Behavior on ScrollBar.vertical.position {
                 NumberAnimation {
                     duration: Global.durationDelay
@@ -91,19 +93,19 @@ Dialog {
             Grid {
                 width: parent.width
                 columns: 2
-                spacing: rootSetting.height * 0.01
+                spacing: scrollView.height * 0.01
                 Text {
                     text: "配置选择"
                     width: parent.width * 0.3
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ComboBox {
                     id: configComboBox
-                    width: parent.width * 0.7
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.69
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.6
                     font.family: Global.alibabaPuHuiTi.font.family
                     model: Global.configListModel
@@ -164,7 +166,7 @@ Dialog {
                 Text {
                     text: "中控IP地址"
                     width: parent.width * 0.3
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
@@ -172,8 +174,8 @@ Dialog {
 
                 TextField {
                     id: ipAddress
-                    width: parent.width * 0.7
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.69
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipAddress
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -197,15 +199,15 @@ Dialog {
                 Text {
                     text: "中控端口"
                     width: parent.width * 0.3
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: ipPort
-                    width: parent.width * 0.7
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.69
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipPort
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -230,15 +232,15 @@ Dialog {
                 Text {
                     text: "程序IPID"
                     width: parent.width * 0.3
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 TextField {
                     id: ipId
-                    width: parent.width * 0.7
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.69
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.6
                     text: Global.settings.ipId
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -263,7 +265,7 @@ Dialog {
                 Text {
                     text: "系统设置密码"
                     width: parent.width * 0.3
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
@@ -271,8 +273,8 @@ Dialog {
 
                 TextField {
                     id: settingPassword
-                    width: parent.width * 0.7
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.69
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.6
                     text: Global.settings.settingPassword
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -296,14 +298,14 @@ Dialog {
 
                 Text {
                     text: "模式"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.3
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     width: height * 3
                     id: demoMode
                     checked: Global.settings.demoMode
@@ -311,15 +313,15 @@ Dialog {
                 }
                 Text {
                     text: "显示"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.3
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                     visible: Qt.platform.os === "windows"
                 }
                 ColorSwitch {
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     width: height * 1.6
                     id: fullscreen
                     checked: Global.settings.fullscreen
@@ -328,14 +330,14 @@ Dialog {
                 }
                 Text {
                     text: "调试信息"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.3
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     width: height * 1.6
                     id: showChannel
                     checked: Global.settings.showChannel
@@ -343,14 +345,14 @@ Dialog {
                 }
                 Text {
                     text: "主题"
-                    width: parent.width * 0.4
-                    height: rootSetting.height / 15
+                    width: parent.width * 0.3
+                    height: scrollView.height / 10
                     font.pixelSize: height * 0.7
                     color: Global.buttonTextColor
                     font.family: Global.alibabaPuHuiTi.font.family
                 }
                 ColorSwitch {
-                    height: rootSetting.height / 15
+                    height: scrollView.height / 10
                     width: height * 1.6
                     id: darkTheme
                     checked: Global.settings.darkTheme
@@ -359,7 +361,6 @@ Dialog {
             }
         }
     }
-
     onAccepted: {
         apply()
     }

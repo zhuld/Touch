@@ -71,8 +71,8 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridLed.spacing) / gridLed.columns - gridLed.spacing
-                        height: (parent.height + gridLed.spacing) / gridLed.rows - gridLed.spacing
+                        width: (gridLed.width + gridLed.spacing) / gridLed.columns - gridLed.spacing
+                        height: (gridLed.height + gridLed.spacing) / gridLed.rows - gridLed.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl

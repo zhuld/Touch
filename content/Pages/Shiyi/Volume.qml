@@ -7,6 +7,7 @@ Item {
     implicitWidth: parent.width
     implicitHeight: parent.height
     RowLayout {
+        id: volList
         anchors.fill: parent
         Repeater {
             id: repeater
@@ -65,9 +66,9 @@ Item {
                 id: category
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                Layout.maximumWidth: parent.width / volumeList.count
-                Layout.rightMargin: parent.width * 0.02
-                Layout.bottomMargin: parent.width * 0.02
+                Layout.maximumWidth: volList.width / volumeList.count
+                Layout.rightMargin: volList.width * 0.02
+                Layout.bottomMargin: volList.width * 0.02
                 required property string name
                 required property int vChannel
                 required property int vLevel

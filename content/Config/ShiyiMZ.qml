@@ -3,7 +3,7 @@ import QtQuick
 QtObject {
     readonly property string logoName: qsTr("上海市第一人民医院")
     readonly property string titleName: qsTr("门诊大楼指挥中心")
-    readonly property string version: qsTr("2502")
+    readonly property string version: qsTr("202502")
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property int processDialogChannel: 1
     readonly property string protocol: "CrestronCIP"

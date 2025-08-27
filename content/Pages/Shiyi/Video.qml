@@ -46,9 +46,9 @@ Item {
                     delegate: Output {
                         required property string name
                         required property int outputChannel
-                        width: (parent.width + gridOutput.spacing)
+                        width: (gridOutput.width + gridOutput.spacing)
                                / gridOutput.columns - gridOutput.spacing
-                        height: (parent.height + gridOutput.spacing)
+                        height: (gridOutput.height + gridOutput.spacing)
                                 / gridOutput.rows - gridOutput.spacing
                         output: outputChannel
                         textOutput: name
@@ -149,9 +149,9 @@ Item {
                         required property int index
                         required property int btnChannel
                         required property int disableOut
-                        width: (parent.width + gridInput.spacing)
+                        width: (gridInput.width + gridInput.spacing)
                                / gridInput.columns - gridInput.spacing
-                        height: (parent.height + gridInput.spacing)
+                        height: (gridInput.height + gridInput.spacing)
                                 / gridInput.rows - gridInput.spacing
                         btnColor: bgColor
                         textInput: name

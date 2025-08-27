@@ -3,7 +3,7 @@ import QtQuick
 QtObject {
     readonly property string logoName: qsTr("测试")
     readonly property string titleName: qsTr("媒体播放器控制")
-    readonly property string version: qsTr("202507")
+    readonly property string version: qsTr("202508")
     readonly property string background: "qrc:/content/images/mediaplayer.jpg"
     readonly property int processDialogChannel: 1
     readonly property string protocol: "CrestronCIP"
@@ -66,6 +66,13 @@ QtObject {
             iconUrl: "qrc:/content/icons/xitong.png"
             test: false
             pageChannel: 18
+        }
+        ListElement {
+            name: qsTr("网页")
+            pageUrl: "qrc:/qt/qml/content/Pages/Mediaplayer/Web.qml"
+            iconUrl: "qrc:/content/icons/web.png"
+            test: false
+            pageChannel: 19
         }
     }
     readonly property var initValue: ListModel {

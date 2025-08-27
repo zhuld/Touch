@@ -1,14 +1,12 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
     id: main
     anchors.fill: parent
-    anchors.leftMargin: parent.width * 0.02
-    anchors.bottomMargin: parent.width * 0.02
+    anchors.bottomMargin: width * 0.02
 
     ProcessDialog {
         id: processDialog
@@ -17,42 +15,46 @@ Item {
         channel: Global.config.processDialogChannel
         autoClose: 50
     }
-    Row {
+    ListView {
         id: tabBar
-        width: parent.width * 0.98
-        height: parent.height * 0.15
-        x: (width - height * Global.tabList.count) / (Global.tabList.count + 1)
+        width: parent.width * 0.96 > (height * 0.85 + spacing)
+               * Global.tabList.count ? (height * 0.85 + spacing)
+                                        * Global.tabList.count : parent.width * 0.96
+        height: parent.height * 0.16
+        clip: true
+        spacing: height * 0.2
         anchors.bottom: parent.bottom
-        Repeater {
-            id: repeater
-            model: Global.tabList
-            delegate: MyTabButton {
-                id: tabButton
-                required property string name
-                required property string iconUrl
-                required property int index
-                required property int pageChannel
-                required property int disableChannel
-                disEnableChannel: disableChannel
-                text: name
-                width: parent.height
-                height: parent.height
-                source: iconUrl
-                channel: pageChannel
-                onCheckedChanged: {
-                    if (checked & stackLayout.currentIndex !== index) {
-                        stackLayout.currentIndex = index
-                    }
+        anchors.horizontalCenter: parent.horizontalCenter
+        orientation: ListView.Horizontal
+        interactive: parent.width * 0.96 > (height * 0.85 + spacing)
+                     * Global.tabList.count ? false : true
+        model: Global.tabList
+        delegate: MyTabButton {
+            id: tabButton
+            required property string name
+            required property string iconUrl
+            required property int index
+            required property int pageChannel
+            required property int disableChannel
+            disEnableChannel: disableChannel
+            text: name
+            width: height
+            height: tabBar.height * 0.85
+            source: iconUrl
+            channel: pageChannel
+            onCheckedChanged: {
+                if (checked & stackLayout.currentIndex !== index) {
+                    stackLayout.currentIndex = index
                 }
             }
         }
-        spacing: (width - height * Global.tabList.count) / (Global.tabList.count + 1)
     }
     StackLayout {
         id: stackLayout
         anchors.top: parent.top
-        width: parent.width
+        width: parent.width * 0.98
         height: parent.height - tabBar.height
+        x: parent.width * 0.02
         Repeater {
             model: Global.tabList
             delegate: Loader {
@@ -62,10 +64,6 @@ Item {
             }
         }
         clip: true
-        // orientation: Qt.Horizontal
-        // spacing: parent.width / 10
-        // interactive: false
-        // Component.onCompleted: contentItem.highlightMoveDuration = 0
     }
     Component.onCompleted: {
         // Clear the filtered model

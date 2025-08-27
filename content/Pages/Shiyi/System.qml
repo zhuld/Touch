@@ -61,9 +61,9 @@ Item {
                         required property string iconUrl
                         required property bool showDialog
                         required property color bColor
-                        width: (parent.width + gridSystem.spacing)
+                        width: (gridSystem.width + gridSystem.spacing)
                                / gridSystem.columns - gridSystem.spacing
-                        height: (parent.height + gridSystem.spacing)
+                        height: (gridSystem.height + gridSystem.spacing)
                                 / gridSystem.rows - gridSystem.spacing
                         text: name
                         channel: btnchannel
@@ -130,9 +130,9 @@ Item {
                         required property string iconUrl
                         required property int disableChannel
                         disEnableChannel: disableChannel
-                        width: (parent.width + gridMode.spacing)
+                        width: (gridMode.width + gridMode.spacing)
                                / gridMode.columns - gridMode.spacing
-                        height: (parent.height + gridMode.spacing)
+                        height: (gridMode.height + gridMode.spacing)
                                 / gridMode.rows - gridMode.spacing
                         text: name
                         channel: btnchannel
