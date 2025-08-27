@@ -55,9 +55,9 @@ Item {
                         required property string name
                         text: name
                         channel: btnChannel
-                        width: (parent.width + gridLight.spacing)
+                        width: (gridLight.width + gridLight.spacing)
                                / gridLight.columns - gridLight.spacing
-                        height: (parent.height + gridLight.spacing)
+                        height: (gridLight.height + gridLight.spacing)
                                 / gridLight.rows - gridLight.spacing
                         source: checked ? "qrc:/content/icons/deng.png" : "qrc:/content/icons/dengju.png"
                     }
@@ -105,9 +105,9 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridMode.spacing)
+                        width: (gridMode.width + gridMode.spacing)
                                / gridMode.columns - gridMode.spacing
-                        height: (parent.height + gridMode.spacing)
+                        height: (gridMode.height + gridMode.spacing)
                                 / gridMode.rows - gridMode.spacing
                         text: name
                         channel: btnchannel

@@ -20,9 +20,8 @@ T.Button {
 
     checked: Global.digital[controlVButton.channel] ? true : false
 
-    implicitHeight: parent.height
-    implicitWidth: parent.width
-
+    // implicitHeight: parent.height
+    // implicitWidth: parent.width
     enabled: Global.digital[controlVButton.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.6
     Behavior on opacity {

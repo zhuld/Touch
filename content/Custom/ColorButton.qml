@@ -7,10 +7,10 @@ import QtQuick.Templates as T
 
 T.Button {
     id: controlColorButton
-    property color btnColor: Global.backgroundColor
+    property color btnColor: Global.buttonColor
     property color btnCheckColor: Global.buttonCheckedColor
-    property color textColor: pressed ? Global.backgroundColor : Global.buttonTextColor
-    property color iconColor: pressed ? Global.backgroundColor : Global.buttonTextColor
+    property color textColor: Global.buttonTextColor
+    property color iconColor: Global.buttonTextColor
     property string source
 
     property real radius: height / 5

@@ -1,27 +1,22 @@
 // Copyright (C) 2021 The Qt Company Ltd.
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
-//import QtQuick.Controls
-
-// import "./Dialog"
-// import "./Pages"
-// import "./Custom"
-// import "./Config"
 import "./Js/crestroncip.js" as CrestronCIP
 
 Window {
     id: root
     readonly property PasswordDialog passwordDialog: PasswordDialog {
         onPasswordEnter: password => {
-                             if ((password === "314159")
-                                 | (password === Global.settings.settingPassword)) {
-                                 settingDialog.open()
-                                 passwordDialog.close()
-                             } else {
-                                 passwordDialog.error = true
-                             }
-                         }
+            if ((password === "314159") | (password === Global.settings.settingPassword)) {
+                settingDialog.open()
+                passwordDialog.close()
+            } else {
+                passwordDialog.error = true
+            }
+        }
     }
     readonly property SettingDialog settingDialog: SettingDialog {}
     readonly property ConfirmDialog closeDialog: ConfirmDialog {
@@ -50,7 +45,8 @@ Window {
     minimumHeight: 1000
     color: Global.backgroundColor
 
-    title: Global.config.logoName + Global.config.titleName
+    title: Global.configList[Global.settings.configSetting].logoName
+    + Global.configList[Global.settings.configSetting].titleName
 
     visibility: Global.settings.fullscreen ? Window.FullScreen : Window.Windowed
     flags: Qt.FramelessWindowHint | Qt.Window
@@ -58,14 +54,104 @@ Window {
     //Material.theme: Global.settings.darkTheme ? Material.Dark : Material.Light
     Image {
         anchors.fill: parent
-        source: Global.config.background
+        source: Global.configList[Global.settings.configSetting].background
         opacity: ping.running ? 0.3 : 0.6
     }
-    TitleBar {
+
+    //titlebar
+    Item {
         id: titleBar
         width: parent.width * 0.96
         height: parent.height * 0.07
-        x: parent.width * 0.02
+        anchors.horizontalCenter: parent.horizontalCenter
+        MouseArea {
+            property point clickPosition: Qt.point(0, 0)
+            anchors.fill: parent
+            cursorShape: Global.settings.fullscreen ? Qt.ArrowCursor : Qt.SizeAllCursor
+            onPositionChanged: {
+                if (!pressed || Global.settings.fullscreen)
+                return
+                root.x += mouseX - clickPosition.x
+                root.y += mouseY - clickPosition.y
+            }
+            onPressed: clickPosition = Qt.point(mouseX, mouseY)
+        }
+        Text {
+            id: titleLogo
+            text: Global.configList[Global.settings.configSetting].logoName
+            height: parent.height
+            anchors.left: parent.left
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: height * 0.5
+            color: Global.buttonTextColor
+            font.family: Global.alibabaPuHuiTi.font.family
+        }
+
+        Text {
+            id: titleName
+            text: Global.configList[Global.settings.configSetting].titleName
+            height: parent.height
+            anchors.centerIn: parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: height * 0.5
+            color: Global.buttonTextColor
+            font.family: Global.alibabaPuHuiTi.font.family
+        }
+        Row {
+            height: parent.height
+            anchors.right: parent.right
+            spacing: parent.width * 0.01
+            Text {
+                id: titleTime
+                height: parent.height
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: height * 0.5
+                color: Global.buttonTextColor
+                font.family: Global.alibabaPuHuiTi.font.family
+                Timer {
+                    id: timer
+                    interval: 1000
+                    repeat: true
+                    running: true
+                    triggeredOnStart: true
+                    onTriggered: {
+                        titleTime.text = new Date().toLocaleTimeString(
+                            Qt.locale("zh_CN"), " hh:mm")
+                    }
+                }
+            }
+            ColorSwitch {
+                id: themeSwtich
+                height: parent.height * 0.6
+                width: height
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked: {
+                    Global.settings.darkTheme = !Global.settings.darkTheme
+                }
+                checked: Global.settings.darkTheme
+                visible: Qt.platform.os === "windows" ? true : false
+            }
+            ColorButton {
+                id: setup
+                height: parent.height
+                width: height
+                source: "qrc:/content/icons/config.png"
+                onClicked: root.passwordDialog.open()
+                btnColor: "transparent"
+                btnCheckColor: "transparent"
+            }
+            ColorButton {
+                id: close
+                height: parent.height
+                width: height
+                source: "qrc:/content/icons/close.png"
+                btnColor: "transparent"
+                btnCheckColor: "transparent"
+                onClicked: root.closeDialog.open()
+                visible: Qt.platform.os === "windows" ? true : false
+            }
+        }
     }
     MouseArea {
         id: rightSide
@@ -76,7 +162,7 @@ Window {
         anchors.right: parent.right
         onPositionChanged: {
             if (!pressed || Global.settings.fullscreen)
-                return
+            return
             let width = root.width + mouseX
             if (width > root.minimumWidth) {
                 root.width = width
@@ -104,7 +190,7 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         onPositionChanged: {
             if (!pressed || Global.settings.fullscreen)
-                return
+            return
             let height = root.height + mouseY
             if (height > root.minimumHeight) {
                 root.height = height
@@ -125,11 +211,10 @@ Window {
     }
     Loader {
         id: pageLoader
-        y: titleBar.height
-        //asynchronous: true
+        anchors.top: titleBar.bottom
         width: parent.width
         height: parent.height - titleBar.height
-        source: ping.running ? (Global.config.tabOnBottom ? "qrc:/qt/qml/content/ContentRow.qml" : "qrc:/qt/qml/content/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/ConfigSelect.qml" : "qrc:/qt/qml/content/Connect.qml")
+        source: ping.running ? (Global.configList[Global.settings.configSetting].tabOnBottom ? "qrc:/qt/qml/content/Pages/ContentRow.qml" : "qrc:/qt/qml/content/Pages/ContentColumn.qml") : (Global.settings.configSetting === 0 ? "qrc:/qt/qml/content/Pages/ConfigSelect.qml" : "qrc:/qt/qml/content/Pages/Connect.qml")
     }
 
     Connections {
@@ -152,8 +237,5 @@ Window {
         function onClientConnected() {
             CrestronCIP.serverAccept()
         }
-    }
-    Component.onCompleted: {
-        Global.config = Global.configList[Global.settings.configSetting]
     }
 }

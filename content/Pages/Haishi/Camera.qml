@@ -74,9 +74,9 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridCamera.spacing)
+                        width: (gridCamera.width + gridCamera.spacing)
                                / gridCamera.columns - gridCamera.spacing
-                        height: (parent.height + gridCamera.spacing)
+                        height: (gridCamera.height + gridCamera.spacing)
                                 / gridCamera.rows - gridCamera.spacing
                         text: name
                         channel: btnchannel

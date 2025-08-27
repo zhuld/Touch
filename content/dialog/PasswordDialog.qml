@@ -11,6 +11,14 @@ Dialog {
     property int during
     property bool error: false
 
+    onErrorChanged: {
+        if (error) {
+            passwordTitle.text = "请输入密码：  密码错误"
+            error = false
+            passwordAnimation.start()
+        }
+    }
+
     implicitWidth: parent.width / parent.height
                    < ratio ? parent.width * 0.9 : parent.height * 0.9 * ratio
     implicitHeight: implicitWidth / ratio
@@ -27,7 +35,7 @@ Dialog {
             from: 0
             to: 1
             property: "opacity"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 2
         }
     }
     exit: Transition {
@@ -35,7 +43,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 2
         }
     }
 
@@ -52,11 +60,13 @@ Dialog {
         }
     }
     onOpened: {
+        passwordTitle.text = "请输入密码："
         during = autoClose
         countDownTimer.start()
     }
 
     onClosed: {
+        passwordTitle.text = "请输入密码："
         password.text = ""
         rootPassword.error = false
         countDownTimer.stop()
@@ -72,8 +82,19 @@ Dialog {
             id: passwordTitle
             height: parent.height * 0.06
             color: Global.buttonTextColor
-            text: "请输入密码：" + (rootPassword.error ? " 密码错误" : "")
+            text: "请输入密码："
             font.pixelSize: height
+
+            PropertyAnimation on x {
+                id: passwordAnimation
+                property int originVal
+                from: -10
+                to: 10
+                duration: 100
+                easing.type: Easing.InOutSine
+                loops: 3
+                onFinished: passwordTitle.x = 0
+            }
         }
 
         TextInput {
@@ -148,7 +169,6 @@ Dialog {
                     radius: height / 2
                     text: name
                     enabled: (text === "\u21E6" & password.text === "") ? 0 : 1
-                    btnColor: Global.backgroundColor
                     onClicked: {
                         switch (name) {
                             case "1":

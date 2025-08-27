@@ -11,31 +11,44 @@ qt_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        Connect.qml
-        ContentColumn.qml
-        ContentRow.qml
         Global.qml
-        ConfigSelect.qml
-        Config/ShiyiMZ.qml
-        Config/Haishi410.qml
+
         Config/ConfigSet.qml
+        Config/Haishi410.qml
+        Config/MediaPlayer.qml
+        Config/ShiyiMZ.qml
+
         Pages/Shiyi/System.qml
         Pages/Shiyi/Video.qml
         Pages/Shiyi/CameraControl.qml
         Pages/Shiyi/Volume.qml
         Pages/Shiyi/Light.qml
         Pages/Shiyi/Power.qml
+
         Pages/Haishi/SingleScreen.qml
         Pages/Haishi/VR.qml
         Pages/Haishi/Camera.qml
         Pages/Haishi/Remote.qml
         Pages/Haishi/LED.qml
-        Pages/TitleBar.qml
+
+        Pages/Mediaplayer/Movie.qml
+        Pages/Mediaplayer/Sound.qml
+        Pages/Mediaplayer/PPT.qml
+        Pages/Mediaplayer/Flash.qml
+        Pages/Mediaplayer/Picture.qml
+        Pages/Mediaplayer/MediaSystem.qml
+        Pages/Mediaplayer/MedaiCamera.qml
+        Pages/Mediaplayer/Web.qml        
+
         Pages/Test.qml
+
+        Pages/Connect.qml
+        Pages/ContentColumn.qml
+        Pages/ContentRow.qml
+        Pages/ConfigSelect.qml
 
         Custom/MyButton.qml
         Custom/InputButton.qml
-        Custom/InputButton2.qml
         Custom/Output.qml
         Custom/ColorButton.qml
         Custom/VolumeBar.qml
@@ -47,19 +60,11 @@ qt_add_qml_module(content
         Custom/ControlPad.qml
         Custom/VButton.qml
         Custom/MyIconLabel.qml
+
         Dialog/PasswordDialog.qml
         Dialog/SettingDialog.qml
         Dialog/ConfirmDialog.qml
         Dialog/ProcessDialog.qml
 
         Js/crestroncip.js
-        QML_FILES Config/MediaPlayer.qml
-        QML_FILES Pages/Mediaplayer/Movie.qml
-        QML_FILES Pages/Mediaplayer/Sound.qml
-        QML_FILES Pages/Mediaplayer/PPT.qml
-        QML_FILES Pages/Mediaplayer/Flash.qml
-        QML_FILES Pages/Mediaplayer/Picture.qml
-        QML_FILES Pages/Mediaplayer/MediaSystem.qml
-        QML_FILES Pages/Mediaplayer/MedaiCamera.qml
-        QML_FILES Pages/Mediaplayer/Web.qml
     )

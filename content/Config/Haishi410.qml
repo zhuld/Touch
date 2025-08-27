@@ -9,7 +9,7 @@ QtObject {
     readonly property string protocol: "CrestronCIP"
 
     //页面List
-    readonly property var pageList: ListModel {
+    readonly property ListModel pageList: ListModel {
         ListElement {
             name: qsTr("远程")
             pageUrl: "qrc:/qt/qml/content/Pages/Haishi/Remote.qml"
@@ -55,7 +55,7 @@ QtObject {
             pageChannel: 18
         }
     }
-    readonly property var initValue: ListModel {
+    readonly property ListModel initValue: ListModel {
         ListElement {
             name: "analog"
             channel: 1

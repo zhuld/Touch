@@ -18,16 +18,13 @@ Dialog {
     closePolicy: Popup.NoAutoClose
     modal: true
 
-    // Overlay.modal: Rectangle {
-    //     color: "#80000000"
-    // }
     background: Background {}
     enter: Transition {
         NumberAnimation {
             from: 0
             to: 1
             property: "opacity"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 2
         }
     }
     exit: Transition {
@@ -35,7 +32,7 @@ Dialog {
             from: 1
             to: 0
             property: "opacity"
-            duration: Global.durationDelay
+            duration: Global.durationDelay * 2
         }
     }
     Column {

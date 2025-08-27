@@ -59,9 +59,9 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + gridFlash.spacing)
+                        width: (gridFlash.width + gridFlash.spacing)
                                / gridFlash.columns - gridFlash.spacing
-                        height: (parent.height + gridFlash.spacing)
+                        height: (gridFlash.height + gridFlash.spacing)
                                 / gridFlash.rows - gridFlash.spacing
                         text: name
                         channel: btnchannel

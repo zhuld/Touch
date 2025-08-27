@@ -12,9 +12,9 @@ Item {
     property int output
     property alias textOutput: textOutput.text
     property color dragShadowColor
-    readonly property var input: Global.analog[output]
+    readonly property int input: Global.analog[output]
     property int disEnableChannel: 0
-    property var inputListMode
+    property ListModel inputListMode
 
     enabled: Global.digital[controlOutput.disEnableChannel] ? false : true
     opacity: enabled ? 1 : 0.4
@@ -62,10 +62,8 @@ Item {
                     position: 0
                     color: Qt.alpha(
                                controlOutput.input > 0 & controlOutput.input
-                               <= inputListMode.count ? Qt.darker(
-                                                            inputListMode.get(
-                                                                input - 1).bgColor,
-                                                            1.4) : Global.backgroundColor,
+                               <= controlOutput.inputListMode.count ? Qt.darker(
+                                                                          controlOutput.inputListMode.get(controlOutput.input - 1).bgColor, 1.4) : Global.backgroundColor,
                                0.5)
                     Behavior on color {
                         ColorAnimation {
@@ -76,12 +74,11 @@ Item {
                 GradientStop {
                     position: 1
                     color: controlOutput.input > 0 & controlOutput.input
-                           <= inputListMode.count ? Qt.lighter(
-                                                        inputListMode.get(
-                                                            input - 1).bgColor,
-                                                        1.2) : Qt.lighter(
-                                                        Global.backgroundColor,
-                                                        1.3)
+                           <= controlOutput.inputListMode.count ? Qt.lighter(
+                                                                      controlOutput.inputListMode.get(controlOutput.input - 1).bgColor,
+                                                                      1.2) : Qt.lighter(
+                                                                      Global.backgroundColor,
+                                                                      1.3)
                     Behavior on color {
                         ColorAnimation {
                             duration: Global.durationDelay
@@ -96,7 +93,7 @@ Item {
         id: textOutput
         height: parent.height * 0.5
         font.pixelSize: height * 0.5
-        x: outputText.width
+        x: outputNumber.width
         verticalAlignment: Text.AlignVCenter
         text: "Output"
         color: Global.buttonTextColor
@@ -104,7 +101,7 @@ Item {
     }
 
     Text {
-        id: outputText
+        id: outputNumber
         height: parent.height
         font.pixelSize: height * 0.6
         anchors.margins: height * 0.1
@@ -119,25 +116,25 @@ Item {
         id: textInput
         anchors.bottom: parent.bottom
         height: parent.height * 0.6
-        width: parent.width - inputText.width
+        width: parent.width - inputNumber.width
         alignment: Text.AlignRight
         icon.source: controlOutput.input > 0 & controlOutput.input
-                     <= controlOutput.inputListMode.count ? inputListMode.get(
-                                                                input - 1).source : ""
+                     <= controlOutput.inputListMode.count ? controlOutput.inputListMode.get(
+                                                                controlOutput.input - 1).source : ""
         text: controlOutput.input > 0 & controlOutput.input
-              <= controlOutput.inputListMode.count ? inputListMode.get(
-                                                         input - 1).name : null
+              <= controlOutput.inputListMode.count ? controlOutput.inputListMode.get(
+                                                         controlOutput.input - 1).name : null
         anchors.right: parent.right
-        anchors.rightMargin: inputText.width
+        anchors.rightMargin: inputNumber.width
     }
     Text {
-        id: inputText
+        id: inputNumber
         height: parent.height * 0.4
         font.pixelSize: height
         anchors.margins: height * 0.1
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        text: input ? input : ""
+        text: controlOutput.input ? controlOutput.input : ""
         color: Global.buttonTextColor
         font.bold: true
         opacity: 0.1

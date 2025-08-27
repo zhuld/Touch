@@ -46,9 +46,9 @@ Item {
                     delegate: Output {
                         required property string name
                         required property int outputChannel
-                        width: (parent.width + gridOutput.spacing)
+                        width: (gridOutput.width + gridOutput.spacing)
                                / gridOutput.columns - gridOutput.spacing
-                        height: (parent.height + gridOutput.spacing)
+                        height: (gridOutput.height + gridOutput.spacing)
                                 / gridOutput.rows - gridOutput.spacing
                         output: outputChannel
                         textOutput: name
@@ -124,22 +124,6 @@ Item {
                             btnChannel: 96
                             //disableOut: 4
                         }
-                        // ListElement {
-                        //     name: qsTr("预留输入2")
-                        //     inputChannel: 7
-                        //     bgColor: "gold"
-                        //     source: "qrc:/content/icons/HDMIjiekou.png"
-                        //     btnChannel: 97
-                        //     disableOut: 5
-                        // }
-                        // ListElement {
-                        //     name: qsTr("预留输入3")
-                        //     inputChannel: 8
-                        //     bgColor: "#8e9eab" //"lightslategrey"
-                        //     source: "qrc:/content/icons/HDMIjiekou.png"
-                        //     btnChannel: 98
-                        //     disableOut: 6
-                        // }
                     }
                     delegate: InputButton {
                         required property string name
@@ -149,9 +133,9 @@ Item {
                         required property int index
                         required property int btnChannel
                         required property int disableOut
-                        width: (parent.width + gridInput.spacing)
+                        width: (gridInput.width + gridInput.spacing)
                                / gridInput.columns - gridInput.spacing
-                        height: (parent.height + gridInput.spacing)
+                        height: (gridInput.height + gridInput.spacing)
                                 / gridInput.rows - gridInput.spacing
                         btnColor: bgColor
                         textInput: name

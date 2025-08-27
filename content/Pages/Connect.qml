@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 
 Item {
@@ -60,23 +62,19 @@ Item {
             triggeredOnStart: false
             onTriggered: {
                 dateText.text = new Date().toLocaleDateString(
-                            Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
+                    Qt.locale("zh_CN"), "yy年MM月dd日\n\rdddd")
                 if (space) {
                     timeText.text = new Date().toLocaleTimeString(
-                                Qt.locale("zh_CN"), "hh mm ss")
+                        Qt.locale("zh_CN"), "hh mm ss")
                 } else {
                     timeText.text = new Date().toLocaleTimeString(
-                                Qt.locale("zh_CN"), "hh:mm:ss")
+                        Qt.locale("zh_CN"), "hh:mm:ss")
                 }
                 space = !space
                 count++
                 if (count == 3) {
-                    if (Global.settings.demoMode) {
-                        tcpClient.connectToServer("127.0.0.1", 41793)
-                    } else {
-                        tcpClient.connectToServer(Global.settings.ipAddress,
-                                                  Global.settings.ipPort)
-                    }
+                    tcpClient.connectToServer(Global.settings.ipAddress,
+                                              Global.settings.ipPort)
                 } else if (count > 10) {
                     count = 0
                     socketAnimation.start()

@@ -2,14 +2,14 @@ import QtQuick
 
 QtObject {
     readonly property string logoName: qsTr("上海市第一人民医院")
-    readonly property string titleName: qsTr("门诊大楼指挥中心")
-    readonly property string version: qsTr("2502")
+    readonly property string titleName: qsTr("门诊大楼指挥中心会议室")
+    readonly property string version: qsTr("202502")
     readonly property string background: "qrc:/content/images/shiyi.jpg"
     readonly property int processDialogChannel: 1
     readonly property string protocol: "CrestronCIP"
 
     //页面List
-    readonly property var pageList: ListModel {
+    readonly property ListModel pageList: ListModel {
         ListElement {
             name: qsTr("系统")
             pageUrl: "qrc:/qt/qml/content/Pages/Shiyi/System.qml"
@@ -67,7 +67,7 @@ QtObject {
             disableChannel: 4
         }
     }
-    readonly property var initValue: ListModel {
+    readonly property ListModel initValue: ListModel {
         ListElement {
             name: "digital"
             channel: 2

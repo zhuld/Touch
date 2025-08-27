@@ -11,7 +11,7 @@ Item {
     Column {
         width: parent.width
         height: parent.height
-        spacing: height * 0.08
+        spacing: height * 0.05
         Row {
             width: parent.width
             height: parent.height * 0.3
@@ -73,27 +73,58 @@ Item {
                 }
             }
         }
-        ScrollView {
-            id: scrollView
+        Rectangle {
             width: parent.width
-            height: parent.height * 0.6
-            clip: true
-            Column {
-                width: scrollView.width
-                spacing: scrollView.height * 0.05
-                Repeater {
-                    model: Global.configListModel
-                    delegate: ColorButton {
-                        required property string modelData
-                        required property int index
-                        text: modelData
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        width: scrollView.width * 0.9
-                        height: scrollView.height * 0.25
-                        visible: index === 0 ? false : true
-                        onClicked: {
-                            Global.settings.configSetting = index
-                            Global.config = Global.configList[Global.settings.configSetting]
+            height: parent.height * 0.65
+            //color: "transparent"
+            color: Global.buttonColor
+            radius: height / 20
+            ListView {
+                id: listView
+                anchors.fill: parent
+                clip: true
+                ScrollBar.vertical: ScrollBar {}
+                highlight: Rectangle {
+                    color: Global.buttonCheckedColor
+                    radius: height / 5
+                    Text {
+                        width: height
+                        height: parent.height
+                        font.pixelSize: height * 0.5
+                        font.family: Global.alibabaPuHuiTi.font.family
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        text: "\u00BB"
+                        anchors.right: parent.right
+                        MouseArea {
+                            id: textMouseArea
+                            anchors.fill: parent
+                            onClicked: function (mouse) {
+                                Global.settings.configSetting = listView.currentIndex
+                            }
+                        }
+                    }
+                }
+                highlightFollowsCurrentItem: true // 高亮跟随当前项移动亮
+                anchors.margins: height * 0.1
+                model: Global.configListModel
+                delegate: Text {
+                    required property string modelData
+                    required property int index
+                    text: modelData
+                    width: listView.width
+                    height: listView.height * 0.2
+                    font.pixelSize: height * 0.5
+                    color: Global.buttonTextColor
+                    font.family: Global.alibabaPuHuiTi.font.family
+                    leftPadding: height / 2
+                    verticalAlignment: Text.AlignVCenter
+                    MouseArea {
+                        anchors.fill: parent
+                        propagateComposedEvents: true
+                        onClicked: function (mouse) {
+                            listView.currentIndex = parent.index
+                            mouse.accepted = false
                         }
                     }
                 }

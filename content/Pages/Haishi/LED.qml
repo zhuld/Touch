@@ -12,7 +12,7 @@ Item {
         Category {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.25
+            Layout.maximumWidth: parent.width * 0.2
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
             label: qsTr("亮度")
@@ -28,7 +28,7 @@ Item {
         Category {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.5
+            Layout.maximumWidth: parent.width * 0.6
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
             label: qsTr("LED控制")
@@ -71,8 +71,8 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridLed.spacing) / gridLed.columns - gridLed.spacing
-                        height: (parent.height + gridLed.spacing) / gridLed.rows - gridLed.spacing
+                        width: (gridLed.width + gridLed.spacing) / gridLed.columns - gridLed.spacing
+                        height: (gridLed.height + gridLed.spacing) / gridLed.rows - gridLed.spacing
                         text: name
                         channel: btnchannel
                         source: iconUrl
@@ -85,7 +85,7 @@ Item {
             color: "transparent"
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.25
+            Layout.maximumWidth: parent.width * 0.2
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
         }

@@ -179,8 +179,10 @@ function serverMessageCheck(message) {
                             cipmessage(
                                 op_Join,
                                 new Uint8Array([0x00, 0x00, 0x02, op_Join_Request, op_Join_Request_Reply_Start])))
-                for (var i = 0; i < Global.config.initValue.count; i++) {
-                    var item = Global.config.initValue.get(i)
+                for (let i = 0; i
+                     < Global.configList[Global.settings.configSetting].initValue.count; i++) {
+                    let item = Global.configList[Global.settings.configSetting].initValue.get(
+                                i)
                     //console.log(item.name, item.channel, item.value)
                     switch (item.name) {
                     case "digital":
@@ -327,7 +329,7 @@ function serverAccept() {
 function toHexString(data, space) {
     let hexMessage = ""
     let s = space
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         let hex = data[i].toString(16)
         // 将字节转换为十六进制
         if (hex.length < 2) {

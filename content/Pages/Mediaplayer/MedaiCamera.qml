@@ -11,7 +11,7 @@ Item {
         Category {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.5
+            Layout.maximumWidth: parent.width * 0.7
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
             label: qsTr("摄像头模式")
@@ -60,9 +60,9 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + gridCamera.spacing)
+                        width: (gridCamera.width + gridCamera.spacing)
                                / gridCamera.columns - gridCamera.spacing
-                        height: (parent.height + gridCamera.spacing)
+                        height: (gridCamera.height + gridCamera.spacing)
                                 / gridCamera.rows - gridCamera.spacing
                         text: name
                         channel: btnchannel
@@ -76,7 +76,7 @@ Item {
         Category {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.2
+            Layout.maximumWidth: parent.width * 0.3
             Layout.rightMargin: parent.width * 0.02
             Layout.bottomMargin: parent.width * 0.02
             label: qsTr("控制")
@@ -99,9 +99,9 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridControl.spacing)
+                        width: (gridControl.width + gridControl.spacing)
                                / gridControl.columns - gridControl.spacing
-                        height: (parent.height + gridControl.spacing)
+                        height: (gridControl.height + gridControl.spacing)
                                 / gridControl.rows - gridControl.spacing
                         text: name
                         channel: btnchannel
@@ -109,14 +109,6 @@ Item {
                     }
                 }
             }
-        }
-        Rectangle {
-            color: "transparent"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.maximumWidth: parent.width * 0.3
-            Layout.rightMargin: parent.width * 0.02
-            Layout.bottomMargin: parent.width * 0.02
         }
     }
 }

@@ -52,9 +52,9 @@ Item {
                         required property int btnchannel
                         required property int disBtnChannel
                         required property string iconUrl
-                        width: (parent.width + gridOutput.spacing)
+                        width: (gridOutput.width + gridOutput.spacing)
                                / gridOutput.columns - gridOutput.spacing
-                        height: (parent.height + gridOutput.spacing)
+                        height: (gridOutput.height + gridOutput.spacing)
                                 / gridOutput.rows - gridOutput.spacing
                         text: name
                         channel: btnchannel
@@ -126,9 +126,9 @@ Item {
                         required property string name
                         required property int btnchannel
                         required property string iconUrl
-                        width: (parent.width + gridInput.spacing)
+                        width: (gridInput.width + gridInput.spacing)
                                / gridInput.columns - gridInput.spacing
-                        height: (parent.height + gridInput.spacing)
+                        height: (gridInput.height + gridInput.spacing)
                                 / gridInput.rows - gridInput.spacing
                         text: name
                         channel: btnchannel
